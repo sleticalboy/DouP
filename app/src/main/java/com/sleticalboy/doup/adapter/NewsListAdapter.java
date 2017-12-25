@@ -63,7 +63,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             newsHolder.newsTitle.setText(storiesBean.title);
             Glide.with(mContext).load(storiesBean.images.get(0)).centerCrop().into(newsHolder.newsImg);
         } else if (holder instanceof BannerViewHolder) {
-            // TODO: 12/25/17 绑定轮播图
+            // TODO: 12/25/17 绑定顶部轮播图
         }
     }
 
@@ -76,6 +76,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mData = data;
     }
 
+    // 新闻 item
     static class NewsViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.card_view)
@@ -91,6 +92,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    // 顶部轮播图 item
     static class BannerViewHolder extends RecyclerView.ViewHolder {
 
         public BannerViewHolder(View itemView) {
