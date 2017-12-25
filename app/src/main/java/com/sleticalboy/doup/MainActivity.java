@@ -1,3 +1,5 @@
+package com.sleticalboy.doup;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -5,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.fragment.book.BookFragment;
 import com.sleticalboy.doup.fragment.index.IndexFragment;
 import com.sleticalboy.doup.fragment.mine.MineFragment;
