@@ -21,13 +21,13 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/tab_index"
+            android:id="@+id/tab_news"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="index"/>
+            android:text="news"/>
 
         <RadioButton
             android:id="@+id/tab_book"

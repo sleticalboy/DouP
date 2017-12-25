@@ -8,9 +8,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.sleticalboy.doup.fragment.book.BookFragment;
-import com.sleticalboy.doup.fragment.index.IndexFragment;
 import com.sleticalboy.doup.fragment.mine.MineFragment;
 import com.sleticalboy.doup.fragment.movie.MovieFragment;
+import com.sleticalboy.doup.fragment.news.NewsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.tab_index)
-    RadioButton tabIndex;
+    @BindView(R.id.tab_news)
+    RadioButton tabNews;
     @BindView(R.id.rg_navigator)
     RadioGroup rgNavigator;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         rgNavigator.setOnCheckedChangeListener((group, checkedId) -> {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (checkedId) {
-                case R.id.tab_index:
+                case R.id.tab_news:
                     handleFragment(transaction, mFragments.get(0));
                     break;
                 case R.id.tab_book:
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         if (mFragments == null)
             mFragments = new ArrayList<>(4);
 
-        mFragments.add(new IndexFragment());
+        mFragments.add(new NewsFragment());
         mFragments.add(new BookFragment());
         mFragments.add(new MovieFragment());
         mFragments.add(new MineFragment());
@@ -87,6 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fl_container, mFragments.get(0))
                 .commit();
-        tabIndex.setChecked(true);
+        tabNews.setChecked(true);
     }
 }

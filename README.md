@@ -12,3 +12,14 @@
 - 数据库框架：`OrmLite`
 - 快速开发框架：`ButterKnife`
 - 响应式编程框架：`RxAndroid`
+
+### api 接口来源（网络整理）
+
+- 知乎日报：
+  - 最新新闻：http://news-at.zhihu.com/api/4/news/latest
+  - 老新闻：http://news-at.zhihu.com/api/4/news/before/{data:20171222}
+  - 新闻详情：http://news-at.zhihu.com/api/4/news/{id:9662117}
+- 豆瓣
+  - 图书
+  - 电影
+  - 音乐

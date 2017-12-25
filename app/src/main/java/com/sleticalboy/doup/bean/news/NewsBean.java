@@ -38,6 +38,18 @@ public class NewsBean extends BaseBean {
         public String title;
         public boolean multipic;
         public List<String> images;
+
+        @Override
+        public String toString() {
+            return "StoriesBean{" +
+                    "type=" + type +
+                    ", id=" + id +
+                    ", ga_prefix='" + ga_prefix + '\'' +
+                    ", title='" + title + '\'' +
+                    ", multipic=" + multipic +
+                    ", images=" + images.toString() +
+                    '}';
+        }
     }
 
     public static class TopStoriesBean {
@@ -54,5 +66,25 @@ public class NewsBean extends BaseBean {
         public int id;
         public String ga_prefix;
         public String title;
+
+        @Override
+        public String toString() {
+            return "TopStoriesBean{" +
+                    "image='" + image + '\'' +
+                    ", type=" + type +
+                    ", id=" + id +
+                    ", ga_prefix='" + ga_prefix + '\'' +
+                    ", title='" + title + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "NewsBean{" +
+                "date='" + date + '\'' +
+                ", stories=" + stories.toString() +
+                ", top_stories=" + top_stories +
+                '}';
     }
 }
