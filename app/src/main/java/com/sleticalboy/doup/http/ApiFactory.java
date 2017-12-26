@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.http;
 
+import com.sleticalboy.doup.http.api.BeautyApi;
 import com.sleticalboy.doup.http.api.NewsApi;
 
 /**
@@ -14,22 +15,17 @@ public class ApiFactory {
 //    private static BookApi sBookApi;
 //    private static MovieApi sMovieApi;
     private static NewsApi sNewsApi;
-
-//    public static BookApi getBookApi() {
-//        if (sBookApi == null)
-//            sBookApi = RetrofitClient.getClient().getBookApiService();
-//        return sBookApi;
-//    }
-
-//    public static MovieApi getMovieApi() {
-//        if (sMovieApi == null)
-//            sMovieApi = RetrofitClient.getClient().getMovieApiService();
-//        return sMovieApi;
-//    }
+    private static BeautyApi sBeautyApi;
 
     public static NewsApi getNewsApi() {
         if (sNewsApi == null)
             sNewsApi = RetrofitClient.getClient().getNewsApiService();
         return sNewsApi;
+    }
+
+    public static BeautyApi getBeautyApi() {
+        if (sBeautyApi == null)
+            sBeautyApi = RetrofitClient.getClient().getBeautyApiService();
+        return sBeautyApi;
     }
 }
