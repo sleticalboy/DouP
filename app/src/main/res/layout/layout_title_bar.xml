@@ -6,23 +6,26 @@
     android:layout_height="40dp">
 
     <TextView
+        android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="4dp"
         android:paddingStart="4dp"
-        android:textSize="18sp"
-        android:text="back"/>
+        android:text="back"
+        android:textSize="18sp"/>
 
     <TextView
+        android:id="@+id/tab_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:textSize="18sp"
-        android:text="title"/>
+        android:text="title"
+        android:textSize="18sp"/>
 
     <TextView
+        android:id="@+id/about_me"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
@@ -30,7 +33,7 @@
         android:gravity="center"
         android:paddingEnd="4dp"
         android:paddingRight="4dp"
-        android:text="message"/>
+        android:text="about me"/>
 
 </RelativeLayout>
 

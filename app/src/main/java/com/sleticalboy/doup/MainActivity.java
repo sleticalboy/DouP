@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.sleticalboy.doup.activity.AboutMeActivity;
 import com.sleticalboy.doup.fragment.book.BookFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.mine.MineFragment;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,5 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.fl_container, mFragments.get(0))
                 .commit();
         tabNews.setChecked(true);
+    }
+
+    @OnClick(R.id.about_me)
+    public void onViewClicked() {
+        AboutMeActivity.startAction(this);
     }
 }

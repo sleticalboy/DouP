@@ -25,6 +25,7 @@
         <activity
             android:name=".activity.NewsDetailActivity"
             android:theme="@style/NewsDetailTheme"/>
+        <activity android:name=".activity.AboutMeActivity"/>
     </application>
 
 </manifest>
