@@ -88,7 +88,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(NewsDetailBean newsDetailBean) {
-                        Log.d(TAG, newsDetailBean.toString());
+                        Log.d(TAG, newsDetailBean.title);
                         initToolBar(newsDetailBean.title);
                         showPage(newsDetailBean);
                     }

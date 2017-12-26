@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.http;
 
+import com.sleticalboy.doup.http.api.BeautyApi;
 import com.sleticalboy.doup.http.api.NewsApi;
 import com.sleticalboy.doup.util.CommonUtils;
 
@@ -27,24 +28,24 @@ public class RetrofitClient {
 
     private static RetrofitClient sClient;
 
-    private static final String BASE_NEWS_URL = "http://news-at.zhihu.com/api/4/";
-//    private static final String BASE_BOOK_URL = "";
+    //    private static final String BASE_BOOK_URL = "";
 //    private static final String BASE_MOVIE_URL = "";
+
+    private static final String BASE_BEAUTY_URL = "http://gank.io/api/";
+    private static final String BASE_NEWS_URL = "http://news-at.zhihu.com/api/4/";
 
     private static final long MAX_CACHE_SIZE = 1L << 24;
     private static final String CACHE_DIR = "cache_dir";
 
     //    private BookApi bookApiService;
 //    private MovieApi movieApiService;
-    private NewsApi newsApiService;
 
-//    public BookApi getBookApiService() {
-//        return bookApiService;
-//    }
-//
-//    public MovieApi getMovieApiService() {
-//        return movieApiService;
-//    }
+    private NewsApi newsApiService;
+    private BeautyApi beautyApiService;
+
+    public BeautyApi getBeautyApiService() {
+        return beautyApiService;
+    }
 
     public NewsApi getNewsApiService() {
         return newsApiService;
@@ -92,6 +93,7 @@ public class RetrofitClient {
                 .build();
 
         newsApiService = buildRetrofit(BASE_NEWS_URL, client).create(NewsApi.class);
+        beautyApiService = buildRetrofit(BASE_BEAUTY_URL, client).create(BeautyApi.class);
 //        bookApiService = buildRetrofit(BASE_BOOK_URL, client).create(BookApi.class);
 //        movieApiService = buildRetrofit(BASE_MOVIE_URL, client).create(MovieApi.class);
     }

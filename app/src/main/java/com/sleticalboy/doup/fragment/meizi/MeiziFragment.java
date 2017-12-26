@@ -1,15 +1,13 @@
-package com.sleticalboy.doup.fragment.news;
+package com.sleticalboy.doup.fragment.meizi;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -18,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.adapter.NewsListAdapter;
-import com.sleticalboy.doup.bean.news.NewsBean;
+import com.sleticalboy.doup.adapter.MeiziAdapter;
+import com.sleticalboy.doup.bean.meizi.BeautyBean;
 import com.sleticalboy.doup.http.ApiFactory;
 
 import butterknife.BindView;
@@ -30,30 +28,29 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
- * Date: 12/25/17.
+ * Date: 12/26/17.
  *
  * @author sleticalboy
  */
 
-public class NewsFragment extends Fragment {
+public class MeiziFragment extends Fragment {
 
-    private static final String TAG = "NewsFragment";
+    private static final String TAG = "MeiziFragment";
 
-    @BindView(R.id.rv_news)
-    RecyclerView rvNews;
+    @BindView(R.id.rv_meizi)
+    RecyclerView rvMeizi;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    @BindView(R.id.fab_top)
-    FloatingActionButton fabTop;
 
     private Unbinder unbinder;
-    private int mLastVisibleItemPosition;
-    private String mDate;
-    private NewsListAdapter mAdapter;
-    private boolean mIsLoadMore = false;
-    private NewsBean mNewsBean;
-    private LinearLayoutManager mLayoutManager;
+    private MeiziAdapter mAdapter;
     private RecyclerView.OnScrollListener mOnScrollListener;
+    private GridLayoutManager mLayoutManager;
+
+    private int page = 1;
+    private int mLastVisibleItem;
+    private boolean mIsLoadMore;
+    private BeautyBean mLocalData;
 
     @Override
     public void onAttach(Context context) {
@@ -71,60 +68,50 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = View.inflate(getContext(), R.layout.frag_news, null);
+        View rootView = View.inflate(getContext(), R.layout.frag_meizi, null);
         unbinder = ButterKnife.bind(this, rootView);
+
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
+        rvMeizi.setLayoutManager(mLayoutManager);
+
+        mAdapter = new MeiziAdapter(getContext());
+        rvMeizi.setAdapter(mAdapter);
 
         Log.d(TAG, "init data");
         initData();
 
-        mLayoutManager = new LinearLayoutManager(getContext());
-        rvNews.setLayoutManager(mLayoutManager);
-
-        mAdapter = new NewsListAdapter(getContext());
-        rvNews.setAdapter(mAdapter);
-
         return rootView;
     }
 
-    // 初始化数据
     private void initData() {
-        // 获取最新新闻列表
-        ApiFactory.getNewsApi().getLatestNews()
+        ApiFactory.getBeautyApi().getBeauty(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(newsBean -> {
-                    Log.d(TAG, newsBean.stories.get(0).title);
-                    // 展示数据
-                    showNewsList(newsBean);
+                .subscribe(beautyBean -> {
+                    Log.d(TAG, "beautyBean:" + beautyBean);
+                    Log.d(TAG, "Thread.currentThread():" + Thread.currentThread());
+                    showMeizi(beautyBean);
                 }, tr -> {
                     tr.printStackTrace();
-                    Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "加载数据失败", Toast.LENGTH_SHORT).show();
                 });
     }
 
-    // 展示新闻列表
-    private void showNewsList(NewsBean newsBean) {
+    private void showMeizi(BeautyBean beautyBean) {
+
         if (mIsLoadMore) {
-            if (TextUtils.isEmpty(mDate)) {
-                mAdapter.updateStatus(NewsListAdapter.LOAD_NONE);
-                srl.setRefreshing(false);
-                return;
-            } else {
-                mNewsBean.stories.addAll(newsBean.stories);
-            }
+            mLocalData.results.addAll(beautyBean.results);
+            mAdapter.notifyDataSetChanged();
         } else {
-            mNewsBean = newsBean;
-            // 将数据设置给 adapter
-            mAdapter.setData(mNewsBean);
+            mLocalData = beautyBean;
+            // 给 adapter 设置数据
+            mAdapter.setData(mLocalData);
+            mAdapter.notifyDataSetChanged();
         }
-        mAdapter.notifyDataSetChanged();
-        mDate = newsBean.date;
 
         scrollRecyclerView();
 
         setSwipeRefreshLayout();
-
-        setFloatingActionButton();
     }
 
     private void setSwipeRefreshLayout() {
@@ -138,41 +125,21 @@ public class NewsFragment extends Fragment {
         });
     }
 
-    private void setFloatingActionButton() {
-        if (mLayoutManager.findLastVisibleItemPosition() >= 16) {
-            fabTop.setVisibility(View.VISIBLE);
-        } else {
-            fabTop.setVisibility(View.GONE);
-        }
-        fabTop.setOnClickListener(v -> {
-            // 返回顶部
-            Toast.makeText(getContext(), "返回顶部", Toast.LENGTH_SHORT).show();
-            // 平滑滚动 RecyclerView 到顶部
-//            mLayoutManager.smoothScrollToPosition(rvNews, null, 0);
-            rvNews.scrollToPosition(0);
-            fabTop.setVisibility(View.GONE);
-        });
-    }
-
     private void scrollRecyclerView() {
         mOnScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.d(TAG, "newState:" + newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mLastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
-                    Log.d(TAG, "mLastVisibleItemPosition:" + mLastVisibleItemPosition);
-                    Log.d(TAG, "mLayoutManager.getItemCount():" + mLayoutManager.getItemCount());
-                    if (mLayoutManager.getItemCount() == 1) {
-                        mAdapter.updateStatus(NewsListAdapter.LOAD_NONE);
+                    mLastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                    if (mLayoutManager.getItemCount() == 1)
                         return;
-                    }
-                    if (mLastVisibleItemPosition + 1 == mLayoutManager.getItemCount()) {
-                        mAdapter.updateStatus(NewsListAdapter.PULL_TO_LOAD);
+                    if (mLayoutManager.getItemCount() == mLastVisibleItem + 1) {
                         mIsLoadMore = true;
-                        mAdapter.updateStatus(NewsListAdapter.LOAD_MORE);
-                        new Handler().postDelayed(() -> getOldNews(), 1000);
+                        new Handler().postDelayed(() -> {
+                            // 加载更多数据
+                            loadMoreData();
+                        }, 1000);
                     }
                 }
             }
@@ -180,25 +147,23 @@ public class NewsFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mLastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                mLastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
             }
         };
-        // 给 RecyclerView 添加滚动监听
-        rvNews.addOnScrollListener(mOnScrollListener);
+        rvMeizi.addOnScrollListener(mOnScrollListener);
     }
 
-    // 上拉加载获取的数据，将获取的数据添加到已有的数据中，刷新 adapter
-    private void getOldNews() {
-        ApiFactory.getNewsApi().getOldNews(mDate)
+    private void loadMoreData() {
+        page += 1;
+        ApiFactory.getBeautyApi().getBeauty(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(newsBean -> {
-                    Log.d(TAG, newsBean.stories.get(0).title);
-                    // 展示数据
-                    showNewsList(newsBean);
-                }, tr -> {
-                    tr.printStackTrace();
-                    Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
+                .subscribe(beautyBean -> {
+                    Log.d(TAG, "beautyBean:" + beautyBean);
+                    showMeizi(beautyBean);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    Toast.makeText(getContext(), "加载数据失败", Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -242,16 +207,10 @@ public class NewsFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(TAG, "onDestroyView() called");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
         unbinder.unbind();
-        if (rvNews != null && mOnScrollListener != null)
-            rvNews.removeOnScrollListener(mOnScrollListener);
+        if (rvMeizi != null && mOnScrollListener != null) {
+            rvMeizi.removeOnScrollListener(mOnScrollListener);
+        }
     }
 
     @Override
