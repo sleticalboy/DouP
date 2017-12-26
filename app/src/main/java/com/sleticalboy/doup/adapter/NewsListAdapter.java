@@ -68,7 +68,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 NewsDetailActivity.actionStart(mContext, storiesBean.id);
             });
             newsHolder.newsTitle.setText(storiesBean.title);
-            Glide.with(mContext).load(storiesBean.images.get(0)).centerCrop().into(newsHolder.newsImg);
+            Glide.with(mContext)
+                    .load(storiesBean.images.get(0))
+                    .placeholder(R.mipmap.ic_launcher)
+                    .centerCrop()
+                    .into(newsHolder.newsImg);
         } else if (holder instanceof BannerViewHolder) {
             // TODO: 12/25/17 绑定顶部轮播图
         }

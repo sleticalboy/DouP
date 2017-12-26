@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="news"/>
+            android:text="新闻"/>
 
         <RadioButton
             android:id="@+id/tab_book"
@@ -39,13 +39,13 @@
             android:text="book"/>
 
         <RadioButton
-            android:id="@+id/tab_movie"
+            android:id="@+id/tab_meizi"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="movie"/>
+            android:text="妹子"/>
 
         <RadioButton
             android:id="@+id/tab_mine"

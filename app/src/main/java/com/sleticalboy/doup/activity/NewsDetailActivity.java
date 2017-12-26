@@ -114,7 +114,11 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     private void initHeader(NewsDetailBean newsDetailBean) {
-        Glide.with(this).load(newsDetailBean.image).centerCrop().into(newsImg);
+        Glide.with(this)
+                .load(newsDetailBean.image)
+                .placeholder(R.mipmap.ic_launcher)
+                .centerCrop()
+                .into(newsImg);
         newsTitle.setText(newsDetailBean.title);
         newsImgResource.setText(newsDetailBean.image_source);
     }

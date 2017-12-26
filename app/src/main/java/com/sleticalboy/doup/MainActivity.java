@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.sleticalboy.doup.fragment.book.BookFragment;
+import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.mine.MineFragment;
-import com.sleticalboy.doup.fragment.movie.MovieFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     @BindView(R.id.tab_news)
     RadioButton tabNews;
@@ -40,15 +43,19 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (checkedId) {
                 case R.id.tab_news:
+                    Log.d(TAG, "news");
                     handleFragment(transaction, mFragments.get(0));
                     break;
                 case R.id.tab_book:
+                    Log.d(TAG, "book");
                     handleFragment(transaction, mFragments.get(1));
                     break;
-                case R.id.tab_movie:
+                case R.id.tab_meizi:
+                    Log.d(TAG, "meizi");
                     handleFragment(transaction, mFragments.get(1));
                     break;
                 case R.id.tab_mine:
+                    Log.d(TAG, "mine");
                     handleFragment(transaction, mFragments.get(3));
                     break;
                 default:
@@ -59,16 +66,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleFragment(FragmentTransaction transaction, Fragment target) {
-        // 隐藏其他的 Fragment
-        for (Fragment fragment : mFragments) {
-            if (fragment != target && fragment.isAdded())
-                transaction.hide(fragment);
-        }
-        // 显示当前 Fragment
-        if (target != null && !target.isAdded()) {
-            transaction.add(R.id.fl_container, target);
-        } else {
-            transaction.show(target);
+        if (target != null) {
+            for (Fragment fragment : mFragments) {
+                if (fragment != target && fragment.isAdded())
+                    transaction.hide(fragment);
+            }
+            if (target.isAdded())
+                transaction.show(target);
+            else
+                transaction.add(R.id.fl_container, target);
         }
     }
 
@@ -79,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
         mFragments.add(new NewsFragment());
         mFragments.add(new BookFragment());
-        mFragments.add(new MovieFragment());
+        mFragments.add(new MeiziFragment());
         mFragments.add(new MineFragment());
+
+        Log.d(TAG, mFragments.toString());
 
         // 设置默认显示的 Fragment
         getSupportFragmentManager()

@@ -15,11 +15,15 @@
 
 ### api 接口来源（网络整理）
 
-- 知乎日报：
+- 知乎日报: http://news-at.zhihu.com/api/4/
   - 最新新闻：http://news-at.zhihu.com/api/4/news/latest
   - 老新闻：http://news-at.zhihu.com/api/4/news/before/{data:20171222}
   - 新闻详情：http://news-at.zhihu.com/api/4/news/{id:9662117}
-- 豆瓣
-  - 图书
-  - 电影
-  - 音乐
+
+- 干货集中营: http://gank.io/api/
+  - 妹子：http://gank.io/api/data/福利/10/{page:2}
+
+- 豆瓣: https://api.douban.com/v2/
+  - 图书: https://api.douban.com/v2/book/{id:1000001}
+  - 电影: https://api.douban.com/v2/movie/subject/{id:1764789}
+  - 音乐: https://api.douban.com/v2/music/{id:10000033}

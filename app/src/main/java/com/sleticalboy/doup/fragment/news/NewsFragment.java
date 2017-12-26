@@ -24,7 +24,7 @@ import com.sleticalboy.doup.http.ApiFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -46,7 +46,6 @@ public class NewsFragment extends Fragment {
     @BindView(R.id.fab_top)
     FloatingActionButton fabTop;
 
-    private Unbinder unbinder;
     private int mLastVisibleItemPosition;
     private String mDate;
     private NewsListAdapter mAdapter;
@@ -72,7 +71,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = View.inflate(getContext(), R.layout.frag_news, null);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         Log.d(TAG, "init data");
         initData();
@@ -138,20 +137,22 @@ public class NewsFragment extends Fragment {
         });
     }
 
+    @OnClick(R.id.fab_top)
+    public void onViewClicked() {
+        // 返回顶部
+        Toast.makeText(getContext(), "返回顶部", Toast.LENGTH_SHORT).show();
+        // 平滑滚动 RecyclerView 到顶部
+//            mLayoutManager.smoothScrollToPosition(rvNews, null, 0);
+        rvNews.scrollToPosition(0);
+        fabTop.setVisibility(View.GONE);
+    }
+
     private void setFloatingActionButton() {
         if (mLayoutManager.findLastVisibleItemPosition() >= 16) {
             fabTop.setVisibility(View.VISIBLE);
         } else {
             fabTop.setVisibility(View.GONE);
         }
-        fabTop.setOnClickListener(v -> {
-            // 返回顶部
-            Toast.makeText(getContext(), "返回顶部", Toast.LENGTH_SHORT).show();
-            // 平滑滚动 RecyclerView 到顶部
-//            mLayoutManager.smoothScrollToPosition(rvNews, null, 0);
-            rvNews.scrollToPosition(0);
-            fabTop.setVisibility(View.GONE);
-        });
     }
 
     private void scrollRecyclerView() {
@@ -159,11 +160,8 @@ public class NewsFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.d(TAG, "newState:" + newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     mLastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
-                    Log.d(TAG, "mLastVisibleItemPosition:" + mLastVisibleItemPosition);
-                    Log.d(TAG, "mLayoutManager.getItemCount():" + mLayoutManager.getItemCount());
                     if (mLayoutManager.getItemCount() == 1) {
                         mAdapter.updateStatus(NewsListAdapter.LOAD_NONE);
                         return;
@@ -249,7 +247,6 @@ public class NewsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
-        unbinder.unbind();
         if (rvNews != null && mOnScrollListener != null)
             rvNews.removeOnScrollListener(mOnScrollListener);
     }

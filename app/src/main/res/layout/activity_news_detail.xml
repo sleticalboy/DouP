@@ -62,7 +62,9 @@
         android:id="@+id/fab_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:src="@mipmap/share"
+        app:elevation="4dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"/>
 
