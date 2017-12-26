@@ -28,6 +28,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_NEWS = 0x000;
     private static final int TYPE_BANNER = 0x001;
 
+    public static final int LOAD_MORE = 0x003;
+    public static final int PULL_TO_LOAD = 0x004;
+    public static final int LOAD_NONE = 0x005;
+    public static final int LOAD_END = 0x006;
+
+    private int mStatus = PULL_TO_LOAD; // 用于控制显示加载文字
+
     private Context mContext;
     private NewsBean mData;
 
@@ -74,6 +81,11 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void setData(NewsBean data) {
         mData = data;
+    }
+
+    public void updateStatus(int status) {
+        mStatus = status;
+        notifyDataSetChanged();
     }
 
     // 新闻 item

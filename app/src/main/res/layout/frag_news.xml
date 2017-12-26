@@ -27,5 +27,6 @@
         android:layout_alignParentRight="true"
         android:layout_margin="4dp"
         android:src="@mipmap/arrow_up"
+        android:visibility="gone"
         app:elevation="4dp"/>
 </RelativeLayout>
