@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.http;
 
+import com.sleticalboy.doup.http.api.EyesApi;
 import com.sleticalboy.doup.http.api.MeiziApi;
 import com.sleticalboy.doup.http.api.NewsApi;
 import com.sleticalboy.doup.util.CommonUtils;
@@ -28,6 +29,7 @@ public class RetrofitClient {
 
     private static final String BASE_BEAUTY_URL = "http://gank.io/api/";
     private static final String BASE_NEWS_URL = "http://news-at.zhihu.com/api/4/";
+    private static final String BASE_EYE_URL = "http://baobab.kaiyanapp.com/api/";
 
     private static final long MAX_CACHE_SIZE = 1L << 24;
     private static final String CACHE_DIR = "cache_dir";
@@ -36,6 +38,7 @@ public class RetrofitClient {
 
     private NewsApi newsApiService;
     private MeiziApi mMeiziApiService;
+    private EyesApi mEyesApiService;
 
     public MeiziApi getMeiziApiService() {
         return mMeiziApiService;
@@ -43,6 +46,10 @@ public class RetrofitClient {
 
     public NewsApi getNewsApiService() {
         return newsApiService;
+    }
+
+    public EyesApi getEyesApiService() {
+        return mEyesApiService;
     }
 
     private RetrofitClient() {
@@ -88,6 +95,7 @@ public class RetrofitClient {
 
         newsApiService = buildRetrofit(BASE_NEWS_URL, client).create(NewsApi.class);
         mMeiziApiService = buildRetrofit(BASE_BEAUTY_URL, client).create(MeiziApi.class);
+        mEyesApiService = buildRetrofit(BASE_EYE_URL, client).create(EyesApi.class);
     }
 
     private Retrofit buildRetrofit(String baseUrl, OkHttpClient client) {

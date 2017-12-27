@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.adapter.MeiziAdapter;
+import com.sleticalboy.doup.adapter.meizi.MeiziAdapter;
 import com.sleticalboy.doup.bean.meizi.BeautyBean;
 import com.sleticalboy.doup.http.ApiFactory;
 

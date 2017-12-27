@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">豆皮</string>
     <string name="about_me">About Me</string>
-    <string name="news">新闻</string>
     <string name="meizi">妹子</string>
     <string name="open_eye">开眼</string>
     <string name="recommend">推荐</string>
     <string name="popular">热门</string>
     <string name="findings">发现</string>
+    <string name="back">back</string>
+    <string name="news">新闻</string>
 </resources>

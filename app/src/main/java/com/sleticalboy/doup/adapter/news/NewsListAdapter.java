@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.adapter;
+package com.sleticalboy.doup.adapter.news;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

@@ -26,6 +26,9 @@
             android:name=".activity.NewsDetailActivity"
             android:theme="@style/NewsDetailTheme"/>
         <activity android:name=".activity.AboutMeActivity"/>
+        <activity
+            android:name=".activity.VideoPlayActivity"
+            android:theme="@style/NewsDetailTheme"/>
     </application>
 
 </manifest>

@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sleticalboy.doup.activity.AboutMeActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
@@ -28,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
     RadioButton tabNews;
     @BindView(R.id.rg_navigator)
     RadioGroup rgNavigator;
+    @BindView(R.id.toolbar)
+    RelativeLayout toolbar;
+    @BindView(R.id.btn_back)
+    TextView btnBack;
+    @BindView(R.id.tab_title)
+    TextView tabTitle;
+    @BindView(R.id.about_me)
+    TextView aboutMe;
 
     private List<Fragment> mFragments;
 
@@ -40,25 +51,38 @@ public class MainActivity extends AppCompatActivity {
 
         initFragments();
 
+        initHeader();
+
         rgNavigator.setOnCheckedChangeListener((group, checkedId) -> {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (checkedId) {
                 case R.id.tab_news:
                     Log.d(TAG, "news");
+                    tabTitle.setText(R.string.news);
+                    toolbar.setVisibility(View.VISIBLE);
                     handleFragment(transaction, mFragments.get(0));
                     break;
                 case R.id.tab_meizi:
                     Log.d(TAG, "meizi");
+                    tabTitle.setText(R.string.meizi);
+                    toolbar.setVisibility(View.VISIBLE);
                     handleFragment(transaction, mFragments.get(1));
                     break;
                 case R.id.tab_eyes:
                     Log.d(TAG, "eye");
+                    toolbar.setVisibility(View.GONE);
                     handleFragment(transaction, mFragments.get(2));
                 default:
                     break;
             }
             transaction.commit();
         });
+    }
+
+    private void initHeader() {
+        btnBack.setText(R.string.back);
+        tabTitle.setText(R.string.news);
+        aboutMe.setText(R.string.about_me);
     }
 
     private void handleFragment(FragmentTransaction transaction, Fragment target) {

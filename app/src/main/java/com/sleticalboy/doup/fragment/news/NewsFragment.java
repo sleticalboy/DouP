@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.adapter.NewsListAdapter;
+import com.sleticalboy.doup.adapter.news.NewsListAdapter;
 import com.sleticalboy.doup.bean.news.NewsBean;
 import com.sleticalboy.doup.http.ApiFactory;
 

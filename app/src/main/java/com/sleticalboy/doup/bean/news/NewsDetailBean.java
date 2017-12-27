@@ -13,17 +13,7 @@ import java.util.List;
 
 public class NewsDetailBean extends BaseBean {
     /**
-     * body : <div class="main-wrap content-wrap">...</div><script type=“text/javascript”>window.daily=true</script>
-     * image_source : Yestone 邑石网正版图库
-     * title : 上班锻炼没时间？下班没器材？这些借口你可不能再用了
-     * image : https://pic2.zhimg.com/v2-e821be13243d2d6732421dbd2c985e19.jpg
-     * share_url : http://daily.zhihu.com/story/9662117
-     * js : []
-     * ga_prefix : 122519
-     * images : ["https://pic2.zhimg.com/v2-9131d9be85259099f1fa1bbc4200f1bd.jpg"]
-     * type : 0
-     * id : 9662117
-     * css : ["http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3"]
+     *
      */
 
     public String body;

@@ -23,6 +23,11 @@
 - 干货集中营: http://gank.io/api/
   - 妹子：http://gank.io/api/data/福利/10/{page:2}
 
+- 开眼视频: http://baobab.kaiyanapp.com/api/
+  - 首页： http://baobab.kaiyanapp.com/api/v2/feed?num=2&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83
+  - 发现： http://baobab.kaiyanapp.com/api/v2/categories?udid=26868b32e808498db32fd51fb422d00175e179df&vc=83
+  - 热门： http://baobab.kaiyanapp.com/api/v3/ranklist
+
 - 豆瓣: https://api.douban.com/v2/
   - 图书: https://api.douban.com/v2/book/{id:1000001}
   - 电影: https://api.douban.com/v2/movie/subject/{id:1764789}
