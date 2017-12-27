@@ -72,4 +72,21 @@ public class VideoBean implements Parcelable {
         dest.writeInt(replyCount);
         dest.writeLong(time);
     }
+
+    @Override
+    public String toString() {
+        return "VideoBean{" +
+                "feed='" + feed + '\'' +
+                ", title='" + title + '\'' +
+                ", desc='" + desc + '\'' +
+                ", duration=" + duration +
+                ", playUrl='" + playUrl + '\'' +
+                ", category='" + category + '\'' +
+                ", blurred='" + blurred + '\'' +
+                ", collectCount=" + collectCount +
+                ", shareCount=" + shareCount +
+                ", replyCount=" + replyCount +
+                ", time=" + time +
+                '}';
+    }
 }

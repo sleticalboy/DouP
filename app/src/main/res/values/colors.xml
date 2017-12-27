@@ -9,4 +9,5 @@
     <color name="refresh_progress_3">#FF4081</color>
 
     <color name="textColor">#424242</color>
+    <color name="white">#FFFFFF</color>
 </resources>

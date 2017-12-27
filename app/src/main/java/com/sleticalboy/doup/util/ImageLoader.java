@@ -36,7 +36,7 @@ public class ImageLoader {
     /**
      * 加载高清图片
      */
-    public static void loadHight(Context context, ImageView target, String url) {
+    public static void loadHigh(Context context, ImageView target, String url) {
         if (target == null)
             throw new IllegalArgumentException("target view is null");
         Glide.with(context)

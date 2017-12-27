@@ -17,6 +17,12 @@ import java.io.File;
 
 public class CommonUtils {
 
+    public static String wrapperTime(long timeStamp) {
+        if (timeStamp < 0)
+            throw new IllegalArgumentException("time can not be negative");
+        return null;
+    }
+
     /**
      * 获取应用的缓存目录
      */

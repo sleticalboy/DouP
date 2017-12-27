@@ -8,4 +8,11 @@
     <string name="findings">发现</string>
     <string name="back">back</string>
     <string name="news">新闻</string>
+    <string name="cache">缓存</string>
+    <string name="comment">评论</string>
+    <string name="share">分享</string>
+    <string name="favorite">收藏</string>
+    <string name="title">标题</string>
+    <string name="time">时间</string>
+    <string name="video_desc">视频描述</string>
 </resources>
