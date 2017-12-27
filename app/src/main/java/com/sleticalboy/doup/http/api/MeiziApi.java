@@ -12,7 +12,7 @@ import retrofit2.http.Path;
  * @author sleticalboy
  */
 
-public interface BeautyApi {
+public interface MeiziApi {
 
     @GET("data/福利/10/{page}")
     rx.Observable<BeautyBean> getBeauty(@Path("page") int page);

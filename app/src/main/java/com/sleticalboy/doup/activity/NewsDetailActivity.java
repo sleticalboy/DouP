@@ -70,6 +70,11 @@ public class NewsDetailActivity extends BaseActivity {
         return R.layout.activity_news_detail;
     }
 
+    @Override
+    protected void initAnim() {
+        // do nothing
+    }
+
     private void getNewsDetail(String id) {
         ApiFactory.getNewsApi().getNewsDetail(id)
                 .subscribeOn(Schedulers.io())

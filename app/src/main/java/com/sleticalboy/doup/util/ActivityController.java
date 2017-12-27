@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.base;
+package com.sleticalboy.doup.util;
 
 import android.app.Activity;
 

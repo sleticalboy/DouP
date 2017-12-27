@@ -9,9 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.sleticalboy.doup.activity.AboutMeActivity;
-import com.sleticalboy.doup.fragment.book.BookFragment;
+import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
-import com.sleticalboy.doup.fragment.mine.MineFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
 
 import java.util.ArrayList;
@@ -48,18 +47,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "news");
                     handleFragment(transaction, mFragments.get(0));
                     break;
-                case R.id.tab_book:
-                    Log.d(TAG, "book");
-                    handleFragment(transaction, mFragments.get(1));
-                    break;
                 case R.id.tab_meizi:
                     Log.d(TAG, "meizi");
                     handleFragment(transaction, mFragments.get(1));
                     break;
-                case R.id.tab_mine:
-                    Log.d(TAG, "mine");
-                    handleFragment(transaction, mFragments.get(3));
-                    break;
+                case R.id.tab_eyes:
+                    Log.d(TAG, "eye");
+                    handleFragment(transaction, mFragments.get(2));
                 default:
                     break;
             }
@@ -83,12 +77,11 @@ public class MainActivity extends AppCompatActivity {
     // 初始化Fragment
     private void initFragments() {
         if (mFragments == null)
-            mFragments = new ArrayList<>(4);
+            mFragments = new ArrayList<>();
 
         mFragments.add(new NewsFragment());
-        mFragments.add(new BookFragment());
         mFragments.add(new MeiziFragment());
-        mFragments.add(new MineFragment());
+        mFragments.add(new EyeFragment());
 
         Log.d(TAG, mFragments.toString());
 

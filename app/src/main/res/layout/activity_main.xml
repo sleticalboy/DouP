@@ -27,16 +27,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="新闻"/>
-
-        <RadioButton
-            android:id="@+id/tab_book"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:gravity="center"
-            android:text="book"/>
+            android:text="@string/news"/>
 
         <RadioButton
             android:id="@+id/tab_meizi"
@@ -45,15 +36,15 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="妹子"/>
+            android:text="@string/meizi"/>
 
         <RadioButton
-            android:id="@+id/tab_mine"
+            android:id="@+id/tab_eyes"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:text="mine"/>
+            android:text="@string/open_eye"/>
     </RadioGroup>
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.sleticalboy.doup.fragment.news;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -52,19 +51,6 @@ public class NewsFragment extends Fragment {
     private boolean mIsLoadMore = false;
     private NewsBean mNewsBean;
     private LinearLayoutManager mLayoutManager;
-    private RecyclerView.OnScrollListener mOnScrollListener;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach() called with: context = [" + context + "]");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
-    }
 
     @Nullable
     @Override
@@ -156,7 +142,8 @@ public class NewsFragment extends Fragment {
     }
 
     private void scrollRecyclerView() {
-        mOnScrollListener = new RecyclerView.OnScrollListener() {
+        // 给 RecyclerView 添加滚动监听
+        rvNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -180,9 +167,7 @@ public class NewsFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 mLastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
             }
-        };
-        // 给 RecyclerView 添加滚动监听
-        rvNews.addOnScrollListener(mOnScrollListener);
+        });
     }
 
     // 上拉加载获取的数据，将获取的数据添加到已有的数据中，刷新 adapter
@@ -198,62 +183,5 @@ public class NewsFragment extends Fragment {
                     tr.printStackTrace();
                     Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
                 });
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
-                + savedInstanceState + "]");
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart() called");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume() called");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause() called");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop() called");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView() called");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
-        if (rvNews != null && mOnScrollListener != null)
-            rvNews.removeOnScrollListener(mOnScrollListener);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach() called");
     }
 }

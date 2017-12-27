@@ -50,6 +50,11 @@ public class AboutMeActivity extends BaseActivity {
         return R.layout.activity_about_me;
     }
 
+    @Override
+    protected void initAnim() {
+        // do nothing
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
