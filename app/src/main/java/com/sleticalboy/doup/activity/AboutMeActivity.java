@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -13,9 +12,9 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -25,7 +24,7 @@ import butterknife.OnClick;
  * @author sleticalboy
  */
 
-public class AboutMeActivity extends AppCompatActivity {
+public class AboutMeActivity extends BaseActivity {
 
     private static final String GIT_HUB = "https://www.github.com/sleticalboy";
     @BindView(R.id.btn_back)
@@ -40,12 +39,15 @@ public class AboutMeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_me);
-        ButterKnife.bind(this);
 
         initHeader();
 
         initWebView();
+    }
+
+    @Override
+    protected int bindContentView() {
+        return R.layout.activity_about_me;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -70,4 +72,5 @@ public class AboutMeActivity extends AppCompatActivity {
     public void onViewClicked() {
         finish();
     }
+
 }

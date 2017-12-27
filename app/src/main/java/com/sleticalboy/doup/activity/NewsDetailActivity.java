@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -18,13 +17,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.http.ApiFactory;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -36,7 +34,7 @@ import rx.schedulers.Schedulers;
  * @author sleticalboy
  */
 
-public class NewsDetailActivity extends AppCompatActivity {
+public class NewsDetailActivity extends BaseActivity {
 
     private static final String TAG = "NewsDetailActivity";
     private static final String ID = "id";
@@ -56,18 +54,20 @@ public class NewsDetailActivity extends AppCompatActivity {
     WebView webView;
 
     private int id;
-    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_detail);
-        mUnbinder = ButterKnife.bind(this);
 
         Intent intent = getIntent();
         if (intent != null)
             id = intent.getIntExtra(ID, -1);
         getNewsDetail(String.valueOf(id));
+    }
+
+    @Override
+    protected int bindContentView() {
+        return R.layout.activity_news_detail;
     }
 
     private void getNewsDetail(String id) {
@@ -139,12 +139,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(context, NewsDetailActivity.class);
         intent.putExtra(ID, id);
         context.startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
     }
 
     @OnClick(R.id.fab_share)
