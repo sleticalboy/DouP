@@ -5,15 +5,28 @@
 
 仿豆瓣的一款产品，自己业余拿来练手的。
 
+### 目前已实现的模块
+
+- 新闻
+- 妹子
+- 开眼
+  - 推荐
+
+### 尚在开发的模块
+
+- 开眼
+  - 发现
+  - 热门
+
 ### 项目框架
 
 - 网络通讯框架：`Retrofit`
 - 图片加载框架：`Glide`
-- 数据库框架：`OrmLite`
 - 快速开发框架：`ButterKnife`
 - 响应式编程框架：`RxAndroid`
+- 视频播放： `GSYVideoPlayer`
 
-### api 接口来源（网络整理）
+### api 接口均来源于网络，如有侵权请及时通知
 
 - 知乎日报: http://news-at.zhihu.com/api/4/
   - 最新新闻：http://news-at.zhihu.com/api/4/news/latest
@@ -32,3 +45,4 @@
   - 图书: https://api.douban.com/v2/book/{id:1000001}
   - 电影: https://api.douban.com/v2/movie/subject/{id:1764789}
   - 音乐: https://api.douban.com/v2/music/{id:10000033}
+
