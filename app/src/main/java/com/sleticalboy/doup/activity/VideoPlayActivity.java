@@ -20,7 +20,7 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.eye.VideoBean;
 import com.sleticalboy.doup.util.ImageLoader;
-import com.sleticalboy.doup.util.VideoListener;
+import com.sleticalboy.doup.listener.VideoListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,6 +81,7 @@ public class VideoPlayActivity extends AppCompatActivity {
     }
 
     private void prepareVideo() {
+        // TODO: 12/28/17 sp 保存链接
         String url = getIntent().getStringExtra("");
         if (url != null) {
             Log.d(TAG, url);
@@ -197,7 +198,7 @@ public class VideoPlayActivity extends AppCompatActivity {
         String url = mData.playUrl;
         if (!TextUtils.isEmpty(url)) {
             // 下载视频
-            Toast.makeText(this, "下载视频-待完善", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "缓存视频-待完善", Toast.LENGTH_SHORT).show();
         } else {
             // 链接错误
             Toast.makeText(this, "链接错误", Toast.LENGTH_SHORT).show();

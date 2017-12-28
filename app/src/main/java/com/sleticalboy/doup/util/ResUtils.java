@@ -1,7 +1,5 @@
 package com.sleticalboy.doup.util;
 
-import com.sleticalboy.doup.DouApp;
-
 /**
  * Created by Android Studio.
  * Date: 12/27/17.

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<GridView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gv_finding"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/findings"
-        android:textColor="@color/textColor"/>
-
-</RelativeLayout>
+    android:layout_height="match_parent"
+    android:columnWidth="180dp"
+    android:gravity="center"
+    android:horizontalSpacing="4dp"
+    android:numColumns="2"
+    android:scrollbars="none"
+    android:verticalSpacing="4dp"/>

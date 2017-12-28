@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.util;
+package com.sleticalboy.doup.listener;
 
 import com.shuyu.gsyvideoplayer.listener.StandardVideoAllCallBack;
 

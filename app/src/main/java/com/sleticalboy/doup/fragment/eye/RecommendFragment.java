@@ -19,6 +19,8 @@ import com.sleticalboy.doup.http.ApiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +48,8 @@ public class RecommendFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private int mLastVisibleItemIndex;
     private List<RecommendBean.IssueListBean.ItemListBean> mData = new ArrayList<>();
+    private String mDate;
+    private boolean mIsPullDown = true;
 
     @Nullable
     @Override
@@ -54,10 +58,8 @@ public class RecommendFragment extends Fragment {
         View rootView = View.inflate(getContext(), R.layout.frag_recommond, null);
         ButterKnife.bind(this, rootView);
 
-        Log.d(TAG, "initView");
         initView();
 
-        Log.d(TAG, "initData");
         initData();
 
         return rootView;
@@ -68,7 +70,6 @@ public class RecommendFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         rvRecommend.setLayoutManager(mLayoutManager);
 
-        Log.d(TAG, "init adapter");
         mAdapter = new RecommendAdapter(getContext());
         rvRecommend.setAdapter(mAdapter);
 
@@ -81,7 +82,9 @@ public class RecommendFragment extends Fragment {
                         return;
                     }
                     if (mLayoutManager.getItemCount() + 1 == mLastVisibleItemIndex) {
-                        //
+                        // 上拉加载更多数据
+                        mIsPullDown = false;
+                        loadMore();
                     }
                 }
             }
@@ -95,32 +98,61 @@ public class RecommendFragment extends Fragment {
         srl.setOnRefreshListener(() -> {
             if (srl.isRefreshing()) {
                 srl.setRefreshing(false);
+                mIsPullDown = true;
+                loadMore();
             } else {
                 srl.setRefreshing(true);
             }
         });
     }
 
-    private void initData() {
+    private void loadMore() {
+        ApiFactory.getEyesApi().getMoreRecommend(mDate, "2")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(recommendBean -> {
+                    resolveDate(recommendBean);
+                    flatMapData(recommendBean);
+                }, this::loadMoreError);
+    }
 
+    private void loadMoreError(Throwable tr) {
+        tr.printStackTrace();
+        Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
+    }
+
+    private void initData() {
         ApiFactory.getEyesApi().getRecommend()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recommendBean -> {
                     // 最终需要的是 type 是 video 的 ItemListBean 所以需要对原始数据进行处理和过滤
+                    resolveDate(recommendBean);
                     flatMapData(recommendBean);
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    Toast.makeText(getContext(), "网络错误", Toast.LENGTH_SHORT).show();
-                });
+                }, this::loadMoreError);
 
+    }
+
+    private void resolveDate(RecommendBean recommendBean) {
+        String nextPageUrl = recommendBean.nextPageUrl;
+        String regex = "[^0-9]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(nextPageUrl);
+        mDate = matcher.replaceAll("")
+                .subSequence(1, matcher.replaceAll("").length() - 1)
+                .toString();
     }
 
     private void flatMapData(RecommendBean recommendBean) {
         Observable.from(recommendBean.issueList)
                 .flatMap(issueListBean -> Observable.from(issueListBean.itemList))
                 .filter(itemListBean -> itemListBean.type.equals("video"))
-                .forEach(itemListBean -> mData.add(itemListBean));
+                .forEach(itemListBean -> {
+                    if (mIsPullDown)
+                        mData.add(0, itemListBean);
+                    else
+                        mData.add(itemListBean);
+                });
 
         Log.d(TAG, "mData.size():" + mData.size());
         mAdapter.setData(mData);

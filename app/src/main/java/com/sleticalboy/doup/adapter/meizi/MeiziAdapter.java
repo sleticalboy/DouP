@@ -50,7 +50,7 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
         holder.cardView.setOnClickListener(v -> {
             // 点击显示妹子大图，并可以保存图片到本地
             // TODO: 12/26/17 待完善
-            Toast.makeText(mContext, "未完成功能", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "显示大图并且保存本地-待完善", Toast.LENGTH_SHORT).show();
         });
     }
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ActivityController {
 
-    public static List<Activity> sActivityList = new ArrayList<>();
+    private static List<Activity> sActivityList = new ArrayList<>();
 
     public static void add(Activity a) {
         if (!sActivityList.contains(a))

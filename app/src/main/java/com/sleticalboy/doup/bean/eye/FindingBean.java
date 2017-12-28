@@ -10,16 +10,26 @@ import com.sleticalboy.doup.bean.base.BaseBean;
  */
 
 public class FindingBean extends BaseBean {
-    /**
-     *
-     */
+    public int id;
+    public String name;
+    public Object alias;
+    public String description;
+    public String bgPicture;
+    public String bgColor;
+    public String headerImage;
+    public Object defaultAuthorId;
 
-    private int id;
-    private String name;
-    private Object alias;
-    private String description;
-    private String bgPicture;
-    private String bgColor;
-    private String headerImage;
-    private Object defaultAuthorId;
+    @Override
+    public String toString() {
+        return "FindingBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias=" + alias +
+                ", description='" + description + '\'' +
+                ", bgPicture='" + bgPicture + '\'' +
+                ", bgColor='" + bgColor + '\'' +
+                ", headerImage='" + headerImage + '\'' +
+                ", defaultAuthorId=" + defaultAuthorId +
+                '}';
+    }
 }

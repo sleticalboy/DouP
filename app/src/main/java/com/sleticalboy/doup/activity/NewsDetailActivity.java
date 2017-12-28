@@ -148,6 +148,6 @@ public class NewsDetailActivity extends BaseActivity {
 
     @OnClick(R.id.fab_share)
     public void onViewClicked() {
-        Toast.makeText(this, "分享本篇", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "分享本篇-待完善", Toast.LENGTH_SHORT).show();
     }
 }
