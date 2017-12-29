@@ -19,6 +19,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.eye.VideoBean;
+import com.sleticalboy.doup.util.CommonUtils;
 import com.sleticalboy.doup.util.ImageLoader;
 import com.sleticalboy.doup.listener.VideoListener;
 
@@ -149,7 +150,7 @@ public class VideoPlayActivity extends AppCompatActivity {
 
         tvVideoTitle.setText(mData.title);
         tvVideoDesc.setText(mData.desc);
-        tvVideoTime.setText(String.format("%s / %s", mData.category, wrapperTime(mData.duration)));
+        tvVideoTime.setText(String.format("%s / %s", mData.category, CommonUtils.wrapperTime(mData.duration)));
 
         btnFavorite.setText(String.valueOf(mData.collectCount));
         btnReply.setText(String.valueOf(mData.replyCount));
@@ -157,37 +158,7 @@ public class VideoPlayActivity extends AppCompatActivity {
         btnCache.setText(R.string.cache);
     }
 
-    /**
-     * 将视频时长转换成 12'19" 05'04" 的形式
-     */
-    private String wrapperTime(int duration) {
-        StringBuilder builder = new StringBuilder();
-        int minutes = duration / 60;
-        if (minutes >= 60) {
-            int hours = minutes / 60;
-            if (hours < 24) {
-                builder.append(hours).append(":");
-            }
-            minutes %= 60;
-            if (minutes <= 9)
-                builder.append(0).append(minutes).append("'");
-            else
-                builder.append(minutes).append("'");
-        } else {
-            if (minutes <= 9)
-                builder.append(0).append(minutes).append("'");
-            else
-                builder.append(minutes).append("'");
-        }
-        int seconds = duration % 60;
-        if (seconds <= 9)
-            builder.append(0).append(seconds).append("\"");
-        else
-            builder.append(seconds).append("\"");
-        return builder.toString();
-    }
-
-    public static void startAction(Context context, VideoBean videoBean) {
+    public static void actionStart(Context context, VideoBean videoBean) {
         Intent intent = new Intent(context, VideoPlayActivity.class);
         intent.putExtra(VIDEO, videoBean);
         context.startActivity(intent);

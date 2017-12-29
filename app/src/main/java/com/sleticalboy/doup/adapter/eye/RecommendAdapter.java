@@ -55,7 +55,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
         holder.tvDetail.setText(itemData.data.description);
 
         VideoBean videoBean = wrapperVideo(itemData);
-        holder.itemView.setOnClickListener(v -> VideoPlayActivity.startAction(mContext, videoBean));
+        holder.itemView.setOnClickListener(v -> VideoPlayActivity.actionStart(mContext, videoBean));
 
     }
 

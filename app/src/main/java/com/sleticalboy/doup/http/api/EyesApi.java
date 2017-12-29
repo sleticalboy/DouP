@@ -25,9 +25,6 @@ public interface EyesApi {
 
     /**
      * 获取更多推荐内容
-     *
-     * @param date date
-     * @param num  page number
      */
     @GET("v2/feed")
     rx.Observable<RecommendBean> getMoreRecommend(@Query("date") String date,
@@ -41,12 +38,6 @@ public interface EyesApi {
 
     /**
      * 获取热门推荐内容
-     *
-     * @param num
-     * @param strategy
-     * @param udid
-     * @param vc
-     * @return
      */
     @GET("api/v3/ranklist")
     rx.Observable<PopularBean> getPopular(@Query("num") int num,
@@ -56,14 +47,15 @@ public interface EyesApi {
 
     /**
      * 关键词搜索
-     *
-     * @param num
-     * @param query
-     * @param start
-     * @return
      */
     @GET("v1/search")
     rx.Observable<PopularBean> getSearchData(@Query("num") int num,
                                              @Query("query") String query,
                                              @Query("start") int start);
+
+    @GET("v3/videos")
+    rx.Observable<PopularBean> getFindingsDetail(@Query("categoryName") String categoryName,
+                                                 @Query("strategy") String strategy,
+                                                 @Query("udid") String udid,
+                                                 @Query("vc") int vc);
 }

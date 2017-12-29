@@ -18,7 +18,7 @@ public class PopularBean extends BaseBean {
 
     public int count;
     public int total;
-    public Object nextPageUrl;
+    public String nextPageUrl;
     public boolean adExist;
     public List<ItemListBean> itemList;
 
@@ -117,6 +117,14 @@ public class PopularBean extends BaseBean {
                 public String blurred;
                 public Object sharing;
                 public String homepage;
+
+                @Override
+                public String toString() {
+                    return "CoverBean{" +
+                            "feed='" + feed + '\'' +
+                            ", blurred='" + blurred + '\'' +
+                            '}';
+                }
             }
 
             public static class WebUrlBean {
@@ -130,6 +138,15 @@ public class PopularBean extends BaseBean {
                 public int collectionCount;
                 public int shareCount;
                 public int replyCount;
+
+                @Override
+                public String toString() {
+                    return "ConsumptionBean{" +
+                            "collectionCount=" + collectionCount +
+                            ", shareCount=" + shareCount +
+                            ", replyCount=" + replyCount +
+                            '}';
+                }
             }
 
             public static class PlayInfoBean {
@@ -159,6 +176,14 @@ public class PopularBean extends BaseBean {
                 public String headerImage;
                 public String tagRecType;
 
+            }
+
+            @Override
+            public String toString() {
+                return "DataBean{" +
+                        "category='" + category + '\'' +
+                        ", cover=" + cover +
+                        '}';
             }
         }
     }

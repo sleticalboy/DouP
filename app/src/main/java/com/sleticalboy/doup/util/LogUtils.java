@@ -15,6 +15,10 @@ public class LogUtils {
 
     private static final boolean DEBUG = Log.isLoggable(LogUtils.class.getSimpleName(), Log.DEBUG);
 
+    private LogUtils() {
+        throw new SecurityException("util class can not be initialized");
+    }
+
     public static void v(String tag, String msg) {
         if (!BuildConfig.DEBUG || DEBUG) {
             Log.v(tag, msg);
