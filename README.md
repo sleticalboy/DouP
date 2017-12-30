@@ -41,6 +41,11 @@
   - 发现： http://baobab.kaiyanapp.com/api/v2/categories?udid=26868b32e808498db32fd51fb422d00175e179df&vc=83
   - 热门： http://baobab.kaiyanapp.com/api/v3/ranklist
 
+- 和风天气：http://guolin.tech/api/weather?cityid={CN101050109}&key={your_key} (需要注册之后获取 appkey)
+  - 省市区：http://guolin.tech/api/china
+
+- ~~彩云天气：https://www.caiyunapp.com/ ~~
+
 - 豆瓣: https://api.douban.com/v2/
   - 图书: https://api.douban.com/v2/book/{id:1000001}
   - 电影: https://api.douban.com/v2/movie/subject/{id:1764789}
