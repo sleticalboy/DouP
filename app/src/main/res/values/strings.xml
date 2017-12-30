@@ -7,7 +7,7 @@
     <string name="popular">热门</string>
     <string name="findings">发现</string>
     <string name="back">back</string>
-    <string name="news">新闻</string>
+    <string name="index">首页</string>
     <string name="cache">缓存</string>
     <string name="comment">评论</string>
     <string name="share">分享</string>
@@ -15,4 +15,12 @@
     <string name="title">标题</string>
     <string name="time">时间</string>
     <string name="video_desc">视频描述</string>
+    <string name="weather">天气</string>
+    <string name="nav_call">Call</string>
+    <string name="nav_friend">Friends</string>
+    <string name="nav_location">Location</string>
+    <string name="nav_mail">Mail</string>
+    <string name="nav_tasks">Tasks</string>
+    <string name="my_name">Bin Lee</string>
+    <string name="my_email">sleticalboy@gmail.com</string>
 </resources>

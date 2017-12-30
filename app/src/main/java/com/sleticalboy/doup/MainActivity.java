@@ -1,20 +1,22 @@
 package com.sleticalboy.doup;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.activity.AboutMeActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
+import com.sleticalboy.doup.fragment.weather.WeatherFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +33,24 @@ public class MainActivity extends AppCompatActivity {
     RadioButton tabNews;
     @BindView(R.id.rg_navigator)
     RadioGroup rgNavigator;
-    @BindView(R.id.toolbar)
-    RelativeLayout toolbar;
     @BindView(R.id.btn_back)
     TextView btnBack;
     @BindView(R.id.tab_title)
     TextView tabTitle;
     @BindView(R.id.about_me)
     TextView aboutMe;
+    @BindView(R.id.fl_container)
+    FrameLayout flContainer;
+    @BindView(R.id.tab_meizi)
+    RadioButton tabMeizi;
+    @BindView(R.id.tab_eyes)
+    RadioButton tabEyes;
+    @BindView(R.id.tab_weather)
+    RadioButton tabWeather;
+    @BindView(R.id.nav_menu)
+    NavigationView navMenu;
+    @BindView(R.id.drawer)
+    DrawerLayout drawer;
 
     private List<Fragment> mFragments;
 
@@ -58,20 +70,20 @@ public class MainActivity extends AppCompatActivity {
             switch (checkedId) {
                 case R.id.tab_news:
                     Log.d(TAG, "news");
-                    tabTitle.setText(R.string.news);
-                    toolbar.setVisibility(View.VISIBLE);
+                    tabTitle.setText(R.string.index);
                     handleFragment(transaction, mFragments.get(0));
                     break;
                 case R.id.tab_meizi:
                     Log.d(TAG, "meizi");
                     tabTitle.setText(R.string.meizi);
-                    toolbar.setVisibility(View.VISIBLE);
                     handleFragment(transaction, mFragments.get(1));
                     break;
                 case R.id.tab_eyes:
                     Log.d(TAG, "eye");
-                    toolbar.setVisibility(View.GONE);
                     handleFragment(transaction, mFragments.get(2));
+                case R.id.tab_weather:
+                    Log.d(TAG, "weather");
+                    handleFragment(transaction, mFragments.get(3));
                 default:
                     break;
             }
@@ -81,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initHeader() {
         btnBack.setText(R.string.back);
-        tabTitle.setText(R.string.news);
+        tabTitle.setText(R.string.index);
         aboutMe.setText(R.string.about_me);
     }
 
@@ -106,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         mFragments.add(new NewsFragment());
         mFragments.add(new MeiziFragment());
         mFragments.add(new EyeFragment());
+        mFragments.add(new WeatherFragment());
 
         Log.d(TAG, mFragments.toString());
 
