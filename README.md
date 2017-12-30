@@ -11,20 +11,25 @@
 - 妹子
 - 开眼
   - 推荐
+  - 发现
 
 ### 尚在开发的模块
 
 - 开眼
-  - 发现
   - 热门
+- 天气
+- 地图
 
 ### 项目框架
 
-- 网络通讯框架：`Retrofit`
-- 图片加载框架：`Glide`
-- 快速开发框架：`ButterKnife`
-- 响应式编程框架：`RxAndroid`
+- 网络通讯：`Retrofit`
+- 图片加载：`Glide`
+- 快速开发：`ButterKnife`
+- 响应式编程：`RxAndroid`
 - 视频播放： `GSYVideoPlayer`
+- 数据库： `LitePal`
+- 圆形图片： `CircleImageView`
+- 动态权限申请： `RxPermissions`
 
 ### api 接口均来源于网络，如有侵权请及时通知
 
