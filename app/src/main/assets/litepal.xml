@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<litepal>
+    <dbname value="douP"/>
+    <version value="1"/>
+    <list>
+        <mapping class="com.sleticalboy.doup.bean.weather.Province"/>
+        <mapping class="com.sleticalboy.doup.bean.weather.City"/>
+        <mapping class="com.sleticalboy.doup.bean.weather.County"/>
+    </list>
+</litepal>
