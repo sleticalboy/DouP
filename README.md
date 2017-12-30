@@ -1,5 +1,5 @@
 # DouP
-一款业余练习的模仿豆瓣的Android app
+一款业余练习的Android app
 
 ## 项目简介
 
