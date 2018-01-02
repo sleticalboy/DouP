@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.bean.meizi.BeautyBean;
+import com.sleticalboy.doup.mvp.model.bean.meizi.BeautyBean;
 import com.sleticalboy.doup.util.ImageLoader;
 
 import butterknife.BindView;

@@ -1,8 +1,10 @@
-package com.sleticalboy.doup.util;
+package com.sleticalboy.doup.http;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.sleticalboy.doup.util.CommonUtils;
 
 import java.io.IOException;
 

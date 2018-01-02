@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.bean.weather;
+package com.sleticalboy.doup.mvp.model.bean.weather;
 
 import org.litepal.crud.DataSupport;
 

@@ -2,8 +2,8 @@ package com.sleticalboy.doup.mvp.model;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.bean.news.NewsBean;
-import com.sleticalboy.doup.bean.news.NewsDetailBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.NewsApi;
@@ -34,19 +34,22 @@ public class NewsModel {
     public rx.Observable<NewsBean> getLatestNews() {
         return mNewsApiService.getLatestNews()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .onTerminateDetach();
     }
 
     public rx.Observable<NewsBean> getOldNews(String date) {
         return mNewsApiService.getOldNews(date)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .onTerminateDetach();
     }
 
     public Observable<NewsDetailBean> getNewsDetail(String id) {
         return mNewsApiService.getNewsDetail(id)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .onTerminateDetach();
     }
 
     public void clear() {

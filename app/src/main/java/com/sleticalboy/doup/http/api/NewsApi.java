@@ -1,10 +1,14 @@
 package com.sleticalboy.doup.http.api;
 
-import com.sleticalboy.doup.bean.news.NewsBean;
-import com.sleticalboy.doup.bean.news.NewsDetailBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
+
+import static com.sleticalboy.doup.http.HttpConfig.HEADER_KEY;
+import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_NEWS;
 
 /**
  * Created by Android Studio.
@@ -18,7 +22,8 @@ public interface NewsApi {
     /**
      * 获取最新新闻列表
      */
-    @GET("news/latest")
+    @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
+    @GET("4/news/latest")
     rx.Observable<NewsBean> getLatestNews();
 
     /**
@@ -26,7 +31,8 @@ public interface NewsApi {
      *
      * @param date 日期
      */
-    @GET("news/before/{date}")
+    @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
+    @GET("4/news/before/{date}")
     rx.Observable<NewsBean> getOldNews(@Path("date") String date);
 
     /**
@@ -34,6 +40,7 @@ public interface NewsApi {
      *
      * @param id 新闻 id
      */
-    @GET("news/{id}")
+    @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
+    @GET("4/news/{id}")
     rx.Observable<NewsDetailBean> getNewsDetail(@Path("id") String id);
 }

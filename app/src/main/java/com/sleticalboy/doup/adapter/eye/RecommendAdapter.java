@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.VideoPlayActivity;
-import com.sleticalboy.doup.bean.eye.RecommendBean;
-import com.sleticalboy.doup.bean.eye.VideoBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.RecommendBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.VideoBean;
 import com.sleticalboy.doup.util.ImageLoader;
 
 import java.util.List;

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.NewsDetailActivity;
-import com.sleticalboy.doup.bean.news.NewsBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsBean;
 import com.sleticalboy.doup.util.ImageLoader;
 
 import butterknife.BindView;

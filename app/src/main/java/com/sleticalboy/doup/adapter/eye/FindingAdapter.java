@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.bean.eye.FindingBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.FindingBean;
 import com.sleticalboy.doup.util.ImageLoader;
 
 import java.util.List;

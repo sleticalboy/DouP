@@ -11,7 +11,7 @@ import android.widget.GridView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.FindingDetailActivity;
 import com.sleticalboy.doup.adapter.eye.FindingAdapter;
-import com.sleticalboy.doup.bean.eye.FindingBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.FindingBean;
 import com.sleticalboy.doup.mvp.model.EyesModel;
 import com.sleticalboy.doup.util.ToastUtils;
 

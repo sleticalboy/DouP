@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.bean.news.NewsDetailBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.mvp.model.NewsModel;
 import com.sleticalboy.doup.util.ToastUtils;
 

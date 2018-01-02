@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.eye.RecommendAdapter;
-import com.sleticalboy.doup.bean.eye.RecommendBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.RecommendBean;
 import com.sleticalboy.doup.mvp.model.EyesModel;
 
 import java.util.ArrayList;

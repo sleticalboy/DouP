@@ -2,10 +2,10 @@ package com.sleticalboy.doup.mvp.model;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.bean.meizi.BeautyBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.MeiziApi;
+import com.sleticalboy.doup.mvp.model.bean.meizi.BeautyBean;
 
 import java.lang.ref.WeakReference;
 
@@ -24,15 +24,16 @@ public class MeiziModel {
     private MeiziApi mMeiziApiService;
 
     public MeiziModel(Context context) {
-        mWeakReference = new WeakReference<Context>(context);
-        RetrofitClient client = RetrofitClient.getInstance(context, ApiConstant.BASE_MEIZI_URL);
+        mWeakReference = new WeakReference<>(context);
+        RetrofitClient client = RetrofitClient.getInstance(mWeakReference.get(), ApiConstant.BASE_MEIZI_URL);
         mMeiziApiService = client.create(MeiziApi.class);
     }
 
     public rx.Observable<BeautyBean> getMeizi(int page) {
         return mMeiziApiService.getBeauty(page)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .onTerminateDetach();
     }
 
     public void clear() {

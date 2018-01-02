@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.bean.eye;
+package com.sleticalboy.doup.mvp.model.bean.eye;
 
 import android.os.Parcel;
 import android.os.Parcelable;

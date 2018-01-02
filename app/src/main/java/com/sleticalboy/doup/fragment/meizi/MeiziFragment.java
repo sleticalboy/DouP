@@ -1,6 +1,7 @@
 package com.sleticalboy.doup.fragment.meizi;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,15 +14,12 @@ import android.view.ViewGroup;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.meizi.MeiziAdapter;
-import com.sleticalboy.doup.bean.meizi.BeautyBean;
 import com.sleticalboy.doup.mvp.model.MeiziModel;
-
-import java.util.concurrent.TimeUnit;
+import com.sleticalboy.doup.mvp.model.bean.meizi.BeautyBean;
+import com.sleticalboy.doup.util.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Android Studio.
@@ -29,7 +27,6 @@ import rx.android.schedulers.AndroidSchedulers;
  *
  * @author sleticalboy
  */
-
 public class MeiziFragment extends Fragment {
 
     private static final String TAG = "MeiziFragment";
@@ -74,7 +71,7 @@ public class MeiziFragment extends Fragment {
         srl.setOnRefreshListener(() -> {
             if (srl.isRefreshing()) {
                 srl.setRefreshing(false);
-                pullDownLoadMore();
+                loadMore(true);
             }
         });
 
@@ -88,12 +85,12 @@ public class MeiziFragment extends Fragment {
                         // 第一条数据
                         return;
                     }
-                    Log.d(TAG, "mLayoutManager.getItemCount():" + mLayoutManager.getItemCount());
-                    Log.d(TAG, "mLastVisibleItemIndex:" + mLastVisibleItemIndex);
+                    LogUtils.d(TAG, "mLayoutManager.getItemCount():" + mLayoutManager.getItemCount());
+                    LogUtils.d(TAG, "mLastVisibleItemIndex:" + mLastVisibleItemIndex);
                     if (mLayoutManager.getItemCount() + 1 == mLastVisibleItemIndex) {
                         // 最后一条数据， 加载更多数据
                         mIsLoadMore = true;
-                        pullUpLoadMore();
+                        loadMore(false);
                     }
                 }
             }
@@ -117,46 +114,23 @@ public class MeiziFragment extends Fragment {
                 }, Throwable::printStackTrace);
     }
 
-    private void showMeiziList(BeautyBean beautyBean) {
-
-        if (!mIsLoadMore) {
-            mLocalData = beautyBean;
-        }
-
-        mAdapter.setData(mLocalData);
-        mAdapter.notifyDataSetChanged();
+    private void loadMore(boolean isPullDown) {
+        page += 1;
+        new Handler().postDelayed(() -> mMeiziModel.getMeizi(page)
+                .subscribe(beautyBean -> {
+                    if (isPullDown) {
+                        mLocalData.results.addAll(0, beautyBean.results);
+                    } else {
+                        mLocalData.results.addAll(beautyBean.results);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                    srl.setRefreshing(false);
+                }, Throwable::printStackTrace), 1000);
     }
 
-    // 上拉加载数据
-    private void pullUpLoadMore() {
-        Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .map(aLong -> {
-                    page += 1;
-                    mMeiziModel.getMeizi(page)
-                            .subscribe(beautyBean -> {
-                                mLocalData.results.addAll(beautyBean.results);
-                                mAdapter.notifyDataSetChanged();
-                            }, Throwable::printStackTrace);
-                    return null;
-                })
-                .subscribe();
-    }
-
-    // 下拉加载数据
-    private void pullDownLoadMore() {
-        Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .map(aLong -> {
-                    srl.setRefreshing(true); // 显示刷新
-                    // 加载数据
-                    page += 1;
-                    mMeiziModel.getMeizi(page)
-                            .subscribe(beauty -> {
-                                mLocalData.results.addAll(0, beauty.results);
-                                mAdapter.notifyDataSetChanged();
-                            }, Throwable::printStackTrace);
-                    srl.setRefreshing(false); // 隐藏刷新
-                    return null;
-                })
-                .subscribe();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMeiziModel.clear();
     }
 }

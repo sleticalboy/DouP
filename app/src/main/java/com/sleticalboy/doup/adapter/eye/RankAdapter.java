@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.VideoPlayActivity;
-import com.sleticalboy.doup.bean.eye.PopularBean;
-import com.sleticalboy.doup.bean.eye.VideoBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.PopularBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.VideoBean;
 import com.sleticalboy.doup.util.CommonUtils;
 import com.sleticalboy.doup.util.ImageLoader;
 

@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.eye.RankAdapter;
-import com.sleticalboy.doup.bean.eye.PopularBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.PopularBean;
 import com.sleticalboy.doup.mvp.model.EyesModel;
 
 import java.util.ArrayList;

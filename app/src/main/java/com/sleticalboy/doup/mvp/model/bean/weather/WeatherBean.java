@@ -1,7 +1,7 @@
-package com.sleticalboy.doup.bean.weather;
+package com.sleticalboy.doup.mvp.model.bean.weather;
 
 import com.google.gson.annotations.SerializedName;
-import com.sleticalboy.doup.bean.base.BaseBean;
+import com.sleticalboy.doup.mvp.model.bean.base.BaseBean;
 
 import java.util.List;
 
