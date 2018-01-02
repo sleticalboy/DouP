@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.bean.base;
+package com.sleticalboy.doup.mvp.model.bean.base;
 
 import java.io.Serializable;
 

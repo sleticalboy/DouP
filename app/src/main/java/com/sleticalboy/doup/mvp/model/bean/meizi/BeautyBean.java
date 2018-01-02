@@ -1,6 +1,6 @@
-package com.sleticalboy.doup.bean.meizi;
+package com.sleticalboy.doup.mvp.model.bean.meizi;
 
-import com.sleticalboy.doup.bean.base.BaseBean;
+import com.sleticalboy.doup.mvp.model.bean.base.BaseBean;
 
 import java.util.List;
 

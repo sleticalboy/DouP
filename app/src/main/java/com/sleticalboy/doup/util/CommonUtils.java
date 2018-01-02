@@ -50,8 +50,11 @@ public class CommonUtils {
     /**
      * 获取应用的缓存目录
      */
-    public static File getCacheDir() {
-        return DouApp.sContext.getCacheDir();
+    public static File getCacheDir(Context context) {
+        if (context == null) {
+            throw new NullPointerException("context is null");
+        }
+        return context.getApplicationContext().getCacheDir();
     }
 
     /**
@@ -59,11 +62,15 @@ public class CommonUtils {
      *
      * @return 连接返回 true， 否则 false
      */
-    public static boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) DouApp.sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean isNetworkAvailable(Context context) {
+        if (context == null) {
+            throw new NullPointerException("context is null");
+        }
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo info = cm.getActiveNetworkInfo();
-            return info.isAvailable();
+            if (info.isAvailable())
+                return true;
         }
         return false;
     }
