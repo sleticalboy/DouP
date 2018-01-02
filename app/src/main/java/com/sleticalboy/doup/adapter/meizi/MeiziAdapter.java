@@ -3,15 +3,14 @@ package com.sleticalboy.doup.adapter.meizi;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.meizi.BeautyBean;
+import com.sleticalboy.doup.util.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,12 +40,13 @@ public class MeiziAdapter extends RecyclerView.Adapter<MeiziAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         BeautyBean.ResultsBean resultsBean = mData.results.get(position);
-        Log.d("MeiziAdapter", "resultsBean:" + resultsBean.url);
-        Glide.with(mContext)
-                .load(resultsBean.url)
-                .placeholder(R.mipmap.ic_launcher)
-                .centerCrop()
-                .into(holder.imgMeizi);
+
+        ImageLoader.load(mContext, holder.imgMeizi, resultsBean.url);
+//        Glide.with(mContext)
+//                .load(resultsBean.url)
+//                .placeholder(R.mipmap.ic_launcher)
+//                .centerCrop()
+//                .into(holder.imgMeizi);
         holder.cardView.setOnClickListener(v -> {
             // 点击显示妹子大图，并可以保存图片到本地
             // TODO: 12/26/17 待完善

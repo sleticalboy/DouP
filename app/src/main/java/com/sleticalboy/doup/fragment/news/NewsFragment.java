@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.fragment.news;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -19,13 +22,11 @@ import android.widget.Toast;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.news.NewsListAdapter;
 import com.sleticalboy.doup.bean.news.NewsBean;
-import com.sleticalboy.doup.http.ApiFactory;
+import com.sleticalboy.doup.mvp.model.NewsModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -52,12 +53,16 @@ public class NewsFragment extends Fragment {
     private NewsBean mNewsBean;
     private LinearLayoutManager mLayoutManager;
 
+    private NewsModel mNewsModel;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = View.inflate(getContext(), R.layout.frag_news, null);
         ButterKnife.bind(this, rootView);
+
+        mNewsModel = new NewsModel(getContext());
 
         Log.d(TAG, "init data");
         initData();
@@ -74,9 +79,7 @@ public class NewsFragment extends Fragment {
     // 初始化数据
     private void initData() {
         // 获取最新新闻列表
-        ApiFactory.getNewsApi().getLatestNews()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mNewsModel.getLatestNews()
                 .subscribe(newsBean -> {
                     Log.d(TAG, newsBean.stories.get(0).title);
                     // 展示数据
@@ -141,6 +144,7 @@ public class NewsFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void scrollRecyclerView() {
         // 给 RecyclerView 添加滚动监听
         rvNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -168,13 +172,16 @@ public class NewsFragment extends Fragment {
                 mLastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
             }
         });
+
+
+        rvNews.setOnTouchListener((v, event) -> mDetector.onTouchEvent(event));
     }
+
+    private GestureDetector mDetector = new GestureDetector(new GestureListener());
 
     // 上拉加载获取的数据，将获取的数据添加到已有的数据中，刷新 adapter
     private void getOldNews() {
-        ApiFactory.getNewsApi().getOldNews(mDate)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mNewsModel.getOldNews(mDate)
                 .subscribe(newsBean -> {
                     Log.d(TAG, newsBean.stories.get(0).title);
                     // 展示数据
@@ -183,5 +190,34 @@ public class NewsFragment extends Fragment {
                     tr.printStackTrace();
                     Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    static class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        /**
+         * Notified when a scroll occurs with the initial on down {@link MotionEvent} and the
+         * current move {@link MotionEvent}. The distance in x and y is also supplied for
+         * convenience.
+         *
+         * @param down The first down motion event that started the scrolling.
+         * @param move The move motion event that triggered the current onScroll.
+         * @param distanceX The distance along the X axis that has been scrolled since the last
+         *              call to onScroll. This is NOT the distance between {@code down}
+         *              and {@code move}.
+         * @param distanceY The distance along the Y axis that has been scrolled since the last
+         *              call to onScroll. This is NOT the distance between {@code down}
+         *              and {@code move}.
+         * @return true if the event is consumed, else false
+         */
+        @Override
+        public boolean onScroll(MotionEvent down, MotionEvent move, float distanceX, float distanceY) {
+            switch (move.getAction()) {
+                case MotionEvent.ACTION_MOVE:
+                    float x = move.getX();
+                    float y = move.getY();
+                    break;
+            }
+            return super.onScroll(down, move, distanceX, distanceY);
+        }
     }
 }

@@ -1,19 +1,16 @@
 package com.sleticalboy.doup.http;
 
-import com.sleticalboy.doup.http.api.EyesApi;
-import com.sleticalboy.doup.http.api.MeiziApi;
-import com.sleticalboy.doup.http.api.NewsApi;
-import com.sleticalboy.doup.util.CommonUtils;
+import android.content.Context;
+import android.util.Log;
+
+import com.sleticalboy.doup.util.CacheInterceptor;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
+import java.lang.ref.WeakReference;
 
 import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,93 +21,73 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * @author sleticalboy
  */
-
 public class RetrofitClient {
 
-    private static final String BASE_BEAUTY_URL = "http://gank.io/api/";
-    private static final String BASE_NEWS_URL = "http://news-at.zhihu.com/api/4/";
-    private static final String BASE_EYE_URL = "http://baobab.kaiyanapp.com/api/";
+    private static final String TAG = "RetrofitClient";
 
     private static final long MAX_CACHE_SIZE = 1L << 24;
-    private static final String CACHE_DIR = "cache_dir";
+    private static final String CACHE_DIR = "app_cache";
 
     private static RetrofitClient sClient;
 
-    private NewsApi newsApiService;
-    private MeiziApi mMeiziApiService;
-    private EyesApi mEyesApiService;
+    private File mHttpCacheDir;
+    private Cache mCache;
+    private static OkHttpClient mOkHttpClient;
+    private final Retrofit mRetrofit;
+    private WeakReference<Context> mWeakReference;
 
-    public MeiziApi getMeiziApiService() {
-        return mMeiziApiService;
-    }
+    private RetrofitClient(Context context, String baseUrl) {
+        mWeakReference = new WeakReference<>(context);
 
-    public NewsApi getNewsApiService() {
-        return newsApiService;
-    }
+        if (mHttpCacheDir == null) {
+            mHttpCacheDir = new File(mWeakReference.get().getCacheDir(), CACHE_DIR);
+        }
 
-    public EyesApi getEyesApiService() {
-        return mEyesApiService;
-    }
-
-    private RetrofitClient() {
-        File cacheDir = new File(CommonUtils.getCacheDir(), CACHE_DIR);
-        Cache cache = new Cache(cacheDir, MAX_CACHE_SIZE);
-
-        Interceptor cacheControlInterceptor = chain -> {
-            CacheControl cacheControl = new CacheControl.Builder()
-                    .maxAge(0, TimeUnit.SECONDS)
-                    .maxStale(30, TimeUnit.DAYS)
-                    .build();
-
-            Request request = chain.request();
-
-            if (!CommonUtils.isNetworkAvailable()) {
-                request = chain.request()
-                        .newBuilder()
-                        .cacheControl(cacheControl)
-                        .build();
+        try {
+            if (mCache == null) {
+                mCache = new Cache(mHttpCacheDir, MAX_CACHE_SIZE);
             }
+        } catch (Exception e) {
+            Log.d(TAG, "could not create http cache", e);
+        }
 
-            Response oriResponse = chain.proceed(request);
-
-            if (CommonUtils.isNetworkAvailable()) {
-                int maxAge = 0;
-                return oriResponse.newBuilder()
-                        .removeHeader("Param")
-                        .header("Cache-Control", "public, max-age=" + maxAge)
-                        .build();
-            } else {
-                int maxStale = 60 * 60 * 24 * 30;
-                return oriResponse.newBuilder()
-                        .removeHeader("Param")
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                        .build();
-            }
-        };
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(cacheControlInterceptor)
-                .cache(cache)
+        // 创建 OkHttpClient
+        mOkHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new HttpLoggingInterceptor()
+                        .setLevel(HttpLoggingInterceptor.Level.BODY))
+                .cache(mCache)
+                .addInterceptor(new CacheInterceptor(mWeakReference.get()))
+                .addInterceptor(new CacheInterceptor(mWeakReference.get()))
                 .build();
 
-        newsApiService = buildRetrofit(BASE_NEWS_URL, client).create(NewsApi.class);
-        mMeiziApiService = buildRetrofit(BASE_BEAUTY_URL, client).create(MeiziApi.class);
-        mEyesApiService = buildRetrofit(BASE_EYE_URL, client).create(EyesApi.class);
-    }
-
-    private Retrofit buildRetrofit(String baseUrl, OkHttpClient client) {
-        return new Retrofit.Builder()
+        // 创建 Retrofit.Builder
+        mRetrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(client)
+                .client(mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }
 
-    public synchronized static RetrofitClient getClient() {
+    public synchronized static RetrofitClient getInstance(Context context, String baseUrl) {
         if (sClient == null) {
-            sClient = new RetrofitClient();
+            sClient = new RetrofitClient(context, baseUrl);
         }
         return sClient;
+    }
+
+    public OkHttpClient getOkHttpClient() {
+        return mOkHttpClient;
+    }
+
+    public <T> T create(Class<T> service) {
+        if (service == null)
+            throw new RuntimeException("Api service is null");
+        return mRetrofit.create(service);
+    }
+
+    public void clear() {
+        mWeakReference.clear();
+        mWeakReference = null;
     }
 }

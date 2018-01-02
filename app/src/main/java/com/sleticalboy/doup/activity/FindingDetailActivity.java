@@ -13,7 +13,7 @@ import android.util.Log;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.eye.RankAdapter;
 import com.sleticalboy.doup.bean.eye.PopularBean;
-import com.sleticalboy.doup.http.ApiFactory;
+import com.sleticalboy.doup.mvp.model.EyesModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,8 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -38,9 +36,8 @@ import rx.schedulers.Schedulers;
 public class FindingDetailActivity extends AppCompatActivity {
 
     private static final String TAG = "FindingDetailActivity";
+
     public static final String NAME = "name";
-    public static final String UDID = "26868b32e808498db32fd51fb422d00175e179df";
-    public static final int VC = 83;
 
     @BindView(R.id.rv_rank)
     RecyclerView rvRank;
@@ -55,11 +52,15 @@ public class FindingDetailActivity extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     private int mLastVisibleItemIndex;
 
+    private EyesModel mEyesModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finding_detail);
         ButterKnife.bind(this);
+
+        mEyesModel = new EyesModel(this);
 
         initView();
 
@@ -115,9 +116,7 @@ public class FindingDetailActivity extends AppCompatActivity {
             mName = intent.getStringExtra(NAME);
         }
 
-        ApiFactory.getEyesApi().getFindingsDetail(mName, "date", UDID, VC)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mEyesModel.getFindingsDetail(mName)
                 .subscribe(new Action1<PopularBean>() {
                     @Override
                     public void call(PopularBean popularBean) {

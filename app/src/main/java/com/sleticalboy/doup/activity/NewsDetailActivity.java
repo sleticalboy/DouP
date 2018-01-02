@@ -19,13 +19,12 @@ import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.bean.news.NewsDetailBean;
-import com.sleticalboy.doup.http.ApiFactory;
+import com.sleticalboy.doup.mvp.model.NewsModel;
+import com.sleticalboy.doup.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -54,6 +53,7 @@ public class NewsDetailActivity extends BaseActivity {
     WebView webView;
 
     private int id;
+    private NewsModel mNewsModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +62,8 @@ public class NewsDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         if (intent != null)
             id = intent.getIntExtra(ID, -1);
+
+        mNewsModel = new NewsModel(this);
         getNewsDetail(String.valueOf(id));
     }
 
@@ -76,9 +78,7 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     private void getNewsDetail(String id) {
-        ApiFactory.getNewsApi().getNewsDetail(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mNewsModel.getNewsDetail(id)
                 .subscribe(new Subscriber<NewsDetailBean>() {
                     @Override
                     public void onCompleted() {
@@ -148,6 +148,6 @@ public class NewsDetailActivity extends BaseActivity {
 
     @OnClick(R.id.fab_share)
     public void onViewClicked() {
-        Toast.makeText(this, "分享本篇-待完善", Toast.LENGTH_SHORT).show();
+        ToastUtils.showToast(this, "分享本篇-待完善");
     }
 }

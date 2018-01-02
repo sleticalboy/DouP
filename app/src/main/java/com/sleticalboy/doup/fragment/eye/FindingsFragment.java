@@ -3,7 +3,6 @@ package com.sleticalboy.doup.fragment.eye;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,13 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.FindingDetailActivity;
 import com.sleticalboy.doup.adapter.eye.FindingAdapter;
 import com.sleticalboy.doup.bean.eye.FindingBean;
-import com.sleticalboy.doup.http.ApiFactory;
+import com.sleticalboy.doup.mvp.model.EyesModel;
 import com.sleticalboy.doup.util.ToastUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -40,14 +37,16 @@ public class FindingsFragment extends Fragment {
     private FindingAdapter mAdapter;
     private List<FindingBean> mData;
 
+    private EyesModel mEyesModel;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView() called with: inflater = [" + inflater + "], container = [" + container
-                + "], savedInstanceState = [" + savedInstanceState + "]");
         View rootView = View.inflate(getContext(), R.layout.frag_findings, null);
         ButterKnife.bind(this, rootView);
+
+        mEyesModel = new EyesModel(getContext());
 
         initView();
 
@@ -57,11 +56,8 @@ public class FindingsFragment extends Fragment {
     }
 
     private void initData() {
-        ApiFactory.getEyesApi().getFindings()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mEyesModel.getFindings()
                 .subscribe(findingBeans -> {
-                    Log.d(TAG, findingBeans.toString());
                     mData = findingBeans;
                     mAdapter.setData(mData);
                     mAdapter.notifyDataSetChanged();

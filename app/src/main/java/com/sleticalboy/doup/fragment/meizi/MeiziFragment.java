@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.meizi.MeiziAdapter;
 import com.sleticalboy.doup.bean.meizi.BeautyBean;
-import com.sleticalboy.doup.http.ApiFactory;
+import com.sleticalboy.doup.mvp.model.MeiziModel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -47,6 +46,8 @@ public class MeiziFragment extends Fragment {
     private boolean mIsLoadMore = false;
     private int page = 1;
 
+    private MeiziModel mMeiziModel;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,33 +55,21 @@ public class MeiziFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.frag_meizi, container, false);
         ButterKnife.bind(this, rootView);
 
+        mMeiziModel = new MeiziModel(getContext());
+
+        initView();
+
         initData();
 
         return rootView;
     }
 
-    private void initData() {
-        ApiFactory.getMeiziApi().getBeauty(1)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::showMeiziList, Throwable::printStackTrace);
-    }
+    private void initView() {
 
-    private void showMeiziList(BeautyBean beautyBean) {
-
-        if (!mIsLoadMore) {
-            mLocalData = beautyBean;
-        }
-
-        Log.d(TAG, "onCreateView = set recyclerView");
         mLayoutManager = new GridLayoutManager(getContext(), 3);
         rvMeizi.setLayoutManager(mLayoutManager);
         mAdapter = new MeiziAdapter(getContext());
         rvMeizi.setAdapter(mAdapter);
-
-        Log.d(TAG, "onCreateView = adapter set data");
-        mAdapter.setData(mLocalData);
-        mAdapter.notifyDataSetChanged();
 
         srl.setOnRefreshListener(() -> {
             if (srl.isRefreshing()) {
@@ -104,7 +93,6 @@ public class MeiziFragment extends Fragment {
                     if (mLayoutManager.getItemCount() + 1 == mLastVisibleItemIndex) {
                         // 最后一条数据， 加载更多数据
                         mIsLoadMore = true;
-                        Log.d(TAG, "mIsLoadMore:" + mIsLoadMore);
                         pullUpLoadMore();
                     }
                 }
@@ -118,14 +106,33 @@ public class MeiziFragment extends Fragment {
         });
     }
 
+    private void initData() {
+        mMeiziModel.getMeizi(1)
+                .subscribe(beautyBean -> {
+                    if (!mIsLoadMore) {
+                        mLocalData = beautyBean;
+                    }
+                    mAdapter.setData(mLocalData);
+                    mAdapter.notifyDataSetChanged();
+                }, Throwable::printStackTrace);
+    }
+
+    private void showMeiziList(BeautyBean beautyBean) {
+
+        if (!mIsLoadMore) {
+            mLocalData = beautyBean;
+        }
+
+        mAdapter.setData(mLocalData);
+        mAdapter.notifyDataSetChanged();
+    }
+
     // 上拉加载数据
     private void pullUpLoadMore() {
         Observable.timer(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .map(aLong -> {
                     page += 1;
-                    ApiFactory.getMeiziApi().getBeauty(page)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
+                    mMeiziModel.getMeizi(page)
                             .subscribe(beautyBean -> {
                                 mLocalData.results.addAll(beautyBean.results);
                                 mAdapter.notifyDataSetChanged();
@@ -142,9 +149,7 @@ public class MeiziFragment extends Fragment {
                     srl.setRefreshing(true); // 显示刷新
                     // 加载数据
                     page += 1;
-                    ApiFactory.getMeiziApi().getBeauty(page)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
+                    mMeiziModel.getMeizi(page)
                             .subscribe(beauty -> {
                                 mLocalData.results.addAll(0, beauty.results);
                                 mAdapter.notifyDataSetChanged();

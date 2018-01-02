@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.eye.RecommendAdapter;
 import com.sleticalboy.doup.bean.eye.RecommendBean;
-import com.sleticalboy.doup.http.ApiFactory;
+import com.sleticalboy.doup.mvp.model.EyesModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,6 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -51,12 +49,16 @@ public class RecommendFragment extends Fragment {
     private String mDate;
     private boolean mIsPullDown = true;
 
+    private EyesModel mEyesModel;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = View.inflate(getContext(), R.layout.frag_recommond, null);
         ButterKnife.bind(this, rootView);
+
+        mEyesModel = new EyesModel(getContext());
 
         initView();
 
@@ -107,9 +109,7 @@ public class RecommendFragment extends Fragment {
     }
 
     private void loadMore() {
-        ApiFactory.getEyesApi().getMoreRecommend(mDate, "2")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mEyesModel.getMoreRecommend(mDate)
                 .subscribe(recommendBean -> {
                     resolveDate(recommendBean);
                     flatMapData(recommendBean);
@@ -122,9 +122,7 @@ public class RecommendFragment extends Fragment {
     }
 
     private void initData() {
-        ApiFactory.getEyesApi().getRecommend()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mEyesModel.getRecommend()
                 .subscribe(recommendBean -> {
                     // 最终需要的是 type 是 video 的 ItemListBean 所以需要对原始数据进行处理和过滤
                     resolveDate(recommendBean);

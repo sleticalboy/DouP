@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.NewsDetailActivity;
 import com.sleticalboy.doup.bean.news.NewsBean;
+import com.sleticalboy.doup.util.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,11 +68,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 NewsDetailActivity.actionStart(mContext, storiesBean.id);
             });
             newsHolder.newsTitle.setText(storiesBean.title);
-            Glide.with(mContext)
-                    .load(storiesBean.images.get(0))
-                    .placeholder(R.mipmap.ic_launcher)
-                    .centerCrop()
-                    .into(newsHolder.newsImg);
+            ImageLoader.load(mContext, newsHolder.newsImg, storiesBean.images.get(0));
         } else if (holder instanceof BannerViewHolder) {
             // TODO: 12/25/17 绑定顶部轮播图
         }
