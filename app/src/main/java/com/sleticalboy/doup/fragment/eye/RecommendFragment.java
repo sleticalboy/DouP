@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.eye.RecommendAdapter;
-import com.sleticalboy.doup.mvp.model.bean.eye.RecommendBean;
 import com.sleticalboy.doup.mvp.model.EyesModel;
+import com.sleticalboy.doup.mvp.model.bean.eye.RecommendBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,9 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -110,6 +112,8 @@ public class RecommendFragment extends Fragment {
 
     private void loadMore() {
         mEyesModel.getMoreRecommend(mDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recommendBean -> {
                     resolveDate(recommendBean);
                     flatMapData(recommendBean);
@@ -123,6 +127,8 @@ public class RecommendFragment extends Fragment {
 
     private void initData() {
         mEyesModel.getRecommend()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recommendBean -> {
                     // 最终需要的是 type 是 video 的 ItemListBean 所以需要对原始数据进行处理和过滤
                     resolveDate(recommendBean);
@@ -142,14 +148,15 @@ public class RecommendFragment extends Fragment {
     }
 
     private void flatMapData(RecommendBean recommendBean) {
-        Observable.from(recommendBean.issueList)
-                .flatMap(issueListBean -> Observable.from(issueListBean.itemList))
+        Observable.fromIterable(recommendBean.issueList)
+                .flatMap(issueListBean -> Observable.fromIterable(issueListBean.itemList))
                 .filter(itemListBean -> itemListBean.type.equals("video"))
                 .forEach(itemListBean -> {
-                    if (mIsPullDown)
+                    if (mIsPullDown) {
                         mData.add(0, itemListBean);
-                    else
+                    } else {
                         mData.add(itemListBean);
+                    }
                 });
 
         Log.d(TAG, "mData.size():" + mData.size());

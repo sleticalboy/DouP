@@ -2,18 +2,17 @@ package com.sleticalboy.doup.mvp.model;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.mvp.model.bean.eye.FindingBean;
-import com.sleticalboy.doup.mvp.model.bean.eye.PopularBean;
-import com.sleticalboy.doup.mvp.model.bean.eye.RecommendBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.EyesApi;
+import com.sleticalboy.doup.mvp.model.bean.eye.FindingBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.PopularBean;
+import com.sleticalboy.doup.mvp.model.bean.eye.RecommendBean;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
 
 /**
  * Created by Android Studio.
@@ -36,32 +35,20 @@ public class EyesModel {
         mEyesApiService = client.create(EyesApi.class);
     }
 
-    public rx.Observable<RecommendBean> getRecommend() {
-        return mEyesApiService.getRecommend()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<RecommendBean> getRecommend() {
+        return mEyesApiService.getRecommend();
     }
 
-    public rx.Observable<RecommendBean> getMoreRecommend(String date) {
-        return mEyesApiService.getMoreRecommend(date, "2")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<RecommendBean> getMoreRecommend(String date) {
+        return mEyesApiService.getMoreRecommend(date, "2");
     }
 
-    public rx.Observable<List<FindingBean>> getFindings() {
-        return mEyesApiService.getFindings()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<List<FindingBean>> getFindings() {
+        return mEyesApiService.getFindings();
     }
 
-    public rx.Observable<PopularBean> getFindingsDetail(String name) {
-        return mEyesApiService.getFindingsDetail(name, CATEGORY_NAME, UDID, VC)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<PopularBean> getFindingsDetail(String name) {
+        return mEyesApiService.getFindingsDetail(name, CATEGORY_NAME, UDID, VC);
     }
 
     public void clear() {

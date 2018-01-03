@@ -8,6 +8,5 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-
 public abstract class BaseBean implements Serializable {
 }

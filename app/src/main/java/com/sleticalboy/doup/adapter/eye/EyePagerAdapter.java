@@ -19,7 +19,6 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-
 public class EyePagerAdapter extends FragmentPagerAdapter {
 
     private int[] mTabTitleId = {R.string.recommend, R.string.findings, R.string.popular};

@@ -13,8 +13,7 @@ import com.sleticalboy.doup.mvp.model.bean.weather.WeatherBean;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
 
 /**
  * Created by Android Studio.
@@ -35,32 +34,20 @@ public class WeatherModel {
         mWeatherApiService = client.create(WeatherApi.class);
     }
 
-    public rx.Observable<List<Province>> getProvinces() {
-        return mWeatherApiService.getProvinces()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<List<Province>> getProvinces() {
+        return mWeatherApiService.getProvinces();
     }
 
-    public rx.Observable<List<City>> getCities(int provinceId) {
-        return mWeatherApiService.getCities(provinceId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<List<City>> getCities(int provinceId) {
+        return mWeatherApiService.getCities(provinceId);
     }
 
-    public rx.Observable<List<County>> getCounties(int provinceId, int cityId) {
-        return mWeatherApiService.getCounties(provinceId, cityId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<List<County>> getCounties(int provinceId, int cityId) {
+        return mWeatherApiService.getCounties(provinceId, cityId);
     }
 
-    public rx.Observable<WeatherBean> getWeather(String weatherId) {
-        return mWeatherApiService.getWeather(weatherId, APP_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<WeatherBean> getWeather(String weatherId) {
+        return mWeatherApiService.getWeather(weatherId, APP_KEY);
     }
 
     public void clear() {

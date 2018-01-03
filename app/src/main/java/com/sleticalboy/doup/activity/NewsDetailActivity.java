@@ -13,18 +13,19 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.mvp.model.NewsModel;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Subscriber;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -79,25 +80,35 @@ public class NewsDetailActivity extends BaseActivity {
 
     private void getNewsDetail(String id) {
         mNewsModel.getNewsDetail(id)
-                .subscribe(new Subscriber<NewsDetailBean>() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<NewsDetailBean>() {
                     @Override
-                    public void onCompleted() {
-                        Toast.makeText(NewsDetailActivity.this, "加载完成", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        Toast.makeText(NewsDetailActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(NewsDetailBean newsDetailBean) {
+                    public void accept(NewsDetailBean newsDetailBean) throws Exception {
                         Log.d(TAG, newsDetailBean.title);
                         initToolBar(newsDetailBean.title);
                         showPage(newsDetailBean);
                     }
                 });
+//                .subscribe(new Subscriber<NewsDetailBean>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        Toast.makeText(NewsDetailActivity.this, "加载完成", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(NewsDetailActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onNext(NewsDetailBean newsDetailBean) {
+//                        Log.d(TAG, newsDetailBean.title);
+//                        initToolBar(newsDetailBean.title);
+//                        showPage(newsDetailBean);
+//                    }
+//                });
     }
 
     // app bar

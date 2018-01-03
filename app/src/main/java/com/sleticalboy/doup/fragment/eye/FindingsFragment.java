@@ -11,14 +11,16 @@ import android.widget.GridView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.activity.FindingDetailActivity;
 import com.sleticalboy.doup.adapter.eye.FindingAdapter;
-import com.sleticalboy.doup.mvp.model.bean.eye.FindingBean;
 import com.sleticalboy.doup.mvp.model.EyesModel;
+import com.sleticalboy.doup.mvp.model.bean.eye.FindingBean;
 import com.sleticalboy.doup.util.ToastUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -57,6 +59,8 @@ public class FindingsFragment extends Fragment {
 
     private void initData() {
         mEyesModel.getFindings()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(findingBeans -> {
                     mData = findingBeans;
                     mAdapter.setData(mData);

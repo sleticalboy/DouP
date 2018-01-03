@@ -3,6 +3,7 @@ package com.sleticalboy.doup.http.api;
 import com.sleticalboy.doup.mvp.model.bean.news.NewsBean;
 import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
@@ -24,7 +25,7 @@ public interface NewsApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
     @GET("4/news/latest")
-    rx.Observable<NewsBean> getLatestNews();
+    Observable<NewsBean> getLatestNews();
 
     /**
      * 获取之前的新闻列表
@@ -33,7 +34,7 @@ public interface NewsApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
     @GET("4/news/before/{date}")
-    rx.Observable<NewsBean> getOldNews(@Path("date") String date);
+    Observable<NewsBean> getOldNews(@Path("date") String date);
 
     /**
      * 获取新闻详情
@@ -42,5 +43,5 @@ public interface NewsApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
     @GET("4/news/{id}")
-    rx.Observable<NewsDetailBean> getNewsDetail(@Path("id") String id);
+    Observable<NewsDetailBean> getNewsDetail(@Path("id") String id);
 }

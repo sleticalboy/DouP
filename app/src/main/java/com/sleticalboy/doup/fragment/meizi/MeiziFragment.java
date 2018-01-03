@@ -20,6 +20,8 @@ import com.sleticalboy.doup.util.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -105,6 +107,8 @@ public class MeiziFragment extends Fragment {
 
     private void initData() {
         mMeiziModel.getMeizi(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(beautyBean -> {
                     if (!mIsLoadMore) {
                         mLocalData = beautyBean;
@@ -117,6 +121,8 @@ public class MeiziFragment extends Fragment {
     private void loadMore(boolean isPullDown) {
         page += 1;
         new Handler().postDelayed(() -> mMeiziModel.getMeizi(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(beautyBean -> {
                     if (isPullDown) {
                         mLocalData.results.addAll(0, beautyBean.results);

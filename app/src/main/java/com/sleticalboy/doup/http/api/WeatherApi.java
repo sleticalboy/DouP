@@ -7,6 +7,7 @@ import com.sleticalboy.doup.mvp.model.bean.weather.WeatherBean;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
@@ -28,7 +29,7 @@ public interface WeatherApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("china")
-    rx.Observable<List<Province>> getProvinces();
+    Observable<List<Province>> getProvinces();
 
     /**
      * 获取市级信息
@@ -37,7 +38,7 @@ public interface WeatherApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("china/{provinceId}")
-    rx.Observable<List<City>> getCities(@Path("id") int provinceId);
+    Observable<List<City>> getCities(@Path("id") int provinceId);
 
     /**
      * 获取区域信息
@@ -47,7 +48,7 @@ public interface WeatherApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("china/{provinceId}/{cityId}")
-    rx.Observable<List<County>> getCounties(@Path("id") int provinceId,
+    Observable<List<County>> getCounties(@Path("id") int provinceId,
                                             @Path("id") int cityId);
 
     /**
@@ -58,12 +59,12 @@ public interface WeatherApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("weather")
-    rx.Observable<WeatherBean> getWeather(@Query("cityid") String weatherId,
+    Observable<WeatherBean> getWeather(@Query("cityid") String weatherId,
                                           @Query("key") String key);
 
     @Deprecated
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("weather?cityid=CN101050109&key=f528b9b4264e4f9b977645d60f321a0c")
-    rx.Observable<WeatherBean> getWeather();
+    Observable<WeatherBean> getWeather();
 
 }

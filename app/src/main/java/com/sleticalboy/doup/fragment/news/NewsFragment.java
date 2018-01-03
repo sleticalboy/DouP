@@ -24,6 +24,8 @@ import com.sleticalboy.doup.util.ToastUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -109,6 +111,8 @@ public class NewsFragment extends Fragment {
     private void initData() {
         // 获取最新新闻列表
         mNewsModel.getLatestNews()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newsBean -> {
                     Log.d(TAG, "初始化数据");
                     mDate = newsBean.date;
@@ -160,6 +164,8 @@ public class NewsFragment extends Fragment {
      */
     private void loadMore(boolean isPullDown) {
         new Handler().postDelayed(() -> mNewsModel.getOldNews(mDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newsBean -> {
                     Log.d(TAG, "date = " + newsBean.date);
                     mDate = newsBean.date;

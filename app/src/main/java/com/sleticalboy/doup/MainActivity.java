@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.sleticalboy.doup.dialog.ChooseAreaDialog;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
@@ -81,11 +82,22 @@ public class MainActivity extends AppCompatActivity {
 
         initFragments();
 
+        initView();
+    }
+
+    private void initView() {
         initActionBar();
 
         initNavMenu();
 
         initNavigator();
+
+//        initDialog();
+    }
+
+    private void initDialog() {
+        ChooseAreaDialog dialog = new ChooseAreaDialog();
+        dialog.show(getSupportFragmentManager(), "ChooseAreaDialog");
     }
 
     private void initNavigator() {
@@ -219,3 +231,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 }
+
+/*
+More than one file was found with OS independent path 'META-INF/rxjava.properties'
+* */

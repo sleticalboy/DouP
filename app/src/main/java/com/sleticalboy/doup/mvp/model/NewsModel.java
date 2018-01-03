@@ -2,17 +2,15 @@ package com.sleticalboy.doup.mvp.model;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.mvp.model.bean.news.NewsBean;
-import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.NewsApi;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsBean;
+import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
 
 import java.lang.ref.WeakReference;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
 
 /**
  * Created by Android Studio.
@@ -31,25 +29,16 @@ public class NewsModel {
         mNewsApiService = client.create(NewsApi.class);
     }
 
-    public rx.Observable<NewsBean> getLatestNews() {
-        return mNewsApiService.getLatestNews()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<NewsBean> getLatestNews() {
+        return mNewsApiService.getLatestNews();
     }
 
-    public rx.Observable<NewsBean> getOldNews(String date) {
-        return mNewsApiService.getOldNews(date)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<NewsBean> getOldNews(String date) {
+        return mNewsApiService.getOldNews(date);
     }
 
     public Observable<NewsDetailBean> getNewsDetail(String id) {
-        return mNewsApiService.getNewsDetail(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+        return mNewsApiService.getNewsDetail(id);
     }
 
     public void clear() {

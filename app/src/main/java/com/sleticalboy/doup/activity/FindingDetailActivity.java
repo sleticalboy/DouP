@@ -12,8 +12,8 @@ import android.util.Log;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.adapter.eye.RankAdapter;
-import com.sleticalboy.doup.mvp.model.bean.eye.PopularBean;
 import com.sleticalboy.doup.mvp.model.EyesModel;
+import com.sleticalboy.doup.mvp.model.bean.eye.PopularBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -74,16 +74,13 @@ public class FindingDetailActivity extends AppCompatActivity {
         mAdapter = new RankAdapter(this);
         rvRank.setAdapter(mAdapter);
 
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (srl.isRefreshing()) {
-                    srl.setRefreshing(false);
-                    // 更新数据
-                    loadMore();
-                } else {
-                    srl.setRefreshing(true);
-                }
+        srl.setOnRefreshListener(() -> {
+            if (srl.isRefreshing()) {
+                srl.setRefreshing(false);
+                // 更新数据
+                loadMore();
+            } else {
+                srl.setRefreshing(true);
             }
         });
 
@@ -117,20 +114,10 @@ public class FindingDetailActivity extends AppCompatActivity {
         }
 
         mEyesModel.getFindingsDetail(mName)
-                .subscribe(new Action1<PopularBean>() {
-                    @Override
-                    public void call(PopularBean popularBean) {
-                        resolveDate(popularBean);
-                        flatMapData(popularBean);
-                        mAdapter.setDataList(mData);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
-                });
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(this::resolveDate)
+                .subscribe(this::flatMapData);
     }
 
     private void resolveDate(PopularBean popularBean) {
@@ -143,22 +130,16 @@ public class FindingDetailActivity extends AppCompatActivity {
     }
 
     private void flatMapData(PopularBean popularBean) {
-        Observable.from(popularBean.itemList)
-                .filter(new Func1<PopularBean.ItemListBean, Boolean>() {
-                    @Override
-                    public Boolean call(PopularBean.ItemListBean itemListBean) {
-                        // 过滤掉不合法的数据
-                        return itemListBean.data.category != null
-                                && itemListBean.data.cover != null;
-                    }
-                })
-                .forEach(new Action1<PopularBean.ItemListBean>() {
-                    @Override
-                    public void call(PopularBean.ItemListBean itemListBean) {
-                        Log.d(TAG, itemListBean.data.toString());
-                        mData.add(itemListBean.data);
-                    }
+        Observable.fromIterable(popularBean.itemList)
+                .filter(itemListBean -> itemListBean.data.category != null
+                        && itemListBean.data.cover != null)
+                .forEach(itemListBean -> {
+                    Log.d(TAG, itemListBean.data.toString());
+                    mData.add(itemListBean.data);
+
                 });
+        mAdapter.setDataList(mData);
+        mAdapter.notifyDataSetChanged();
     }
 
     public static void actionStart(Context context, String name) {

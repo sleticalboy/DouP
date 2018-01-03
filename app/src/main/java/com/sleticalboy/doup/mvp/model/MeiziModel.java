@@ -9,8 +9,7 @@ import com.sleticalboy.doup.mvp.model.bean.meizi.BeautyBean;
 
 import java.lang.ref.WeakReference;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
 
 /**
  * Created by Android Studio.
@@ -29,11 +28,8 @@ public class MeiziModel {
         mMeiziApiService = client.create(MeiziApi.class);
     }
 
-    public rx.Observable<BeautyBean> getMeizi(int page) {
-        return mMeiziApiService.getBeauty(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onTerminateDetach();
+    public Observable<BeautyBean> getMeizi(int page) {
+        return mMeiziApiService.getBeauty(page);
     }
 
     public void clear() {

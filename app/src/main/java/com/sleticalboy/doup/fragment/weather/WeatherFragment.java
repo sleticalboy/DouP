@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.fragment.weather;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.dialog.ChooseAreaDialog;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.mvp.model.WeatherModel;
-import com.sleticalboy.doup.mvp.model.bean.weather.City;
-import com.sleticalboy.doup.mvp.model.bean.weather.Province;
 import com.sleticalboy.doup.mvp.model.bean.weather.WeatherBean;
 import com.sleticalboy.doup.util.ImageLoader;
 
@@ -26,11 +26,12 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import rx.Observable;
 
 /**
  * Created by Android Studio.
@@ -38,39 +39,47 @@ import rx.Observable;
  *
  * @author sleticalboy
  */
-
 public class WeatherFragment extends Fragment {
 
     private static final String TAG = "WeatherFragment";
+
+    private static final int LEVEL_PROVINCE = 0;
+    private static final int LEVEL_CITY = 1;
+    private static final int LEVEL_COUNTY = 2;
+    public static final String DIALOG_TAG = "ChooseAreaDialog";
+
     @BindView(R.id.weather_content)
     TextView weatherContent;
     @BindView(R.id.img_bg)
     ImageView imgBg;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-
     private Unbinder unbind;
 
     private String mUrl;
     private WeatherBean mData;
-
-    private WeatherModel mWeatherModel;
+    public WeatherModel mWeatherModel;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View rootView = View.inflate(getContext(), R.layout.frag_weather, null);
+        View rootView = inflater.inflate(R.layout.frag_weather, container, false);
         unbind = ButterKnife.bind(this, rootView);
 
-        mWeatherModel = new WeatherModel(getContext());
+        mWeatherModel = new WeatherModel(getActivity());
 
         initView();
 
-        initData();
-
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
+        initData();
     }
 
     private void initData() {
@@ -78,7 +87,6 @@ public class WeatherFragment extends Fragment {
         HttpUtils.request(ApiConstant.BASE_WEATHER_URL + "bing_pic", new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-
             }
 
             @Override
@@ -86,7 +94,7 @@ public class WeatherFragment extends Fragment {
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     mUrl = responseBody.string();
-                    getActivity().runOnUiThread(() -> ImageLoader.loadHigh(getContext(), imgBg, mUrl));
+                    getActivity().runOnUiThread(() -> ImageLoader.loadHigh(getActivity(), imgBg, mUrl));
                 }
             }
         });
@@ -96,7 +104,15 @@ public class WeatherFragment extends Fragment {
 
     private void initView() {
 
+        initDialog();
+
         setupSwipeRefreshLayout();
+    }
+
+    private void initDialog() {
+        ChooseAreaDialog dialog = new ChooseAreaDialog();
+        setTargetFragment(WeatherFragment.this, 300);
+        dialog.show(getChildFragmentManager(), DIALOG_TAG);
     }
 
     private void setupSwipeRefreshLayout() {
@@ -105,33 +121,20 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private void initCity(Province province) {
-        mWeatherModel.getCities(province.id)
-                .flatMap(Observable::from)
-                .forEach(city -> {
-                    city.save();
-                    initCounty(city);
-                });
-    }
-
-    private void initCounty(City city) {
-        mWeatherModel.getCounties(city.provinceId, city.id)
-                .flatMap(Observable::from)
-                .forEach(county -> {
-                    county.save();
-                    getWeather(county.weatherId);
-                });
-    }
-
     private void getWeather(String weatherId) {
         mWeatherModel.getWeather(weatherId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(weatherBean -> {
                     // TODO: 12/30/17 获取并展示天气数据
-                    Log.d("SplashActivity", "weatherBean:" + weatherBean);
-                    Log.d(TAG, "weather = " + weatherBean);
+                    Log.d(TAG, "weather = " + weatherBean.HeWeather.get(0).status);
                     mData = weatherBean;
                     weatherContent.setText(weatherBean.HeWeather.get(0).toString());
                 }, Throwable::printStackTrace);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 
     @Override
