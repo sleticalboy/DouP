@@ -42,8 +42,8 @@ public class WeatherModel {
         return mWeatherApiService.getCities(provinceId);
     }
 
-    public Observable<List<County>> getCounties(int provinceId, int cityId) {
-        return mWeatherApiService.getCounties(provinceId, cityId);
+    public Observable<List<County>> getCounties(int provinceId, int cityCode) {
+        return mWeatherApiService.getCounties(provinceId, cityCode);
     }
 
     public Observable<WeatherBean> getWeather(String weatherId) {

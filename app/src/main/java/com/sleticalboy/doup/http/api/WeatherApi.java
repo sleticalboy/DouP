@@ -38,18 +38,18 @@ public interface WeatherApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("china/{provinceId}")
-    Observable<List<City>> getCities(@Path("id") int provinceId);
+    Observable<List<City>> getCities(@Path("provinceId") int provinceId);
 
     /**
      * 获取区域信息
      *
      * @param provinceId 省份 id
-     * @param cityId     城市 id
+     * @param cityCode     城市 id
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
-    @GET("china/{provinceId}/{cityId}")
-    Observable<List<County>> getCounties(@Path("id") int provinceId,
-                                            @Path("id") int cityId);
+    @GET("china/{provinceId}/{cityCode}")
+    Observable<List<County>> getCounties(@Path("provinceId") int provinceId,
+                                         @Path("cityCode") int cityCode);
 
     /**
      * 获取天气信息
@@ -60,7 +60,7 @@ public interface WeatherApi {
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
     @GET("weather")
     Observable<WeatherBean> getWeather(@Query("cityid") String weatherId,
-                                          @Query("key") String key);
+                                       @Query("key") String key);
 
     @Deprecated
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})

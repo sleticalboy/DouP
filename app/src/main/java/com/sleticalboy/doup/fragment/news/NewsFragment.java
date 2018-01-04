@@ -23,7 +23,7 @@ import com.sleticalboy.doup.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -53,29 +53,40 @@ public class NewsFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
 
     private NewsModel mNewsModel;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View rootView = View.inflate(getContext(), R.layout.frag_news, null);
-        ButterKnife.bind(this, rootView);
+        View rootView = inflater.inflate(R.layout.frag_news, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
 
-        mNewsModel = new NewsModel(getContext());
-
-        initData();
+        mNewsModel = new NewsModel(getActivity());
 
         initView();
 
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
     private void initView() {
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         rvNews.setLayoutManager(mLayoutManager);
 
-        mAdapter = new NewsListAdapter(getContext());
+        mAdapter = new NewsListAdapter(getActivity());
         rvNews.setAdapter(mAdapter);
 
         rvNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -142,19 +153,15 @@ public class NewsFragment extends Fragment {
         });
     }
 
-    @OnClick(R.id.fab_top)
-    public void onViewClicked() {
-        ToastUtils.showToast(getContext(), "返回顶部");
-        rvNews.scrollToPosition(0);
-        fabTop.setVisibility(View.GONE);
-    }
-
     private void setFloatingActionButton() {
+        ToastUtils.showToast(getContext(), "返回顶部");
         if (mLastVisibleItemPosition >= 16) {
             fabTop.setVisibility(View.VISIBLE);
         } else {
             fabTop.setVisibility(View.GONE);
         }
+        rvNews.scrollToPosition(0);
+        fabTop.setVisibility(View.GONE);
     }
 
     /**

@@ -69,13 +69,8 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected int bindContentView() {
+    protected int attachLayout() {
         return R.layout.activity_news_detail;
-    }
-
-    @Override
-    protected void initAnim() {
-        // do nothing
     }
 
     private void getNewsDetail(String id) {

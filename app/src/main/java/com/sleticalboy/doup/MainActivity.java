@@ -231,7 +231,3 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 }
-
-/*
-More than one file was found with OS independent path 'META-INF/rxjava.properties'
-* */

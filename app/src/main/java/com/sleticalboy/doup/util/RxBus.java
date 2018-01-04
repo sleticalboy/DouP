@@ -24,8 +24,8 @@ public class RxBus {
     }
 
     @NonNull
-    public static RxBus getInstance() {
-        return Holder.sRxBus;
+    public static RxBus getBus() {
+        return Holder.sInstance;
     }
 
     @NonNull
@@ -67,7 +67,7 @@ public class RxBus {
 
     public void post(@NonNull Object tag, @NonNull Object content) {
         List<Subject> subjectList = mSubjectContainer.get(tag);
-        if (!subjectList.isEmpty()) {
+        if (subjectList != null && !subjectList.isEmpty()) {
             for (Subject subject : subjectList) {
                 subject.onNext(content);
             }
@@ -75,6 +75,6 @@ public class RxBus {
     }
 
     private static class Holder {
-        private static RxBus sRxBus = new RxBus();
+        private static RxBus sInstance = new RxBus();
     }
 }
