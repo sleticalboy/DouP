@@ -1,5 +1,7 @@
 package com.sleticalboy.doup;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,11 +22,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.sleticalboy.doup.dialog.ChooseAreaDialog;
+import com.sleticalboy.doup.activity.WeatherActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
-import com.sleticalboy.doup.fragment.weather.WeatherFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
     RadioButton tabMeizi;
     @BindView(R.id.tab_eyes)
     RadioButton tabEyes;
-    @BindView(R.id.tab_weather)
-    RadioButton tabWeather;
+//    @BindView(R.weatherId.tab_weather)
+//    RadioButton tabWeather;
 
-//    @BindView(R.id.btn_back)
+//    @BindView(R.weatherId.btn_back)
 //    TextView btnBack;
-//    @BindView(R.id.tab_title)
+//    @BindView(R.weatherId.tab_title)
 //    TextView tabTitle;
-//    @BindView(R.id.about_me)
+//    @BindView(R.weatherId.about_me)
 //    TextView aboutMe;
 
     @BindView(R.id.fl_container)
@@ -87,17 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         initActionBar();
-
         initNavMenu();
-
         initNavigator();
-
-//        initDialog();
-    }
-
-    private void initDialog() {
-        ChooseAreaDialog dialog = new ChooseAreaDialog();
-        dialog.show(getSupportFragmentManager(), "ChooseAreaDialog");
     }
 
     private void initNavigator() {
@@ -119,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle(R.string.open_eye);
                     handleFragment(transaction, mFragments.get(2));
                     break;
-                case R.id.tab_weather:
-                    Log.d(TAG, "weather");
-                    getSupportActionBar().setTitle(R.string.weather);
-                    handleFragment(transaction, mFragments.get(3));
-                    break;
+//                case R.weatherId.tab_weather:
+//                    Log.d(TAG, "weather");
+//                    getSupportActionBar().setTitle(R.string.weather);
+//                    handleFragment(transaction, mFragments.get(3));
+//                    break;
                 default:
                     break;
             }
@@ -139,14 +131,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_call:
                     // TODO: 12/30/17 拨号
                     break;
-                case R.id.nav_friends:
+                case R.id.nav_contacts:
                     // TODO: 12/30/17 联系人列表 Activity
                     break;
                 case R.id.nav_location:
                     // TODO: 12/30/17 地图 MapActivity
                     break;
-                case R.id.nav_mail:
-                    // TODO: 12/30/17 邮件
+                case R.id.nav_weather:
+                    WeatherActivity.actionStart(MainActivity.this);
                     break;
                 case R.id.nav_tasks:
                     // TODO: 12/30/17 todo list Activity
@@ -192,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
         mFragments.add(new NewsFragment());
         mFragments.add(new MeiziFragment());
         mFragments.add(new EyeFragment());
-        mFragments.add(new WeatherFragment());
 
         Log.d(TAG, mFragments.toString());
 
@@ -229,5 +220,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    public static void actionStart(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
     }
 }

@@ -52,6 +52,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:gravity="end"
+                    android:paddingBottom="24dp"
+                    android:paddingEnd="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="8dp"
                     tools:text="图片来源"/>
             </RelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>

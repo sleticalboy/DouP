@@ -20,7 +20,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    public final String TAG = getClass().getSimpleName();
+    private static final String TAG = "BaseActivity";
 
     protected Unbinder unbinder;
 //    protected int[] mInAndOutAnims;
@@ -28,10 +28,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(attachLayout());
-        unbinder = ButterKnife.bind(this);
+
         ActivityController.add(this);
+        setContentView(attachLayout());
+
+        unbinder = ButterKnife.bind(this);
+
+        initView();
+
+        initData();
     }
+
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData();
+
+    /**
+     * 初始化控件
+     */
+    protected abstract void initView();
 
     @Override
     protected void onResume() {
@@ -66,14 +82,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 绑定布局
      *
-     * @return layout id
+     * @return layout weatherId
      */
     protected abstract int attachLayout();
-
-    //    /**
-//     * 初始化 activity 动画
-//     */
-//    protected abstract void initAnim();
 
     @Override
     public void onBackPressed() {

@@ -88,20 +88,20 @@
                     android:gravity="center"
                     android:text="@string/open_eye"/>
 
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/black"/>
+                <!--<View-->
+                    <!--android:layout_width="0.5dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@color/black"/>-->
 
-                <RadioButton
-                    android:id="@+id/tab_weather"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_nav_tab"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/weather"/>
+                <!--<RadioButton-->
+                    <!--andrweatherIdd:idweatherId@+id/tab_weather"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@drawable/bg_nav_tab"-->
+                    <!--android:button="@null"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/weather"/>-->
             </RadioGroup>
         </LinearLayout>
 

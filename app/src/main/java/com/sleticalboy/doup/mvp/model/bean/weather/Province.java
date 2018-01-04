@@ -19,7 +19,7 @@ public class Province extends DataSupport implements Serializable {
     @Override
     public String toString() {
         return "Province{" +
-                "id=" + id +
+                "weatherId=" + id +
                 ", name='" + name + '\'' +
                 ", provinceCode=" + provinceCode +
                 '}';

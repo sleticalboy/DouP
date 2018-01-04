@@ -23,23 +23,26 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.NewsDetailActivity"
             android:theme="@style/NewsDetailTheme"/>
         <activity android:name=".activity.AboutMeActivity"/>
+
         <activity
             android:name=".activity.VideoPlayActivity"
             android:theme="@style/NewsDetailTheme"/>
+
         <activity android:name=".activity.FindingDetailActivity"/>
+
+        <activity
+            android:name=".activity.WeatherActivity"
+            android:launchMode="singleTask"/>
 
         <service
             android:name=".service.AutoUpdateService"
             android:exported="false"/>
 
-        <service
-            android:name=".service.LeeService"
-            android:exported="false">
-        </service>
     </application>
 
 </manifest>
