@@ -24,10 +24,12 @@ import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_WEATHER;
  */
 public interface WeatherApi {
 
+    String CUSTOM_HEADER = HEADER_KEY + ":" + HEADER_VALUE_WEATHER;
+
     /**
      * 获取省份信息
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
+    @Headers({CUSTOM_HEADER})
     @GET("china")
     Observable<List<Province>> getProvinces();
 
@@ -36,7 +38,7 @@ public interface WeatherApi {
      *
      * @param provinceId 省份 id
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
+    @Headers({CUSTOM_HEADER})
     @GET("china/{provinceId}")
     Observable<List<City>> getCities(@Path("provinceId") int provinceId);
 
@@ -44,9 +46,9 @@ public interface WeatherApi {
      * 获取区域信息
      *
      * @param provinceId 省份 id
-     * @param cityCode     城市 id
+     * @param cityCode   城市 code
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
+    @Headers({CUSTOM_HEADER})
     @GET("china/{provinceId}/{cityCode}")
     Observable<List<County>> getCounties(@Path("provinceId") int provinceId,
                                          @Path("cityCode") int cityCode);
@@ -54,17 +56,11 @@ public interface WeatherApi {
     /**
      * 获取天气信息
      *
-     * @param weatherId 具体区域对应的天气 id
+     * @param weatherId 具体区域对应的 weatherId
      * @param key       appkey
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
+    @Headers({CUSTOM_HEADER})
     @GET("weather")
     Observable<WeatherBean> getWeather(@Query("cityid") String weatherId,
                                        @Query("key") String key);
-
-    @Deprecated
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_WEATHER})
-    @GET("weather?cityid=CN101050109&key=f528b9b4264e4f9b977645d60f321a0c")
-    Observable<WeatherBean> getWeather();
-
 }

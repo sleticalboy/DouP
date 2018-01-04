@@ -23,7 +23,7 @@ public class County extends DataSupport implements Serializable {
     @Override
     public String toString() {
         return "County{" +
-                "id=" + id +
+                "weatherId=" + id +
                 ", name='" + name + '\'' +
                 ", weatherId='" + weatherId + '\'' +
                 ", cityId=" + cityId +

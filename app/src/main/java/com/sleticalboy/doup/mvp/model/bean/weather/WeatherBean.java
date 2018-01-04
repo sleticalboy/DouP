@@ -80,8 +80,8 @@ public class WeatherBean extends BaseBean {
             public String city;
             @SerializedName("cnty")
             public String cnty;
-            @SerializedName("id")
-            public String id;
+            @SerializedName("weatherId")
+            public String weatherId;
             @SerializedName("lat")
             public String lat;
             @SerializedName("lon")
@@ -109,7 +109,7 @@ public class WeatherBean extends BaseBean {
                 return "BasicBean{" +
                         "city='" + city + '\'' +
                         ", cnty='" + cnty + '\'' +
-                        ", id='" + id + '\'' +
+                        ", weatherId='" + weatherId + '\'' +
                         ", lat='" + lat + '\'' +
                         ", lon='" + lon + '\'' +
                         ", update=" + update +

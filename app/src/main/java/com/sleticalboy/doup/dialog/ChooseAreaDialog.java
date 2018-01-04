@@ -17,12 +17,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.fragment.weather.WeatherFragment;
+import com.sleticalboy.doup.activity.WeatherActivity;
 import com.sleticalboy.doup.mvp.model.WeatherModel;
 import com.sleticalboy.doup.mvp.model.bean.weather.City;
 import com.sleticalboy.doup.mvp.model.bean.weather.County;
 import com.sleticalboy.doup.mvp.model.bean.weather.Province;
+import com.sleticalboy.doup.util.ConstantValue;
 import com.sleticalboy.doup.util.RxBus;
+import com.sleticalboy.doup.util.SPUtils;
 
 import org.litepal.crud.DataSupport;
 
@@ -43,7 +45,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ChooseAreaDialog extends DialogFragment {
 
-    private static final String TAG = "ChooseAreaDialog";
+    public static final String TAG = "ChooseAreaDialog";
 
     private static final int LEVEL_PROVINCE = 0;
     private static final int LEVEL_CITY = 1;
@@ -72,9 +74,7 @@ public class ChooseAreaDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WeatherFragment weatherFragment = (WeatherFragment) getParentFragment();
-        Log.d(TAG, "weatherFragment:" + weatherFragment);
-        mWeatherModel = weatherFragment.mWeatherModel;
+        mWeatherModel = ((WeatherActivity) getActivity()).getWeatherModel();
     }
 
     @Nullable
@@ -86,12 +86,12 @@ public class ChooseAreaDialog extends DialogFragment {
         Log.d(TAG, "getDialog():" + getDialog());
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        // 自定义 Dialog 位置
         Window dialogWindow = getDialog().getWindow();
         assert dialogWindow != null;
         WindowManager.LayoutParams params = dialogWindow.getAttributes();
         dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
         params.y = 48;
-        params.height = 600;
         dialogWindow.setAttributes(params);
 
         View dialogView = inflater.inflate(R.layout.frag_area, container, false);
@@ -112,8 +112,6 @@ public class ChooseAreaDialog extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
-
         initData();
 
         lvArea.setOnItemClickListener((parent, view, position, id) -> {
@@ -133,8 +131,10 @@ public class ChooseAreaDialog extends DialogFragment {
                     County county = mCountyList.get(position);
                     titleArea.setText(county.name);
                     Log.d(TAG, "post --> " + county.toString());
-                    // 关闭地区选择 dialog, 发送消息到 WeatherFragment 显示天气
-                    RxBus.getBus().post(WeatherFragment.class, county);
+                    // 关闭地区选择 dialog, 发送消息到 weatherActivity 显示天气
+                    SPUtils.putString(ConstantValue.KEY_AREA, county.name);
+                    SPUtils.putString(ConstantValue.KEY_WEATHER_ID, county.weatherId);
+                    RxBus.getBus().post(TAG, county);
                     dismiss();
                     break;
                 default:
@@ -171,11 +171,11 @@ public class ChooseAreaDialog extends DialogFragment {
     // 获取省份数据，先从数据库查询，若不存在再从网络获取之后保存到数据库
     private void initProvince() {
         titleArea.setText("中国");
+        btnBack.setVisibility(View.GONE);
         mProvinceList = DataSupport.findAll(Province.class);
         mData.clear();
         if (mProvinceList != null && mProvinceList.size() > 0) { // 数据库中有数据
             Log.d(TAG, "从数据库获取省份数据");
-            Log.d(TAG, "db --> " + mProvinceList.toString());
             for (Province province : mProvinceList) {
                 mData.add(province.name);
             }
@@ -195,7 +195,6 @@ public class ChooseAreaDialog extends DialogFragment {
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(provinces -> {
-                        Log.d(TAG, "wrapper --> " + provinces.toString());
                         mProvinceList = provinces;
                         updateDataSet(LEVEL_PROVINCE);
                     });
@@ -219,7 +218,6 @@ public class ChooseAreaDialog extends DialogFragment {
         mData.clear();
         if (mCityList != null && mCityList.size() > 0) {
             Log.d(TAG, "从数据库获取城市数据");
-            Log.d(TAG, "db --> " + mCityList.toString());
             for (City city : mCityList) {
                 mData.add(city.name);
             }
@@ -228,9 +226,6 @@ public class ChooseAreaDialog extends DialogFragment {
             Log.d(TAG, "从网络获取城市数据");
             showDialog();
             mWeatherModel.getCities(province.id)
-                    .doOnNext(cities -> {
-                        Log.d(TAG, "original --> " + cities.toString());
-                    })
                     .subscribeOn(Schedulers.io())
                     .filter(cities -> cities != null && cities.size() > 0)
                     .doOnNext(cities -> {
@@ -243,7 +238,6 @@ public class ChooseAreaDialog extends DialogFragment {
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(cities -> {
-                        Log.d(TAG, "wrapper --> " + cities.toString());
                         mCityList = cities;
                         updateDataSet(LEVEL_CITY);
                     });
@@ -259,7 +253,6 @@ public class ChooseAreaDialog extends DialogFragment {
         mData.clear();
         if (mCountyList != null && mCountyList.size() > 0) {
             Log.d(TAG, "从数据库获取地区数据");
-            Log.d(TAG, "db --> " + mCountyList.toString());
             for (County county : mCountyList) {
                 mData.add(county.name);
             }
@@ -268,9 +261,6 @@ public class ChooseAreaDialog extends DialogFragment {
             Log.d(TAG, "从网络获取地区数据");
             showDialog();
             mWeatherModel.getCounties(city.provinceId, city.cityCode)
-                    .doOnNext(counties -> {
-                        Log.d(TAG, "original --> " + counties.toString());
-                    })
                     .subscribeOn(Schedulers.io())
                     .filter(counties -> counties != null && counties.size() > 0)
                     .doOnNext(counties -> {
@@ -282,7 +272,6 @@ public class ChooseAreaDialog extends DialogFragment {
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(counties -> {
-                        Log.d(TAG, "wrapper --> " + counties.toString());
                         mCountyList = counties;
                         updateDataSet(LEVEL_COUNTY);
                     });

@@ -55,5 +55,8 @@ public class WeatherModel {
             mWeakReference.clear();
             mWeakReference = null;
         }
+        if (mWeatherApiService != null) {
+            mWeatherApiService = null;
+        }
     }
 }
