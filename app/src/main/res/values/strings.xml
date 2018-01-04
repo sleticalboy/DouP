@@ -17,10 +17,17 @@
     <string name="video_desc">视频描述</string>
     <string name="weather">天气</string>
     <string name="nav_call">Call</string>
-    <string name="nav_friend">Friends</string>
+    <string name="nav_contacts">Contacts</string>
     <string name="nav_location">Location</string>
-    <string name="nav_mail">Mail</string>
+    <string name="nav_weather">Weather</string>
     <string name="nav_tasks">Tasks</string>
     <string name="my_name">Bin Lee</string>
     <string name="my_email">sleticalboy@gmail.com</string>
+    <!--天气-->
+    <string name="choose_area">选择地区：中国</string>
+    <string name="forecast">预报</string>
+    <string name="aqi">空气质量</string>
+    <string name="aqi_power">AQI指数</string>
+    <string name="pm2_5">PM2.5 指数</string>
+    <string name="live_suggestion">生活建议</string>
 </resources>
