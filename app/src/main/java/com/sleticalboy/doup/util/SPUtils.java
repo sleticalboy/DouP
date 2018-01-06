@@ -14,7 +14,8 @@ import com.sleticalboy.doup.DouApp;
 
 public class SPUtils {
 
-    private static SharedPreferences sInstance = PreferenceManager.getDefaultSharedPreferences(DouApp.sContext);
+    private static SharedPreferences sInstance = PreferenceManager
+            .getDefaultSharedPreferences(DouApp.sReference.get());
 
     public static void putInt(String key, int value) {
         sInstance.edit().putInt(key, value).apply();
