@@ -20,6 +20,8 @@ import com.sleticalboy.doup.baidumap.search.poi.SearchInBoundActivity;
 import com.sleticalboy.doup.baidumap.search.poi.SearchInCityActivity;
 import com.sleticalboy.doup.baidumap.search.poi.SearchNearbyActivity;
 import com.sleticalboy.doup.baidumap.search.route.DrivingRouteSearchActivity;
+import com.sleticalboy.doup.baidumap.search.route.TransitRouteSearchActivity;
+import com.sleticalboy.doup.baidumap.search.route.WalkingRouteSearchActivity;
 import com.sleticalboy.doup.util.ToastUtils;
 
 /**
@@ -44,6 +46,8 @@ public class MapListActivity extends ListActivity {
             new ItemHolder(SearchInCityActivity.class, "在城市内搜索"),
             new ItemHolder(SearchNearbyActivity.class, "周边搜索"),
             new ItemHolder(DrivingRouteSearchActivity.class, "驾车路线搜索"),
+            new ItemHolder(TransitRouteSearchActivity.class, "换乘路线搜索"),
+            new ItemHolder(WalkingRouteSearchActivity.class, "步行路线搜索"),
     };
 
 

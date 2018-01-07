@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     //CrashHandler实例
     private static CrashHandler instance;
+
+    private WeakReference<Context> mReference;
+
     //程序的Context对象
     private Context mContext;
     //用来存储设备信息和异常信息
@@ -68,7 +72,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 初始化
      */
     public void init(Context context) {
-        mContext = context;
+        mReference = new WeakReference<>(context);
+        mContext = mReference.get();
         //获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         //设置 CrashHandler 为该程序的默认处理器
@@ -209,7 +214,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 目前只将log日志保存在sdcard 和输出到LogCat中，并未发送给后台。
      */
     private void sendCrashLog2PM(String fileName) {
-        // TODO: 11/9/17 upload2Server()
+        // TODO: 11/9/17 上传文件到服务器
         if (!new File(fileName).exists()) {
             Toast.makeText(mContext, "日志文件不存在！", Toast.LENGTH_SHORT).show();
             return;

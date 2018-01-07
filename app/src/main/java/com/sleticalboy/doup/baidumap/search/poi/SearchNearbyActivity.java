@@ -2,7 +2,7 @@ package com.sleticalboy.doup.baidumap.search.poi;
 
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
-import com.sleticalboy.doup.baidumap.location.LocationManager;
+import com.sleticalboy.doup.baidumap.LocationManager;
 import com.sleticalboy.doup.baidumap.search.BasePoiSearchActivity;
 
 /**

@@ -48,7 +48,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="4wtjH4RhtyFgMGaSwYG8NZuaD0148Wsh"/>
 
-        <activity android:name=".baidumap.MapActivity">
+        <activity android:name=".baidumap.MapListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -71,9 +71,19 @@
             android:name=".activity.WeatherActivity"
             android:launchMode="singleTask"/>
 
-        <activity android:name=".baidumap.LocationActivity"/>
-
         <activity android:name=".MainActivity"/>
+
+        <activity android:name=".baidumap.MapActivity"/>
+        <activity android:name=".baidumap.location.LocationActivity"/>
+        <activity android:name=".baidumap.overlay.CircleOverlayActivity"/>
+        <activity android:name=".baidumap.overlay.TextOverlayActivity"/>
+        <activity android:name=".baidumap.overlay.MarkerOverlayActivity"/>
+        <activity android:name=".baidumap.search.poi.SearchInBoundActivity"/>
+        <activity android:name=".baidumap.search.poi.SearchInCityActivity"/>
+        <activity android:name=".baidumap.search.poi.SearchNearbyActivity"/>
+        <activity android:name=".baidumap.search.route.DrivingRouteSearchActivity"/>
+        <activity android:name=".baidumap.search.route.TransitRouteSearchActivity"/>
+        <activity android:name=".baidumap.search.route.WalkingRouteSearchActivity"/>
 
         <service
             android:name=".service.AutoUpdateService"

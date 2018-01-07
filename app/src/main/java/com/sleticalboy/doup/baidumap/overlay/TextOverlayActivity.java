@@ -5,7 +5,7 @@ import android.graphics.Color;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.TextOptions;
 import com.sleticalboy.doup.baidumap.BaseMapActivity;
-import com.sleticalboy.doup.baidumap.location.LocationManager;
+import com.sleticalboy.doup.baidumap.LocationManager;
 
 /**
  * Created by Android Studio.

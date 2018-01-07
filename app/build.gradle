@@ -4,6 +4,15 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def keyStorePropertiesFile = rootProject.file('keystore.properties')
+def keyStoreProperties = new Properties()
+keyStoreProperties.load(new FileInputStream(keyStorePropertiesFile))
+
+def storeFilePath = keyStoreProperties['storeFile']
+def storePwd = keyStoreProperties['storePassword']
+def alias = keyStoreProperties['keyAlias']
+def keyPwd = keyStoreProperties['keyPassword']
+
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.3'
@@ -20,17 +29,17 @@ android {
     signingConfigs {
 
         debug {
-            storeFile file('/home/sleticalboy/.android/debug.keystore')
-            storePassword 'sleticalboy'
-            keyAlias 'baihuzi'
-            keyPassword 'sleticalboy'
+            storeFile file(storeFilePath)
+            storePassword storePwd
+            keyAlias alias
+            keyPassword keyPwd
         }
 
         release {
-            storeFile file('/home/sleticalboy/code/android/sleticalboy.jks')
-            storePassword 'sleticalboy'
-            keyAlias 'baihuzi'
-            keyPassword 'sleticalboy'
+            storeFile file(storeFilePath)
+            storePassword storePwd
+            keyAlias alias
+            keyPassword keyPwd
         }
     }
 

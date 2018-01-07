@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.baidumap.location;
+package com.sleticalboy.doup.baidumap;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -134,7 +134,7 @@ public class LocationManager {
      *
      * @param location 位置
      */
-    static void resolveLocation(BDLocation location) {
+    public static void resolveLocation(BDLocation location) {
 
         // 获取经纬度
         double latitude = location.getLatitude();

@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.sleticalboy.doup.baidumap.location.LocationActivity;
 import com.sleticalboy.doup.activity.WeatherActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
@@ -135,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
                     // TODO: 12/30/17 联系人列表 Activity
                     break;
                 case R.id.nav_location:
-                    // TODO: 12/30/17 地图 MapActivity
+                    LocationActivity.actionStart(this);
                     break;
                 case R.id.nav_weather:
-                    WeatherActivity.actionStart(MainActivity.this);
+                    WeatherActivity.actionStart(this);
                     break;
                 case R.id.nav_tasks:
                     // TODO: 12/30/17 todo list Activity

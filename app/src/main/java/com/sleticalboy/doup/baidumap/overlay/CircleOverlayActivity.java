@@ -4,7 +4,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.CircleOptions;
 import com.baidu.mapapi.map.Stroke;
 import com.sleticalboy.doup.baidumap.BaseMapActivity;
-import com.sleticalboy.doup.baidumap.location.LocationManager;
+import com.sleticalboy.doup.baidumap.LocationManager;
 
 /**
  * Created by Android Studio.

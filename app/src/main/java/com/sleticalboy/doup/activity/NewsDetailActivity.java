@@ -3,8 +3,6 @@ package com.sleticalboy.doup.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -14,17 +12,16 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.mvp.model.NewsModel;
 import com.sleticalboy.doup.mvp.model.bean.news.NewsDetailBean;
+import com.sleticalboy.doup.util.ImageLoader;
 import com.sleticalboy.doup.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -33,7 +30,6 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author sleticalboy
  */
-
 public class NewsDetailActivity extends BaseActivity {
 
     private static final String TAG = "NewsDetailActivity";
@@ -57,15 +53,18 @@ public class NewsDetailActivity extends BaseActivity {
     private NewsModel mNewsModel;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void initData() {
         Intent intent = getIntent();
         if (intent != null)
             id = intent.getIntExtra(ID, -1);
 
         mNewsModel = new NewsModel(this);
         getNewsDetail(String.valueOf(id));
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override
@@ -77,33 +76,11 @@ public class NewsDetailActivity extends BaseActivity {
         mNewsModel.getNewsDetail(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<NewsDetailBean>() {
-                    @Override
-                    public void accept(NewsDetailBean newsDetailBean) throws Exception {
-                        Log.d(TAG, newsDetailBean.title);
-                        initToolBar(newsDetailBean.title);
-                        showPage(newsDetailBean);
-                    }
+                .subscribe(newsDetailBean -> {
+                    Log.d(TAG, newsDetailBean.title);
+                    initToolBar(newsDetailBean.title);
+                    showPage(newsDetailBean);
                 });
-//                .subscribe(new Subscriber<NewsDetailBean>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        Toast.makeText(NewsDetailActivity.this, "加载完成", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(NewsDetailActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onNext(NewsDetailBean newsDetailBean) {
-//                        Log.d(TAG, newsDetailBean.title);
-//                        initToolBar(newsDetailBean.title);
-//                        showPage(newsDetailBean);
-//                    }
-//                });
     }
 
     // app bar
@@ -125,11 +102,7 @@ public class NewsDetailActivity extends BaseActivity {
     }
 
     private void initHeader(NewsDetailBean newsDetailBean) {
-        Glide.with(this)
-                .load(newsDetailBean.image)
-                .placeholder(R.mipmap.ic_launcher)
-                .centerCrop()
-                .into(newsImg);
+        ImageLoader.load(this, newsImg, newsDetailBean.image);
         newsTitle.setText(newsDetailBean.title);
         newsImgResource.setText(newsDetailBean.image_source);
     }

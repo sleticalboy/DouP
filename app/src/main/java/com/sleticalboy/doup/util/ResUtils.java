@@ -18,6 +18,6 @@ public class ResUtils {
      * @return resId 对应的字符串
      */
     public static String getString(int resId) {
-        return DouApp.sContext.getResources().getString(resId);
+        return DouApp.sReference.get().getResources().getString(resId);
     }
 }

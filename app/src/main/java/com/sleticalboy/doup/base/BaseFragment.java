@@ -78,7 +78,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
     /**
      * 绑定布局文件
      *
-     * @return 布局文件 id
+     * @return 布局文件 weatherId
      */
     protected abstract int attachLayout();
 

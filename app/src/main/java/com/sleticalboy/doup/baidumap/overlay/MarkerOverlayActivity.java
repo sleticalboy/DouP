@@ -14,7 +14,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.baidumap.BaseMapActivity;
-import com.sleticalboy.doup.baidumap.location.LocationManager;
+import com.sleticalboy.doup.baidumap.LocationManager;
 
 /**
  * Created by Android Studio.

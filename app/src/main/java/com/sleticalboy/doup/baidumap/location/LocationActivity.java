@@ -4,14 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.Poi;
 import com.sleticalboy.doup.BuildConfig;
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.baidumap.LocationManager;
 import com.sleticalboy.doup.base.BaseActivity;
+import com.sleticalboy.doup.util.LogUtils;
 import com.sleticalboy.doup.util.RxBus;
 
 import java.util.List;
@@ -49,69 +50,87 @@ public class LocationActivity extends BaseActivity {
                 LocationManager.resolveLocation(location);
             }
 
-            StringBuilder builder = new StringBuilder();
+            ////////////////////////////////////////////
 
-            // 获取经纬度
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
+            //Receive Location
+            StringBuilder builder = new StringBuilder(256);
+            builder.append("time : ");
+            builder.append(location.getTime());
+            builder.append("\nerror code : ");
+            builder.append(location.getLocType());
+            builder.append("\nlatitude : ");
+            builder.append(location.getLatitude());
+            builder.append("\nlongitude : ");
+            builder.append(location.getLongitude());
+            builder.append("\nradius : ");
+            builder.append(location.getRadius());
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+                builder.append("\nspeed : ");
+                builder.append(location.getSpeed());// 单位：公里每小时
+                builder.append("\nsatellite : ");
+                builder.append(location.getSatelliteNumber());
+                builder.append("\nheight : ");
+                builder.append(location.getAltitude());// 单位：米
+                builder.append("\ndirection : ");
+                builder.append(location.getDirection());// 单位度
+                builder.append("\naddr : ");
+                builder.append(location.getAddrStr());
+                builder.append("\ndescribe : ");
+                builder.append("gps定位成功");
 
-            builder.append("original data --> \n");
-            builder.append("latitude = ").append(latitude).append("\n");
-            builder.append("longitude = ").append(longitude).append("\n");
-
-            if (latitude == LocationManager.ERROR_LATITUDE && longitude == LocationManager.ERROR_LONGITUDE) {
-                builder.append("after wrap --> \n");
-                location.setLatitude(LocationManager.TAM_LATITUDE);
-                location.setLongitude(LocationManager.TAM_LONGITUDE);
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                builder.append("latitude = ").append(latitude).append("\n");
-                builder.append("longitude = ").append(longitude).append("\n");
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+                builder.append("\naddr : ");
+                builder.append(location.getAddrStr());
+                //运营商信息
+                builder.append("\noperationers : ");
+                builder.append(location.getOperators());
+                builder.append("\ndescribe : ");
+                builder.append("网络定位成功");
+            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
+                builder.append("\ndescribe : ");
+                builder.append("离线定位成功，离线定位结果也是有效的");
+            } else if (location.getLocType() == BDLocation.TypeServerError) {
+                builder.append("\ndescribe : ");
+                builder.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
+                builder.append("\ndescribe : ");
+                builder.append("网络不同导致定位失败，请检查网络是否通畅");
+            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
+                builder.append("\ndescribe : ");
+                builder.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
             }
-
-
-            // 获取地址信息
-            builder.append("address = ").append(location.getAddrStr()).append("\n");
-            builder.append("country = ").append(location.getCountry()).append("\n");
-            builder.append("province = ").append(location.getProvince()).append("\n");
-            builder.append("city = ").append(location.getCity()).append("\n");
-            builder.append("district = ").append(location.getDistrict()).append("\n");
-            builder.append("street = ").append(location.getStreet()).append("\n");
-
-            // 获取位置描述
-            builder.append("describe = ").append(location.getLocationDescribe()).append("\n");
-
-            // 获取周边 poi
-            List<Poi> poiList = location.getPoiList();
-            if (poiList != null && poiList.size() > 0) {
-                for (Poi poi : poiList) {
-                    builder.append("poi.id = ").append(poi.getId()).append("\n");
-                    builder.append("poi.rank = ").append(poi.getRank()).append("\n");
-                    builder.append("poi.name = ").append(poi.getName()).append("\n");
+            builder.append("\nlocationdescribe : ");
+            builder.append(location.getLocationDescribe());// 位置语义化信息
+            List<Poi> list = location.getPoiList();// POI数据
+            if (list != null) {
+                builder.append("\npoilist size = : ");
+                builder.append(list.size());
+                for (Poi p : list) {
+                    builder.append("\npoi= : ");
+                    builder.append(p.getId() + " " + p.getName() + " " + p.getRank());
                 }
             }
+            /////////////////////////////////////////////
 
             // 国内外信息
             // BDLocation.LOCATION_WHERE_IN_CN：当前定位点在国内；
             // BDLocation.LOCATION_WHERE_OUT_CN：当前定位点在海外；
             // 其他：无法判定。
             int where = location.getLocationWhere();
-            builder.append("位置：");
+            builder.append("\n位置：");
             switch (where) {
                 case BDLocation.LOCATION_WHERE_IN_CN:
-                    Log.d(TAG, "国内");
                     builder.append("国内");
                     break;
                 case BDLocation.LOCATION_WHERE_OUT_CN:
-                    Log.d(TAG, "国外");
                     builder.append("国外");
                     break;
                 case BDLocation.LOCATION_WHERE_UNKNOW:
                 default:
-                    Log.d(TAG, "未知位置");
                     builder.append("未知位置");
                     break;
             }
+            LogUtils.d(TAG, "location info --> " + builder.toString());
             tvShowInfo.setText(builder.toString());
         });
     }

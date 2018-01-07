@@ -110,6 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@mipmap/arrow_up"
+        android:visibility="gone"
         app:elevation="8dp"
         app:layout_anchor="@id/ll_location"
         app:layout_anchorGravity="bottom|end"/>

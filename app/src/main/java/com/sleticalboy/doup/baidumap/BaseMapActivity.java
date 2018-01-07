@@ -24,7 +24,6 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.baidumap.location.LocationManager;
 import com.sleticalboy.doup.util.LogUtils;
 import com.sleticalboy.doup.util.RxBus;
 import com.sleticalboy.doup.util.ToastUtils;
