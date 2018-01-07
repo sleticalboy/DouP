@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.baidumap;
+package com.sleticalboy.doup.baidumap.location;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
+import com.baidu.mapapi.model.LatLng;
 import com.sleticalboy.doup.BuildConfig;
 import com.sleticalboy.doup.util.RxBus;
 
@@ -19,18 +20,21 @@ import java.util.List;
  * Date: 1/4/18.
  *
  * @author sleticalboy
+ *         <p>
+ *         LocationManager
  */
 public class LocationManager {
 
     public static final String TAG = "LocationManager";
 
     // 天安门经纬度 116.403963,39.915119
-    private static final double TAM_LATITUDE = 116.403963;
-    private static final double TAM_LONGITUDE = 39.915119;
+    public static final double TAM_LATITUDE = 39.915119;
+    public static final double TAM_LONGITUDE = 116.403963;
+    public static final LatLng TAM = new LatLng(TAM_LATITUDE, TAM_LONGITUDE);
 
     // latitude = 4.9E-324, longitude = 4.9E-324
-    private static final double ERROR_LATITUDE = 4.9E-324;
-    private static final double ERROR_LONGITUDE = ERROR_LATITUDE;
+    public static final double ERROR_LATITUDE = 4.9E-324;
+    public static final double ERROR_LONGITUDE = ERROR_LATITUDE;
 
     private static LocationManager sInstance;
 
@@ -45,6 +49,12 @@ public class LocationManager {
         return sInstance;
     }
 
+    /**
+     * 初始化
+     *
+     * @param context Context 对象
+     * @return LocationManager 对象
+     */
     @NonNull
     public LocationManager init(@NonNull Context context) {
         if (mLocationClient == null) {
@@ -190,12 +200,18 @@ public class LocationManager {
         }
     }
 
+    /**
+     * 开始定位
+     */
     public void start() {
         if (mLocationClient != null) {
             mLocationClient.start();
         }
     }
 
+    /**
+     * 结束定位
+     */
     public void stop() {
         if (mLocationClient != null) {
             mLocationClient.stop();
@@ -220,30 +236,12 @@ public class LocationManager {
                 Log.d(TAG, "after redirect --> latitude = " + latitude + ", longitude = " + longitude);
             }
 
-            // 把回调到的 Location 对象 post 出去
+            // 把定位得到的 Location 结果 post 出去
             RxBus.getBus().post(TAG, location);
 
             if (BuildConfig.DEBUG) {
                 resolveLocation(location);
             }
         }
-
-        // 新版本才有的方法
-//        public void onConnectHotSpotMessage(String connectWifiMac, int hotSpotState) {
-//            super.onConnectHotSpotMessage(connectWifiMac, hotSpotState);
-//            // 在这个回调中，可获取当前设备所链接网络的类型、状态信息
-//            Log.d(TAG, connectWifiMac);
-//            switch (hotSpotState) {
-//                case LocationClient.CONNECT_HOT_SPOT_TRUE:
-//                    Log.d(TAG, "onConnectHotSpotMessage = 移动热点");
-//                    break;
-//                case LocationClient.CONNECT_HOT_SPOT_FALSE:
-//                    Log.d(TAG, "onConnectHotSpotMessage = 非移动热点");
-//                    break;
-//                case LocationClient.CONNECT_HOT_SPOT_UNKNOWN:
-//                    Log.d(TAG, "onConnectHotSpotMessage = 未知状态");
-//                    break;
-//            }
-//        }
     }
 }
