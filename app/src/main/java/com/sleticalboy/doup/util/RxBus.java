@@ -18,7 +18,7 @@ import io.reactivex.subjects.Subject;
  */
 public class RxBus {
 
-    private ConcurrentHashMap<Object, List<Subject>> mSubjectContainer = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Object, List<Subject>> mSubjectBus = new ConcurrentHashMap<>();
 
     private RxBus() {
     }
@@ -35,10 +35,10 @@ public class RxBus {
 
     @NonNull
     public <T> Observable<T> register(@NonNull Object tag) {
-        List<Subject> subjectList = mSubjectContainer.get(tag);
+        List<Subject> subjectList = mSubjectBus.get(tag);
         if (subjectList == null) {
             subjectList = new ArrayList<>();
-            mSubjectContainer.put(tag, subjectList);
+            mSubjectBus.put(tag, subjectList);
         }
 
         Subject<T> subject = PublishSubject.create();
@@ -52,21 +52,32 @@ public class RxBus {
     }
 
     public void unregister(@NonNull Object tag, @NonNull Observable observable) {
-        List<Subject> subjectList = mSubjectContainer.get(tag);
+        List<Subject> subjectList = mSubjectBus.get(tag);
         if (subjectList != null) {
             subjectList.remove(observable);
             if (subjectList.isEmpty()) {
-                mSubjectContainer.remove(tag);
+                mSubjectBus.remove(tag);
             }
         }
     }
 
+    /**
+     * post 一条消息
+     *
+     * @param content 消息的主体内容
+     */
     public void post(@NonNull Object content) {
         post(content.getClass().getName(), content);
     }
 
+    /**
+     * post 一条消息
+     *
+     * @param tag     消息的 tag
+     * @param content 消息的主体内容
+     */
     public void post(@NonNull Object tag, @NonNull Object content) {
-        List<Subject> subjectList = mSubjectContainer.get(tag);
+        List<Subject> subjectList = mSubjectBus.get(tag);
         if (subjectList != null && !subjectList.isEmpty()) {
             for (Subject subject : subjectList) {
                 subject.onNext(content);

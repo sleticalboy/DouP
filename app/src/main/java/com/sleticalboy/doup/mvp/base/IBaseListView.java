@@ -8,12 +8,12 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public interface IBaseListView<T> extends IBaseView<T> {
+public interface IBaseListView<P> extends IBaseView<P> {
 
     /**
      * 设置适配器
      *
-     * @param dataList
+     * @param dataList 列表数据
      */
     void onSetAdapter(List<?> dataList);
 

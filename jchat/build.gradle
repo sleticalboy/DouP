@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+
+def keyStorePropertiesFile = rootProject.file('keystore.properties')
+def keyStoreProperties = new Properties()
+keyStoreProperties.load(new FileInputStream(keyStorePropertiesFile))
+
+def storeFilePath = keyStoreProperties['storeFile']
+def storePwd = keyStoreProperties['storePassword']
+def alias = keyStoreProperties['keyAlias']
+def keyPwd = keyStoreProperties['keyPassword']
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.3'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+
+        debug {
+            storeFile file(storeFilePath)
+            storePassword storePwd
+            keyAlias alias
+            keyPassword keyPwd
+        }
+
+        release {
+            storeFile file(storeFilePath)
+            storePassword storePwd
+            keyAlias alias
+            keyPassword keyPwd
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    implementation files('libs/jmessage-android_v2.4.1.jar')
+}

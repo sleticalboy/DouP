@@ -31,4 +31,5 @@
     <string name="pm2_5">PM2.5 指数</string>
     <string name="live_suggestion">生活建议</string>
     <string name="map_search_hint">搜地点、查公交、找路线</string>
+    <string name="search_hint">搜索</string>
 </resources>

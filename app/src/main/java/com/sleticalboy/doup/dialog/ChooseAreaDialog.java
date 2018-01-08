@@ -1,11 +1,12 @@
 package com.sleticalboy.doup.dialog;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,19 +88,30 @@ public class ChooseAreaDialog extends DialogFragment {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 自定义 Dialog 位置
-        Window dialogWindow = getDialog().getWindow();
-        assert dialogWindow != null;
-        WindowManager.LayoutParams params = dialogWindow.getAttributes();
-        dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-        params.y = 48;
-        dialogWindow.setAttributes(params);
+        Window window = getDialog().getWindow();
+        assert window != null;
 
-        View dialogView = inflater.inflate(R.layout.frag_area, container, false);
+        View dialogView = inflater.inflate(R.layout.dialog_choose_area, window.findViewById(android.R.id.content), false);
+
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
         unbinder = ButterKnife.bind(this, dialogView);
 
         initView();
 
         return dialogView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final Window window = getDialog().getWindow();
+        assert window != null;
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.dimAmount = 0.0f;
+        params.alpha = 0.9f;
+        window.setAttributes(params);
     }
 
     private void initView() {

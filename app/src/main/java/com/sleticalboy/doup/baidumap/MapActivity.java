@@ -1,25 +1,25 @@
 package com.sleticalboy.doup.baidumap;
 
-import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.overlayutil.PoiOverlay;
+import com.baidu.mapapi.search.poi.PoiResult;
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.dialog.MapSearchDialog;
 import com.sleticalboy.doup.util.LogUtils;
+import com.sleticalboy.doup.util.RxBus;
 import com.sleticalboy.doup.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Observable;
 
 /**
  * Created by Android Studio.
@@ -30,14 +30,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MapActivity extends BaseMapActivity {
 
     public static final String TAG = "MapActivity";
+    public static final String TAG_DIALOG = "tag_show_search_dialog";
+    public static final String TAG_POI_RESULT = "poi_result";
+    public static final String TAG_POI_DETAIL_RESULT = "poi_detail_result";
 
-    @BindView(R.id.map_view)
-    MapView mapView;
-
-    @BindView(R.id.img_user_icon)
-    CircleImageView imgUserIcon;
-    @BindView(R.id.et_search)
-    EditText etSearch;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
+    @BindView(R.id.btn_search)
+    ImageView btnSearch;
 
     @BindView(R.id.btn_common)
     Button btnCommon;
@@ -48,11 +48,14 @@ public class MapActivity extends BaseMapActivity {
     @BindView(R.id.btn_heat)
     Button btnHeat;
 
-    @BindView(R.id.btn_location)
-    ImageButton btnLocation;
+    @BindView(R.id.btn_zoom_out)
+    ImageButton btnZoomOut;
+    @BindView(R.id.btn_zoom_in)
+    ImageButton btnZoomIn;
 
-    @BindView(R.id.btn_navigation)
-    FloatingActionButton btnNavigation;
+    private int mCurLevel = DEFAUlT_LEVEL;
+    private MapSearchDialog mSearchDialog;
+    private Observable<PoiResult> mResultObservable;
 
 
     @Override
@@ -67,10 +70,11 @@ public class MapActivity extends BaseMapActivity {
     protected void init() {
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
-        // 显示比例尺
-        mapView.showScaleControl(true);
         // 隐藏缩放按钮
-        mapView.showZoomControls(false);
+        mMapView.showZoomControls(false);
+
+        mMapView.removeViewAt(1); // 移除 logo
+        mMapView.removeViewAt(2); // 移除比例尺
 
 //        // 旋转地图, 在原来的基础之上旋转
 //        float rotate = mBaiduMap.getMapStatus().rotate + 30;
@@ -85,69 +89,36 @@ public class MapActivity extends BaseMapActivity {
 //        // 隐藏指南针
 //        mBaiduMap.getUiSettings().setCompassEnabled(false);
 
-        // 获取最高缩放级别 20.0
-        Log.d(TAG, "mBaiduMap.getMaxZoomLevel():" + mBaiduMap.getMaxZoomLevel());
-        // 获取最小缩放级别 3.0
-        Log.d(TAG, "mBaiduMap.getMinZoomLevel():" + mBaiduMap.getMinZoomLevel());
-
-        // 对 marker 覆盖物添加点击事件
-        mBaiduMap.setOnMarkerClickListener(marker -> {
-            if (marker != null) {
-                final LatLng latLng = marker.getPosition();
-                // 将经纬度转换成屏幕上的点
-                mBaiduMap.getProjection().toScreenLocation(latLng);
-                ToastUtils.showToast(MapActivity.this, latLng.toString());
-            }
-            return false;
-        });
-
-        // 对 Marker 覆盖物添加拖拽事件
-        mBaiduMap.setOnMarkerDragListener(new BaiduMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDrag(Marker marker) {
-                LatLng position = marker.getPosition();
-                if (position != null) {
-                    String msg = "拖拽结束，新位置: latitude --> " + position.latitude
-                            + ", longitude --> " + position.longitude;
-                    LogUtils.d(TAG, "onMarkerDrag = " + msg);
-                    // 获取经纬度之后进行反向地理编码，获取具体的位置信息
-                    reverseGeoCode(position);
-                }
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                // 拖拽结束，确定了最终的位置，可以最一些后续的工作
-            }
-
-            @Override
-            public void onMarkerDragStart(Marker marker) {
-                // 开始拖拽
-            }
-        });
-
-        // 点击地图时触发的事件监听
-        mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                LogUtils.d(TAG, "latLng:" + latLng);
-                displayInfoWindow(latLng);
-            }
-
-            @Override
-            public boolean onMapPoiClick(MapPoi mapPoi) {
-                return false;
-            }
+        mResultObservable = RxBus.getBus().register(TAG_POI_RESULT);
+        mResultObservable.subscribe(result -> {
+            PoiOverlay overlay = new PoiOverlay(mBaiduMap);
+            overlay.setData(result);
+            mBaiduMap.setOnMarkerClickListener(overlay);
+            overlay.addToMap();
+            overlay.zoomToSpan();
         });
     }
 
-    @OnClick({R.id.btn_common, R.id.btn_satellite, R.id.btn_traffic, R.id.btn_heat})
+    @Override
+    protected void initView() {
+        mSearchDialog = new MapSearchDialog();
+    }
+
+    @OnClick({R.id.btn_common, R.id.btn_satellite, R.id.btn_traffic, R.id.btn_heat, R.id.btn_zoom_in,
+            R.id.btn_zoom_out, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-//            case R.id.btn_none:
-//                // 空白图层 节省流量，加载速度快
-//                mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NONE);
-//                break;
+            case R.id.tv_search:
+                showSearchDialog();
+                break;
+            case R.id.btn_zoom_out:
+                mCurLevel++;
+                updateZoomLevel(mCurLevel);
+                break;
+            case R.id.btn_zoom_in:
+                mCurLevel--;
+                updateZoomLevel(mCurLevel);
+                break;
             case R.id.btn_common:
                 // 普通地图 显示基础的道路地图，有道路，建筑物，绿地，河流等
                 mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
@@ -181,5 +152,53 @@ public class MapActivity extends BaseMapActivity {
                 }
                 break;
         }
+    }
+
+    private void showSearchDialog() {
+        if (mSearchDialog == null) {
+            mSearchDialog = new MapSearchDialog();
+        }
+        mSearchDialog.show(getSupportFragmentManager(), TAG_DIALOG);
+    }
+
+    /**
+     * 更新地图缩放级别
+     *
+     * @param level 缩放级别
+     */
+    private void updateZoomLevel(int level) {
+        if (level <= mBaiduMap.getMinZoomLevel()) {
+            btnZoomIn.setEnabled(false);
+            btnZoomIn.setAlpha(0.5f);
+            showToast("已经缩小至最小级别");
+        } else if (level >= mBaiduMap.getMaxZoomLevel()) {
+            btnZoomOut.setEnabled(false);
+            btnZoomOut.setAlpha(0.5f);
+            showToast("已放大至最大级别");
+        } else {
+            btnZoomOut.setEnabled(true);
+            btnZoomOut.setAlpha(1.0f);
+            btnZoomIn.setEnabled(true);
+            btnZoomIn.setAlpha(1.0f);
+            mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(level));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogUtils.d(TAG, "onPause() called");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtils.d(TAG, "onResume() called");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RxBus.getBus().unregister(TAG_POI_RESULT, mResultObservable);
     }
 }

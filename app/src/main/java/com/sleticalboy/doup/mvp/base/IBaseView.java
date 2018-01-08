@@ -6,7 +6,7 @@ package com.sleticalboy.doup.mvp.base;
  *
  * @author sleticalboy
  */
-public interface IBaseView<T> {
+public interface IBaseView<P> {
 
     /**
      * 显示加载动画
@@ -26,5 +26,5 @@ public interface IBaseView<T> {
     /**
      * 设置 presenter
      */
-    void setPresenter(T presenter);
+    void setPresenter(P presenter);
 }

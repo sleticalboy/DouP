@@ -2,7 +2,6 @@ package com.sleticalboy.doup;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,19 +10,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.sleticalboy.doup.baidumap.location.LocationActivity;
 import com.sleticalboy.doup.activity.WeatherActivity;
+import com.sleticalboy.doup.baidumap.MapListActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
@@ -63,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navMenu;
     @BindView(R.id.drawer)
     DrawerLayout drawer;
-    @BindView(R.id.tool_bar)
-    Toolbar toolBar;
 
     private List<Fragment> mFragments;
 
@@ -72,11 +69,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         }
 
         setContentView(R.layout.activity_main);
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        initActionBar();
+//        initActionBar();
         initNavMenu();
         initNavigator();
     }
@@ -99,17 +98,17 @@ public class MainActivity extends AppCompatActivity {
             switch (checkedId) {
                 case R.id.tab_index:
                     Log.d(TAG, "news");
-                    getSupportActionBar().setTitle(R.string.index);
+//                    getSupportActionBar().setTitle(R.string.index);
                     handleFragment(transaction, mFragments.get(0));
                     break;
                 case R.id.tab_meizi:
                     Log.d(TAG, "meizi");
-                    getSupportActionBar().setTitle(R.string.meizi);
+//                    getSupportActionBar().setTitle(R.string.meizi);
                     handleFragment(transaction, mFragments.get(1));
                     break;
                 case R.id.tab_eyes:
                     Log.d(TAG, "eye");
-                    getSupportActionBar().setTitle(R.string.open_eye);
+//                    getSupportActionBar().setTitle(R.string.open_eye);
                     handleFragment(transaction, mFragments.get(2));
                     break;
 //                case R.weatherId.tab_weather:
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     // TODO: 12/30/17 联系人列表 Activity
                     break;
                 case R.id.nav_location:
-                    LocationActivity.actionStart(this);
+                    MapListActivity.actionStart(this);
                     break;
                 case R.id.nav_weather:
                     WeatherActivity.actionStart(this);
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 初始化 ActionBar
     private void initActionBar() {
-        setSupportActionBar(toolBar);
+//        setSupportActionBar(toolBar);
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);

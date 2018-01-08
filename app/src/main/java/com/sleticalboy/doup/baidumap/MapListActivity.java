@@ -38,7 +38,7 @@ public class MapListActivity extends ListActivity {
 
     private ItemHolder[] mData = {
             new ItemHolder(LocationActivity.class, "基本定位"),
-            new ItemHolder(MapActivity.class, "基本地图图层"),
+            new ItemHolder(MapActivity.class, "基本地图"),
             new ItemHolder(CircleOverlayActivity.class, "圆形覆盖物"),
             new ItemHolder(TextOverlayActivity.class, "文字覆盖物"),
             new ItemHolder(MarkerOverlayActivity.class, "标志覆盖物"),
@@ -49,7 +49,6 @@ public class MapListActivity extends ListActivity {
             new ItemHolder(TransitRouteSearchActivity.class, "换乘路线搜索"),
             new ItemHolder(WalkingRouteSearchActivity.class, "步行路线搜索"),
     };
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +61,7 @@ public class MapListActivity extends ListActivity {
     }
 
     /**
-     * 检测 appkey 是否正确
+     * 检测百度地图 appkey 是否正确
      */
     private void registerSdkCheckReceiver() {
         mReceiver = new BroadcastReceiver() {
@@ -100,6 +99,13 @@ public class MapListActivity extends ListActivity {
         unregisterReceiver(mReceiver);
     }
 
+    public static void actionStart(Context context) {
+        context.startActivity(new Intent(context, MapListActivity.class));
+    }
+
+    /**
+     * 用于存储数据
+     */
     static class ItemHolder {
         public Class<?> clazz;
         public String name;
