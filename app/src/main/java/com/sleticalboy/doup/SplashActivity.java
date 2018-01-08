@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
             // 展示欢迎页
         } else {
-            MainActivity.actionStart(this);
+            StartActivity.actionStart(this);
         }
     }
 

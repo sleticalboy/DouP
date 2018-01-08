@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.jpush.android.ui.FullScreenView xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.jpush.android.ui.FullScreenView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/actionbarLayoutId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rlRichpushTitleBar"
@@ -16,44 +17,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/jpush_richpush_btn_selector" />
+            android:layout_marginStart="9dp"
+            android:background="@drawable/richpush_btn_selector"/>
 
         <ImageView
             android:id="@+id/imgView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imgRichpushBtnBack"
             android:layout_toRightOf="@id/imgRichpushBtnBack"
             android:clickable="false"
-            android:src="@drawable/jpush_ic_richpush_actionbar_divider" />
+            android:src="@drawable/jpush_ic_richpush_actionbar_divider"/>
 
         <TextView
             android:id="@+id/tvRichpushTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="5dp"
+            android:layout_marginStart="7dp"
+            android:layout_toEndOf="@id/imgView"
             android:layout_toRightOf="@id/imgView"
             android:clickable="false"
             android:text=" "
-            android:textSize="20sp"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="20sp"/>
     </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/pushPrograssBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:progress="0"
-        android:progressDrawable="@drawable/jpush_richpush_progressbar"
-        style="?android:attr/progressBarStyleHorizontal" />
+        android:progressDrawable="@drawable/richpush_progressbar"/>
+
     <WebView
+        android:id="@+id/fullWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fullWebView"
-        android:background="#000000" />
+        android:background="#000000"/>
 
 </cn.jpush.android.ui.FullScreenView>

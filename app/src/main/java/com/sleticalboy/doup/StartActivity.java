@@ -26,6 +26,7 @@ import com.sleticalboy.doup.baidumap.MapListActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
+import com.sleticalboy.doup.jpush.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "StartActivity";
 
     @BindView(R.id.rg_navigator)
     RadioGroup rgNavigator;
@@ -45,15 +46,6 @@ public class MainActivity extends AppCompatActivity {
     RadioButton tabMeizi;
     @BindView(R.id.tab_eyes)
     RadioButton tabEyes;
-//    @BindView(R.weatherId.tab_weather)
-//    RadioButton tabWeather;
-
-//    @BindView(R.weatherId.btn_back)
-//    TextView btnBack;
-//    @BindView(R.weatherId.tab_title)
-//    TextView tabTitle;
-//    @BindView(R.weatherId.about_me)
-//    TextView aboutMe;
 
     @BindView(R.id.fl_container)
     FrameLayout flContainer;
@@ -129,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
         navMenu.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_call:
-                    // TODO: 12/30/17 拨号
+                    // TODO: 1/8/18 测试极光推送
+                    MainActivity.actionStart(this);
                     break;
                 case R.id.nav_contacts:
                     // TODO: 12/30/17 联系人列表 Activity
@@ -223,6 +216,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void actionStart(Context context) {
-        context.startActivity(new Intent(context, MainActivity.class));
+        context.startActivity(new Intent(context, StartActivity.class));
     }
 }

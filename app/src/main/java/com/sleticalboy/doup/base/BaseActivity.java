@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.util.ActivityController;
 
 import butterknife.ButterKnife;
@@ -105,5 +106,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         unbinder.unbind();
         ActivityController.remove(this);
+    }
+
+    protected String urlPrefix() {
+        return getResources().getString(R.string.url_schema) + getResources().getString(R.string.url_middle);
     }
 }

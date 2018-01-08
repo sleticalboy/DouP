@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.sleticalboy.doup.jpush.JPushManager;
 
 import org.litepal.LitePal;
 
@@ -34,7 +35,12 @@ public class DouApp extends Application {
         super.onCreate();
         Log.d(TAG, "onCreate() called");
         sReference = new WeakReference<>(this);
+        init();
+    }
+
+    private void init() {
         SDKInitializer.initialize(this);
         LitePal.initialize(this);
+        JPushManager.getInstance().initialize(this);
     }
 }

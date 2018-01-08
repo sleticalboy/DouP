@@ -1,4 +1,38 @@
 <resources>
+
+    <!--start url prefix-->
+    <string name="url_schema">doup</string>
+    <string name="url_middle">://</string>
+    <!--end url prefix-->
+
+    <!--start main module-->
+    <string name="host_main">main</string>
+    <string name="path_start">/startActivity</string>
+    <!--end main module-->
+
+    <!--start jchat module-->
+    <string name="host_im">jim</string>
+    <!--end jchat module-->
+
+    <!--start jpush module-->
+    <string name="host_jpush">jpush</string>
+    <string name="path_main">/mainActivity</string>
+    <!--end jpush module-->
+
+    <!--start 极光-->
+    <string name="hello">Hello World, JPush!</string>
+    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
+    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
+    <string name="style_hint">style为数字</string>
+    <string name="error_style_empty">style不能为空</string>
+    <string name="error_alias_empty">alias不能为空</string>
+    <string name="error_tag_empty">tag不能为空</string>
+    <string name="error_tag_gs_empty">格式不对</string>
+    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
+    <string name="logining">程序在后台执行, 请查看日志！</string>
+    <string name="setting_su">设置成功</string>
+    <!--end 极光-->
+
     <string name="app_name">豆皮</string>
     <string name="about_me">About Me</string>
     <string name="meizi">妹子</string>
