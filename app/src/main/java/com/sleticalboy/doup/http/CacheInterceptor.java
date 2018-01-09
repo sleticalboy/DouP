@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.sleticalboy.doup.util.CommonUtils;
+import com.sleticalboy.util.CommonUtils;
 
 import java.io.IOException;
 

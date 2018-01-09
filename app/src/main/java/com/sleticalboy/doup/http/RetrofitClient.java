@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.sleticalboy.doup.util.CommonUtils;
+import com.sleticalboy.util.CommonUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

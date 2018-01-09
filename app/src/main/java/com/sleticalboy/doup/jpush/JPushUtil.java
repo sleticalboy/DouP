@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -29,29 +28,32 @@ public class JPushUtil {
     public static final String KEY_APP_KEY = "JPUSH_APPKEY";
 
     public static boolean isEmpty(String s) {
-        if (null == s)
-            return true;
-        if (s.length() == 0)
-            return true;
-        if (s.trim().length() == 0)
-            return true;
-        return false;
+        return s == null || s.length() == 0 || s.trim().length() == 0;
     }
 
-    // 校验Tag Alias 只能是数字,英文字母和中文
+    /**
+     * 校验Tag Alias 只能是数字,英文字母和中文
+     *
+     * @param s 要校验的字符串
+     * @return true 符合规则，否则false
+     */
     public static boolean isValidTagAndAlias(String s) {
         Pattern p = Pattern.compile("^[\u4E00-\u9FA50-9a-zA-Z_!@#$&*+=.|]+$");
         Matcher m = p.matcher(s);
         return m.matches();
     }
 
-    // 取得AppKey
+    /**
+     * 取得 AppKey
+     *
+     * @return appkey
+     */
     public static String getAppKey(Context context) {
         Bundle metaData = null;
         String appKey = null;
         try {
-            ApplicationInfo ai = context.getPackageManager().getApplicationInfo(
-                    context.getPackageName(), PackageManager.GET_META_DATA);
+            ApplicationInfo ai = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             if (null != ai)
                 metaData = ai.metaData;
             if (null != metaData) {
@@ -60,19 +62,23 @@ public class JPushUtil {
                     appKey = null;
                 }
             }
-        } catch (NameNotFoundException e) {
-
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
         return appKey;
     }
 
-    // 取得版本号
-    public static String GetVersion(Context context) {
+    /**
+     * 取得版本号
+     *
+     * @return 版本号
+     */
+    public static String getVersion(Context context) {
         try {
-            PackageInfo manager = context.getPackageManager().getPackageInfo(
-                    context.getPackageName(), 0);
+            PackageInfo manager = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
             return manager.versionName;
-        } catch (NameNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException e) {
             return "Unknown";
         }
     }
@@ -91,12 +97,13 @@ public class JPushUtil {
 
     public static boolean isConnected(Context context) {
         ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert conn != null;
         NetworkInfo info = conn.getActiveNetworkInfo();
         return (info != null && info.isConnected());
     }
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
-    public static String getImei(Context context, String imei) {
+    public static String getImei(Context context, String defValue) {
         String ret = null;
         try {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -108,12 +115,13 @@ public class JPushUtil {
         if (isReadableASCII(ret)) {
             return ret;
         } else {
-            return imei;
+            return defValue;
         }
     }
 
     private static boolean isReadableASCII(CharSequence string) {
-        if (TextUtils.isEmpty(string)) return false;
+        if (TextUtils.isEmpty(string))
+            return false;
         try {
             Pattern p = Pattern.compile("[\\x20-\\x7E]+");
             return p.matcher(string).matches();

@@ -286,10 +286,10 @@ public class TagAliasOperatorHelper {
     }
 
     public static class TagAliasBean {
-        int action;
-        Set<String> tags;
-        String alias;
-        boolean isAliasAction;
+        public int action;
+        public Set<String> tags;
+        public String alias;
+        public boolean isAliasAction;
 
         @Override
         public String toString() {

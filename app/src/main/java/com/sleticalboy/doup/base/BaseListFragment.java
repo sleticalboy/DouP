@@ -3,10 +3,8 @@ package com.sleticalboy.doup.base;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.sleticalboy.doup.mvp.base.IBaseListView;
-import com.sleticalboy.doup.mvp.base.IBasePresenter;
-import com.sleticalboy.doup.util.RxBus;
-import com.sleticalboy.doup.util.ToastUtils;
+import com.sleticalboy.util.RxBus;
+import com.sleticalboy.util.ToastUtils;
 
 import io.reactivex.Observable;
 import me.drakeet.multitype.Items;

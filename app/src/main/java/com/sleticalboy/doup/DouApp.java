@@ -10,7 +10,8 @@ import android.util.Log;
 import com.baidu.mapapi.SDKInitializer;
 import com.sleticalboy.doup.jchat.JChatManager;
 import com.sleticalboy.doup.jpush.JPushManager;
-import com.sleticalboy.doup.util.CrashHandler;
+import com.sleticalboy.doup.module.main.StartActivity;
+import com.sleticalboy.util.CrashHandler;
 
 import org.litepal.LitePal;
 

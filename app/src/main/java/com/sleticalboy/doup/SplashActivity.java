@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.sleticalboy.doup.util.ConstantValue;
-import com.sleticalboy.doup.util.SPUtils;
+import com.sleticalboy.doup.base.config.ConstantValue;
+import com.sleticalboy.doup.module.main.StartActivity;
+import com.sleticalboy.util.SPUtils;
 
 /**
  * Created by Android Studio.
@@ -22,7 +23,8 @@ public class SplashActivity extends AppCompatActivity {
         boolean isFirst = SPUtils.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
         if (isFirst) {
             SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
-            // 展示欢迎页
+            // 展示欢迎页之后进入主页面
+            StartActivity.actionStart(this);
         } else {
             StartActivity.actionStart(this);
         }

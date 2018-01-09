@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 
 import com.sleticalboy.doup.BuildConfig;
+import com.sleticalboy.doup.jpush.receiver.MyJPushMessageReceiver;
+import com.sleticalboy.util.LogUtils;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.service.PushReceiver;
@@ -23,7 +25,6 @@ public class JPushManager {
     private static final Object sLock = new Object();
 
     private static JPushManager sInstance;
-    private Context mContext;
 
     private JPushManager() {
     }
@@ -40,7 +41,7 @@ public class JPushManager {
     }
 
     public void initialize(@NonNull Context context) {
-        mContext = context;
+        LogUtils.d(TAG, "initialize() called with: context = [" + context + "]");
         if (BuildConfig.DEBUG) {
             JPushInterface.setDebugMode(true);
         } else {
@@ -54,8 +55,8 @@ public class JPushManager {
      *
      * @param name Component name
      */
-    public void enable(ComponentName name) {
-        PackageManager pm = mContext.getPackageManager();
+    public void enable(Context context, ComponentName name) {
+        PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(name,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
@@ -66,8 +67,8 @@ public class JPushManager {
      *
      * @param name Component name
      */
-    public void disable(ComponentName name) {
-        PackageManager pm = mContext.getPackageManager();
+    public void disable(Context context, ComponentName name) {
+        PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(name,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
@@ -76,24 +77,24 @@ public class JPushManager {
     /**
      * 开启机关通知
      */
-    public void enableReceiver() {
-        enable(new ComponentName(mContext, PushReceiver.class));
-        enable(new ComponentName(mContext, MyJPushMessageReceiver.class));
+    public void enableReceiver(Context context) {
+        enable(context, new ComponentName(context, PushReceiver.class));
+        enable(context, new ComponentName(context, MyJPushMessageReceiver.class));
     }
 
     /**
      * 关闭极光通知
      */
-    public void disableReceiver() {
-        disable(new ComponentName(mContext, PushReceiver.class));
-        disable(new ComponentName(mContext, MyJPushMessageReceiver.class));
+    public void disableReceiver(Context context) {
+        disable(context, new ComponentName(context, PushReceiver.class));
+        disable(context, new ComponentName(context, MyJPushMessageReceiver.class));
     }
 
-    public void onResume() {
-        JPushInterface.onResume(mContext);
+    public void onResume(Context context) {
+        JPushInterface.onResume(context);
     }
 
-    public void onPause() {
-        JPushInterface.onPause(mContext);
+    public void onPause(Context context) {
+        JPushInterface.onPause(context);
     }
 }

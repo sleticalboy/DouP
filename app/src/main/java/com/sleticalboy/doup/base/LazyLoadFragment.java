@@ -3,8 +3,6 @@ package com.sleticalboy.doup.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.sleticalboy.doup.mvp.base.IBasePresenter;
-
 /**
  * Created by Android Studio.
  * Date: 1/4/18.

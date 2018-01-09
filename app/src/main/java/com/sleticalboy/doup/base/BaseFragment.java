@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sleticalboy.doup.mvp.base.IBasePresenter;
-import com.sleticalboy.doup.mvp.base.IBaseView;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 

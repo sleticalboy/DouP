@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.util.ActivityController;
+import com.sleticalboy.util.ActivityController;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

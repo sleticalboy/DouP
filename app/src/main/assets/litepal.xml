@@ -3,8 +3,8 @@
     <dbname value="douP"/>
     <version value="1"/>
     <list>
-        <mapping class="com.sleticalboy.doup.mvp.model.bean.weather.Province"/>
-        <mapping class="com.sleticalboy.doup.mvp.model.bean.weather.City"/>
-        <mapping class="com.sleticalboy.doup.mvp.model.bean.weather.County"/>
+        <mapping class="com.sleticalboy.doup.model.weather.Province"/>
+        <mapping class="com.sleticalboy.doup.model.weather.City"/>
+        <mapping class="com.sleticalboy.doup.model.weather.County"/>
     </list>
 </litepal>
