@@ -20,6 +20,20 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# start 百度地图
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**
+# end 百度地图
+
+# start 极光推送
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+# end 极光推送

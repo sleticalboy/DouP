@@ -3,17 +3,14 @@ package com.sleticalboy.doup.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -25,12 +22,6 @@ public class AboutMeActivity extends BaseActivity {
 
     private static final String GIT_HUB = "https://www.github.com/sleticalboy";
 
-    @BindView(R.id.btn_back)
-    TextView btnBack;
-    @BindView(R.id.tab_title)
-    TextView tabTitle;
-    @BindView(R.id.about_me)
-    TextView aboutMe;
     @BindView(R.id.web_view)
     WebView webView;
 
@@ -59,18 +50,10 @@ public class AboutMeActivity extends BaseActivity {
     }
 
     private void initHeader() {
-        aboutMe.setVisibility(View.GONE);
-        tabTitle.setText(R.string.about_me);
     }
 
     public static void startAction(Context context) {
         Intent intent = new Intent(context, AboutMeActivity.class);
         context.startActivity(intent);
     }
-
-    @OnClick(R.id.btn_back)
-    public void onViewClicked() {
-        finish();
-    }
-
 }

@@ -11,7 +11,6 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-
 public class ActivityController {
 
     private static List<Activity> sActivityList = new ArrayList<>();

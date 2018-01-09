@@ -1,13 +1,18 @@
 package com.sleticalboy.doup.util;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +27,6 @@ import java.io.Writer;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,35 +41,28 @@ import java.util.Map;
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private static final String TAG = "CrashHandler";
-    private static final String LOG_DIR = File.separator + "FirstLineLog" + File.separator;
+    private static final String LOG_DIR = File.separator + "DouPCrashLog" + File.separator;
 
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     //CrashHandler实例
-    private static CrashHandler instance;
+    private static CrashHandler sInstance = new CrashHandler();
 
     private WeakReference<Context> mReference;
 
-    //程序的Context对象
-    private Context mContext;
     //用来存储设备信息和异常信息
     private Map<String, String> infos = new HashMap<>();
     //用于格式化日期,作为日志文件名的一部分
-    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+//    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    private DateFormat formatter = DateFormat.getInstance();
 
-    /**
-     * 保证只有一个CrashHandler实例
-     */
+    private String mFileName;
+
     private CrashHandler() {
     }
 
-    /**
-     * 获取CrashHandler实例 ,单例模式
-     */
     public static CrashHandler getInstance() {
-        if (instance == null)
-            instance = new CrashHandler();
-        return instance;
+        return sInstance;
     }
 
     /**
@@ -73,7 +70,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      */
     public void init(Context context) {
         mReference = new WeakReference<>(context);
-        mContext = mReference.get();
         //获取系统默认的UncaughtException处理器
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         //设置 CrashHandler 为该程序的默认处理器
@@ -89,11 +85,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             //如果用户没有处理则让系统默认的异常处理器来处理
             mDefaultHandler.uncaughtException(thread, ex);
         } else {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                Log.e(TAG, "error : ", e);
-            }
+            SystemClock.sleep(3000);
             //退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
@@ -110,20 +102,38 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             return false;
         }
         //收集设备参数信息
-        collectDeviceInfo(mContext);
+        collectDeviceInfo(mReference.get());
 
         //使用Toast来显示异常信息
         new Thread() {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mReference.get(), "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         }.start();
         //保存日志文件
-        String fileName = saveCatchInfo2File(ex);
-        return fileName != null;
+        RxPermissions rxPermissions;
+        if (mReference.get() instanceof Activity) {
+            rxPermissions = new RxPermissions((Activity) mReference.get());
+            if (rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                mFileName = saveCatchInfo2File(ex);
+            } else {
+                rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .subscribe(granted -> {
+                            if (granted) {
+                                mFileName = saveCatchInfo2File(ex);
+                            } else {
+                                ToastUtils.showToast(mReference.get(), "没有授予相关权限");
+                            }
+                        });
+            }
+        } else {
+            throw new ClassCastException(mReference.get() + " cannot cast to android.os.Activity");
+        }
+
+        return mFileName != null;
     }
 
     /**
@@ -216,7 +226,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private void sendCrashLog2PM(String fileName) {
         // TODO: 11/9/17 上传文件到服务器
         if (!new File(fileName).exists()) {
-            Toast.makeText(mContext, "日志文件不存在！", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mReference.get(), "日志文件不存在！", Toast.LENGTH_SHORT).show();
             return;
         }
         FileInputStream fis = null;
@@ -227,7 +237,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             reader = new BufferedReader(new InputStreamReader(fis, "utf-8"));
             while (true) {
                 s = reader.readLine();
-                if (s == null) break;
+                if (s == null)
+                    break;
                 // 由于目前尚未确定以何种方式发送，所以先打出log日志。
                 Log.i("info", s);
             }
@@ -247,5 +258,22 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void uploadCrash2Server() {
+        // TODO: 1/9/18 将崩溃文件发送到服务器
+        File file = new File(mFileName);
+        // upload file to server
+        Log.d(TAG, file.getAbsolutePath());
+    }
+
+    /**
+     * 监听 app 崩溃
+     */
+    public interface OnCrashListener {
+        /**
+         * Called when the App crashing
+         */
+        void onCrash();
     }
 }

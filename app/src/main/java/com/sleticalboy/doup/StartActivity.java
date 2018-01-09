@@ -1,15 +1,19 @@
 package com.sleticalboy.doup;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -17,8 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sleticalboy.doup.activity.WeatherActivity;
@@ -26,40 +29,51 @@ import com.sleticalboy.doup.baidumap.MapListActivity;
 import com.sleticalboy.doup.fragment.eye.EyeFragment;
 import com.sleticalboy.doup.fragment.meizi.MeiziFragment;
 import com.sleticalboy.doup.fragment.news.NewsFragment;
-import com.sleticalboy.doup.jpush.MainActivity;
+import com.sleticalboy.doup.jpush.IndexActivity;
+import com.sleticalboy.doup.jpush.SettingsActivity;
+import com.sleticalboy.doup.util.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class StartActivity extends AppCompatActivity {
 
     private static final String TAG = "StartActivity";
 
-    @BindView(R.id.rg_navigator)
-    RadioGroup rgNavigator;
-    @BindView(R.id.tab_index)
-    RadioButton tabNews;
-    @BindView(R.id.tab_meizi)
-    RadioButton tabMeizi;
-    @BindView(R.id.tab_eyes)
-    RadioButton tabEyes;
-
     @BindView(R.id.fl_container)
     FrameLayout flContainer;
 
-    @BindView(R.id.nav_menu)
+    @BindView(R.id.nav_slide_menu)
     NavigationView navMenu;
     @BindView(R.id.drawer)
     DrawerLayout drawer;
+
+    @BindView(R.id.btn_change_theme)
+    TextView btnChangeTheme;
+    @BindView(R.id.btn_settings)
+    TextView btnSettings;
+    @BindView(R.id.btn_exit)
+    TextView btnExit;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.appbar_actionbar)
+    AppBarLayout appbarActionbar;
+    @BindView(R.id.bottom_nav)
+    BottomNavigationView bottomNav;
 
     private List<Fragment> mFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        checkAndRequestPermissions();
 
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
@@ -70,7 +84,7 @@ public class StartActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_start);
         ButterKnife.bind(this);
 
         initFragments();
@@ -78,51 +92,57 @@ public class StartActivity extends AppCompatActivity {
         initView();
     }
 
-    private void initView() {
-//        initActionBar();
-        initNavMenu();
-        initNavigator();
+    private void checkAndRequestPermissions() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        if (!rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                || !rxPermissions.isGranted(Manifest.permission.CAMERA)
+                || !rxPermissions.isGranted(Manifest.permission.READ_PHONE_STATE)) {
+            rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_PHONE_STATE)
+                    .subscribe(granted -> {
+                        if (!granted) {
+                            ToastUtils.showToast(this, "没有授予相关权限");
+                        }
+                    });
+        }
     }
 
-    private void initNavigator() {
-        rgNavigator.setOnCheckedChangeListener((group, checkedId) -> {
+    /**
+     * 初始化控件
+     */
+    private void initView() {
+        initActionBar();
+        initSlideNavigation();
+        initBottomNavigation();
+    }
+
+    private void initBottomNavigation() {
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            switch (checkedId) {
-                case R.id.tab_index:
-                    Log.d(TAG, "news");
-//                    getSupportActionBar().setTitle(R.string.index);
+            switch (item.getItemId()) {
+                case R.id.navigation_index:
                     handleFragment(transaction, mFragments.get(0));
                     break;
-                case R.id.tab_meizi:
-                    Log.d(TAG, "meizi");
-//                    getSupportActionBar().setTitle(R.string.meizi);
+                case R.id.navigation_meizi:
                     handleFragment(transaction, mFragments.get(1));
                     break;
-                case R.id.tab_eyes:
-                    Log.d(TAG, "eye");
-//                    getSupportActionBar().setTitle(R.string.open_eye);
+                case R.id.navigation_eye:
                     handleFragment(transaction, mFragments.get(2));
-                    break;
-//                case R.weatherId.tab_weather:
-//                    Log.d(TAG, "weather");
-//                    getSupportActionBar().setTitle(R.string.weather);
-//                    handleFragment(transaction, mFragments.get(3));
-//                    break;
-                default:
                     break;
             }
             transaction.commit();
+            return true;
         });
     }
 
     // 初始化侧滑菜单
-    private void initNavMenu() {
+    private void initSlideNavigation() {
         navMenu.setCheckedItem(R.id.nav_call);
         navMenu.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_call:
-                    // TODO: 1/8/18 测试极光推送
-                    MainActivity.actionStart(this);
+                    SettingsActivity.actionStart(this);
                     break;
                 case R.id.nav_contacts:
                     // TODO: 12/30/17 联系人列表 Activity
@@ -147,11 +167,11 @@ public class StartActivity extends AppCompatActivity {
 
     // 初始化 ActionBar
     private void initActionBar() {
-//        setSupportActionBar(toolBar);
+        setSupportActionBar(toolbar);
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setTitle(R.string.index);
+            supportActionBar.setTitle(R.string.app_name);
             supportActionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
         }
     }
@@ -185,7 +205,6 @@ public class StartActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fl_container, mFragments.get(0))
                 .commit();
-        tabNews.setChecked(true);
     }
 
     @Override
@@ -217,5 +236,23 @@ public class StartActivity extends AppCompatActivity {
 
     public static void actionStart(Context context) {
         context.startActivity(new Intent(context, StartActivity.class));
+    }
+
+    @OnClick({R.id.btn_change_theme, R.id.btn_settings, R.id.btn_exit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_change_theme:
+                ToastUtils.showToast(this, "change theme");
+                break;
+            case R.id.btn_settings:
+                // TODO: 1/8/18 测试极光推送
+                IndexActivity.actionStart(this);
+                break;
+            case R.id.btn_exit:
+                ToastUtils.showToast(this, "exit...");
+//                ActivityController.finishAll();
+//                android.os.Process.killProcess(android.os.Process.myPid());
+                break;
+        }
     }
 }

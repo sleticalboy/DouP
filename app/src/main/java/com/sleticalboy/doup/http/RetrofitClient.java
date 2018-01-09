@@ -35,7 +35,6 @@ public class RetrofitClient {
     private static OkHttpClient mOkHttpClient;
     private final Retrofit mRetrofit;
     private WeakReference<Context> mWeakReference;
-    private String mBaseUrl;
 
     private RetrofitClient(Context context, String baseUrl) {
         mWeakReference = new WeakReference<>(context);
@@ -57,7 +56,7 @@ public class RetrofitClient {
                 .cache(mCache)
                 .addNetworkInterceptor(new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY)) // 打印网络请求日志
-                .addInterceptor(new HttpUrlInterceptor()) // 动态改变 baseUrl
+                .addInterceptor(new UrlChangeInterceptor()) // 动态改变 baseUrl
                 .addInterceptor(new CacheInterceptor(mWeakReference.get())) // 缓存功能
                 .build();
 

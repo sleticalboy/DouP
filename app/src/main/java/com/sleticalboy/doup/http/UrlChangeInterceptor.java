@@ -17,7 +17,7 @@ import okhttp3.Response;
  *
  * @author sleticalboy
  */
-public class HttpUrlInterceptor implements Interceptor {
+public class UrlChangeInterceptor implements Interceptor {
 
     private static final String TAG = "HttpUrlInterceptor";
 

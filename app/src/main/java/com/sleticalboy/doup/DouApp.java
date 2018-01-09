@@ -2,10 +2,15 @@ package com.sleticalboy.doup;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Process;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.sleticalboy.doup.jchat.JChatManager;
 import com.sleticalboy.doup.jpush.JPushManager;
+import com.sleticalboy.doup.util.CrashHandler;
 
 import org.litepal.LitePal;
 
@@ -18,7 +23,7 @@ import java.lang.ref.WeakReference;
  * @author sleticalboy
  */
 
-public class DouApp extends Application {
+public class DouApp extends Application implements CrashHandler.OnCrashListener {
 
     private static final String TAG = "DouApp";
 
@@ -26,8 +31,9 @@ public class DouApp extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
         Log.d(TAG, "attachBaseContext() called with: base = [" + base + "]");
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     @Override
@@ -39,8 +45,30 @@ public class DouApp extends Application {
     }
 
     private void init() {
-        SDKInitializer.initialize(this);
+        // 初始化 LitePal
         LitePal.initialize(this);
+        // 初始化百度地图 sdk
+        SDKInitializer.initialize(this);
+        // 初始化极光推送
         JPushManager.getInstance().initialize(this);
+        // 初始化极光 IM
+        JChatManager.getInstance().initialize(this);
+    }
+
+    @Override
+    public void onCrash() {
+        restartApp();
+    }
+
+    /**
+     * 重新启动 app
+     */
+    private void restartApp() {
+        Intent intent = new Intent(this, StartActivity.class);
+        // 在新的任务栈中启动应用
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        // 干掉原有的进程
+        Process.killProcess(Process.myPid());
     }
 }
