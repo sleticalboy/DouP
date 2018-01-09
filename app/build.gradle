@@ -145,8 +145,8 @@ dependencies {
     implementation files('libs/baidumapapi_v3_5_0.jar')
 
     // 极光推送
-    implementation files('libs/jcore-android-1.1.8.jar')
-    implementation files('libs/jpush-android-3.1.0.jar')
+    implementation files('libs/jcore-android-1.1.9.jar')
+    implementation files('libs/jpush-android-3.1.1.jar')
 
     // 极光 IM
     implementation files('libs/jmessage-android_v2.4.1.jar')
