@@ -1,9 +1,9 @@
 # DouP
-一款业余练习的Android app
+一款业余练习的Android app。
 
 ## 项目简介
 
-一款聚合 APP，自己业余拿来练手的。`目前是传统的 MVC 模式`
+一款聚合 APP，自己业余拿来练习的。`目前是传统的 MVC 模式`
 
 ### 目前已实现的模块
 
@@ -14,29 +14,29 @@
   - 发现
 - 天气
 - 地图
+- 推送
 
 ### 尚在开发的模块
 
 - 开眼
   - 热门
 - 极光
-  - 推送
   - IM
 - todo list
 - Contacts
 
 ### 项目框架
 
-- 网络通讯：`Retrofit`
+- 网络通讯：`Retrofit2`、`OkHttp3`
 - 图片加载：`Glide`
 - 快速开发：`ButterKnife`
-- 响应式编程：`RxAndroid`
+- 响应式编程：`RxAndroid`、`RxJava2`
 - 视频播放： `GSYVideoPlayer`
 - 数据库： `LitePal`
 - 圆形图片： `CircleImageView`
-- 动态权限申请： `RxPermissions`
+- 动态权限申请： `RxPermissions2`
 
-### api 接口均来源于网络，如有侵权请及时通知
+### api 接口均来源于网络，如有侵权请及时通知删除
 
 - 知乎日报: http://news-at.zhihu.com/api/4/
   - 最新新闻：http://news-at.zhihu.com/api/4/news/latest
