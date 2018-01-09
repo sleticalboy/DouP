@@ -36,7 +36,7 @@ abstract public class BaseViewHolder<M> extends RecyclerView.ViewHolder {
     public void setData(M data) {
     }
 
-    protected <T extends View> T $(@IdRes int id) {
+    protected <T extends View> T dollar(@IdRes int id) {
         return (T) itemView.findViewById(id);
     }
 
