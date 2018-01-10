@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.http;
 
-import android.text.TextUtils;
+import com.sleticalboy.util.StrUtils;
 
 import okhttp3.Request;
 
@@ -13,7 +13,7 @@ import okhttp3.Request;
 public class HttpUtils {
 
     public static void request(String completeUrl, okhttp3.Callback callback) {
-        if (TextUtils.isEmpty(completeUrl) || callback == null)
+        if (StrUtils.isEmpty(completeUrl) || callback == null)
             throw new IllegalArgumentException("completeUrl or callback is null");
 
         Request request = new Request.Builder()

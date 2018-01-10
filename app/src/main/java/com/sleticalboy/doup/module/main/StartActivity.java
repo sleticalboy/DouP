@@ -1,6 +1,5 @@
 package com.sleticalboy.doup.module.main;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -23,13 +22,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.weather.WeatherActivity;
-import com.sleticalboy.doup.module.baidumap.MapListActivity;
-import com.sleticalboy.doup.module.openeye.fragment.OpeneyeFragment;
+import com.sleticalboy.doup.jpush.SettingsActivity;
+import com.sleticalboy.doup.jpush.activity.IndexActivity;
+import com.sleticalboy.doup.message.MessageFragment;
 import com.sleticalboy.doup.module.girl.GirlFragment;
 import com.sleticalboy.doup.module.home.NewsFragment;
-import com.sleticalboy.doup.jpush.activity.IndexActivity;
-import com.sleticalboy.doup.jpush.SettingsActivity;
+import com.sleticalboy.doup.module.openeye.fragment.OpeneyeFragment;
+import com.sleticalboy.doup.module.weather.WeatherActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -91,12 +90,12 @@ public class StartActivity extends AppCompatActivity {
 
     private void checkAndRequestPermissions() {
         RxPermissions rxPermissions = new RxPermissions(this);
-        if (!rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                || !rxPermissions.isGranted(Manifest.permission.CAMERA)
-                || !rxPermissions.isGranted(Manifest.permission.READ_PHONE_STATE)) {
-            rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.READ_PHONE_STATE)
+        if (!rxPermissions.isGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                || !rxPermissions.isGranted(android.Manifest.permission.CAMERA)
+                || !rxPermissions.isGranted(android.Manifest.permission.READ_PHONE_STATE)) {
+            rxPermissions.request(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.READ_PHONE_STATE)
                     .subscribe(granted -> {
                         if (!granted) {
                             ToastUtils.showToast(this, "没有授予相关权限");
@@ -128,6 +127,7 @@ public class StartActivity extends AppCompatActivity {
                     handleFragment(transaction, mFragments.get(2));
                     break;
                 case R.id.navigation_message:
+                    handleFragment(transaction, mFragments.get(3));
                     break;
             }
             transaction.commit();
@@ -144,10 +144,10 @@ public class StartActivity extends AppCompatActivity {
                     SettingsActivity.actionStart(this);
                     break;
                 case R.id.nav_contacts:
-                    // TODO: 12/30/17 联系人列表 Activity
+                    // TODO: 12/30/17 contact Activity
                     break;
                 case R.id.nav_location:
-                    MapListActivity.actionStart(this);
+                    // TODO: 1/10/18 map and location
                     break;
                 case R.id.nav_weather:
                     WeatherActivity.actionStart(this);
@@ -196,6 +196,7 @@ public class StartActivity extends AppCompatActivity {
         mFragments.add(new NewsFragment());
         mFragments.add(new GirlFragment());
         mFragments.add(new OpeneyeFragment());
+        mFragments.add(new MessageFragment());
 
         Log.d(TAG, mFragments.toString());
 

@@ -3,7 +3,6 @@ package com.sleticalboy.doup.module.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.home.adapter.NewsListAdapter;
 import com.sleticalboy.doup.model.NewsModel;
 import com.sleticalboy.doup.model.news.NewsBean;
+import com.sleticalboy.doup.module.home.adapter.NewsListAdapter;
 import com.sleticalboy.util.ToastUtils;
 
 import butterknife.BindView;
@@ -42,8 +41,6 @@ public class NewsFragment extends Fragment {
     RecyclerView rvNews;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    @BindView(R.id.fab_top)
-    FloatingActionButton fabTop;
 
     private int mLastVisibleItemPosition;
     private String mDate;
@@ -114,8 +111,6 @@ public class NewsFragment extends Fragment {
         });
 
         setSwipeRefreshLayout();
-
-        setFloatingActionButton();
     }
 
     // 初始化数据
@@ -151,17 +146,6 @@ public class NewsFragment extends Fragment {
                 srl.setRefreshing(false);
             }
         });
-    }
-
-    private void setFloatingActionButton() {
-        ToastUtils.showToast(getContext(), "返回顶部");
-        if (mLastVisibleItemPosition >= 16) {
-            fabTop.setVisibility(View.VISIBLE);
-        } else {
-            fabTop.setVisibility(View.GONE);
-        }
-        rvNews.scrollToPosition(0);
-        fabTop.setVisibility(View.GONE);
     }
 
     /**

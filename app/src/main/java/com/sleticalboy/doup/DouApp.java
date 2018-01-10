@@ -7,8 +7,6 @@ import android.os.Process;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.baidu.mapapi.SDKInitializer;
-import com.sleticalboy.doup.jchat.JChatManager;
 import com.sleticalboy.doup.jpush.JPushManager;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
@@ -48,12 +46,10 @@ public class DouApp extends Application implements CrashHandler.OnCrashListener 
     private void init() {
         // 初始化 LitePal
         LitePal.initialize(this);
-        // 初始化百度地图 sdk
-        SDKInitializer.initialize(this);
         // 初始化极光推送
         JPushManager.getInstance().initialize(this);
         // 初始化极光 IM
-        JChatManager.getInstance().initialize(this);
+//        JChatManager.getInstance().initialize(this);
     }
 
     @Override

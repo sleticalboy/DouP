@@ -13,20 +13,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
-    <!-- start 百度 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <!-- end 百度 -->
-
     <!-- start 极光 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="com.sleticalboy.doup.permission.JPUSH_MESSAGE"/>
     <!-- end 极光 -->
@@ -47,12 +36,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="4wtjH4RhtyFgMGaSwYG8NZuaD0148Wsh"/>
+        <!--<meta-data-->
+        <!--android:name=""-->
+        <!--android:value=""/>-->
 
         <!-- <activity android:name=".baidumap.MapListActivity"> -->
-        <activity android:name=".SplashActivity">
+        <activity android:name=".module.main.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -68,9 +57,9 @@
             <!--<data android:path="@string/path_start"/>-->
             <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".module.main.StartActivity"
-            android:launchMode="singleTask"/>
+        <!--<activity-->
+        <!--android:name=".module.main.StartActivity"-->
+        <!--android:launchMode="singleTask"/>-->
         <activity
             android:name=".module.home.NewsDetailActivity"
             android:theme="@style/NewsDetailTheme"/>
@@ -82,26 +71,10 @@
         <activity
             android:name=".module.weather.WeatherActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".module.baidumap.MapListActivity"/>
-        <activity android:name=".module.baidumap.MapActivity"/>
-        <activity android:name=".module.baidumap.location.LocationActivity"/>
-        <activity android:name=".module.baidumap.overlay.CircleOverlayActivity"/>
-        <activity android:name=".module.baidumap.overlay.TextOverlayActivity"/>
-        <activity android:name=".module.baidumap.overlay.MarkerOverlayActivity"/>
-        <activity android:name=".module.baidumap.search.poi.SearchInBoundActivity"/>
-        <activity android:name=".module.baidumap.search.poi.SearchInCityActivity"/>
-        <activity android:name=".module.baidumap.search.poi.SearchNearbyActivity"/>
-        <activity android:name=".module.baidumap.search.route.DrivingRouteSearchActivity"/>
-        <activity android:name=".module.baidumap.search.route.TransitRouteSearchActivity"/>
-        <activity android:name=".module.baidumap.search.route.WalkingRouteSearchActivity"/>
 
         <service
             android:name=".module.weather.service.AutoUpdateService"
             android:exported="false"/>
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote"/>
 
         <!-- start 极光 -->
         <!-- For test only 测试的主程序 -->

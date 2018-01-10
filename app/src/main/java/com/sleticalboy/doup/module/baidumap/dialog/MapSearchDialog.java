@@ -14,15 +14,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailResult;
-import com.baidu.mapapi.search.poi.PoiResult;
-import com.baidu.mapapi.search.poi.PoiSearch;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.baidumap.MapActivity;
-import com.sleticalboy.util.RxBus;
 import com.sleticalboy.util.ToastUtils;
 
 import butterknife.BindView;
@@ -114,23 +106,5 @@ public class MapSearchDialog extends DialogFragment {
             ToastUtils.showToast(getActivity(), "请输入关键字");
             return;
         }
-        PoiSearch poiSearch = PoiSearch.newInstance();
-        poiSearch.searchInCity(new PoiCitySearchOption().city("北京").keyword(keyWord).pageCapacity(10));
-        poiSearch.setOnGetPoiSearchResultListener(new OnGetPoiSearchResultListener() {
-            @Override
-            public void onGetPoiResult(PoiResult poiResult) {
-                if (poiResult == null || poiResult.error != SearchResult.ERRORNO.NO_ERROR) {
-                    ToastUtils.showToast(getActivity(), "没有搜索结果");
-                    return;
-                }
-                RxBus.getBus().post(MapActivity.TAG_POI_RESULT, poiResult);
-                dismiss();
-            }
-
-            @Override
-            public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
-
-            }
-        });
     }
 }

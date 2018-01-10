@@ -140,10 +140,6 @@ dependencies {
     // 简化版 Adapter
     implementation 'me.drakeet.multitype:multitype:3.3.3'
 
-    // 百度地图 定位 地图 导航
-    implementation files('libs/locSDK_6.05.jar')
-    implementation files('libs/baidumapapi_v3_5_0.jar')
-
     // 极光推送
     implementation files('libs/jcore-android-1.1.9.jar')
     implementation files('libs/jpush-android-3.1.1.jar')
