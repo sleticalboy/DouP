@@ -23,7 +23,7 @@ import java.lang.reflect.Field;
  *
  * @param <M>
  */
-abstract public class BaseViewHolder<M> extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<M> extends RecyclerView.ViewHolder {
 
     public BaseViewHolder(View itemView) {
         super(itemView);

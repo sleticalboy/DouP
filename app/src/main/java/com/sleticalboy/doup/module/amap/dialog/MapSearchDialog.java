@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.module.baidumap.dialog;
+package com.sleticalboy.doup.module.amap.dialog;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

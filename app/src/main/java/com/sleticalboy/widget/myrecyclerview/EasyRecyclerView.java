@@ -156,9 +156,9 @@ public class EasyRecyclerView extends FrameLayout {
         LayoutInflater.from(getContext()).inflate(progressView, mProgressView);
     }
 
-    public void setErrorView(int errorView) {
+    public void setErrorView(int errorLayoutId) {
         mErrorView.removeAllViews();
-        LayoutInflater.from(getContext()).inflate(errorView, mErrorView);
+        LayoutInflater.from(getContext()).inflate(errorLayoutId, mErrorView);
     }
 
     public void scrollToPosition(int position) {

@@ -25,8 +25,8 @@ public final class CacheInterceptor implements Interceptor {
     private static final String TAG = "CacheInterceptor";
     private final Context mContext;
 
-    public CacheInterceptor(Context context) {
-        mContext = context;
+    public CacheInterceptor(@NonNull Context context) {
+        mContext = context.getApplicationContext();
     }
 
     @Override
