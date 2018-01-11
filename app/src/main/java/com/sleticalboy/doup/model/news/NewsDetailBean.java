@@ -10,11 +10,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-
 public class NewsDetailBean extends BaseBean {
-    /**
-     *
-     */
 
     public String body;
     public String image_source;

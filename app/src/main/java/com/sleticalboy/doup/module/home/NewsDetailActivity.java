@@ -53,16 +53,6 @@ public class NewsDetailActivity extends BaseActivity {
     private NewsModel mNewsModel;
 
     @Override
-    protected void initData() {
-        Intent intent = getIntent();
-        if (intent != null)
-            id = intent.getIntExtra(ID, -1);
-
-        mNewsModel = new NewsModel(this);
-        getNewsDetail(String.valueOf(id));
-    }
-
-    @Override
     protected void initView() {
 
     }
@@ -70,6 +60,21 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected int attachLayout() {
         return R.layout.activity_news_detail;
+    }
+
+    @Override
+    protected void prepareTask() {
+        initData();
+    }
+
+    protected void initData() {
+        Intent intent = getIntent();
+        if (intent != null)
+            id = intent.getIntExtra(ID, -1);
+
+        // 数据层的
+        mNewsModel = new NewsModel(this);
+        getNewsDetail(String.valueOf(id));
     }
 
     private void getNewsDetail(String id) {

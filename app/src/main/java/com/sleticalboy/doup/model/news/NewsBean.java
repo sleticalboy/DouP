@@ -10,11 +10,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-
 public class NewsBean extends BaseBean {
-    /**
-     *
-     */
 
     public String date;
     public List<StoriesBean> stories;

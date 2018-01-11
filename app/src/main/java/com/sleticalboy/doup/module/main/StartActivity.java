@@ -3,7 +3,6 @@ package com.sleticalboy.doup.module.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.jpush.SettingsActivity;
 import com.sleticalboy.doup.jpush.activity.IndexActivity;
 import com.sleticalboy.doup.message.MessageFragment;
@@ -37,10 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends BaseActivity {
 
     private static final String TAG = "StartActivity";
 
@@ -67,9 +65,20 @@ public class StartActivity extends AppCompatActivity {
     private List<Fragment> mFragments;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected int attachLayout() {
+        return R.layout.activity_start;
+    }
 
+    @Override
+    protected void initView() {
+        initFragments();
+        initActionBar();
+        initSlideNavigation();
+        initBottomNavigation();
+    }
+
+    @Override
+    protected void prepareTask() {
         checkAndRequestPermissions();
 
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -80,13 +89,6 @@ public class StartActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
         }
-
-        setContentView(R.layout.activity_start);
-        ButterKnife.bind(this);
-
-        initFragments();
-
-        initView();
     }
 
     private void checkAndRequestPermissions() {
@@ -103,15 +105,6 @@ public class StartActivity extends AppCompatActivity {
                         }
                     });
         }
-    }
-
-    /**
-     * 初始化控件
-     */
-    private void initView() {
-        initActionBar();
-        initSlideNavigation();
-        initBottomNavigation();
     }
 
     private void initBottomNavigation() {

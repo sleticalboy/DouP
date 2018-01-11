@@ -26,13 +26,7 @@ public class AboutMeActivity extends BaseActivity {
     WebView webView;
 
     @Override
-    protected void initData() {
-        // do nothing
-    }
-
-    @Override
     protected void initView() {
-        initHeader();
         initWebView();
     }
 
@@ -47,9 +41,6 @@ public class AboutMeActivity extends BaseActivity {
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webView.loadUrl(GIT_HUB);
         webView.setWebViewClient(new WebViewClient());
-    }
-
-    private void initHeader() {
     }
 
     public static void startAction(Context context) {
