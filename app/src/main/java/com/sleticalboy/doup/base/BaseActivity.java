@@ -1,12 +1,15 @@
 package com.sleticalboy.doup.base;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.jpush.JPushManager;
 import com.sleticalboy.util.ActivityController;
 
 import butterknife.ButterKnife;
@@ -18,32 +21,30 @@ import butterknife.Unbinder;
  *
  * @author sleticalboy
  */
-
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static final String TAG = "BaseActivity";
+    public final String TAG = getClass().getSimpleName();
 
     protected Unbinder unbinder;
-//    protected int[] mInAndOutAnims;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActivityController.add(this);
-        setContentView(attachLayout());
 
+        prepareTask();
+
+        setContentView(attachLayout());
         unbinder = ButterKnife.bind(this);
 
         initView();
-
-        initData();
     }
 
     /**
-     * 初始化数据
+     * 做一些准备工作，对于某些页面需要有特殊处理，都放在此处处理。比如隐藏状态栏等。
      */
-    protected abstract void initData();
+    protected void prepareTask() {
+    }
 
     /**
      * 初始化控件
@@ -53,6 +54,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        JPushManager.getInstance().onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushManager.getInstance().onPause(this);
     }
 
     @Override
@@ -60,10 +68,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home)
             onBackPressed();
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void overridePendingTransition(int enterAnim, int exitAnim) {
     }
 
     /**
@@ -97,18 +101,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
         ActivityController.remove(this);
     }
 
-    protected String urlPrefix() {
+    /**
+     * 初始化 url 前缀
+     *
+     * @return url prefix: <code>doup://</code>
+     */
+    protected final String urlPre() {
         return getResources().getString(R.string.url_schema) + getResources().getString(R.string.url_middle);
+    }
+
+    public final String getJumpUrl(String module, String activity) {
+        return Uri.parse(urlPre() + module).toString() + activity;
+    }
+
+    public final String getTargetUrl(@StringRes int moduleNameResId, @StringRes int activityNameResId) {
+        return getJumpUrl(getString(moduleNameResId), getString(activityNameResId));
     }
 }

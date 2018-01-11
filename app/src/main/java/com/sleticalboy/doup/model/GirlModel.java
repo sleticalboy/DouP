@@ -2,12 +2,11 @@ package com.sleticalboy.doup.model;
 
 import android.content.Context;
 
+import com.sleticalboy.doup.base.BaseModel;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.GirlsApi;
 import com.sleticalboy.doup.model.girl.GirlBean;
-
-import java.lang.ref.WeakReference;
 
 import io.reactivex.Observable;
 
@@ -17,14 +16,13 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class GirlModel {
+public class GirlModel extends BaseModel {
 
-    private WeakReference<Context> mWeakReference;
     private GirlsApi mGirlsApiService;
 
     public GirlModel(Context context) {
-        mWeakReference = new WeakReference<>(context);
-        RetrofitClient client = RetrofitClient.getInstance(mWeakReference.get(), ApiConstant.BASE_MEIZI_URL);
+        super(context);
+        RetrofitClient client = RetrofitClient.getInstance(mReference.get(), ApiConstant.BASE_MEIZI_URL);
         mGirlsApiService = client.create(GirlsApi.class);
     }
 
@@ -32,10 +30,11 @@ public class GirlModel {
         return mGirlsApiService.getBeauty(page);
     }
 
+    @Override
     public void clear() {
-        if (mWeakReference != null) {
-            mWeakReference.clear();
-            mWeakReference = null;
+        super.clear();
+        if (mGirlsApiService != null) {
+            mGirlsApiService = null;
         }
     }
 }

@@ -1,24 +1,40 @@
 package com.sleticalboy.doup.base;
 
-import java.util.List;
+import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
 
 /**
- * Created by Android Studio.
- * Date: 1/3/18.
+ * <pre>
+ *   Created by Android Studio.
+ *     列表页面基类，包括：获取 RecyclerView、加载更多、没有更多
+ *   Date: 1/3/18.
+ * </pre>
  *
  * @author sleticalboy
  */
-public interface IBaseListView<P> extends IBaseView<P> {
+public interface IBaseListView extends IBaseView {
 
     /**
-     * 设置适配器
+     * 设置 adapter
      *
-     * @param dataList 列表数据
+     * @param adapter adapter 对象
      */
-    void onSetAdapter(List<?> dataList);
+//    设置 adapter、
+//    void setAdapter(RecyclerArrayAdapter adapter);
 
     /**
-     * 加载完毕
+     * 获取当前页面的 RecyclerView
+     *
+     * @return EasyRecyclerView 对象
      */
-    void onShowNoMore();
+    EasyRecyclerView getRecyclerView();
+
+    /**
+     * 没有更多数据时调用
+     */
+    void onNoMore(); // 对 footer 操作
+
+    /**
+     * 加载更多时调用
+     */
+    void onShowMore(); // 对 footer 操作
 }

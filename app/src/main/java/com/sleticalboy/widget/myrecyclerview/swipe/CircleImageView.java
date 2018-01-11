@@ -34,7 +34,7 @@ import android.view.animation.Animation;
  * called before the animation is actually complete and support shadows on older
  * platforms.
  */
-class CircleImageView extends AppCompatImageView {
+public class CircleImageView extends AppCompatImageView {
 
     private static final int KEY_SHADOW_COLOR = 0x1E000000;
     private static final int FILL_SHADOW_COLOR = 0x3D000000;

@@ -2,6 +2,7 @@ package com.sleticalboy.doup.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,18 +19,11 @@ import butterknife.Unbinder;
  * @author sleticalboy
  */
 
-public abstract class BaseFragment<T extends IBasePresenter> extends Fragment implements IBaseView<T> {
+public abstract class BaseFragment extends Fragment {
 
     public final String TAG = getClass().getSimpleName();
 
     private Unbinder mUnbinder;
-    protected T mPresenter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setPresenter(mPresenter);
-    }
 
     @Nullable
     @Override
@@ -44,12 +38,6 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
-    }
-
     /**
      * 初始化 ToolBar
      *
@@ -60,11 +48,6 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
     protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
         ((BaseActivity) getActivity()).initToolBar(toolbar, homeAsUpEnabled, title);
     }
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void initData();
 
     /**
      * 初始化控件
@@ -79,6 +62,19 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment im
      * @return 布局文件 weatherId
      */
     protected abstract int attachLayout();
+
+    /**
+     * 初始化 url 前缀
+     *
+     * @return url prefix: <code>doup://</code>
+     */
+    public final String urlPre() {
+        return ((BaseActivity) getActivity()).urlPre();
+    }
+
+    public final String getTargetUrl(@StringRes int moduleResId, @StringRes int activityResId) {
+        return ((BaseActivity) getActivity()).getTargetUrl(moduleResId, activityResId);
+    }
 
     @Override
     public void onDestroyView() {
