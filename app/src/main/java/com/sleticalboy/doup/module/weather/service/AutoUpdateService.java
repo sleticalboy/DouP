@@ -13,11 +13,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.sleticalboy.doup.base.config.ConstantValue;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.model.WeatherModel;
 import com.sleticalboy.doup.model.weather.WeatherBean;
-import com.sleticalboy.doup.base.config.ConstantValue;
 import com.sleticalboy.util.SPUtils;
 import com.sleticalboy.util.ToastUtils;
 
@@ -112,5 +112,9 @@ public class AutoUpdateService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mWeatherModel.clear();
+    }
+
+    public static void actionStart(Context context) {
+        context.startService(new Intent(context, AutoUpdateService.class));
     }
 }

@@ -12,6 +12,7 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.jpush.JPushManager;
 import com.sleticalboy.util.ActivityController;
 
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -24,6 +25,11 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
+
+    @BindString(R.string.url_schema)
+    String mUrlSchema;
+    @BindString(R.string.url_middle)
+    String mUrlMiddle;
 
     protected Unbinder unbinder;
 
@@ -113,7 +119,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return url prefix: <code>doup://</code>
      */
     protected final String urlPre() {
-        return getResources().getString(R.string.url_schema) + getResources().getString(R.string.url_middle);
+//        return getResources().getString(R.string.url_schema) + getResources().getString(R.string.url_middle);
+        return mUrlSchema + mUrlMiddle;
     }
 
     public final String getJumpUrl(String module, String activity) {

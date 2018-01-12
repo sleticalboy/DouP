@@ -2,9 +2,6 @@ package com.sleticalboy.doup.module.weather;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -19,29 +16,20 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.module.weather.dialog.ChooseAreaDialog;
-import com.sleticalboy.doup.http.ApiConstant;
-import com.sleticalboy.doup.http.HttpUtils;
+import com.sleticalboy.doup.base.IBaseView;
+import com.sleticalboy.doup.base.config.ConstantValue;
 import com.sleticalboy.doup.model.WeatherModel;
 import com.sleticalboy.doup.model.weather.County;
 import com.sleticalboy.doup.model.weather.WeatherBean;
-import com.sleticalboy.doup.module.weather.service.AutoUpdateService;
-import com.sleticalboy.doup.base.config.ConstantValue;
+import com.sleticalboy.doup.module.weather.dialog.DistrictDialog;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.util.RxBus;
 import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * Created by Android Studio.
@@ -49,10 +37,11 @@ import okhttp3.ResponseBody;
  *
  * @author sleticalboy
  */
-public class WeatherActivity extends BaseActivity {
+public class WeatherActivity extends BaseActivity implements IBaseView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "WeatherActivity";
-    public static final String DIALOG_TAG = "ChooseAreaDialog";
+    public static final String DIALOG_TAG = "DistrictDialog";
 
     @BindView(R.id.img_bg)
     ImageView imgBg;
@@ -84,30 +73,27 @@ public class WeatherActivity extends BaseActivity {
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
 
-    private WeatherModel mWeatherModel;
     private Observable<County> mObservable;
     private String mWeatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
 
+    private DistrictDialog mDialog;
+    private WeatherPresenter mPresenter;
+
+
     @Override
-    protected void initData() {
-        mWeatherModel = new WeatherModel(this);
+    protected int attachLayout() {
+        return R.layout.activity_weather;
+    }
 
-        HttpUtils.request(ApiConstant.BASE_WEATHER_URL + "bing_pic", new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                ToastUtils.showToast(WeatherActivity.this, "网络错误");
-            }
+    @Override
+    protected void prepareTask() {
+        mObservable = RxBus.getBus().register(DistrictDialog.TAG);
+    }
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                ResponseBody responseBody = response.body();
-                if (responseBody != null) {
-                    String url = responseBody.string();
-                    SPUtils.putString(ConstantValue.KEY_BG, url);
-                    runOnUiThread(() -> ImageLoader.loadHigh(WeatherActivity.this, imgBg, url));
-                }
-            }
-        });
+    @Override
+    protected void initView() {
+
+        mPresenter = new WeatherPresenter(this, this);
 
         mObservable.subscribe(county -> {
             if (TextUtils.isEmpty(mWeatherId))
@@ -119,36 +105,45 @@ public class WeatherActivity extends BaseActivity {
             }
             swipeRefresh.setRefreshing(true);
             Log.d("WeatherActivity", "form dialog");
-            getWeather(county.weatherId);
+            mPresenter.getWeather(county.weatherId);
         });
+
+        // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
+        String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
+        if (StrUtils.isEmpty(area))
+            showDistrictDialog();
+        else
+            titleCity.setText(area);
+        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
+        if (!StrUtils.isEmpty(weatherStr)) {
+            WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
+            if (weatherBean != null) {
+                Log.d("WeatherActivity", "from sp");
+                showWeather(weatherBean);
+            }
+        }
+
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(this);
+        btnNavigation.setOnClickListener(v -> showDistrictDialog());
+
+        mPresenter.getBgUrl();
     }
 
     public WeatherModel getWeatherModel() {
-        return mWeatherModel;
+        return mPresenter.getWeatherModel();
     }
 
-    // 获取天气信息
-    public void getWeather(String weatherId) {
-        if (TextUtils.isEmpty(weatherId))
-            throw new IllegalArgumentException("weatherId is null");
-
-        mWeatherModel.getWeather(weatherId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(weatherBean -> {
-                    Log.d("WeatherActivity", "get weather form network -- >");
-                    SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
-                    showWeather(weatherBean);
-                    swipeRefresh.setRefreshing(false);
-                }, throwable -> {
-                    // 获取天气信息失败
-                    ToastUtils.showToast(WeatherActivity.this, "获取天气信息失败");
-                    swipeRefresh.setRefreshing(false);
-                });
+    public void showBg(String bgUrl) {
+        runOnUiThread(() -> ImageLoader.load(this, imgBg, bgUrl));
     }
 
-    // 展示天气信息
-    private void showWeather(WeatherBean weatherBean) {
+    /**
+     * 展示天气信息
+     *
+     * @param weatherBean 天气对象
+     */
+    public void showWeather(WeatherBean weatherBean) {
         WeatherBean.HeWeatherBean weather = weatherBean.HeWeather.get(0);
 
         titleCity.setText(weather.basic.city);
@@ -190,60 +185,45 @@ public class WeatherActivity extends BaseActivity {
         tvSport.setText(sport);
 
         layoutWeather.setVisibility(View.VISIBLE);
-
-        Intent intent = new Intent(this, AutoUpdateService.class);
-        startService(intent);
     }
 
-    @Override
-    protected void initView() {
-
-        ChooseAreaDialog dialog = new ChooseAreaDialog();
-        String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
-        if (TextUtils.isEmpty(area))
-            showDialog(dialog);
-        else
-            titleCity.setText(area);
-        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
-        if (weatherStr != null) {
-            WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
-            if (weatherBean != null) {
-                Log.d("WeatherActivity", "from sp");
-                showWeather(weatherBean);
-            }
+    /**
+     * 显示地址选择框
+     */
+    public void showDistrictDialog() {
+        if (mDialog == null) {
+            mDialog = new DistrictDialog();
         }
-
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        swipeRefresh.setOnRefreshListener(() -> getWeather(mWeatherId));
-
-        btnNavigation.setOnClickListener(v -> showDialog(dialog));
+        mDialog.show(getSupportFragmentManager(), DIALOG_TAG);
     }
 
-    // 显示地址选择框
-    private void showDialog(ChooseAreaDialog dialog) {
-        if (dialog.isAdded()) {
-            dialog.showDialog();
-        } else {
-            dialog.show(getSupportFragmentManager(), DIALOG_TAG);
+    @Override
+    public void onLoading() {
+        swipeRefresh.setRefreshing(true);
+    }
+
+    @Override
+    public void onLoadingEnd() {
+        swipeRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void onNetError() {
+        ToastUtils.showToast(this, "网络错误");
+    }
+
+    @Override
+    public void onRefresh() {
+        if (swipeRefresh.isRefreshing()) {
+            mPresenter.getWeather(mWeatherId);
         }
-    }
-
-    @Override
-    protected int attachLayout() {
-        return R.layout.activity_weather;
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        mObservable = RxBus.getBus().register(ChooseAreaDialog.TAG);
-        super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getBus().unregister(ChooseAreaDialog.TAG, mObservable);
-        mWeatherModel.clear();
+        RxBus.getBus().unregister(DistrictDialog.TAG, mObservable);
+        mPresenter.onUnTokenView();
     }
 
     public static void actionStart(Context context) {
