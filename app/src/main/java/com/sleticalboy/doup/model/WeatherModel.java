@@ -2,6 +2,7 @@ package com.sleticalboy.doup.model;
 
 import android.content.Context;
 
+import com.sleticalboy.doup.base.BaseModel;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.WeatherApi;
@@ -10,7 +11,6 @@ import com.sleticalboy.doup.model.weather.County;
 import com.sleticalboy.doup.model.weather.Province;
 import com.sleticalboy.doup.model.weather.WeatherBean;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -21,16 +21,15 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class WeatherModel {
+public class WeatherModel extends BaseModel {
 
     private static final String APP_KEY = "f528b9b4264e4f9b977645d60f321a0c";
 
-    private WeakReference<Context> mWeakReference;
     private WeatherApi mWeatherApiService;
 
     public WeatherModel(Context context) {
-        mWeakReference = new WeakReference<>(context);
-        RetrofitClient client = RetrofitClient.getInstance(mWeakReference.get(), ApiConstant.BASE_WEATHER_URL);
+        super(context);
+        RetrofitClient client = RetrofitClient.getInstance(mReference.get(), ApiConstant.BASE_WEATHER_URL);
         mWeatherApiService = client.create(WeatherApi.class);
     }
 
@@ -50,11 +49,9 @@ public class WeatherModel {
         return mWeatherApiService.getWeather(weatherId, APP_KEY);
     }
 
+    @Override
     public void clear() {
-        if (mWeakReference != null) {
-            mWeakReference.clear();
-            mWeakReference = null;
-        }
+        super.clear();
         if (mWeatherApiService != null) {
             mWeatherApiService = null;
         }

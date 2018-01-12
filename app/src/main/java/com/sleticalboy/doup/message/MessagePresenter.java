@@ -1,6 +1,9 @@
 package com.sleticalboy.doup.message;
 
-import com.sleticalboy.doup.base.IBasePresenter;
+import android.content.Context;
+
+import com.sleticalboy.doup.base.BasePresenter;
+import com.sleticalboy.doup.base.IBaseListView;
 
 /**
  * Created by Android Studio.
@@ -8,15 +11,28 @@ import com.sleticalboy.doup.base.IBasePresenter;
  *
  * @author sleticalboy
  */
-public class MessagePresenter implements IBasePresenter {
-    
-    @Override
-    public void doRefreshData() {
+public class MessagePresenter extends BasePresenter {
 
+    private MessageAdapter mAdapter;
+    private IBaseListView mMessageView;
+    private MessageModel mMessageModel;
+
+    public MessagePresenter(Context context, IBaseListView messageView) {
+        super(context);
+        mMessageView = messageView;
+        mMessageModel = new MessageModel(context);
     }
 
-    @Override
-    public void doShowNetError() {
+    public void setAdapter() {
+        mAdapter = new MessageAdapter(getContext());
+        mMessageView.getRecyclerView().setAdapter(mAdapter);
+    }
 
+    public void getMessage() {
+        // 数据层获取 Message
+        mMessageModel.getMessages()
+                .subscribe(messages -> {
+                    mAdapter.addAll(messages);
+                });
     }
 }
