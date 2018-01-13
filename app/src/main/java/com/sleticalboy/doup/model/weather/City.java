@@ -20,7 +20,7 @@ public class City extends DataSupport implements Serializable {
     @Override
     public String toString() {
         return "City{" +
-                "weatherId=" + id +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", cityCode=" + cityCode +
                 ", provinceId=" + provinceId +

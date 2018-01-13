@@ -72,7 +72,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--behavior-->
-    <string name="bottom_navigation_behavior" translatable="false">com.sleticalboy.widget.behavior.BottomNavigationBehavior</string>
+    <string
+        name="bottom_navigation_behavior"
+        translatable="false">com.sleticalboy.widget.behavior.BottomNavigationBehavior</string>
 
     <!-- Strings related to Settings -->
 

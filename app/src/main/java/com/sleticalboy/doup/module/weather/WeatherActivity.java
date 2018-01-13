@@ -95,6 +95,7 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
 
         mPresenter = new WeatherPresenter(this, this);
 
+        // 接收 DistrictDialog post 的 County 对象
         mObservable.subscribe(county -> {
             if (TextUtils.isEmpty(mWeatherId))
                 mWeatherId = county.weatherId;

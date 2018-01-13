@@ -24,6 +24,7 @@ import com.sleticalboy.doup.model.weather.City;
 import com.sleticalboy.doup.model.weather.County;
 import com.sleticalboy.doup.model.weather.Province;
 import com.sleticalboy.doup.module.weather.WeatherActivity;
+import com.sleticalboy.util.RxBus;
 
 import org.litepal.crud.DataSupport;
 
@@ -69,15 +70,19 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
 //    private DistrictPresenter mPresenter;
 
     private WeatherModel mWeatherModel;
+    private boolean mIsFirst = true;
 
     private List<Province> mProvinceList = new ArrayList<>();
     private List<City> mCityList = new ArrayList<>();
     private List<County> mCountyList = new ArrayList<>();
 
-    private List<String> mProvinceNameList = new ArrayList<>();
-    private List<String> mCityNameList = new ArrayList<>();
-    private List<String> mCountyNameList = new ArrayList<>();
-    private ArrayAdapter<String> mAdapter;
+    private final List<String> mProvinceNameList = new ArrayList<>();
+    private final List<String> mCityNameList = new ArrayList<>();
+    private final List<String> mCountyNameList = new ArrayList<>();
+    private ArrayAdapter<String> mProvinceAdapter;
+    private ArrayAdapter<String> mCityAdapter;
+    private ArrayAdapter<String> mCountyAdapter;
+    private ArrayAdapter<String> mEmptyAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +124,18 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
         spinnerProvince.setOnItemSelectedListener(this);
         spinnerCity.setOnItemSelectedListener(this);
         spinnerCounty.setOnItemSelectedListener(this);
+
+        mProvinceAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item);
+        mProvinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerProvince.setAdapter(mProvinceAdapter);
+
+        mCityAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item);
+        mCityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCity.setAdapter(mCityAdapter);
+
+        mCountyAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item);
+        mCountyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCounty.setAdapter(mCountyAdapter);
     }
 
     /**
@@ -129,12 +146,15 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
     public void updateDataSet(int level) {
         switch (level) {
             case LEVEL_PROVINCE:
+                mSelectedLevel = LEVEL_PROVINCE;
                 setupSpinnerView(mProvinceNameList);
                 break;
             case LEVEL_CITY:
+                mSelectedLevel = LEVEL_CITY;
                 setupSpinnerView(mCityNameList);
                 break;
             case LEVEL_COUNTY:
+                mSelectedLevel = LEVEL_COUNTY;
                 setupSpinnerView(mCountyNameList);
                 break;
         }
@@ -142,50 +162,63 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
 
     private void setupSpinnerView(List<String> subDistrictNameList) {
         if (subDistrictNameList != null && subDistrictNameList.size() > 0) {
-            if (mAdapter == null) {
-                mAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
-                        subDistrictNameList);
-                mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            }
-            if (mSelectedLevel == LEVEL_PROVINCE)
-                spinnerProvince.setAdapter(mAdapter);
-            if (mSelectedLevel == LEVEL_CITY)
-                spinnerCity.setAdapter(mAdapter);
-            if (mSelectedLevel == LEVEL_COUNTY)
-                spinnerCounty.setAdapter(mAdapter);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            ArrayAdapter<String> emptyAdapter = new ArrayAdapter<>(getActivity(),
-                    android.R.layout.simple_spinner_item, Collections.emptyList());
             if (mSelectedLevel == LEVEL_PROVINCE) {
-                spinnerProvince.setAdapter(emptyAdapter);
-                spinnerCity.setAdapter(emptyAdapter);
-                spinnerCounty.setAdapter(emptyAdapter);
+                mProvinceAdapter.clear();
+                mProvinceAdapter.addAll(subDistrictNameList);
+                spinnerProvince.setSelection(0, true);
+                mProvinceAdapter.notifyDataSetChanged();
             }
             if (mSelectedLevel == LEVEL_CITY) {
-                spinnerCity.setAdapter(emptyAdapter);
-                spinnerCounty.setAdapter(emptyAdapter);
+                mCityAdapter.clear();
+                mCityAdapter.addAll(subDistrictNameList);
+                spinnerCity.setSelection(0, true);
+                mCityAdapter.notifyDataSetChanged();
             }
-            if (mSelectedLevel == LEVEL_COUNTY)
-                spinnerCounty.setAdapter(emptyAdapter);
-            emptyAdapter.notifyDataSetChanged();
+            if (mSelectedLevel == LEVEL_COUNTY) {
+                mCountyAdapter.clear();
+                mCountyAdapter.addAll(subDistrictNameList);
+                spinnerCounty.setSelection(0, true);
+                mCountyAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (mEmptyAdapter == null)
+                mEmptyAdapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_spinner_item, Collections.emptyList());
+            if (mSelectedLevel == LEVEL_PROVINCE) {
+                spinnerProvince.setAdapter(mEmptyAdapter);
+                spinnerCity.setAdapter(mEmptyAdapter);
+                spinnerCounty.setAdapter(mEmptyAdapter);
+            }
+            if (mSelectedLevel == LEVEL_CITY) {
+                spinnerCity.setAdapter(mEmptyAdapter);
+                spinnerCounty.setAdapter(mEmptyAdapter);
+            }
+            if (mSelectedLevel == LEVEL_COUNTY) {
+                spinnerCounty.setAdapter(mEmptyAdapter);
+            }
+            mEmptyAdapter.notifyDataSetChanged();
         }
     }
 
     /**
-     * 获取省份数据，先从数据库查询，若不存在再从网络获取之后保存到数据库
+     * 获取省份数据
      */
     public void fetchProvince() {
+        // 从数据库查询
         mProvinceList = DataSupport.findAll(Province.class);
         onLoading();
         if (mProvinceList != null && mProvinceList.size() > 0) { // 数据库中有数据
             Log.d(TAG, "从数据库获取省份数据");
-            Log.d(TAG, "mProvinceList.size():" + mProvinceList.size());
             if (mProvinceNameList.size() == 0) {
                 for (Province province : mProvinceList) {
                     mProvinceNameList.add(province.name);
                 }
             }
+            if (mIsFirst) {
+                Province province = mProvinceList.get(0);
+                fetchCity(province.id, province.provinceCode);
+            }
+            updateDataSet(DistrictDialog.LEVEL_PROVINCE);
             onLoadingEnd();
         } else { // 数据库中没有数据，从网络获取并存储数据库
             Log.d(TAG, "从网络获取省份数据");
@@ -193,16 +226,21 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
                     .subscribeOn(Schedulers.io())
                     .filter(provinces -> provinces != null && provinces.size() > 0)
                     .doOnNext(provinces -> {
+                        // 将数据保存到数据库中
                         for (Province province : provinces) {
                             province.provinceCode = province.id;
                             province.save();
                             mProvinceNameList.add(province.name);
                         }
                     })
+                    .doOnNext(provinces -> {
+                        if (mIsFirst) {
+                            fetchCity(provinces.get(0).id, provinces.get(0).provinceCode);
+                        }
+                    })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(provinces -> {
                         mProvinceList = provinces;
-//                        mDistrictView.updateDataSet(DistrictDialog.LEVEL_PROVINCE);
                         updateDataSet(DistrictDialog.LEVEL_PROVINCE);
                         onLoadingEnd();
                     });
@@ -212,33 +250,45 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
     /**
      * 获取某一省份下的所有城市数据
      *
-     * @param province Province 对象
+     * @param provinceId   province id
+     * @param provinceCode province code
      */
-    public void fetchCity(Province province) {
-        Log.d(TAG, province.name);
-        mCityList = DataSupport.where("provinceId = ?", String.valueOf(province.id)).find(City.class);
+    public void fetchCity(int provinceId, int provinceCode) {
+        onLoading();
+        mCityList = DataSupport.where("provinceId = ?", String.valueOf(provinceId)).find(City.class);
         if (mCityList != null && mCityList.size() > 0) {
             Log.d(TAG, "从数据库获取城市数据");
-//            mDistrictView.updateDataSet(DistrictDialog.LEVEL_CITY);
+            mCityNameList.clear();
+            for (City city : mCityList) {
+                mCityNameList.add(city.name);
+            }
+            Log.d(TAG, "mCityNameList.size():" + mCityNameList.size());
+            onLoadingEnd();
             updateDataSet(DistrictDialog.LEVEL_CITY);
         } else {
             Log.d(TAG, "从网络获取城市数据");
-            onLoading();
-            mWeatherModel.getCities(province.id)
+            mWeatherModel.getCities(provinceId)
                     .subscribeOn(Schedulers.io())
                     .filter(cities -> cities != null && cities.size() > 0)
                     .doOnNext(cities -> {
+                        // 将数据保存到数据库中
+                        mCityNameList.clear();
                         for (City city : cities) {
-                            city.provinceId = province.provinceCode;
+                            city.provinceId = provinceCode;
                             city.cityCode = city.id;
                             city.save();
                             mCityNameList.add(city.name);
                         }
                     })
+                    .doOnNext(cities -> {
+                        if (mIsFirst) {
+                            mIsFirst = false;
+                            fetchCounty(cities.get(0).provinceId, cities.get(0).cityCode);
+                        }
+                    })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(cities -> {
                         mCityList = cities;
-//                        mDistrictView.updateDataSet(DistrictDialog.LEVEL_CITY);
                         updateDataSet(DistrictDialog.LEVEL_CITY);
                         onLoadingEnd();
                     });
@@ -248,24 +298,29 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
     /**
      * 获取某以城市下所有区数据
      *
-     * @param city City 对象
+     * @param provinceId province id
+     * @param cityCode   city code
      */
-    public void fetchCounty(City city) {
-        Log.d(TAG, city.name);
-        mCountyList = DataSupport.where("cityId = ?", String.valueOf(city.cityCode)).find(County.class);
+    public void fetchCounty(int provinceId, int cityCode) {
+        onLoading();
+        mCountyList = DataSupport.where("cityId = ?", String.valueOf(cityCode)).find(County.class);
         if (mCountyList != null && mCountyList.size() > 0) {
             Log.d(TAG, "从数据库获取地区数据");
-//            mDistrictView.updateDataSet(DistrictDialog.LEVEL_COUNTY);
+            for (County county : mCountyList) {
+                mCountyNameList.add(county.name);
+            }
+            Log.d(TAG, "mCountyNameList.size():" + mCountyNameList.size());
+            onLoadingEnd();
             updateDataSet(DistrictDialog.LEVEL_COUNTY);
         } else {
             Log.d(TAG, "从网络获取地区数据");
-            onLoading();
-            mWeatherModel.getCounties(city.provinceId, city.cityCode)
+            mWeatherModel.getCounties(provinceId, cityCode)
                     .subscribeOn(Schedulers.io())
                     .filter(counties -> counties != null && counties.size() > 0)
                     .doOnNext(counties -> {
+                        mCountyNameList.clear();
                         for (County county : counties) {
-                            county.cityId = city.cityCode;
+                            county.cityId = cityCode;
                             county.save();
                             mCountyNameList.add(county.name);
                         }
@@ -273,7 +328,6 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(counties -> {
                         mCountyList = counties;
-//                        mDistrictView.updateDataSet(DistrictDialog.LEVEL_COUNTY);
                         updateDataSet(DistrictDialog.LEVEL_COUNTY);
                         onLoadingEnd();
                     });
@@ -312,16 +366,32 @@ public class DistrictDialog extends DialogFragment implements IBaseView, Adapter
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spinner_province:
+                // 1,更新当前选中级别为 province
+                // 2,获取该省份的所有城市数据
+                // 3,获取该省份下第一个城市的所有地区数据
                 mSelectedLevel = LEVEL_PROVINCE;
-                fetchCity(mProvinceList.get(position));
+                Province selectedProvince = mProvinceList.get(position);
+                fetchCity(selectedProvince.id, selectedProvince.provinceCode);
+//                City firstCity = mCityList.get(0);
+//                fetchCounty(firstCity.provinceId, firstCity.cityCode);
                 break;
             case R.id.spinner_city:
+                // 1,更新当前选中级别为 city
+                // 2,获取该城市下的所有地区数据
                 mSelectedLevel = LEVEL_CITY;
-                fetchCounty(mCityList.get(position));
+                City selectedCity = mCityList.get(position);
+                Log.d(TAG, selectedCity.name);
+                fetchCounty(selectedCity.provinceId, selectedCity.cityCode);
                 break;
             case R.id.spinner_county:
+                // 1,更新当前选中级别为 county
+                // 2,跳转到天气信息页面，显示天气
                 mSelectedLevel = LEVEL_COUNTY;
                 // FIXME: 1/12/18 显示天气信息
+                County selectedCounty = mCountyList.get(position);
+                Log.d(TAG, "county:" + selectedCounty);
+                RxBus.getBus().post(DistrictDialog.TAG, selectedCounty);
+                dismiss();
                 break;
         }
     }

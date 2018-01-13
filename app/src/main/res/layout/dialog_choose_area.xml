@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:dropDownVerticalOffset="8dp"
+                android:dropDownVerticalOffset="20dp"
                 android:spinnerMode="dropdown"/>
 
             <TextView
@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:dropDownVerticalOffset="8dp"
+                android:dropDownVerticalOffset="20dp"
                 android:spinnerMode="dropdown"/>
 
             <TextView
@@ -97,7 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:dropDownVerticalOffset="8dp"
+                android:dropDownVerticalOffset="20dp"
                 android:spinnerMode="dropdown"/>
 
             <TextView
