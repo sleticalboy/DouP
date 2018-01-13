@@ -25,40 +25,38 @@ import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener =
-            (preference, value) -> {
-                String stringValue = value.toString();
+    private static Preference.OnPreferenceChangeListener sListener = (preference, value) -> {
+        String stringValue = value.toString();
 
-                if (preference instanceof ListPreference) {
-                    ListPreference listPreference = (ListPreference) preference;
-                    int index = listPreference.findIndexOfValue(stringValue);
+        if (preference instanceof ListPreference) {
+            ListPreference listPreference = (ListPreference) preference;
+            int index = listPreference.findIndexOfValue(stringValue);
 
-                    preference.setSummary(
-                            index >= 0
-                                    ? listPreference.getEntries()[index]
-                                    : null);
+            preference.setSummary(index >= 0
+                    ? listPreference.getEntries()[index]
+                    : null);
 
-                } else if (preference instanceof RingtonePreference) {
-                    if (TextUtils.isEmpty(stringValue)) {
-                        preference.setSummary(R.string.pref_ringtone_silent);
+        } else if (preference instanceof RingtonePreference) {
+            if (TextUtils.isEmpty(stringValue)) {
+                preference.setSummary(R.string.pref_ringtone_silent);
 
-                    } else {
-                        Ringtone ringtone = RingtoneManager.getRingtone(
-                                preference.getContext(), Uri.parse(stringValue));
+            } else {
+                Ringtone ringtone = RingtoneManager.getRingtone(
+                        preference.getContext(), Uri.parse(stringValue));
 
-                        if (ringtone == null) {
-                            preference.setSummary(null);
-                        } else {
-                            String name = ringtone.getTitle(preference.getContext());
-                            preference.setSummary(name);
-                        }
-                    }
-
+                if (ringtone == null) {
+                    preference.setSummary(null);
                 } else {
-                    preference.setSummary(stringValue);
+                    String name = ringtone.getTitle(preference.getContext());
+                    preference.setSummary(name);
                 }
-                return true;
-            };
+            }
+
+        } else {
+            preference.setSummary(stringValue);
+        }
+        return true;
+    };
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -77,12 +75,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * dependent on the type of preference.
      */
     private static void bindPreferenceSummaryToValue(Preference preference) {
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+        preference.setOnPreferenceChangeListener(sListener);
 
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+        sListener.onPreferenceChange(preference, PreferenceManager
+                .getDefaultSharedPreferences(preference.getContext())
+                .getString(preference.getKey(), ""));
     }
 
     @Override

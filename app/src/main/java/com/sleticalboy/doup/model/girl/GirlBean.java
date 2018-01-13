@@ -11,10 +11,6 @@ import java.util.List;
  * @author sleticalboy
  */
 public class GirlBean extends BaseBean {
-    /**
-     *
-     */
-
     public boolean error;
     public List<ResultsBean> results;
 

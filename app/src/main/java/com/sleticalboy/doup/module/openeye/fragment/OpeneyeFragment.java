@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.openeye.adapter.OpeneyePagerAdapter;
+import com.sleticalboy.doup.module.openeye.adapter.BasePagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -22,6 +25,8 @@ import butterknife.ButterKnife;
  */
 
 public class OpeneyeFragment extends Fragment {
+
+    private int[] mTabTitleIds = {R.string.recommend, R.string.findings, R.string.popular};
 
     @Nullable
     @Override
@@ -38,7 +43,15 @@ public class OpeneyeFragment extends Fragment {
         ViewPager viewPager = rootView.findViewById(R.id.view_pager);
         TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
 
-        OpeneyePagerAdapter adapter = new OpeneyePagerAdapter(getActivity(), getChildFragmentManager());
+        List<Fragment> subFragments = new ArrayList<>();
+        subFragments.add(new RecommendFragment());
+        subFragments.add(new FindingsFragment());
+        subFragments.add(new PopularFragment());
+
+        BasePagerAdapter adapter = new BasePagerAdapter(getActivity(), getChildFragmentManager());
+        adapter.setTabTitleIds(mTabTitleIds);
+        adapter.setSubFragments(subFragments);
+
         viewPager.setAdapter(adapter);
 
         tabLayout.addTab(tabLayout.newTab(), 0, true);
@@ -60,7 +73,6 @@ public class OpeneyeFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }

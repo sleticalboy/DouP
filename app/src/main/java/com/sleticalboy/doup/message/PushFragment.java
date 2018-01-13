@@ -17,7 +17,8 @@ import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
  *
  * @author sleticalboy
  */
-public class PushFragment extends LazyFragment implements IBaseListView, SwipeRefreshLayout.OnRefreshListener {
+public class PushFragment extends LazyFragment implements IBaseListView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "PushFragment";
 

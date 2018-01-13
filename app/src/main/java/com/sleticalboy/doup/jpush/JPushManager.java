@@ -41,13 +41,13 @@ public class JPushManager {
     }
 
     public void initialize(@NonNull Context context) {
-        LogUtils.d(TAG, "initialize() called with: context = [" + context + "]");
+        LogUtils.d(TAG, "initialize() called with: context = [" + context.getApplicationContext() + "]");
         if (BuildConfig.DEBUG) {
             JPushInterface.setDebugMode(true);
         } else {
             JPushInterface.setDebugMode(false);
         }
-        JPushInterface.init(context);
+        JPushInterface.init(context.getApplicationContext());
     }
 
     /**
@@ -91,10 +91,10 @@ public class JPushManager {
     }
 
     public void onResume(Context context) {
-        JPushInterface.onResume(context);
+        JPushInterface.onResume(context.getApplicationContext());
     }
 
     public void onPause(Context context) {
-        JPushInterface.onPause(context);
+        JPushInterface.onPause(context.getApplicationContext());
     }
 }

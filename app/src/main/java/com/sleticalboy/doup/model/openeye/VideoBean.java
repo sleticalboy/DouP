@@ -9,7 +9,6 @@ import android.os.Parcelable;
  *
  * @author sleticalboy
  */
-
 public class VideoBean implements Parcelable {
 
     public String feed;

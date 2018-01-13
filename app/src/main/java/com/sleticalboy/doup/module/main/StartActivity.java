@@ -24,10 +24,13 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.jpush.SettingsActivity;
 import com.sleticalboy.doup.jpush.activity.IndexActivity;
+import com.sleticalboy.doup.message.ContactsActivity;
 import com.sleticalboy.doup.message.MessageFragment;
+import com.sleticalboy.doup.module.amap.MapStartActivity;
 import com.sleticalboy.doup.module.girl.GirlFragment;
 import com.sleticalboy.doup.module.home.NewsFragment;
 import com.sleticalboy.doup.module.openeye.fragment.OpeneyeFragment;
+import com.sleticalboy.doup.module.todo.TodoListActivity;
 import com.sleticalboy.doup.module.weather.WeatherActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -138,16 +141,16 @@ public class StartActivity extends BaseActivity {
                     SettingsActivity.actionStart(this);
                     break;
                 case R.id.nav_contacts:
-                    // TODO: 12/30/17 contact Activity
+                    ContactsActivity.actionStart(this);
                     break;
                 case R.id.nav_location:
-                    // TODO: 1/10/18 map and location
+                    MapStartActivity.actionStart(this);
                     break;
                 case R.id.nav_weather:
                     WeatherActivity.actionStart(this);
                     break;
                 case R.id.nav_tasks:
-                    // TODO: 12/30/17 todo list Activity
+                    TodoListActivity.actionStart(this);
                     break;
                 default:
                     break;

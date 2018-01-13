@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
+import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.model.OpeneyeModel;
 import com.sleticalboy.doup.model.openeye.PopularBean;
+import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author sleticalboy
  */
 
-public class FindingDetailActivity extends AppCompatActivity {
+public class FindingDetailActivity extends BaseActivity {
 
     private static final String TAG = "FindingDetailActivity";
 
@@ -67,7 +67,8 @@ public class FindingDetailActivity extends AppCompatActivity {
         initData();
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         mLayoutManager = new LinearLayoutManager(this);
         rvRank.setLayoutManager(mLayoutManager);
 
@@ -101,6 +102,11 @@ public class FindingDetailActivity extends AppCompatActivity {
                 mLastVisibleItemIndex = mLayoutManager.findLastVisibleItemPosition();
             }
         });
+    }
+
+    @Override
+    protected int attachLayout() {
+        return R.layout.activity_finding_detail;
     }
 
     private void loadMore() {

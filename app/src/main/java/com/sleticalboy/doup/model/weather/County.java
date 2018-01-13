@@ -12,7 +12,6 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-
 public class County extends DataSupport implements Serializable {
     public int id;
     public String name;

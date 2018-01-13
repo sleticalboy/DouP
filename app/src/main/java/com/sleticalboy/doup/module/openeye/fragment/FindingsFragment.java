@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.openeye.adapter.FindingAdapter;
 import com.sleticalboy.doup.model.OpeneyeModel;
 import com.sleticalboy.doup.model.openeye.FindingBean;
 import com.sleticalboy.doup.module.openeye.activity.FindingDetailActivity;
+import com.sleticalboy.doup.module.openeye.adapter.FindingAdapter;
 import com.sleticalboy.util.ToastUtils;
 
 import java.util.List;

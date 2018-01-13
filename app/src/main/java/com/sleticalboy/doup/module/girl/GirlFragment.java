@@ -1,7 +1,6 @@
 package com.sleticalboy.doup.module.girl;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -71,7 +70,6 @@ public class GirlFragment extends Fragment {
 
         srl.setOnRefreshListener(() -> {
             if (srl.isRefreshing()) {
-                srl.setRefreshing(false);
                 loadMore(true);
             }
         });
@@ -119,7 +117,7 @@ public class GirlFragment extends Fragment {
 
     private void loadMore(boolean isPullDown) {
         page += 1;
-        new Handler().postDelayed(() -> mGirlModel.getMeizi(page)
+        mGirlModel.getMeizi(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(girlBean -> {
@@ -130,7 +128,7 @@ public class GirlFragment extends Fragment {
                     }
                     mAdapter.notifyDataSetChanged();
                     srl.setRefreshing(false);
-                }, Throwable::printStackTrace), 1000);
+                });
     }
 
     @Override

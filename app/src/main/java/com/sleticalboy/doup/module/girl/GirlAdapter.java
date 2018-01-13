@@ -42,11 +42,6 @@ public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.ViewHolder> {
         GirlBean.ResultsBean resultsBean = mData.results.get(position);
 
         ImageLoader.load(mContext, holder.imgMeizi, resultsBean.url);
-//        Glide.with(mContext)
-//                .load(resultsBean.url)
-//                .placeholder(R.mipmap.ic_launcher)
-//                .centerCrop()
-//                .into(holder.imgMeizi);
         holder.cardView.setOnClickListener(v -> {
             // 点击显示妹子大图，并可以保存图片到本地
             // TODO: 12/26/17 待完善

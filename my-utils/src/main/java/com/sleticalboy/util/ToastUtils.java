@@ -9,7 +9,6 @@ import android.widget.Toast;
  *
  * @author sleticalboy
  */
-
 public class ToastUtils {
 
     public static void showToast(Context context, CharSequence text) {

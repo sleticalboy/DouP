@@ -2,8 +2,6 @@ package com.sleticalboy.util;
 
 import android.util.Log;
 
-import com.sleticalboy.doup.BuildConfig;
-
 /**
  * Created by Android Studio.
  * Date: 10/29/17.

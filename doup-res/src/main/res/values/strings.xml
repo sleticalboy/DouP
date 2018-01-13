@@ -58,7 +58,7 @@
     <string name="my_name">Bin Lee</string>
     <string name="my_email">sleticalboy@gmail.com</string>
     <!--天气-->
-    <string name="choose_area">选择地区：中国</string>
+    <string name="choose_area">中国</string>
     <string name="forecast">预报</string>
     <string name="aqi">空气质量</string>
     <string name="aqi_power">AQI指数</string>
@@ -67,6 +67,12 @@
     <string name="map_search_hint">搜地点、查公交、找路线</string>
     <string name="search_hint">搜索</string>
     <string name="title_activity_settings">Settings</string>
+
+    <!--地图-->
+    <string name="notifyTitle">提示</string>
+    <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

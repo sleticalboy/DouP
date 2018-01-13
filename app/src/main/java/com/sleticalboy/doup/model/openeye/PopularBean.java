@@ -12,9 +12,6 @@ import java.util.List;
  */
 
 public class PopularBean extends BaseBean {
-    /**
-     *
-     */
 
     public int count;
     public int total;

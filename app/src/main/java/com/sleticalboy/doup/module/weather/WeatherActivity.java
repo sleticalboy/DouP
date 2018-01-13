@@ -3,8 +3,6 @@ package com.sleticalboy.doup.module.weather;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,15 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.base.IBaseView;
 import com.sleticalboy.doup.base.config.ConstantValue;
-import com.sleticalboy.doup.model.WeatherModel;
-import com.sleticalboy.doup.model.weather.County;
 import com.sleticalboy.doup.model.weather.WeatherBean;
-import com.sleticalboy.doup.module.weather.dialog.DistrictDialog;
+import com.sleticalboy.doup.module.amap.LocationManager;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.util.RxBus;
 import com.sleticalboy.util.SPUtils;
@@ -41,7 +38,6 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "WeatherActivity";
-    public static final String DIALOG_TAG = "DistrictDialog";
 
     @BindView(R.id.img_bg)
     ImageView imgBg;
@@ -73,12 +69,10 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
 
-    private Observable<County> mObservable;
     private String mWeatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
 
-    private DistrictDialog mDialog;
     private WeatherPresenter mPresenter;
-
+    private LocationManager mLocationManager;
 
     @Override
     protected int attachLayout() {
@@ -87,7 +81,11 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
 
     @Override
     protected void prepareTask() {
-        mObservable = RxBus.getBus().register(DistrictDialog.TAG);
+        Observable<AMapLocation> observable = RxBus.getBus().register(LocationManager.TAG);
+        observable.subscribe(location -> {
+            String s = mLocationManager.defaultHandleLocation(location);
+            Log.d(TAG, s);
+        });
     }
 
     @Override
@@ -95,26 +93,17 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
 
         mPresenter = new WeatherPresenter(this, this);
 
-        // 接收 DistrictDialog post 的 County 对象
-        mObservable.subscribe(county -> {
-            if (TextUtils.isEmpty(mWeatherId))
-                mWeatherId = county.weatherId;
-            Log.d(TAG, mWeatherId);
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(county.name);
-            }
-            swipeRefresh.setRefreshing(true);
-            Log.d("WeatherActivity", "form dialog");
-            mPresenter.getWeather(county.weatherId);
-        });
+        mLocationManager = LocationManager.getInstance(this);
+        mLocationManager.setNeedAddress(true);
+        mLocationManager.setInterval(1000 * 60 * 3);
+        mLocationManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
         String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
-        if (StrUtils.isEmpty(area))
-            showDistrictDialog();
-        else
+        if (StrUtils.isEmpty(area)) {
+//            showDistrictDialog();
             titleCity.setText(area);
+        }
         String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
         if (!StrUtils.isEmpty(weatherStr)) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
@@ -129,10 +118,6 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
         btnNavigation.setOnClickListener(v -> showDistrictDialog());
 
         mPresenter.getBgUrl();
-    }
-
-    public WeatherModel getWeatherModel() {
-        return mPresenter.getWeatherModel();
     }
 
     public void showBg(String bgUrl) {
@@ -192,10 +177,7 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
      * 显示地址选择框
      */
     public void showDistrictDialog() {
-        if (mDialog == null) {
-            mDialog = new DistrictDialog();
-        }
-        mDialog.show(getSupportFragmentManager(), DIALOG_TAG);
+        ToastUtils.showToast(this, "点我干嘛？");
     }
 
     @Override
@@ -221,10 +203,16 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mLocationManager.stopLocation();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getBus().unregister(DistrictDialog.TAG, mObservable);
         mPresenter.onUnTokenView();
+        mLocationManager.destroy();
     }
 
     public static void actionStart(Context context) {

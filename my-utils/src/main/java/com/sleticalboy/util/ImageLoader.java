@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.sleticalboy.doup.R;
 
 /**
  * Created by Android Studio.
@@ -14,7 +13,6 @@ import com.sleticalboy.doup.R;
  *
  * @author sleticalboy
  */
-
 public class ImageLoader {
 
     public static void load(Context context, ImageView target, int imgId) {

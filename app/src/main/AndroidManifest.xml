@@ -28,6 +28,12 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
+    <!--高德地图-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
+    <uses-permission android:name="android.permission.BODY_SENSORS"/>
+
     <application
         android:name=".DouApp"
         android:allowBackup="true"
@@ -49,7 +55,7 @@
         </activity>
         <!--<activity-->
         <!--android:name=".module.main.StartActivity"-->
-        <!--android:launchMode="singleTask"/>-->
+        <!--android:launchMode="singleInstance"/>-->
         <activity
             android:name=".module.home.NewsDetailActivity"
             android:theme="@style/NewsDetailTheme"/>
@@ -58,9 +64,7 @@
             android:name=".module.openeye.activity.VideoPlayActivity"
             android:theme="@style/NewsDetailTheme"/>
         <activity android:name=".module.openeye.activity.FindingDetailActivity"/>
-        <activity
-            android:name=".module.weather.WeatherActivity"
-            android:launchMode="singleTask"/>
+        <activity android:name=".module.weather.WeatherActivity"/>
 
         <service
             android:name=".module.weather.service.AutoUpdateService"
@@ -220,6 +224,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.support.v7.app.AppCompatActivity"/>
         </activity>
+
+        <!--高德地图-->
+        <!-- 设置key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="ca2c7e7f2639b928dee1c9c75933ea7b"/>
+        <!-- 定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService"/>
+
+        <activity android:name=".module.amap.MapStartActivity"/>
+        <activity android:name=".message.ContactsActivity"/>
+        <activity android:name=".module.todo.TodoListActivity"/>
     </application>
 
 </manifest>

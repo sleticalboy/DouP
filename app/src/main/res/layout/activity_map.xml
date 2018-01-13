@@ -11,14 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.baidu.mapapi.map.MapView
+        <com.amap.api.maps2d.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:clickable="true"
-            android:focusable="true"
-            />
+            android:focusable="true"/>
 
         <LinearLayout
             android:id="@+id/ll_header"

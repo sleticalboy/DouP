@@ -9,9 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
 import com.sleticalboy.doup.model.openeye.PopularBean;
 import com.sleticalboy.doup.model.openeye.VideoBean;
+import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
 import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;
 

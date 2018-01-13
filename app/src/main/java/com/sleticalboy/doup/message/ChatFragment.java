@@ -17,10 +17,11 @@ import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
  *
  * @author sleticalboy
  */
-public class ChatFragment extends LazyFragment implements IBaseListView, SwipeRefreshLayout.OnRefreshListener {
+public class ChatFragment extends LazyFragment implements IBaseListView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "ChatFragment";
-    
+
     @Override
     public void onLoading() {
 
