@@ -15,16 +15,16 @@ import java.lang.ref.WeakReference;
  */
 public abstract class BaseModel {
 
-    protected WeakReference<Context> mReference;
+    protected WeakReference<Context> mContext;
 
     public BaseModel(Context context) {
-        mReference = new WeakReference<>(context);
+        mContext = new WeakReference<>(context);
     }
 
     public void clear() {
-        if (mReference != null) {
-            mReference.clear();
-            mReference = null;
+        if (mContext != null) {
+            mContext.clear();
+            mContext = null;
         }
     }
 }

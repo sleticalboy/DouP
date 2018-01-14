@@ -16,7 +16,6 @@ import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_MEIZI;
  *
  * @author sleticalboy
  */
-
 public interface GirlsApi {
 
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_MEIZI})

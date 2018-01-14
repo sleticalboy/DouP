@@ -1,12 +1,15 @@
 package com.sleticalboy.doup.module.girl;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.girl.GirlBean;
@@ -24,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.ViewHolder> {
 
+    public static final String TAG = "GirlAdapter";
+
     private Context mContext;
     private GirlBean mData;
 
@@ -33,8 +38,7 @@ public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = View.inflate(mContext, R.layout.item_meizi, null);
-        return new ViewHolder(rootView);
+        return new ViewHolder(View.inflate(mContext, R.layout.item_meizi, null));
     }
 
     @Override
@@ -42,10 +46,24 @@ public class GirlAdapter extends RecyclerView.Adapter<GirlAdapter.ViewHolder> {
         GirlBean.ResultsBean resultsBean = mData.results.get(position);
 
         ImageLoader.load(mContext, holder.imgMeizi, resultsBean.url);
+
+        String desc = resultsBean._id;
+        String url = resultsBean.url;
         holder.cardView.setOnClickListener(v -> {
             // 点击显示妹子大图，并可以保存图片到本地
-            // TODO: 12/26/17 待完善
-            Toast.makeText(mContext, "显示大图并且保存本地-待完善", Toast.LENGTH_SHORT).show();
+//            GirlActivity.actionStart(mContext, url, desc);
+            Intent intent = GirlActivity.newIntent(mContext, url, desc);
+            ActivityOptionsCompat optionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
+                            holder.imgMeizi, GirlActivity.TRANSIT_PIC);
+            // android 5.0+
+            try {
+                ActivityCompat.startActivity(mContext, intent, optionsCompat.toBundle());
+            } catch (Exception e) {
+                e.printStackTrace();
+//                GirlActivity.actionStart(mContext, intent);
+                mContext.startActivity(intent);
+            }
         });
     }
 

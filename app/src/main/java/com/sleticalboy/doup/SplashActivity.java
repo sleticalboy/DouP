@@ -22,6 +22,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 //            StartActivity.actionStart(this);
 //        }
         StartActivity.actionStart(this);
+        finish();
     }
 
     @Override

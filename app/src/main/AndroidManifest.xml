@@ -236,6 +236,7 @@
         <activity android:name=".module.amap.MapStartActivity"/>
         <activity android:name=".message.ContactsActivity"/>
         <activity android:name=".module.todo.TodoListActivity"/>
+        <activity android:name=".module.girl.GirlActivity"/>
     </application>
 
 </manifest>

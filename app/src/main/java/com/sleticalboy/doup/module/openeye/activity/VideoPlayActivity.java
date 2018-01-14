@@ -168,7 +168,7 @@ public class VideoPlayActivity extends AppCompatActivity {
     public void onViewClicked() {
         String url = mData.playUrl;
         if (!TextUtils.isEmpty(url)) {
-            // 下载视频
+            // TODO: 1/13/18 下载视频
             Toast.makeText(this, "缓存视频-待完善", Toast.LENGTH_SHORT).show();
         } else {
             // 链接错误

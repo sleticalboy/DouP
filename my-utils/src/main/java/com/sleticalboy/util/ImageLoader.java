@@ -1,11 +1,20 @@
 package com.sleticalboy.util;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Android Studio.
@@ -15,9 +24,57 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
  */
 public class ImageLoader {
 
+    /**
+     * 加载可缩放图片
+     */
+    public static void loadPhotoView(final Context context, final ImageView targetView, String url) {
+        if (targetView == null) {
+            throw new NullPointerException("targetView view is null");
+        }
+        Glide.with(context)
+                .load(url)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        new android.os.Handler().post(() -> ToastUtils.showToast(context, "加载失败，请稍后重试"));
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        new PhotoViewAttacher(targetView);
+                        return false;
+                    }
+                })
+                .bitmapTransform(new BitmapTransformation(context) {
+                    @Override
+                    public String getId() {
+                        return null;
+                    }
+
+                    @Override
+                    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+                        return null;
+                    }
+                })
+                .centerCrop()
+                .crossFade()
+                .into(targetView);
+    }
+
+    public static void clear(View target) {
+        if (target == null) {
+            throw new NullPointerException("target view is null");
+        }
+        Glide.clear(target);
+    }
+
     public static void load(Context context, ImageView target, int imgId) {
         if (target == null) {
-            throw new IllegalArgumentException("target view is null");
+            throw new NullPointerException("target view is null");
         }
         Glide.with(context)
                 .load(imgId)
@@ -33,7 +90,7 @@ public class ImageLoader {
      */
     public static void load(Context context, ImageView target, String url) {
         if (target == null || StrUtils.isEmpty(url))
-            throw new IllegalArgumentException("target view or url is null");
+            throw new NullPointerException("target view or url is null");
         Glide.with(context)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -49,7 +106,7 @@ public class ImageLoader {
      */
     public static void loadHigh(Context context, ImageView target, String url) {
         if (target == null || StrUtils.isEmpty(url))
-            throw new IllegalArgumentException("target view or url is null");
+            throw new NullPointerException("target view or url is null");
         Glide.with(context)
                 .load(url)
                 .asBitmap()

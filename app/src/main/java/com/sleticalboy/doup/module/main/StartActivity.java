@@ -248,7 +248,6 @@ public class StartActivity extends BaseActivity {
                 ToastUtils.showToast(this, "change theme");
                 break;
             case R.id.btn_settings:
-                // TODO: 1/8/18 测试极光推送
                 IndexActivity.actionStart(this);
                 break;
             case R.id.btn_exit:

@@ -70,7 +70,6 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
                         return;
                     }
                     if (mLastVisibleItemPosition + 1 == mPresenter.getItemCount()) {
-//                        new Handler().postDelayed(() -> mPresenter.loadMore(false), 1000);
                         mPresenter.loadMore(false);
                     }
                 }
@@ -106,7 +105,6 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
     @Override
     public void onNetError() {
         ToastUtils.showToast(getActivity(), "网络不见啦");
-//        Log.d(TAG, "网络不见了");
     }
 
     @Override
@@ -117,18 +115,16 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
     @Override
     public void onNoMore() {
         ToastUtils.showToast(getActivity(), "没有更多数据了");
-//        Log.d(TAG, "没有更多数据了");
     }
 
     @Override
     public void onShowMore() {
         ToastUtils.showToast(getActivity(), "加载更多数据。。。");
-//        Log.d(TAG, "加载更多数据");
     }
 
     @Override
     public void onRefresh() {
-        // FIXME: 1/12/18 下拉加载没生效，需要修复 bug
+        // FIXME: 1/12/18 下拉加载不生效，需要修复
         if (srl.isRefreshing()) {
             mPresenter.loadMore(true);
         }
