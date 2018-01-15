@@ -7,9 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.sleticalboy.base.BaseFragment;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseFragment;
-import com.sleticalboy.doup.base.IBaseView;
 import com.sleticalboy.doup.module.openeye.adapter.BasePagerAdapter;
 
 import java.util.ArrayList;

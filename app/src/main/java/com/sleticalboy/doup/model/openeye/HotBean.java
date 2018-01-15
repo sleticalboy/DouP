@@ -1,7 +1,6 @@
 package com.sleticalboy.doup.model.openeye;
 
-import com.sleticalboy.doup.base.BaseBean;
-
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +10,7 @@ import java.util.List;
  * @author sleticalboy
  */
 
-public class HotBean extends BaseBean {
+public class HotBean implements Serializable {
 
     public int count;
     public int total;

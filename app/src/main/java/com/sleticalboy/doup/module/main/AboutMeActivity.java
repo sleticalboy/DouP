@@ -7,9 +7,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.base.IBaseView;
 
 import butterknife.BindView;
 

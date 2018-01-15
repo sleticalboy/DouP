@@ -2,8 +2,8 @@ package com.sleticalboy.doup.message;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.base.BasePresenter;
-import com.sleticalboy.doup.base.IBaseListView;
+import com.sleticalboy.base.BasePresenter;
+import com.sleticalboy.base.IBaseListView;
 
 /**
  * Created by Android Studio.

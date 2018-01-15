@@ -20,8 +20,8 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
 import com.sleticalboy.doup.jpush.SettingsActivity;
 import com.sleticalboy.doup.jpush.activity.IndexActivity;
 import com.sleticalboy.doup.message.ContactsActivity;

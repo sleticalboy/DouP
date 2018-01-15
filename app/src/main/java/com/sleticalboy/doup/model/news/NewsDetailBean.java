@@ -1,7 +1,6 @@
 package com.sleticalboy.doup.model.news;
 
-import com.sleticalboy.doup.base.BaseBean;
-
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public class NewsDetailBean extends BaseBean {
+public class NewsDetailBean implements Serializable {
 
     public String body;
     public String image_source;

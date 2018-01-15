@@ -35,4 +35,7 @@ dependencies {
     implementation 'com.android.support:design:26.0.0-beta1'
     implementation 'com.android.support:cardview-v7:26.0.0-beta1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // project dependency
+    implementation project(':my-widget')
 }

@@ -1,8 +1,8 @@
 package com.sleticalboy.doup.module.home;
 
+import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.base.IBaseView;
 
 /**
  * <pre>

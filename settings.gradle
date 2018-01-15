@@ -1,1 +1,2 @@
-include ':app', ':doup-res', ':my-utils'
+include ':app', ':doup-res', ':my-utils', ':my-widget',
+        ':doup-base'

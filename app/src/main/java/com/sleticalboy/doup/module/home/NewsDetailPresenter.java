@@ -2,7 +2,7 @@ package com.sleticalboy.doup.module.home;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.base.BasePresenter;
+import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.NewsModel;
 import com.sleticalboy.doup.model.news.NewsDetailBean;
 

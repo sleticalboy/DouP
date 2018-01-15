@@ -11,9 +11,9 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.base.IBaseView;
 import com.sleticalboy.doup.model.news.NewsDetailBean;
 import com.sleticalboy.util.ImageLoader;
 

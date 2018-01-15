@@ -3,9 +3,9 @@ package com.sleticalboy.doup.message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
+import com.sleticalboy.base.IBaseListView;
+import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.IBaseListView;
-import com.sleticalboy.doup.base.LazyFragment;
 import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
 
 /**

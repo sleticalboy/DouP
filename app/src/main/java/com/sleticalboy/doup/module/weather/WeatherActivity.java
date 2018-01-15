@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
+import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.IBaseView;
+import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.base.IBaseView;
-import com.sleticalboy.doup.base.config.ConstantValue;
 import com.sleticalboy.doup.model.weather.WeatherBean;
 import com.sleticalboy.doup.module.amap.LocationManager;
 import com.sleticalboy.util.ImageLoader;

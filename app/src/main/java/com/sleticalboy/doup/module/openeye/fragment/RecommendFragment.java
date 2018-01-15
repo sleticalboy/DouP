@@ -4,9 +4,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.sleticalboy.base.IBaseListView;
+import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.IBaseListView;
-import com.sleticalboy.doup.base.LazyFragment;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
 import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;

@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.message;
 
-import com.sleticalboy.doup.base.BaseBean;
+import java.io.Serializable;
 
 /**
  * Created by Android Studio.
@@ -8,7 +8,7 @@ import com.sleticalboy.doup.base.BaseBean;
  *
  * @author sleticalboy
  */
-public class MessageBean extends BaseBean {
+public class MessageBean implements Serializable {
     public String title;
     public String content;
     public String time;

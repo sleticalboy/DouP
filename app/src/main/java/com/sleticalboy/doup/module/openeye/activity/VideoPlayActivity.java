@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,8 +13,10 @@ import android.widget.Toast;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.IBaseView;
+import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.config.ConstantValue;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.listener.VideoListener;
 import com.sleticalboy.util.CommonUtils;
@@ -28,12 +26,7 @@ import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import zlc.season.rxdownload2.RxDownload;
 
 /**
  * Created by Android Studio.
@@ -42,7 +35,7 @@ import zlc.season.rxdownload2.RxDownload;
  * @author sleticalboy
  */
 
-public class VideoPlayActivity extends AppCompatActivity {
+public class VideoPlayActivity extends BaseActivity implements IBaseView, IVideoPlayView {
 
     private static final String TAG = "VideoPlayActivity";
 
@@ -76,15 +69,32 @@ public class VideoPlayActivity extends AppCompatActivity {
     private boolean mIsPause = false;
     private boolean mIsPlay = false;
 
+    private VideoPlayPresenter mPresenter;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_video);
-        ButterKnife.bind(this);
+    protected void prepareTask() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            mData = intent.getParcelableExtra(VIDEO);
+            Log.d(TAG, mData.toString());
+        }
+    }
 
-        initData();
+    @Override
+    protected void initView() {
 
-        initView();
+        mPresenter = new VideoPlayPresenter(this, this);
+
+        ImageLoader.loadHigh(this, imgBlurred, mData.blurred);
+
+        tvVideoTitle.setText(mData.title);
+        tvVideoDesc.setText(mData.desc);
+        tvVideoTime.setText(String.format("%s / %s", mData.category, CommonUtils.wrapperTime(mData.duration)));
+
+        btnFavorite.setText(String.valueOf(mData.collectCount));
+        btnReply.setText(String.valueOf(mData.replyCount));
+        btnShare.setText(String.valueOf(mData.shareCount));
+        btnCache.setText(R.string.cache);
 
         prepareVideo();
     }
@@ -95,7 +105,6 @@ public class VideoPlayActivity extends AppCompatActivity {
         if (!StrUtils.isEmpty(url)) {
             gsyPlayer.setUp(url, false, null, null);
         } else {
-//            SPUtils.putString(ConstantValue.KEY_LOCAL_VIDEO_URL, mData.playUrl);
             gsyPlayer.setUp(mData.playUrl, false, null, null);
         }
         ImageView imgCover = new ImageView(this);
@@ -145,27 +154,6 @@ public class VideoPlayActivity extends AppCompatActivity {
         gsyPlayer.getBackButton().setOnClickListener(v -> onBackPressed());
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            mData = intent.getParcelableExtra(VIDEO);
-            Log.d(TAG, mData.toString());
-        }
-    }
-
-    private void initView() {
-        ImageLoader.loadHigh(this, imgBlurred, mData.blurred);
-
-        tvVideoTitle.setText(mData.title);
-        tvVideoDesc.setText(mData.desc);
-        tvVideoTime.setText(String.format("%s / %s", mData.category, CommonUtils.wrapperTime(mData.duration)));
-
-        btnFavorite.setText(String.valueOf(mData.collectCount));
-        btnReply.setText(String.valueOf(mData.replyCount));
-        btnShare.setText(String.valueOf(mData.shareCount));
-        btnCache.setText(R.string.cache);
-    }
-
     public static void actionStart(Context context, VideoBean videoBean) {
         Intent intent = new Intent(context, VideoPlayActivity.class);
         intent.putExtra(VIDEO, videoBean);
@@ -175,42 +163,27 @@ public class VideoPlayActivity extends AppCompatActivity {
     @OnClick(R.id.btn_cache)
     public void onViewClicked() {
         String url = mData.playUrl;
-        if (!TextUtils.isEmpty(url)) {
-            // 下载时保存 url 到 sp，下次直接播放本地文件，节约流量
-            RxDownload.getInstance(this)
-                    .serviceDownload(mData.playUrl, mData.title)
-                    .subscribeOn(Schedulers.io())
-                    .doOnNext(new Consumer<Object>() {
-                        @Override
-                        public void accept(Object o) throws Exception {
-                            ToastUtils.showToast(VideoPlayActivity.this, "开始下载");
-                            SPUtils.putString(ConstantValue.KEY_LOCAL_VIDEO_URL, url);
-                            SPUtils.putBoolean(ConstantValue.KEY_DOWNLOAD_STATE, true);
-                        }
-                    })
-                    .doOnComplete(new Action() {
-                        @Override
-                        public void run() throws Exception {
-                            ToastUtils.showToast(VideoPlayActivity.this, "下载完成");
-                        }
-                    })
-                    .doOnError(new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            throwable.printStackTrace();
-                            ToastUtils.showToast(VideoPlayActivity.this, "添加任务失败");
-                        }
-                    })
-                    .subscribe(new Consumer<Object>() {
-                        @Override
-                        public void accept(Object o) throws Exception {
-                            Log.d(TAG, "accept = downloading...");
-                        }
-                    });
-        } else {
-            // 链接错误
-            Toast.makeText(this, "链接错误", Toast.LENGTH_SHORT).show();
-        }
+        String saveName = mData.title;
+        mPresenter.downloadVideo(url, saveName);
+    }
+
+    public void onPlayUrlError() {
+        Toast.makeText(this, "链接错误", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStartDownload() {
+        ToastUtils.showToast(this, "开始下载");
+    }
+
+    @Override
+    public void onDownloadFinished() {
+        ToastUtils.showToast(this, "下载完成");
+    }
+
+    @Override
+    public void onAddTaskError() {
+        ToastUtils.showToast(this, "添加任务失败");
     }
 
     @Override
@@ -225,6 +198,11 @@ public class VideoPlayActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mIsPause = true;
+    }
+
+    @Override
+    protected int attachLayout() {
+        return R.layout.activity_play_video;
     }
 
     @Override
@@ -255,5 +233,20 @@ public class VideoPlayActivity extends AppCompatActivity {
         super.onDestroy();
         GSYVideoPlayer.releaseAllVideos();
         mOrientationUtils.releaseListener();
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadingOver() {
+
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 }

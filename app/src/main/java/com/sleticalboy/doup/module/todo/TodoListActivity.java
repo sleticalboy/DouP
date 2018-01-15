@@ -3,8 +3,8 @@ package com.sleticalboy.doup.module.todo;
 import android.content.Context;
 import android.content.Intent;
 
+import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
 
 /**
  * <pre>

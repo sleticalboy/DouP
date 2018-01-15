@@ -157,4 +157,6 @@ dependencies {
     // project dependency
     implementation project(':doup-res')
     implementation project(':my-utils')
+    implementation project(':doup-base')
+    implementation project(':my-widget')
 }

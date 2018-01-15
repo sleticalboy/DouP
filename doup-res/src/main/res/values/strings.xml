@@ -1,8 +1,8 @@
 <resources>
 
     <!--start url prefix-->
-    <string name="url_schema">doup</string>
-    <string name="url_middle">://</string>
+    <!--<string name="url_schema">doup</string>-->
+    <!--<string name="url_middle">://</string>-->
     <!--end url prefix-->
 
     <!--start main module-->

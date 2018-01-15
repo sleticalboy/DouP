@@ -1,6 +1,6 @@
 package com.sleticalboy.doup;
 
-import com.sleticalboy.doup.base.IBaseView;
+import com.sleticalboy.base.IBaseView;
 
 /**
  * <pre>

@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.base;
+package com.sleticalboy.base;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,11 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.jpush.JPushManager;
+import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.util.ActivityController;
 
-import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -26,10 +24,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
 
-    @BindString(R.string.url_schema)
-    String mUrlSchema;
-    @BindString(R.string.url_middle)
-    String mUrlMiddle;
+//    @BindString(R.string.url_schema)
+//    String mUrlSchema;
+//    @BindString(R.string.url_middle)
+//    String mUrlMiddle;
 
     protected Unbinder unbinder;
 
@@ -60,13 +58,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        JPushManager.getInstance().onResume(this);
+//        JPushManager.getInstance().onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        JPushManager.getInstance().onPause(this);
+//        JPushManager.getInstance().onPause(this);
     }
 
     @Override
@@ -119,8 +117,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return url prefix: <code>doup://</code>
      */
     protected final String urlPre() {
-//        return getResources().getString(R.string.url_schema) + getResources().getString(R.string.url_middle);
-        return mUrlSchema + mUrlMiddle;
+//        return mUrlSchema + mUrlMiddle;
+        return ConstantValue.URL_PRE;
     }
 
     public final String getJumpUrl(String module, String activity) {

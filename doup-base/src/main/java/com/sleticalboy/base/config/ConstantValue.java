@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.base.config;
+package com.sleticalboy.base.config;
 
 /**
  * Created by Android Studio.
@@ -7,6 +7,9 @@ package com.sleticalboy.doup.base.config;
  * @author sleticalboy
  */
 public interface ConstantValue {
+
+    String URL_PRE = "doup://";
+
     /**
      * 和风天气背景图
      */

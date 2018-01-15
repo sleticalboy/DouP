@@ -2,7 +2,7 @@ package com.sleticalboy.doup.message;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.base.BaseModel;
+import com.sleticalboy.base.BaseModel;
 
 import java.util.List;
 

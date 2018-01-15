@@ -2,7 +2,7 @@ package com.sleticalboy.doup.model;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.base.BaseModel;
+import com.sleticalboy.base.BaseModel;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.WeatherApi;

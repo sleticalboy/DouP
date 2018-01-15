@@ -1,6 +1,6 @@
 package com.sleticalboy.doup;
 
-import com.sleticalboy.doup.base.BaseActivity;
+import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.module.main.StartActivity;
 
 /**

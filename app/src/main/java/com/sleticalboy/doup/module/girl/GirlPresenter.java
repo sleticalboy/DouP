@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.widget.ImageView;
 
-import com.sleticalboy.doup.base.BasePresenter;
+import com.sleticalboy.base.BasePresenter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

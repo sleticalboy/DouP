@@ -3,7 +3,7 @@ package com.sleticalboy.doup.module.openeye.fragment;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 
-import com.sleticalboy.doup.base.BasePresenter;
+import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.OpeneyeModel;
 import com.sleticalboy.doup.model.openeye.FindingBean;
 import com.sleticalboy.doup.module.openeye.adapter.FindingAdapter;

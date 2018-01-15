@@ -2,7 +2,7 @@ package com.sleticalboy.doup.module.openeye.activity;
 
 import android.content.Context;
 
-import com.sleticalboy.doup.base.BasePresenter;
+import com.sleticalboy.base.BasePresenter;
 
 /**
  * <pre>

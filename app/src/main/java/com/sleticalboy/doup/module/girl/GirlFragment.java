@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.sleticalboy.base.BaseFragment;
+import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseFragment;
-import com.sleticalboy.doup.base.IBaseListView;
 import com.sleticalboy.util.LogUtils;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
@@ -20,7 +20,8 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class GirlFragment extends BaseFragment implements IBaseListView, SwipeRefreshLayout.OnRefreshListener {
+public class GirlFragment extends BaseFragment implements IBaseListView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GirlFragment";
 

@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
+import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.base.IBaseListView;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;

@@ -11,8 +11,8 @@ import android.os.Build;
 import android.provider.Settings;
 import android.view.KeyEvent;
 
+import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseActivity;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

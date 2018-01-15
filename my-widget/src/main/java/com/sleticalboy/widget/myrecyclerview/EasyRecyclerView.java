@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.sleticalboy.doup.R;
+import com.sleticalboy.widget.R;
 import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
 import com.sleticalboy.widget.myrecyclerview.swipe.SwipeRefreshLayout;
 

@@ -1,7 +1,6 @@
 package com.sleticalboy.doup.model.openeye;
 
-import com.sleticalboy.doup.base.BaseBean;
-
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +10,7 @@ import java.util.List;
  * @author sleticalboy
  */
 
-public class RecommendBean extends BaseBean {
+public class RecommendBean implements Serializable {
 
     public String nextPageUrl;
     public long nextPublishTime;

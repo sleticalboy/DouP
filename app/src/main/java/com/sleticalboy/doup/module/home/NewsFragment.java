@@ -7,9 +7,9 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.sleticalboy.base.BaseFragment;
+import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.base.BaseFragment;
-import com.sleticalboy.doup.base.IBaseListView;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
-import com.sleticalboy.doup.base.BasePresenter;
+import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.NewsModel;
 import com.sleticalboy.doup.model.news.NewsBean;
 

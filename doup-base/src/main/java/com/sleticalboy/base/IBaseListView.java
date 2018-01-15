@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.base;
+package com.sleticalboy.base;
 
 import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
 
@@ -12,11 +12,6 @@ import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
  * @author sleticalboy
  */
 public interface IBaseListView extends IBaseView {
-
-    /**
-     * 设置 adapter
-     */
-//    void setAdapter();
 
     /**
      * 获取当前页面的 RecyclerView

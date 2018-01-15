@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.sleticalboy.doup.base.config.ConstantValue;
+import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.model.WeatherModel;
