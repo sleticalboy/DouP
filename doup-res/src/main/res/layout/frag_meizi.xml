@@ -4,9 +4,10 @@
     android:id="@+id/srl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/side_nav_bar"
     android:padding="4dp">
 
-    <android.support.v7.widget.RecyclerView
+    <com.sleticalboy.widget.myrecyclerview.EasyRecyclerView
         android:id="@+id/rv_meizi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

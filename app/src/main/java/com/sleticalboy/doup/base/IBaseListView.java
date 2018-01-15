@@ -15,11 +15,8 @@ public interface IBaseListView extends IBaseView {
 
     /**
      * 设置 adapter
-     *
-     * @param adapter adapter 对象
      */
-//    设置 adapter、
-//    void setAdapter(RecyclerArrayAdapter adapter);
+//    void setAdapter();
 
     /**
      * 获取当前页面的 RecyclerView

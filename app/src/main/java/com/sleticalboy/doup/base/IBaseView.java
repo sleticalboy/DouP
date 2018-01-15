@@ -19,7 +19,7 @@ public interface IBaseView {
     /**
      * 加载界面完成时调用
      */
-    void onLoadingEnd();
+    void onLoadingOver();
 
     /**
      * 网络异常时调用

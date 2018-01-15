@@ -7,7 +7,6 @@ import android.util.Log;
 import com.sleticalboy.doup.base.BasePresenter;
 import com.sleticalboy.doup.model.NewsModel;
 import com.sleticalboy.doup.model.news.NewsBean;
-import com.sleticalboy.doup.module.home.adapter.NewsListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +42,17 @@ public class NewsPresenter extends BasePresenter {
         initData();
     }
 
+    @Override
     public void setAdapter() {
         mAdapter = new NewsListAdapter(getContext(), mData);
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mNewsListView.getRecyclerView().setLayoutManager(mLayoutManager);
         mNewsListView.getRecyclerView().setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(mNewsListView);
+    }
+
+    @Override
+    protected void setLayoutManager() {
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mNewsListView.getRecyclerView().setLayoutManager(mLayoutManager);
     }
 
     // 初始化数据
@@ -65,7 +69,7 @@ public class NewsPresenter extends BasePresenter {
                     mAdapter.addAll(mData);
                     mAdapter.notifyDataSetChanged();
                     Log.d(TAG, newsBean.stories.get(0).title);
-                    mNewsListView.onLoadingEnd();
+                    mNewsListView.onLoadingOver();
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {

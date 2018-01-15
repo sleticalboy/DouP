@@ -237,6 +237,7 @@
         <activity android:name=".message.ContactsActivity"/>
         <activity android:name=".module.todo.TodoListActivity"/>
         <activity android:name=".module.girl.GirlActivity"/>
+        <activity android:name=".module.home.ShareActivity"/>
     </application>
 
 </manifest>

@@ -2,9 +2,7 @@ package com.sleticalboy.doup.module.girl;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -17,11 +15,7 @@ import com.sleticalboy.doup.base.IBaseView;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.util.ToastUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,31 +44,22 @@ public class GirlActivity extends BaseActivity implements IBaseView {
     private String imgDesc;
     private String imgUrl;
 
-    @Override
-    public void onLoading() {
-
-    }
+    private GirlPresenter mPresenter;
 
     @Override
-    public void onLoadingEnd() {
-
-    }
-
-    @Override
-    public void onNetError() {
-
-    }
-
-    @Override
-    protected void initView() {
+    protected void prepareTask() {
         Intent intent = getIntent();
         if (intent != null) {
             imgUrl = intent.getStringExtra(IMG_URL);
             imgDesc = intent.getStringExtra(IMG_DESC);
         }
+    }
+
+    @Override
+    protected void initView() {
+        mPresenter = new GirlPresenter(this, this);
+
         ViewCompat.setTransitionName(imgGirl, TRANSIT_PIC);
-//        ImageLoader.load(this, imgGirl, imgUrl);
-//        ImageLoader.attachView(imgGirl);
         // FIXME: 1/15/18 加载圆角图片
         ImageLoader.loadPhotoView(this, imgGirl, imgUrl);
     }
@@ -104,37 +89,30 @@ public class GirlActivity extends BaseActivity implements IBaseView {
     @OnClick(R.id.btn_save_img)
     public void onViewClicked(View view) {
         Snackbar.make(view, "Save Image", Snackbar.LENGTH_LONG)
-                .setAction("OK", v -> saveImage())
+                .setAction("OK", v -> mPresenter.saveImage(imgGirl, imgDesc))
                 .show();
     }
 
-    /**
-     * 保存图片
-     */
-    private void saveImage() {
-        imgGirl.buildDrawingCache();
-        Bitmap girlBitmap = imgGirl.getDrawingCache();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        girlBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] bytes = baos.toByteArray();
-        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DouP");
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        try {
-            File file = new File(dir, imgDesc.substring(0, 10) + ".png");
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bytes, 0, bytes.length);
-            fos.flush();
-            // 更新相册
-            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            intent.setData(Uri.fromFile(file));
-            this.sendBroadcast(intent);
-            ToastUtils.showToast(this, "保存成功");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadingOver() {
+
+    }
+
+    @Override
+    public void onNetError() {
+
+    }
+
+    public void updateGallery(File file) {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(file));
+        this.sendBroadcast(intent);
+        ToastUtils.showToast(this, "保存成功");
     }
 }

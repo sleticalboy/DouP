@@ -186,7 +186,7 @@ public class WeatherPresenter extends BasePresenter {
                         Log.d("WeatherActivity", "get weather form network -- >");
                         SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
                         mWeatherView.showWeather(weatherBean);
-                        mWeatherView.onLoadingEnd();
+                        mWeatherView.onLoadingOver();
                         AutoUpdateService.actionStart(getContext());
                     }, throwable -> mWeatherView.onNetError());
         }

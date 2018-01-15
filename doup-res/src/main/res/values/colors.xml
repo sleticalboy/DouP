@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="app_theme">#4DB6AC</color>
+
     <color name="refresh_progress_1">#536DFE</color>
     <color name="refresh_progress_2">#f44336</color>
     <color name="refresh_progress_3">#FF4081</color>

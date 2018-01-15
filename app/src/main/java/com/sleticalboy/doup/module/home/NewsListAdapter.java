@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.module.home.adapter;
+package com.sleticalboy.doup.module.home;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -24,13 +24,9 @@ import java.util.List;
 public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> {
 
     private static final String TAG = "NewsListAdapter";
-//    private final List<NewsBean.StoriesBean> mNews;
-//    private final List<NewsBean.TopStoriesBean> mStories;
 
     public NewsListAdapter(Context context, List<NewsBean.StoriesBean> objects) {
         super(context, objects);
-//        mNews = objects.get(0).stories;
-//        mStories = objects.get(0).top_stories;
     }
 
     @Override
@@ -39,7 +35,7 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> 
     }
 
     // 新闻 item
-    class NewsViewHolder extends BaseViewHolder<NewsBean.StoriesBean> {
+    static class NewsViewHolder extends BaseViewHolder<NewsBean.StoriesBean> {
 
         CardView cardView;
         TextView newsTitle;

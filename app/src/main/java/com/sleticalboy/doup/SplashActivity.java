@@ -36,7 +36,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
 
     }
 

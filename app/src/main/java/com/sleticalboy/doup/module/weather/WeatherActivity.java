@@ -186,7 +186,7 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
         swipeRefresh.setRefreshing(false);
     }
 

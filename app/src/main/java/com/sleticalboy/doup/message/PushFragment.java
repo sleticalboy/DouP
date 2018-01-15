@@ -28,7 +28,7 @@ public class PushFragment extends LazyFragment implements IBaseListView,
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
 
     }
 

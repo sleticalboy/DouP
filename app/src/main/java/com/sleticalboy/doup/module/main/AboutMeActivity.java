@@ -9,6 +9,7 @@ import android.webkit.WebViewClient;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
+import com.sleticalboy.doup.base.IBaseView;
 
 import butterknife.BindView;
 
@@ -18,7 +19,7 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class AboutMeActivity extends BaseActivity {
+public class AboutMeActivity extends BaseActivity implements IBaseView {
 
     private static final String GIT_HUB = "https://www.github.com/sleticalboy";
 
@@ -46,5 +47,20 @@ public class AboutMeActivity extends BaseActivity {
     public static void startAction(Context context) {
         Intent intent = new Intent(context, AboutMeActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadingOver() {
+
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 }

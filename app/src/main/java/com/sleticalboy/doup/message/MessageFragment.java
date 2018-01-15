@@ -86,7 +86,7 @@ public class MessageFragment extends BaseFragment implements IBaseView {
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
     }
 
     @Override

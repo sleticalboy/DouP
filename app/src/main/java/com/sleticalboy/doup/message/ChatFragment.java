@@ -28,7 +28,7 @@ public class ChatFragment extends LazyFragment implements IBaseListView,
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
 
     }
 

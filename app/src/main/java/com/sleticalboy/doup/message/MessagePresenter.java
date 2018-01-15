@@ -23,6 +23,7 @@ public class MessagePresenter extends BasePresenter {
         mMessageModel = new MessageModel(context);
     }
 
+    @Override
     public void setAdapter() {
         mAdapter = new MessageAdapter(getContext());
         mMessageView.getRecyclerView().setAdapter(mAdapter);

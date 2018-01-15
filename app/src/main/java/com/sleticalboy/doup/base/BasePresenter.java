@@ -17,6 +17,12 @@ public abstract class BasePresenter<V extends IBaseView> {
         mContext = context;
     }
 
+    protected void setAdapter() {
+    }
+
+    protected void setLayoutManager() {
+    }
+
     protected void onTokenView(V view) {
         mView = view;
     }

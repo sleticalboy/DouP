@@ -41,6 +41,7 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
     @Override
     protected void initView(View rootView) {
         mPresenter = new NewsPresenter(getActivity(), this);
+        mPresenter.setLayoutManager();
         mPresenter.setAdapter();
         setOnScrollListener();
         setSwipeRefreshLayout();
@@ -96,7 +97,7 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }

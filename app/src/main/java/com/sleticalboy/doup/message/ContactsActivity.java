@@ -39,7 +39,7 @@ public class ContactsActivity extends BaseActivity implements IBaseListView {
     }
 
     @Override
-    public void onLoadingEnd() {
+    public void onLoadingOver() {
 
     }
 
