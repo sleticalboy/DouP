@@ -11,7 +11,7 @@ import java.util.List;
  * @author sleticalboy
  */
 
-public class PopularBean extends BaseBean {
+public class HotBean extends BaseBean {
 
     public int count;
     public int total;

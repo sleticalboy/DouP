@@ -2,29 +2,17 @@ package com.sleticalboy.doup.module.openeye.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.base.BaseActivity;
-import com.sleticalboy.doup.model.OpeneyeModel;
-import com.sleticalboy.doup.model.openeye.PopularBean;
-import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.sleticalboy.doup.base.IBaseListView;
+import com.sleticalboy.doup.model.openeye.VideoBean;
+import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android Studio.
@@ -33,73 +21,57 @@ import io.reactivex.schedulers.Schedulers;
  * @author sleticalboy
  */
 
-public class FindingDetailActivity extends BaseActivity {
+public class FindingDetailActivity extends BaseActivity implements IBaseListView,
+        SwipeRefreshLayout.OnRefreshListener,
+        RecyclerArrayAdapter.OnItemClickListener {
 
     private static final String TAG = "FindingDetailActivity";
 
     public static final String NAME = "name";
 
     @BindView(R.id.rv_rank)
-    RecyclerView rvRank;
+    EasyRecyclerView rvRank;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
 
-    private int mStart = 10;
-    private List<PopularBean.ItemListBean.DataBean> mData = new ArrayList<>();
     private String mName;
-    private String mDate;
-    private RankAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
     private int mLastVisibleItemIndex;
 
-    private OpeneyeModel mOpeneyeModel;
+    private RankPresenter mPresenter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finding_detail);
-        ButterKnife.bind(this);
-
-        mOpeneyeModel = new OpeneyeModel(this);
-
-        initView();
-
-        initData();
+    protected void prepareTask() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            mName = intent.getStringExtra(NAME);
+        }
     }
 
     @Override
     protected void initView() {
-        mLayoutManager = new LinearLayoutManager(this);
-        rvRank.setLayoutManager(mLayoutManager);
+        mPresenter = new RankPresenter(this, this);
+        mPresenter.setLayoutManager();
+        mPresenter.setAdapter();
 
-        mAdapter = new RankAdapter(this);
-        rvRank.setAdapter(mAdapter);
+        mPresenter.initData(mName);
 
-        srl.setOnRefreshListener(() -> {
-            if (srl.isRefreshing()) {
-                srl.setRefreshing(false);
-                // 更新数据
-                loadMore();
-            } else {
-                srl.setRefreshing(true);
-            }
-        });
+        srl.setOnRefreshListener(this);
 
         rvRank.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                mLastVisibleItemIndex = mLayoutManager.findLastVisibleItemPosition();
+                mLastVisibleItemIndex = mPresenter.findLastVisibleItemPosition();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (mLayoutManager.getItemCount() == 1) return;
-                    if (mLayoutManager.getItemCount() + 1 == mLastVisibleItemIndex) {
-                        loadMore();
+                    if (mPresenter.getItemCount() == 1) return;
+                    if (mPresenter.getItemCount() + 1 == mLastVisibleItemIndex) {
+                        mPresenter.loadMore(false);
                     }
                 }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                mLastVisibleItemIndex = mLayoutManager.findLastVisibleItemPosition();
+                mLastVisibleItemIndex = mPresenter.findLastVisibleItemPosition();
             }
         });
     }
@@ -109,48 +81,59 @@ public class FindingDetailActivity extends BaseActivity {
         return R.layout.activity_finding_detail;
     }
 
-    private void loadMore() {
-        //
-    }
-
-    private void initData() {
-        Intent intent = getIntent();
-        if (intent != null) {
-            mName = intent.getStringExtra(NAME);
-        }
-
-        mOpeneyeModel.getFindingsDetail(mName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(this::resolveDate)
-                .subscribe(this::flatMapData);
-    }
-
-    private void resolveDate(PopularBean popularBean) {
-        String regex = "[^0-9]";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(popularBean.nextPageUrl);
-        mDate = matcher.replaceAll("")
-                .subSequence(1, matcher.replaceAll("").length() - 1)
-                .toString();
-    }
-
-    private void flatMapData(PopularBean popularBean) {
-        Observable.fromIterable(popularBean.itemList)
-                .filter(itemListBean -> itemListBean.data.category != null
-                        && itemListBean.data.cover != null)
-                .forEach(itemListBean -> {
-                    Log.d(TAG, itemListBean.data.toString());
-                    mData.add(itemListBean.data);
-
-                });
-        mAdapter.setDataList(mData);
-        mAdapter.notifyDataSetChanged();
-    }
-
     public static void actionStart(Context context, String name) {
         Intent intent = new Intent(context, FindingDetailActivity.class);
         intent.putExtra(NAME, name);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onLoading() {
+
+    }
+
+    @Override
+    public void onLoadingOver() {
+
+    }
+
+    @Override
+    public void onNetError() {
+
+    }
+
+    @Override
+    public EasyRecyclerView getRecyclerView() {
+        return rvRank;
+    }
+
+    @Override
+    public void onNoMore() {
+
+    }
+
+    @Override
+    public void onShowMore() {
+
+    }
+
+    @Override
+    public void onRefresh() {
+        if (srl.isRefreshing()) {
+            srl.setRefreshing(false);
+            // 更新数据
+            mPresenter.loadMore(true);
+        } else {
+            srl.setRefreshing(true);
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        mPresenter.onItemClick(position);
+    }
+
+    public void showVideoDetail(VideoBean videoBean) {
+        VideoPlayActivity.actionStart(this, videoBean);
     }
 }

@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.http.api;
 
 import com.sleticalboy.doup.model.openeye.FindingBean;
-import com.sleticalboy.doup.model.openeye.PopularBean;
+import com.sleticalboy.doup.model.openeye.HotBean;
 import com.sleticalboy.doup.model.openeye.RecommendBean;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public interface OpeneyeApi {
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_EYES})
     @GET("v2/feed")
     Observable<RecommendBean> getMoreRecommend(@Query("date") String date,
-                                                  @Query("num") String num);
+                                               @Query("num") String num);
 
     /**
      * 获取发现内容
@@ -49,27 +49,27 @@ public interface OpeneyeApi {
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_EYES})
     @GET("api/v3/ranklist")
-    Observable<PopularBean> getPopular(@Query("num") int num,
-                                          @Query("strategy") String strategy,
-                                          @Query("udid") String udid,
-                                          @Query("vc") String vc);
+    Observable<HotBean> getPopular(@Query("num") int num,
+                                   @Query("strategy") String strategy,
+                                   @Query("udid") String udid,
+                                   @Query("vc") int vc);
 
     /**
      * 关键词搜索
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_EYES})
     @GET("v1/search")
-    Observable<PopularBean> getSearchData(@Query("num") int num,
-                                             @Query("query") String query,
-                                             @Query("start") int start);
+    Observable<HotBean> getSearchData(@Query("num") int num,
+                                      @Query("query") String query,
+                                      @Query("start") int start);
 
     /**
      * 发现详情页面
      */
     @Headers({HEADER_KEY + ":" + HEADER_VALUE_EYES})
     @GET("v3/videos")
-    Observable<PopularBean> getFindingsDetail(@Query("categoryName") String categoryName,
-                                                 @Query("strategy") String strategy,
-                                                 @Query("udid") String udid,
-                                                 @Query("vc") int vc);
+    Observable<HotBean> getFindingsDetail(@Query("categoryName") String categoryName,
+                                          @Query("strategy") String strategy,
+                                          @Query("udid") String udid,
+                                          @Query("vc") int vc);
 }

@@ -25,11 +25,6 @@ public abstract class LazyFragment extends BaseFragment {
     protected boolean isVisibleToUser;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isViewCreated = true;

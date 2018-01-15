@@ -45,8 +45,8 @@ public class OpeneyeFragment extends Fragment {
 
         List<Fragment> subFragments = new ArrayList<>();
         subFragments.add(new RecommendFragment());
-        subFragments.add(new FindingsFragment());
-        subFragments.add(new PopularFragment());
+        subFragments.add(new FindingFragment());
+        subFragments.add(new HotFragment());
 
         BasePagerAdapter adapter = new BasePagerAdapter(getActivity(), getChildFragmentManager());
         adapter.setTabTitleIds(mTabTitleIds);

@@ -1,20 +1,17 @@
 package com.sleticalboy.doup.module.openeye.adapter;
 
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.openeye.FindingBean;
 import com.sleticalboy.util.ImageLoader;
+import com.sleticalboy.widget.myrecyclerview.adapter.BaseViewHolder;
+import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Android Studio.
@@ -22,66 +19,32 @@ import butterknife.ButterKnife;
  *
  * @author sleticalboy
  */
+public class FindingAdapter extends RecyclerArrayAdapter<FindingBean> {
 
-public class FindingAdapter extends BaseAdapter {
-
-    private Context mContext;
-    private List<FindingBean> mData;
-
-    public FindingAdapter(Context context) {
-        mContext = context;
-    }
-
-    public void setData(List<FindingBean> data) {
-        mData = data;
+    public FindingAdapter(Context context, List<FindingBean> objects) {
+        super(context, objects);
     }
 
     @Override
-    public int getCount() {
-        return mData == null ? 0 : mData.size();
+    public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(parent);
     }
 
-    @Override
-    public FindingBean getItem(int position) {
-        return mData.get(position);
-    }
+    static class ViewHolder extends BaseViewHolder<FindingBean> {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = View.inflate(mContext, R.layout.item_finding, null);
-            holder = ViewHolder.getHolder(convertView);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        FindingBean findingBean = mData.get(position);
-        ImageLoader.load(mContext, holder.imgPhoto, findingBean.bgPicture);
-        holder.tvTitle.setText(findingBean.name);
-
-        return convertView;
-    }
-
-    static class ViewHolder {
-
-        @BindView(R.id.img_photo)
         ImageView imgPhoto;
-        @BindView(R.id.tv_title)
         TextView tvTitle;
 
-        ViewHolder(View itemView) {
-            ButterKnife.bind(this, itemView);
+        ViewHolder(ViewGroup itemView) {
+            super(itemView, R.layout.item_finding);
+            imgPhoto = dollar(R.id.img_photo);
+            tvTitle = dollar(R.id.tv_title);
         }
 
-        static ViewHolder getHolder(View itemView) {
-            return new ViewHolder(itemView);
+        @Override
+        public void setData(FindingBean data) {
+            ImageLoader.load(getContext(), imgPhoto, data.bgPicture);
+            tvTitle.setText(data.name);
         }
     }
 }

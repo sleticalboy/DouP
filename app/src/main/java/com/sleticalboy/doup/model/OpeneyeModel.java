@@ -6,7 +6,7 @@ import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.OpeneyeApi;
 import com.sleticalboy.doup.model.openeye.FindingBean;
-import com.sleticalboy.doup.model.openeye.PopularBean;
+import com.sleticalboy.doup.model.openeye.HotBean;
 import com.sleticalboy.doup.model.openeye.RecommendBean;
 
 import java.lang.ref.WeakReference;
@@ -47,8 +47,16 @@ public class OpeneyeModel {
         return mOpeneyeApiService.getFindings();
     }
 
-    public Observable<PopularBean> getFindingsDetail(String name) {
+    public Observable<HotBean> getFindingsDetail(String name) {
         return mOpeneyeApiService.getFindingsDetail(name, CATEGORY_NAME, UDID, VC);
+    }
+
+    public Observable<HotBean> getPopular(int num, String strategy) {
+        return mOpeneyeApiService.getPopular(num, strategy, UDID, VC);
+    }
+
+    public Observable<HotBean> getSearch(int num, String query, int start) {
+        return mOpeneyeApiService.getSearchData(num, query, start);
     }
 
     public void clear() {

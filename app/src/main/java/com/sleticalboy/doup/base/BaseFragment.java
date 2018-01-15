@@ -30,12 +30,17 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        prepareTask();
+
         View rootView = inflater.inflate(attachLayout(), null);
         mUnbinder = ButterKnife.bind(this, rootView);
 
         initView(rootView);
 
         return rootView;
+    }
+
+    protected void prepareTask() {
     }
 
     /**
