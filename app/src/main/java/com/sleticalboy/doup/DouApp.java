@@ -10,6 +10,7 @@ import android.util.Log;
 import com.sleticalboy.doup.jpush.JPushManager;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
+import com.sleticalboy.util.SPUtils;
 
 import org.litepal.LitePal;
 
@@ -44,6 +45,7 @@ public class DouApp extends Application implements CrashHandler.OnCrashListener 
     }
 
     private void init() {
+        SPUtils.init(this);
         // 初始化 LitePal
         LitePal.initialize(this);
         // 初始化极光推送

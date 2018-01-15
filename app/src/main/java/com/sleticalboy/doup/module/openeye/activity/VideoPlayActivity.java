@@ -18,14 +18,22 @@ import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.base.config.ConstantValue;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.listener.VideoListener;
 import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;
+import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.StrUtils;
+import com.sleticalboy.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import zlc.season.rxdownload2.RxDownload;
 
 /**
  * Created by Android Studio.
@@ -82,12 +90,12 @@ public class VideoPlayActivity extends AppCompatActivity {
     }
 
     private void prepareVideo() {
-        // TODO: 12/28/17 sp 保存链接
-        String url = getIntent().getStringExtra("");
-        if (url != null) {
-            Log.d(TAG, url);
+        // 查看视频是否缓存过
+        String url = SPUtils.getString(ConstantValue.KEY_LOCAL_VIDEO_URL, null);
+        if (!StrUtils.isEmpty(url)) {
             gsyPlayer.setUp(url, false, null, null);
         } else {
+//            SPUtils.putString(ConstantValue.KEY_LOCAL_VIDEO_URL, mData.playUrl);
             gsyPlayer.setUp(mData.playUrl, false, null, null);
         }
         ImageView imgCover = new ImageView(this);
@@ -168,8 +176,37 @@ public class VideoPlayActivity extends AppCompatActivity {
     public void onViewClicked() {
         String url = mData.playUrl;
         if (!TextUtils.isEmpty(url)) {
-            // TODO: 1/13/18 下载视频
-            Toast.makeText(this, "缓存视频-待完善", Toast.LENGTH_SHORT).show();
+            // 下载时保存 url 到 sp，下次直接播放本地文件，节约流量
+            RxDownload.getInstance(this)
+                    .serviceDownload(mData.playUrl, mData.title)
+                    .subscribeOn(Schedulers.io())
+                    .doOnNext(new Consumer<Object>() {
+                        @Override
+                        public void accept(Object o) throws Exception {
+                            ToastUtils.showToast(VideoPlayActivity.this, "开始下载");
+                            SPUtils.putString(ConstantValue.KEY_LOCAL_VIDEO_URL, url);
+                            SPUtils.putBoolean(ConstantValue.KEY_DOWNLOAD_STATE, true);
+                        }
+                    })
+                    .doOnComplete(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            ToastUtils.showToast(VideoPlayActivity.this, "下载完成");
+                        }
+                    })
+                    .doOnError(new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            throwable.printStackTrace();
+                            ToastUtils.showToast(VideoPlayActivity.this, "添加任务失败");
+                        }
+                    })
+                    .subscribe(new Consumer<Object>() {
+                        @Override
+                        public void accept(Object o) throws Exception {
+                            Log.d(TAG, "accept = downloading...");
+                        }
+                    });
         } else {
             // 链接错误
             Toast.makeText(this, "链接错误", Toast.LENGTH_SHORT).show();
