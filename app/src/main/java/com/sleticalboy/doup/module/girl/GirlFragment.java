@@ -20,7 +20,7 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class GirlFragment extends BaseFragment implements IBaseListView {
+public class GirlFragment extends BaseFragment implements IBaseListView, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GirlFragment";
 
@@ -43,11 +43,7 @@ public class GirlFragment extends BaseFragment implements IBaseListView {
         mPresenter.setLayoutManager();
         mPresenter.setAdapter();
 
-        srl.setOnRefreshListener(() -> {
-            if (srl.isRefreshing()) {
-                mPresenter.loadMore(true);
-            }
-        });
+        srl.setOnRefreshListener(this);
 
         rvMeizi.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -104,5 +100,13 @@ public class GirlFragment extends BaseFragment implements IBaseListView {
     @Override
     public void onShowMore() {
         ToastUtils.showToast(getActivity(), "加载更多数据。。。");
+    }
+
+    @Override
+    public void onRefresh() {
+        // FIXME: 1/15/18 下拉加载不生效，需要修复
+        if (srl.isRefreshing()) {
+            mPresenter.loadMore(true);
+        }
     }
 }
