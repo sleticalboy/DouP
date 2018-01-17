@@ -21,7 +21,7 @@ import com.sleticalboy.util.TimeUtils;
  *
  * @author sleticalboy
  */
-public class LocationManager implements AMapLocationListener {
+public final class LocationManager implements AMapLocationListener {
 
     public static final String TAG = "LocationManager";
 

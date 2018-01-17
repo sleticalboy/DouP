@@ -103,7 +103,7 @@ public class JPushUtil {
     }
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
-    public static String getImei(Context context, String defValue) {
+    public static String getIMEI(Context context, String defValue) {
         String ret = null;
         try {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

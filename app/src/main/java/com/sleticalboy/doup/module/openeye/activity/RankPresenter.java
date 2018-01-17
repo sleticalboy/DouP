@@ -1,14 +1,18 @@
 package com.sleticalboy.doup.module.openeye.activity;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.OpeneyeModel;
+import com.sleticalboy.doup.model.openeye.DataBean;
 import com.sleticalboy.doup.model.openeye.HotBean;
+import com.sleticalboy.doup.model.openeye.ItemListBean;
+import com.sleticalboy.doup.model.openeye.RecommendBean;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
+import com.sleticalboy.doup.module.openeye.fragment.IRecommendView;
+import com.sleticalboy.util.StrUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,24 +37,30 @@ public class RankPresenter extends BasePresenter {
     public static final String TAG = "RankPresenter";
 
     private RankAdapter mAdapter;
-    private FindingDetailActivity mRankView;
-    private LinearLayoutManager mLayoutManager;
-    private List<HotBean.ItemListBean.DataBean> mData = new ArrayList<>();
+    private IRecommendView mRecommendView;
     private OpeneyeModel mOpeneyeModel;
     private String mDate;
 
-    public RankPresenter(Context context, FindingDetailActivity rankView) {
+    public RankPresenter(Context context, IRecommendView rankView) {
         super(context);
-        mRankView = rankView;
+        mRecommendView = rankView;
         mOpeneyeModel = new OpeneyeModel(getContext());
+    }
+
+    @Override
+    public void initRecyclerView() {
+        mRecommendView.setLayoutManager();
+        mRecommendView.setAdapter(mAdapter = new RankAdapter(getContext()));
     }
 
     public void initData(String name) {
         mOpeneyeModel.getFindingsDetail(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(this::resolveDate)
-                .subscribe(this::flatMapData);
+                .subscribe(hotBean -> {
+                    resolveDate(hotBean);
+                    flatMapDataAndNotifyAdapter(hotBean.itemList, false);
+                });
     }
 
     private void resolveDate(HotBean hotBean) {
@@ -62,49 +72,58 @@ public class RankPresenter extends BasePresenter {
                 .toString();
     }
 
-    private void flatMapData(HotBean hotBean) {
-        Observable.fromIterable(hotBean.itemList)
-                .filter(itemListBean -> itemListBean.data.category != null
-                        && itemListBean.data.cover != null)
+    private void resolveDate(RecommendBean recommendBean) {
+        String regex = "[^0-9]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(recommendBean.nextPageUrl);
+        mDate = matcher.replaceAll("")
+                .subSequence(1, matcher.replaceAll("").length() - 1)
+                .toString();
+    }
+
+    private void flatMapDataAndNotifyAdapter(List<ItemListBean> itemListBeans, boolean isPullDown) {
+        List<DataBean> allData = mAdapter.getAllData();
+        if (isPullDown) {
+            mAdapter.clear();
+        }
+        Observable.fromIterable(itemListBeans)
+                .filter(itemListBean -> {
+                    // 过滤出需要的数据
+                    return itemListBean.data.category != null
+                            && itemListBean.data.cover != null;
+                })
                 .forEach(itemListBean -> {
-                    Log.d(TAG, itemListBean.data.toString());
-                    mData.add(itemListBean.data);
+                    if (isPullDown) {
+                        allData.add(0, itemListBean.data);
+                    } else {
+                        allData.add(itemListBean.data);
+                    }
                 });
-        mAdapter.addAll(mData);
+        Log.d(TAG, "allData.size():" + allData.size());
+        mAdapter.addAll(allData);
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    protected void setLayoutManager() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRankView.getRecyclerView().setLayoutManager(mLayoutManager);
-    }
-
-    @Override
-    protected void setAdapter() {
-        mAdapter = new RankAdapter(getContext(), mData);
-        mRankView.getRecyclerView().setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(mRankView);
-    }
-
-    public int findLastVisibleItemPosition() {
-        return mLayoutManager.findLastVisibleItemPosition();
-    }
-
-    public int getItemCount() {
-        return mLayoutManager.getItemCount();
-    }
-
     public void loadMore(boolean isPullDown) {
-        // TODO: 1/15/18 加载更多
+        mOpeneyeModel.getMoreRecommend(mDate)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(recommendBean -> !StrUtils.isEmpty(recommendBean.nextPageUrl))
+                .subscribe(recommendBean -> {
+                    resolveDate(recommendBean);
+                    final List<ItemListBean> list = new ArrayList<>();
+                    Observable.fromIterable(recommendBean.issueList)
+                            .forEach(issueListBean -> list.addAll(issueListBean.itemList));
+                    flatMapDataAndNotifyAdapter(list, isPullDown);
+                });
     }
 
-    public void onItemClick(int position) {
-        VideoBean videoBean = wrapperVideo(mData.get(position));
-        mRankView.showVideoDetail(videoBean);
+    public void clickItem(int position) {
+        VideoBean videoBean = wrapperVideo(mAdapter.getItem(position));
+        mRecommendView.showVideoDetail(videoBean);
     }
 
-    private VideoBean wrapperVideo(HotBean.ItemListBean.DataBean data) {
+    private VideoBean wrapperVideo(DataBean data) {
         if (data != null) {
             VideoBean videoBean = new VideoBean();
             videoBean.title = data.title;

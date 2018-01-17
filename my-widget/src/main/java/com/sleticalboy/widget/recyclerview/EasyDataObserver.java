@@ -1,8 +1,8 @@
-package com.sleticalboy.widget.myrecyclerview;
+package com.sleticalboy.widget.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 public class EasyDataObserver extends RecyclerView.AdapterDataObserver {
     

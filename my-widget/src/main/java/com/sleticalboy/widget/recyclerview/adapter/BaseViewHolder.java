@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview.adapter;
+package com.sleticalboy.widget.recyclerview.adapter;
 
 import android.content.Context;
 import android.support.annotation.IdRes;
@@ -33,8 +33,7 @@ public abstract class BaseViewHolder<M> extends RecyclerView.ViewHolder {
         super(LayoutInflater.from(parent.getContext()).inflate(res, parent, false));
     }
 
-    public void setData(M data) {
-    }
+    public abstract void setData(M data);
 
     protected <T extends View> T dollar(@IdRes int id) {
         return (T) itemView.findViewById(id);

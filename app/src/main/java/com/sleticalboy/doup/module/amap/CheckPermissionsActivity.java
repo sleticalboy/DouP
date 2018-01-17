@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -53,37 +54,52 @@ public abstract class CheckPermissionsActivity extends BaseActivity {
         super.onResume();
         if (Build.VERSION.SDK_INT >= 23 && getApplicationInfo().targetSdkVersion >= 23) {
             if (isNeedCheck) {
-                checkPermissions(needPermissions);
+                checkPermissions();
             }
         }
     }
 
     /**
-     * @param permissions
      * @since 2.5.0
      */
-    private void checkPermissions(String... permissions) {
+    private void checkPermissions() {
         try {
             if (Build.VERSION.SDK_INT >= 23 && getApplicationInfo().targetSdkVersion >= 23) {
-                List<String> needRequestPermissionList = findDeniedPermissions(permissions);
-                if (null != needRequestPermissionList
-                        && needRequestPermissionList.size() > 0) {
-                    String[] array = needRequestPermissionList.toArray(new String[needRequestPermissionList.size()]);
-                    Method method = getClass().getMethod("requestPermissions", new Class[]{String[].class,
-                            int.class});
-
-                    method.invoke(this, array, PERMISSON_REQUESTCODE);
+//                List<String> needRequestPermissionList = findDeniedPermissions(permissions);
+//                if (null != needRequestPermissionList && needRequestPermissionList.size() > 0) {
+//                    String[] array = needRequestPermissionList.toArray(new String[needRequestPermissionList.size()]);
+//                    Method method = getClass().getMethod("requestPermissions", new Class[]{String[].class,
+//                            Integer.class});
+//                    method.invoke(this, array, PERMISSON_REQUESTCODE);
+//                }
+                RxPermissions rxPermissions = new RxPermissions(this);
+                if (!rxPermissions.isGranted(needPermissions[0])
+                        || !rxPermissions.isGranted(needPermissions[1])
+                        || !rxPermissions.isGranted(needPermissions[2])
+                        || !rxPermissions.isGranted(needPermissions[3])
+                        || !rxPermissions.isGranted(needPermissions[4])) {
+                    rxPermissions.request(needPermissions)
+                            .subscribe(granted -> {
+                                if (granted) {
+                                    // Do other things
+                                } else {
+                                    // Do something
+                                }
+                            });
+                } else {
+                    // Do other things
                 }
+            } else {
+                // Do other things
             }
         } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
     /**
      * 获取权限集中需要申请权限的列表
      *
-     * @param permissions
-     * @return
      * @since 2.5.0
      */
     private List<String> findDeniedPermissions(String[] permissions) {
@@ -110,8 +126,6 @@ public abstract class CheckPermissionsActivity extends BaseActivity {
     /**
      * 检测是否所有的权限都已经授权
      *
-     * @param grantResults
-     * @return
      * @since 2.5.0
      */
     private boolean verifyPermissions(int[] grantResults) {

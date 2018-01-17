@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.sleticalboy.base.BasePresenter;
-import com.sleticalboy.base.config.ConstantValue;
-import com.sleticalboy.util.SPUtils;
 
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -26,9 +24,9 @@ public class VideoPlayPresenter extends BasePresenter {
 
     public static final String TAG = "VideoPlayPresenter";
 
-    private VideoPlayActivity mVideoPlayView;
+    private IVideoPlayView mVideoPlayView;
 
-    public VideoPlayPresenter(Context context, VideoPlayActivity videoPlayView) {
+    public VideoPlayPresenter(Context context, IVideoPlayView videoPlayView) {
         super(context);
         mVideoPlayView = videoPlayView;
     }
@@ -44,9 +42,9 @@ public class VideoPlayPresenter extends BasePresenter {
                         public void accept(Object o) throws Exception {
                             mVideoPlayView.onStartDownload();
                             // 保存视频链接
-                            SPUtils.putString(ConstantValue.KEY_LOCAL_VIDEO_URL, url);
+//                            SPUtils.putString(ConstantValue.KEY_LOCAL_VIDEO_URL, url);
                             // 保存下载状态
-                            SPUtils.putBoolean(ConstantValue.KEY_DOWNLOAD_STATE, true);
+//                            SPUtils.putBoolean(ConstantValue.KEY_DOWNLOAD_STATE, true);
                         }
                     })
                     .doOnComplete(new Action() {

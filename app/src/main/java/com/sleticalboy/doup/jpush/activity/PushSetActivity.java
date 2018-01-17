@@ -82,7 +82,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
                 setStyleCustom();
                 break;
             case R.id.bu_setTime:
-                Intent intent = new Intent(PushSetActivity.this, SettingActivity.class);
+                Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 break;
             default:
@@ -140,7 +140,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
     }
 
     private void setAddActionsStyle() {
-        MultiActionsNotificationBuilder builder = new MultiActionsNotificationBuilder(PushSetActivity.this);
+        MultiActionsNotificationBuilder builder = new MultiActionsNotificationBuilder(this);
         builder.addJPushAction(R.drawable.jpush_ic_richpush_actionbar_back, "first", "my_extra1");
         builder.addJPushAction(R.drawable.jpush_ic_richpush_actionbar_back, "second", "my_extra2");
         builder.addJPushAction(R.drawable.jpush_ic_richpush_actionbar_back, "third", "my_extra3");
@@ -165,7 +165,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
         switch (view.getId()) {
             //增加tag
             case R.id.bt_addtag:
-                tags = getInPutTags();
+                tags = getInputTags();
                 if (tags == null) {
                     return;
                 }
@@ -173,7 +173,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
                 break;
             //设置tag
             case R.id.bt_settag:
-                tags = getInPutTags();
+                tags = getInputTags();
                 if (tags == null) {
                     return;
                 }
@@ -181,7 +181,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
                 break;
             //删除tag
             case R.id.bt_deletetag:
-                tags = getInPutTags();
+                tags = getInputTags();
                 if (tags == null) {
                     return;
                 }
@@ -196,7 +196,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
                 action = ACTION_CLEAN;
                 break;
             case R.id.bt_checktag:
-                tags = getInPutTags();
+                tags = getInputTags();
                 if (tags == null) {
                     return;
                 }
@@ -204,7 +204,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
                 break;
             //设置alias
             case R.id.bt_setalias:
-                alias = getInPutAlias();
+                alias = getInputAlias();
                 if (TextUtils.isEmpty(alias)) {
                     return;
                 }
@@ -239,7 +239,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
     /**
      * 获取输入的alias
      */
-    private String getInPutAlias() {
+    private String getInputAlias() {
         EditText aliasEdit = findViewById(R.id.et_alias);
         String alias = aliasEdit.getText().toString().trim();
         if (TextUtils.isEmpty(alias)) {
@@ -256,7 +256,7 @@ public class PushSetActivity extends InstrumentedActivity implements OnClickList
     /**
      * 获取输入的tags
      */
-    private Set<String> getInPutTags() {
+    private Set<String> getInputTags() {
         EditText tagEdit = findViewById(R.id.et_tag);
         String tag = tagEdit.getText().toString().trim();
         // 检查 tag 的有效性

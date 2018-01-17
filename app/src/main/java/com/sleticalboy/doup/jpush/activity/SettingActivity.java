@@ -1,7 +1,6 @@
 package com.sleticalboy.doup.jpush.activity;
 
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -35,7 +34,7 @@ public class SettingActivity extends InstrumentedActivity implements OnClickList
     CheckBox mSunday;
     Button mSetTime;
     SharedPreferences mSettings;
-    Editor mEditor;
+    SharedPreferences.Editor mEditor;
 
     @Override
     public void onCreate(Bundle icicle) {

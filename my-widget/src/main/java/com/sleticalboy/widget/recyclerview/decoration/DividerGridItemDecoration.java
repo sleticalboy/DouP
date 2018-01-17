@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview.decoration;
+package com.sleticalboy.widget.recyclerview.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 /**
- * Created by Administrator on 2017/2/16 0016.
+ * <pre>
+ *   Created by Android Studio.
+ *
+ *   Date: 2017/2/16 0016.
+ * </pre>
+ *
+ * @author Administrator
  */
 public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -52,8 +58,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                    .getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getLeft() - params.leftMargin;
             final int right = child.getRight() + params.rightMargin
                     + mDivider.getIntrinsicWidth();
@@ -69,8 +74,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
 
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                    .getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getTop() - params.topMargin;
             final int bottom = child.getBottom() + params.bottomMargin;
             final int left = child.getRight() + params.rightMargin;
@@ -88,8 +92,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
      * @param childCount
      * @return 是否是第一列
      */
-    private boolean isFirstColum(RecyclerView parent, int pos, int spanCount,
-                                 int childCount) {
+    private boolean isFirstColum(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             if (pos % spanCount == 0)// 如果是最后一列，则不需要绘制右边
@@ -120,8 +123,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
      * @param childCount
      * @return 是否是最后一列
      */
-    private boolean isLastColum(RecyclerView parent, int pos, int spanCount,
-                                int childCount) {
+    private boolean isLastColum(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             if ((pos + 1) % spanCount == 0)// 如果是最后一列，则不需要绘制右边
@@ -152,8 +154,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
      * @param childCount
      * @return 是否第一行
      */
-    private boolean isFirstRaw(RecyclerView parent, int pos, int spanCount,
-                               int childCount) {
+    private boolean isFirstRaw(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             if (pos <= getSpanCount(parent) - 1) {
@@ -186,8 +187,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
      * @param childCount
      * @return 判断item是否在最后一行
      */
-    private boolean isLastRaw(RecyclerView parent, int pos, int spanCount,
-                              int childCount) {
+    private boolean isLastRaw(RecyclerView parent, int pos, int spanCount, int childCount) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {
             childCount = childCount - childCount % spanCount;
@@ -216,8 +216,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
 
 
     @Override
-    public void getItemOffsets(Rect outRect, int itemPosition,
-                               RecyclerView parent) {   //列数
+    public void getItemOffsets(Rect outRect, int itemPosition, RecyclerView parent) {   //列数
         int spanCount = getSpanCount(parent);
         //item个数
         int childCount = parent.getAdapter().getItemCount();
@@ -229,13 +228,13 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             outRect.set(0, 0, mSpace, mSpace);
         } /*else if (isFirstRaw(parent, itemPosition, spanCount, childCount)) {// 如果是第一行，则只需要绘制上边
             outRect.set(10, 10, 0, 10);
-        } else if(isFirstColum(parent, itemPosition, spanCount, childCount)){// 如果是第一列，则只需要绘制上边
+        } else if (isFirstColum(parent, itemPosition, spanCount, childCount)){// 如果是第一列，则只需要绘制上边
             outRect.set(10, 0, 10, 0);
-        }else if(isFirstRaw(parent, itemPosition, spanCount, childCount) && isLastColum(parent, itemPosition, spanCount, childCount)){
+        } else if (isFirstRaw(parent, itemPosition, spanCount, childCount)
+                && isLastColum(parent, itemPosition, spanCount, childCount)){
             outRect.set(10, 10, 10, 10);
-        }*/else {
-            outRect.set(0, 0, mSpace,
-                    mSpace);
+        }*/ else {
+            outRect.set(0, 0, mSpace, mSpace);
         }
     }
 

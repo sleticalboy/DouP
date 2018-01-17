@@ -1,5 +1,7 @@
 package com.sleticalboy.doup.module.openeye.activity;
 
+import com.sleticalboy.base.IBaseView;
+
 /**
  * <pre>
  *   Created by Android Studio.
@@ -9,7 +11,7 @@ package com.sleticalboy.doup.module.openeye.activity;
  *
  * @author sleticalboy
  */
-public interface IVideoPlayView {
+public interface IVideoPlayView extends IBaseView {
 
     /**
      * 播放链接错误

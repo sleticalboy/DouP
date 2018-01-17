@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview.adapter;
+package com.sleticalboy.widget.recyclerview.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 
 /**
  * Created by Mr.Jude on 2015/8/18.

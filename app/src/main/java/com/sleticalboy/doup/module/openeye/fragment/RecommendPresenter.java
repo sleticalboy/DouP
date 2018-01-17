@@ -1,16 +1,15 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.OpeneyeModel;
+import com.sleticalboy.doup.model.openeye.ItemListBean;
 import com.sleticalboy.doup.model.openeye.RecommendBean;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.adapter.RecommendAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,15 +31,12 @@ public class RecommendPresenter extends BasePresenter {
 
     public static final String TAG = "RecommendPresenter";
 
-    private RecommendFragment mRecommendView;
+    private IRecommendView mRecommendView;
     private OpeneyeModel mOpeneyeModel;
     private RecommendAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
-    private List<RecommendBean.IssueListBean.ItemListBean> mData = new ArrayList<>();
     private String mDate;
-    private boolean mIsPullDown = true;
 
-    public RecommendPresenter(Context context, RecommendFragment recommendView) {
+    public RecommendPresenter(Context context, IRecommendView recommendView) {
         super(context);
         mRecommendView = recommendView;
         mOpeneyeModel = new OpeneyeModel(getContext());
@@ -53,24 +49,31 @@ public class RecommendPresenter extends BasePresenter {
                 .subscribe(recommendBean -> {
                     // 最终需要的是 type 是 video 的 ItemListBean 所以需要对原始数据进行处理和过滤
                     resolveDate(recommendBean);
-                    flatMapData(recommendBean);
+                    flatMapDataAndNotifyAdapter(recommendBean, false);
                 }, throwable -> mRecommendView.onNetError());
     }
 
-    private void flatMapData(RecommendBean recommendBean) {
+    private void flatMapDataAndNotifyAdapter(RecommendBean recommendBean, boolean isPullDown) {
+        List<ItemListBean> allData = mAdapter.getAllData();
+        if (isPullDown) {
+            mAdapter.clear();
+        }
         Observable.fromIterable(recommendBean.issueList)
                 .flatMap(issueListBean -> Observable.fromIterable(issueListBean.itemList))
-                .filter(itemListBean -> itemListBean.type.equals("video"))
+                .filter(itemListBean -> {
+                    // 过滤出所有的 video
+                    return itemListBean.type.equals("video");
+                })
                 .forEach(itemListBean -> {
-                    if (mIsPullDown) {
-                        mData.add(0, itemListBean);
+                    if (isPullDown) {
+                        Log.d(TAG, "下拉加载");
+                        allData.add(0, itemListBean);
                     } else {
-                        mData.add(itemListBean);
+                        Log.d(TAG, "上拉加载");
+                        allData.add(itemListBean);
                     }
                 });
-
-        Log.d(TAG, "mData.size():" + mData.size());
-        mAdapter.addAll(mData);
+        mAdapter.addAll(allData);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -85,43 +88,21 @@ public class RecommendPresenter extends BasePresenter {
     }
 
     public void loadMore(boolean isPullDown) {
-        mIsPullDown = isPullDown;
         mOpeneyeModel.getMoreRecommend(mDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(recommendBean -> {
                     resolveDate(recommendBean);
-                    flatMapData(recommendBean);
+                    flatMapDataAndNotifyAdapter(recommendBean, isPullDown);
                 }, throwable -> mRecommendView.onNetError());
     }
 
-    @Override
-    protected void setAdapter() {
-        mAdapter = new RecommendAdapter(getContext(), mData);
-        mRecommendView.getRecyclerView().setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(mRecommendView);
-    }
-
-    @Override
-    protected void setLayoutManager() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecommendView.getRecyclerView().setLayoutManager(mLayoutManager);
-    }
-
-    public int findLastVisibleItemPosition() {
-        return mLayoutManager.findLastVisibleItemPosition();
-    }
-
-    public int getItemCount() {
-        return mLayoutManager.getItemCount();
-    }
-
-    public void onItemClick(int position) {
-        VideoBean videoBean = wrapperVideo(mData.get(position));
+    public void clickItem(int position) {
+        VideoBean videoBean = wrapperVideo(mAdapter.getItem(position));
         mRecommendView.showVideoDetail(videoBean);
     }
 
-    private VideoBean wrapperVideo(RecommendBean.IssueListBean.ItemListBean itemData) {
+    private VideoBean wrapperVideo(ItemListBean itemData) {
         if (itemData != null) {
             VideoBean videoBean = new VideoBean();
             videoBean.title = itemData.data.title;
@@ -138,5 +119,18 @@ public class RecommendPresenter extends BasePresenter {
             return videoBean;
         }
         return null;
+    }
+
+    public void initRecyclerView() {
+        mRecommendView.setLayoutManager();
+        mRecommendView.setAdapter(mAdapter = new RecommendAdapter(getContext()));
+    }
+
+    @Override
+    protected void setAdapter() {
+    }
+
+    @Override
+    protected void setLayoutManager() {
     }
 }

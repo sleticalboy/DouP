@@ -57,6 +57,7 @@
     <string name="nav_tasks">Tasks</string>
     <string name="my_name">Bin Lee</string>
     <string name="my_email">sleticalboy@gmail.com</string>
+    <string name="no_data">豆皮：暂无数据</string>
     <!--天气-->
     <string name="choose_area">中国</string>
     <string name="forecast">预报</string>

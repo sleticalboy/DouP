@@ -2,6 +2,7 @@ package com.sleticalboy.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -14,6 +15,8 @@ import android.view.View;
  * @author sleticalboy
  */
 public abstract class LazyFragment extends BaseFragment {
+
+    public final String TAG = getClass().getSimpleName();
 
     /**
      * onCreateView 方法执行完毕
@@ -58,6 +61,7 @@ public abstract class LazyFragment extends BaseFragment {
     private void lazyLoad() {
         // step 3 通过双重判断才加载数据
         if (isVisibleToUser && isViewCreated) {
+            Log.d(TAG, "开始初始化数据");
             fetchData();
             isViewCreated = false;
             isVisibleToUser = false;

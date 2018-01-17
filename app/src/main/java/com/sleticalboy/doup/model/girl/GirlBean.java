@@ -1,6 +1,7 @@
 package com.sleticalboy.doup.model.girl;
 
-import java.io.Serializable;
+import com.sleticalboy.base.IBaseBean;
+
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public class GirlBean implements Serializable {
+public class GirlBean implements IBaseBean {
     public boolean error;
     public List<ResultsBean> results;
 

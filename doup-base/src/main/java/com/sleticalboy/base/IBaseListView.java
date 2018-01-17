@@ -1,6 +1,6 @@
 package com.sleticalboy.base;
 
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 
 /**
  * <pre>
@@ -12,6 +12,22 @@ import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
  * @author sleticalboy
  */
 public interface IBaseListView extends IBaseView {
+
+    /**
+     * 设置适配器
+     *
+     * @param adapter
+     * @param <A>
+     */
+//    <A extends RecyclerArrayAdapter> void setAdapter(A adapter);
+
+    /**
+     * 设置 LayoutManager
+     *
+     * @param manager
+     * @param <M>
+     */
+//    <M extends RecyclerView.LayoutManager> void setLayoutManager(M manager);
 
     /**
      * 获取当前页面的 RecyclerView

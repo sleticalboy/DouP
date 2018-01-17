@@ -1,10 +1,9 @@
 package com.sleticalboy.doup.model.weather;
 
 import com.google.gson.annotations.SerializedName;
+import com.sleticalboy.base.IBaseBean;
 
 import org.litepal.crud.DataSupport;
-
-import java.io.Serializable;
 
 /**
  * Created by Android Studio.
@@ -12,7 +11,7 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-public class County extends DataSupport implements Serializable {
+public class County extends DataSupport implements IBaseBean {
     public int id;
     public String name;
     @SerializedName("weather_id")

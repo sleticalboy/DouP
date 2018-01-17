@@ -1,10 +1,10 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.OpeneyeModel;
+import com.sleticalboy.doup.model.openeye.DataBean;
 import com.sleticalboy.doup.model.openeye.HotBean;
 import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
 
@@ -29,8 +29,7 @@ public class HotPresenter extends BasePresenter {
     private HotFragment mHotView;
     private OpeneyeModel mOpeneyeModel;
     private RankAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
-    private List<HotBean.ItemListBean.DataBean> mData = new ArrayList<>();
+    private List<DataBean> mData = new ArrayList<>();
 
     public HotPresenter(Context context, HotFragment hotView) {
         super(context);
@@ -40,15 +39,10 @@ public class HotPresenter extends BasePresenter {
 
     @Override
     protected void setAdapter() {
-        mAdapter = new RankAdapter(getContext(), mData);
-        mHotView.getRecyclerView().setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(mHotView);
     }
 
     @Override
     protected void setLayoutManager() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mHotView.getRecyclerView().setLayoutManager(mLayoutManager);
     }
 
     public void initData() {
@@ -62,5 +56,9 @@ public class HotPresenter extends BasePresenter {
 
                     }
                 });
+    }
+
+    public void loadMore(boolean isPullDown) {
+        //
     }
 }

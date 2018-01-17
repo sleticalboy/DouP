@@ -1,15 +1,15 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
-import com.sleticalboy.base.IBaseListView;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.module.openeye.activity.FindingDetailActivity;
+import com.sleticalboy.doup.module.openeye.activity.RankActivity;
 import com.sleticalboy.util.ToastUtils;
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import butterknife.BindView;
 
@@ -19,13 +19,11 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class FindingFragment extends LazyFragment implements IBaseListView,
+public class FindingFragment extends LazyFragment implements IBaseView,
         RecyclerArrayAdapter.OnItemClickListener {
 
     private static final String TAG = "FindingFragment";
 
-    @BindView(R.id.srl)
-    SwipeRefreshLayout srl;
     @BindView(R.id.rv_finding)
     EasyRecyclerView rvFindings;
 
@@ -33,10 +31,22 @@ public class FindingFragment extends LazyFragment implements IBaseListView,
 
     @Override
     protected void initView(View rootView) {
-        srl.setEnabled(false);
         mPresenter = new FindingPresenter(getActivity(), this);
-        mPresenter.setLayoutManager();
-        mPresenter.setAdapter();
+//        rvFindings.addItemDecoration(new DividerGridItemDecoration(getActivity(), 4));
+//        rvFindings.addItemDecoration(new DividerDecoration());
+//        rvFindings.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mPresenter.initRecyclerView();
+    }
+
+    public void setLayoutManager() {
+        rvFindings.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    }
+
+    public void setAdapter(RecyclerArrayAdapter adapter) {
+        adapter.setError(R.layout.layout_error)
+                .setOnClickListener(v -> adapter.resumeMore());
+        adapter.setOnItemClickListener(this);
+        rvFindings.setAdapterWithProgress(adapter);
     }
 
     @Override
@@ -46,32 +56,16 @@ public class FindingFragment extends LazyFragment implements IBaseListView,
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadingOver() {
-
+        rvFindings.setRefreshing(false);
     }
 
     @Override
     public void onNetError() {
         ToastUtils.showToast(getActivity(), "网络异常");
-    }
-
-    @Override
-    public EasyRecyclerView getRecyclerView() {
-        return rvFindings;
-    }
-
-    @Override
-    public void onNoMore() {
-
-    }
-
-    @Override
-    public void onShowMore() {
-
     }
 
     @Override
@@ -81,10 +75,10 @@ public class FindingFragment extends LazyFragment implements IBaseListView,
 
     @Override
     public void onItemClick(int position) {
-        mPresenter.onItemClick(position);
+        mPresenter.clickItem(position);
     }
 
     public void showFindingDetail(String name) {
-        FindingDetailActivity.actionStart(getContext(), name);
+        RankActivity.actionStart(getContext(), name);
     }
 }

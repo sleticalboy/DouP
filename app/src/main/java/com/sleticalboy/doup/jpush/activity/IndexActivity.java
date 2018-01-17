@@ -37,7 +37,7 @@ public class IndexActivity extends InstrumentedActivity implements OnClickListen
 
     private void initView() {
         TextView mImei = findViewById(R.id.tv_imei);
-        String udid = JPushUtil.getImei(getApplicationContext(), "");
+        String udid = JPushUtil.getIMEI(getApplicationContext(), "");
         if (null != udid)
             mImei.setText(String.format("IMEI: %s", udid));
 
@@ -83,7 +83,7 @@ public class IndexActivity extends InstrumentedActivity implements OnClickListen
                 init();
                 break;
             case R.id.setting:
-                startActivity(new Intent(IndexActivity.this, PushSetActivity.class));
+                startActivity(new Intent(this, PushSetActivity.class));
                 break;
             case R.id.stopPush:
                 JPushInterface.stopPush(getApplicationContext());
@@ -175,5 +175,4 @@ public class IndexActivity extends InstrumentedActivity implements OnClickListen
     public static void actionStart(Context context) {
         context.startActivity(new Intent(context, IndexActivity.class));
     }
-
 }

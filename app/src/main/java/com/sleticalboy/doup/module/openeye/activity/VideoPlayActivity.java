@@ -14,14 +14,11 @@ import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.sleticalboy.base.BaseActivity;
-import com.sleticalboy.base.IBaseView;
-import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.listener.VideoListener;
 import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.util.SPUtils;
 import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
 
@@ -34,8 +31,7 @@ import butterknife.OnClick;
  *
  * @author sleticalboy
  */
-
-public class VideoPlayActivity extends BaseActivity implements IBaseView, IVideoPlayView {
+public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
 
     private static final String TAG = "VideoPlayActivity";
 
@@ -101,7 +97,8 @@ public class VideoPlayActivity extends BaseActivity implements IBaseView, IVideo
 
     private void prepareVideo() {
         // 查看视频是否缓存过
-        String url = SPUtils.getString(ConstantValue.KEY_LOCAL_VIDEO_URL, null);
+//        String url = SPUtils.getString(ConstantValue.KEY_LOCAL_VIDEO_URL, null);
+        String url = "";
         if (!StrUtils.isEmpty(url)) {
             gsyPlayer.setUp(url, false, null, null);
         } else {

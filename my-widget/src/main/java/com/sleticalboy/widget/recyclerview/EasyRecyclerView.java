@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview;
+package com.sleticalboy.widget.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.sleticalboy.widget.R;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-import com.sleticalboy.widget.myrecyclerview.swipe.SwipeRefreshLayout;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 

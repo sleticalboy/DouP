@@ -6,13 +6,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.openeye.HotBean;
+import com.sleticalboy.doup.model.openeye.DataBean;
 import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.myrecyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-
-import java.util.List;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -21,10 +19,10 @@ import java.util.List;
  * @author sleticalboy
  */
 
-public class RankAdapter extends RecyclerArrayAdapter<HotBean.ItemListBean.DataBean> {
+public class RankAdapter extends RecyclerArrayAdapter<DataBean> {
 
-    public RankAdapter(Context context, List<HotBean.ItemListBean.DataBean> objects) {
-        super(context, objects);
+    public RankAdapter(Context context) {
+        super(context);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class RankAdapter extends RecyclerArrayAdapter<HotBean.ItemListBean.DataB
         return new RankHolder(parent);
     }
 
-    static class RankHolder extends BaseViewHolder<HotBean.ItemListBean.DataBean> {
+    static class RankHolder extends BaseViewHolder<DataBean> {
 
         ImageView imgPhoto;
         TextView tvTitle;
@@ -46,7 +44,7 @@ public class RankAdapter extends RecyclerArrayAdapter<HotBean.ItemListBean.DataB
         }
 
         @Override
-        public void setData(HotBean.ItemListBean.DataBean data) {
+        public void setData(DataBean data) {
             tvTitle.setText(data.title);
             ImageLoader.load(getContext(), imgPhoto, data.cover.feed);
             tvTime.setText(String.format("%s / %s", data.category, CommonUtils.wrapperTime(data.duration)));

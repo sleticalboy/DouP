@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview;
+package com.sleticalboy.widget.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +17,5 @@ public abstract class BaseHolder<T> extends RecyclerView.ViewHolder {
      * @param position
      */
     public void refreshData(T data, int position) {
-
     }
 }

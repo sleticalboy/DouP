@@ -8,10 +8,8 @@ import android.widget.TextView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.openeye.FindingBean;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.myrecyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-
-import java.util.List;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -21,8 +19,8 @@ import java.util.List;
  */
 public class FindingAdapter extends RecyclerArrayAdapter<FindingBean> {
 
-    public FindingAdapter(Context context, List<FindingBean> objects) {
-        super(context, objects);
+    public FindingAdapter(Context context) {
+        super(context);
     }
 
     @Override

@@ -1,16 +1,15 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import butterknife.BindView;
 
@@ -21,7 +20,8 @@ import butterknife.BindView;
  * @author sleticalboy
  */
 
-public class RecommendFragment extends LazyFragment implements IBaseListView,
+public class RecommendFragment extends LazyFragment implements IRecommendView,
+        RecyclerArrayAdapter.OnLoadMoreListener,
         SwipeRefreshLayout.OnRefreshListener,
         RecyclerArrayAdapter.OnItemClickListener {
 
@@ -29,40 +29,13 @@ public class RecommendFragment extends LazyFragment implements IBaseListView,
 
     @BindView(R.id.rv_recommend)
     EasyRecyclerView rvRecommend;
-    @BindView(R.id.srl)
-    SwipeRefreshLayout srl;
 
-    private int mLastVisibleItemIndex;
     private RecommendPresenter mPresenter;
 
     @Override
     protected void initView(View rootView) {
         mPresenter = new RecommendPresenter(getActivity(), this);
-        mPresenter.setLayoutManager();
-        mPresenter.setAdapter();
-
-        rvRecommend.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                mLastVisibleItemIndex = mPresenter.findLastVisibleItemPosition();
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (mPresenter.getItemCount() == 1) {
-                        return;
-                    }
-                    if (mPresenter.getItemCount() + 1 == mLastVisibleItemIndex) {
-                        // 上拉加载更多数据
-                        mPresenter.loadMore(false);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                mLastVisibleItemIndex = mPresenter.findLastVisibleItemPosition();
-            }
-        });
-
-        srl.setOnRefreshListener(this);
+        mPresenter.initRecyclerView();
     }
 
     @Override
@@ -72,32 +45,15 @@ public class RecommendFragment extends LazyFragment implements IBaseListView,
 
     @Override
     public void onLoading() {
-
     }
 
     @Override
     public void onLoadingOver() {
-
+        rvRecommend.setRefreshing(false);
     }
 
     @Override
     public void onNetError() {
-
-    }
-
-    @Override
-    public EasyRecyclerView getRecyclerView() {
-        return rvRecommend;
-    }
-
-    @Override
-    public void onNoMore() {
-
-    }
-
-    @Override
-    public void onShowMore() {
-
     }
 
     @Override
@@ -107,20 +63,36 @@ public class RecommendFragment extends LazyFragment implements IBaseListView,
 
     @Override
     public void onRefresh() {
-        if (srl.isRefreshing()) {
-            srl.setRefreshing(false);
-            mPresenter.loadMore(true);
-        } else {
-            srl.setRefreshing(true);
-        }
+        mPresenter.loadMore(true);
     }
 
     @Override
     public void onItemClick(int position) {
-        mPresenter.onItemClick(position);
+        mPresenter.clickItem(position);
     }
 
     public void showVideoDetail(VideoBean videoBean) {
         VideoPlayActivity.actionStart(getActivity(), videoBean);
+    }
+
+    @Override
+    public void onLoadMore() {
+        mPresenter.loadMore(false);
+    }
+
+    public void setLayoutManager() {
+        rvRecommend.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public void setAdapter(RecyclerArrayAdapter adapter) {
+        adapter.setError(R.layout.layout_error)
+                .setOnClickListener(v -> adapter.resumeMore());
+        adapter.setMore(R.layout.layout_more, this);
+        adapter.setNoMore(R.layout.layout_no_more)
+                .setOnClickListener(v -> adapter.resumeMore());
+        adapter.setOnItemClickListener(this);
+        rvRecommend.setAdapterWithProgress(adapter);
+        rvRecommend.setRefreshListener(this);
     }
 }

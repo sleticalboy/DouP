@@ -23,6 +23,9 @@ public abstract class BasePresenter<V extends IBaseView> {
     protected void setLayoutManager() {
     }
 
+    public void initRecyclerView() {
+    }
+
     protected void onTokenView(V view) {
         mView = view;
     }
@@ -32,11 +35,11 @@ public abstract class BasePresenter<V extends IBaseView> {
         mView = null;
     }
 
-    public Context getContext() {
+    public final Context getContext() {
         return mContext;
     }
 
-    public V getView() {
+    public final V getView() {
         return mView;
     }
 }

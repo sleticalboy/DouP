@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/srl"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/side_nav_bar"
-    android:padding="4dp">
+    android:layout_height="match_parent">
 
-    <com.sleticalboy.widget.myrecyclerview.EasyRecyclerView
+    <com.sleticalboy.widget.recyclerview.EasyRecyclerView
         android:id="@+id/rv_meizi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"
+        app:layout_empty="@layout/layout_empty"
+        app:layout_progress="@layout/layout_progress"
+        app:scrollbarStyle="insideOverlay"/>
+</FrameLayout>

@@ -41,6 +41,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 应用的启动主页面
+ */
 public class StartActivity extends BaseActivity {
 
     private static final String TAG = "StartActivity";
@@ -104,7 +107,7 @@ public class StartActivity extends BaseActivity {
                     android.Manifest.permission.READ_PHONE_STATE)
                     .subscribe(granted -> {
                         if (!granted) {
-                            ToastUtils.showToast(this, "没有授予相关权限");
+                            // Do nothing
                         }
                     });
         }

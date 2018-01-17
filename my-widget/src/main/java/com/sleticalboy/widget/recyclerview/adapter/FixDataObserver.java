@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview.adapter;
+package com.sleticalboy.widget.recyclerview.adapter;
 
 import android.support.v7.widget.RecyclerView;
 

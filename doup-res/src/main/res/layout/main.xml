@@ -53,28 +53,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="initPush"/>
+            android:text="初始化 Push"/>
 
         <Button
             android:id="@+id/stopPush"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="stopPush"/>
+            android:text="停止 Push"/>
 
         <Button
             android:id="@+id/resumePush"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="resumePush"/>
+            android:text="重启 Push"/>
 
         <Button
             android:id="@+id/getRegistrationId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="get_Registration_Id"/>
+            android:text="获取 Registration Id"/>
 
         <EditText
             android:id="@+id/msg_rec"

@@ -1,20 +1,17 @@
 package com.sleticalboy.doup.module.home;
 
-import android.app.ProgressDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.sleticalboy.base.BaseFragment;
-import com.sleticalboy.base.IBaseListView;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.util.ToastUtils;
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -23,28 +20,38 @@ import butterknife.BindView;
  * @author sleticalboy
  */
 
-public class NewsFragment extends BaseFragment implements IBaseListView,
-        SwipeRefreshLayout.OnRefreshListener,
-        RecyclerArrayAdapter.OnItemClickListener {
+public class NewsFragment extends BaseFragment implements IBaseView,
+        RecyclerArrayAdapter.OnItemClickListener,
+        RecyclerArrayAdapter.OnLoadMoreListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "NewsFragment";
 
     @BindView(R.id.rv_news)
     EasyRecyclerView rvNews;
-    @BindView(R.id.srl)
-    SwipeRefreshLayout srl;
 
-    private int mLastVisibleItemPosition;
     private NewsPresenter mPresenter;
-    private ProgressDialog mDialog;
 
     @Override
     protected void initView(View rootView) {
         mPresenter = new NewsPresenter(getActivity(), this);
-        mPresenter.setLayoutManager();
-        mPresenter.setAdapter();
-        setOnScrollListener();
-        setSwipeRefreshLayout();
+        mPresenter.initRecyclerView();
+        mPresenter.initData();
+    }
+
+    public void setLayoutManager(LinearLayoutManager layoutManager) {
+        rvNews.setLayoutManager(layoutManager);
+    }
+
+    public void setAdapter(RecyclerArrayAdapter adapter) {
+        adapter.setError(R.layout.layout_error)
+                .setOnClickListener(v -> adapter.resumeMore());
+        adapter.setMore(R.layout.layout_more, this);
+        adapter.setNoMore(R.layout.layout_no_more)
+                .setOnClickListener(v -> adapter.resumeMore());
+        adapter.setOnItemClickListener(this);
+        rvNews.setAdapterWithProgress(adapter);
+        rvNews.setRefreshListener(this);
     }
 
     @Override
@@ -52,88 +59,26 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
         return R.layout.frag_news;
     }
 
-    private void setSwipeRefreshLayout() {
-        srl.setColorSchemeResources(
-                R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3);
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        int end = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, displayMetrics);
-        srl.setProgressViewOffset(true, 0, end);
-    }
-
-    private void setOnScrollListener() {
-        rvNews.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    mLastVisibleItemPosition = mPresenter.findLastVisibleItemPosition();
-                    if (mPresenter.getItemCount() == 1) {
-                        return;
-                    }
-                    if (mLastVisibleItemPosition + 1 == mPresenter.getItemCount()) {
-                        mPresenter.loadMore(false);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mLastVisibleItemPosition = mPresenter.findLastVisibleItemPosition();
-            }
-        });
-    }
-
     @Override
     public void onLoading() {
-        if (mDialog == null) {
-            mDialog = new ProgressDialog(getActivity());
-            mDialog.setMessage("正在加载");
-            mDialog.setCancelable(false);
-        } else {
-            if (!mDialog.isShowing())
-                mDialog.show();
-        }
     }
 
     @Override
     public void onLoadingOver() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+        rvNews.setRefreshing(false);
     }
 
     @Override
     public void onNetError() {
-        ToastUtils.showToast(getActivity(), "网络不见啦");
-    }
-
-    @Override
-    public EasyRecyclerView getRecyclerView() {
-        return rvNews;
-    }
-
-    @Override
-    public void onNoMore() {
-        ToastUtils.showToast(getActivity(), "没有更多数据了");
-    }
-
-    @Override
-    public void onShowMore() {
-        ToastUtils.showToast(getActivity(), "加载更多数据。。。");
-    }
-
-    @Override
-    public void onRefresh() {
-        // FIXME: 1/12/18 下拉加载不生效，需要修复
-        if (srl.isRefreshing()) {
-            mPresenter.loadMore(true);
-        }
     }
 
     @Override
     public void onItemClick(int position) {
-        mPresenter.chooseNewsItem(position);
+        mPresenter.clickItem(position);
+    }
+
+    public void scrollToPosition(int position) {
+        rvNews.scrollToPosition(position);
     }
 
     /**
@@ -145,7 +90,18 @@ public class NewsFragment extends BaseFragment implements IBaseListView,
         NewsDetailActivity.actionStart(getActivity(), newsId);
     }
 
-    public void onLoadMoreOver() {
-        srl.setRefreshing(false);
+    @Override
+    public void onLoadMore() {
+        mPresenter.loadMore(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.loadMore(true);
+    }
+
+    @OnClick(R.id.fab_top)
+    public void onViewClicked() {
+        scrollToPosition(0);
     }
 }

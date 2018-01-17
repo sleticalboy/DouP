@@ -6,7 +6,7 @@ import android.view.View;
 import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 
 /**
  * <pre>

@@ -1,8 +1,8 @@
 package com.sleticalboy.doup.model.weather;
 
-import org.litepal.crud.DataSupport;
+import com.sleticalboy.base.IBaseBean;
 
-import java.io.Serializable;
+import org.litepal.crud.DataSupport;
 
 /**
  * Created by Android Studio.
@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-public class Province extends DataSupport implements Serializable {
+public class Province extends DataSupport implements IBaseBean {
     public int id;
     public String name;
     public int provinceCode;

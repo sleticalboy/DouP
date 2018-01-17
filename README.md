@@ -54,7 +54,7 @@
 - 和风天气：http://guolin.tech/api/weather?cityid={CN101050109}&key={your_key} (需要注册之后获取 appkey)
   - 省市区：http://guolin.tech/api/china
 
-- ~~彩云天气：https://www.caiyunapp.com/ ~~
+- ~~彩云天气：https://www.caiyunapp.com/~~
 
 - 豆瓣: https://api.douban.com/v2/
   - 图书: https://api.douban.com/v2/book/{id:1000001}

@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 
 /**
  * <pre>

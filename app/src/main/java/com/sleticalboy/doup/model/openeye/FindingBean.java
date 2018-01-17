@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.model.openeye;
 
-import java.io.Serializable;
+import com.sleticalboy.base.IBaseBean;
 
 /**
  * Created by Android Studio.
@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author sleticalboy
  */
 
-public class FindingBean implements Serializable {
+public class FindingBean implements IBaseBean {
     public int id;
     public String name;
     public Object alias;

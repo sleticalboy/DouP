@@ -12,10 +12,8 @@ import android.widget.ImageView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.girl.GirlBean;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.myrecyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-
-import java.util.List;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -28,8 +26,8 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
 
     public static final String TAG = "GirlListAdapter";
 
-    public GirlListAdapter(Context context, List<GirlBean.ResultsBean> objects) {
-        super(context, objects);
+    public GirlListAdapter(Context context) {
+        super(context);
     }
 
     @Override
@@ -50,7 +48,6 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
 
         @Override
         public void setData(GirlBean.ResultsBean data) {
-            super.setData(data);
             ImageLoader.load(getContext(), imgMeizi, data.url);
             String desc = data._id;
             String url = data.url;

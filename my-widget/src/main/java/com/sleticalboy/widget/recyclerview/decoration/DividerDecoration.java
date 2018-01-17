@@ -1,4 +1,4 @@
-package com.sleticalboy.widget.myrecyclerview.decoration;
+package com.sleticalboy.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 public class DividerDecoration extends RecyclerView.ItemDecoration{
     private ColorDrawable mColorDrawable;

@@ -10,10 +10,8 @@ import android.widget.TextView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.news.NewsBean;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.myrecyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-
-import java.util.List;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -25,23 +23,22 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> 
 
     private static final String TAG = "NewsListAdapter";
 
-    public NewsListAdapter(Context context, List<NewsBean.StoriesBean> objects) {
-        super(context, objects);
+    public NewsListAdapter(Context context) {
+        super(context);
     }
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-        return new NewsViewHolder(parent);
+        return new ViewHolder(parent);
     }
 
-    // 新闻 item
-    static class NewsViewHolder extends BaseViewHolder<NewsBean.StoriesBean> {
+    static class ViewHolder extends BaseViewHolder<NewsBean.StoriesBean> {
 
         CardView cardView;
         TextView newsTitle;
         ImageView newsImg;
 
-        public NewsViewHolder(ViewGroup itemView) {
+        public ViewHolder(ViewGroup itemView) {
             super(itemView, R.layout.item_news);
             cardView = dollar(R.id.card_view);
             newsTitle = dollar(R.id.news_title);
@@ -53,20 +50,6 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> 
             Log.d(TAG, data.title);
             newsTitle.setText(data.title);
             ImageLoader.load(getContext(), newsImg, data.images.get(0));
-        }
-    }
-
-    // 顶部轮播图 item
-    class BannerViewHolder extends BaseViewHolder<NewsBean> {
-
-        public BannerViewHolder(ViewGroup itemView) {
-            super(itemView);
-        }
-
-        @Override
-        public void setData(NewsBean newsBean) {
-            NewsBean.TopStoriesBean data = newsBean.top_stories.get(getAdapterPosition());
-            Log.d(TAG, data.title);
         }
     }
 }

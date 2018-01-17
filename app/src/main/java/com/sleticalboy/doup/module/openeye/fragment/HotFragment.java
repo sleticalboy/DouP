@@ -3,13 +3,10 @@ package com.sleticalboy.doup.module.openeye.fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.sleticalboy.base.IBaseListView;
+import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.myrecyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-
-import butterknife.BindView;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -17,55 +14,38 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class HotFragment extends LazyFragment implements IBaseListView,
+public class HotFragment extends LazyFragment implements IBaseView,
         SwipeRefreshLayout.OnRefreshListener,
         RecyclerArrayAdapter.OnItemClickListener {
 
-    @BindView(R.id.srl)
-    SwipeRefreshLayout srl;
-    @BindView(R.id.rv_popular)
-    EasyRecyclerView rvPopular;
+//    @BindView(R.id.rv_popular)
+//    EasyRecyclerView rvPopular;
 
     private HotPresenter mPresenter;
 
     @Override
     protected void initView(View rootView) {
 //        mPresenter = new HotPresenter(getActivity(), this);
-//
-//        mPresenter.setLayoutManager();
-//        mPresenter.setAdapter();
+//        mPresenter.initRecyclerView();
 
-        srl.setOnRefreshListener(this);
+    }
+
+    public void setLayoutManager() {
+        //
+    }
+
+    public void setAdapter(RecyclerArrayAdapter adapter) {
+        //
     }
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_popular;
+        return R.layout.layout_empty;
     }
 
     @Override
     protected void fetchData() {
 //        mPresenter.initData();
-    }
-
-    @Override
-    public EasyRecyclerView getRecyclerView() {
-        return rvPopular;
-    }
-
-    @Override
-    public void onRefresh() {
-
-    }
-
-    @Override
-    public void onNoMore() {
-
-    }
-
-    @Override
-    public void onShowMore() {
-
     }
 
     @Override
@@ -86,5 +66,10 @@ public class HotFragment extends LazyFragment implements IBaseListView,
     @Override
     public void onItemClick(int position) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+//        mPresenter.loadMore(true);
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sleticalboy.widget.myrecyclerview.swipe;
+package com.sleticalboy.widget.recyclerview.swipe;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

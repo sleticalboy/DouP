@@ -7,12 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.openeye.RecommendBean;
+import com.sleticalboy.doup.model.openeye.ItemListBean;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.myrecyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
-
-import java.util.List;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -20,10 +18,10 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public class RecommendAdapter extends RecyclerArrayAdapter<RecommendBean.IssueListBean.ItemListBean> {
+public class RecommendAdapter extends RecyclerArrayAdapter<ItemListBean> {
 
-    public RecommendAdapter(Context context, List<RecommendBean.IssueListBean.ItemListBean> objects) {
-        super(context, objects);
+    public RecommendAdapter(Context context) {
+        super(context);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class RecommendAdapter extends RecyclerArrayAdapter<RecommendBean.IssueLi
         return new ViewHolder(parent);
     }
 
-    static class ViewHolder extends BaseViewHolder<RecommendBean.IssueListBean.ItemListBean> {
+    static class ViewHolder extends BaseViewHolder<ItemListBean> {
 
         ImageView imgRecommend;
         ImageView imgUserIcon;
@@ -47,8 +45,7 @@ public class RecommendAdapter extends RecyclerArrayAdapter<RecommendBean.IssueLi
         }
 
         @Override
-        public void setData(RecommendBean.IssueListBean.ItemListBean data) {
-            super.setData(data);
+        public void setData(ItemListBean data) {
             ImageLoader.load(getContext(), imgRecommend, data.data.cover.feed);
             if (data.data.author != null) {
                 ImageLoader.load(getContext(), imgUserIcon, data.data.author.icon);

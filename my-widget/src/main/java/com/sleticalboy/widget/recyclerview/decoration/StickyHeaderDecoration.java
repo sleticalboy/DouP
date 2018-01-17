@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sleticalboy.widget.myrecyclerview.decoration;
+package com.sleticalboy.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -23,7 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sleticalboy.widget.myrecyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import java.util.HashMap;
 import java.util.Map;

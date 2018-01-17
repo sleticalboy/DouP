@@ -8,11 +8,9 @@ import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.NewsModel;
 import com.sleticalboy.doup.model.news.NewsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -31,87 +29,84 @@ public class NewsPresenter extends BasePresenter {
     private NewsFragment mNewsListView;
     private NewsModel mNewsModel;
     private NewsListAdapter mAdapter;
-    private List<NewsBean.StoriesBean> mData = new ArrayList<>();
-    private String mDate;
-    private LinearLayoutManager mLayoutManager;
+    private String mDate = "20180117";
 
     public NewsPresenter(Context context, NewsFragment newsListView) {
         super(context);
         mNewsListView = newsListView;
         mNewsModel = new NewsModel(getContext());
-        initData();
+    }
+
+    /**
+     * 初始化 RecyclerView
+     */
+    public void initRecyclerView() {
+        mAdapter = new NewsListAdapter(getContext());
+        mNewsListView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mNewsListView.setAdapter(mAdapter);
     }
 
     @Override
     public void setAdapter() {
-        mAdapter = new NewsListAdapter(getContext(), mData);
-        mNewsListView.getRecyclerView().setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(mNewsListView);
     }
 
     @Override
     protected void setLayoutManager() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mNewsListView.getRecyclerView().setLayoutManager(mLayoutManager);
     }
 
-    // 初始化数据
-    private void initData() {
-        // 获取最新新闻列表
-        mNewsListView.onLoading();
+    /**
+     * 初始化数据
+     */
+    public void initData() {
         mNewsModel.getLatestNews()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newsBean -> {
-                    Log.d(TAG, "第一次初始化数据");
                     mDate = newsBean.date;
-                    mData.addAll(newsBean.stories);
-                    mAdapter.addAll(mData);
-                    mAdapter.notifyDataSetChanged();
-                    Log.d(TAG, newsBean.stories.get(0).title);
-                    mNewsListView.onLoadingOver();
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        mNewsListView.onNetError();
-                    }
+                    mAdapter.addAll(newsBean.stories);
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    mNewsListView.onNetError();
                 });
     }
 
+    /**
+     * 加载更多数据
+     *
+     * @param isPullDown 是否是下拉加载
+     */
     public void loadMore(boolean isPullDown) {
-        mNewsListView.onShowMore();
         mNewsModel.getOldNews(mDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(newsBean -> {
-                    if (newsBean.stories.size() == 0) {
-                        mNewsListView.onNoMore();
-                    }
-                    mAdapter.clear();
-                    if (isPullDown) { // 下拉加载
+                    mDate = newsBean.date;
+                    if (isPullDown) {
                         Log.d(TAG, "下拉加载");
-                        mData.addAll(0, newsBean.stories);
-                        mAdapter.addAll(mData);
+                        // 1, 取出所有数据
+                        List<NewsBean.StoriesBean> allData = mAdapter.getAllData();
+                        // 2, 清空原有数据
+                        mAdapter.clear();
+                        // 3, 将新数据添加到原数据的前面
+                        allData.addAll(0, newsBean.stories);
+                        mAdapter.addAll(allData);
+                        // 4, 刷新适配器
                         mAdapter.notifyDataSetChanged();
-                        mNewsListView.onLoadMoreOver();
-                    } else { // 上拉加载
+                        mNewsListView.onLoadingOver();
+                    } else {
                         Log.d(TAG, "上拉加载");
-                        mData.addAll(newsBean.stories);
-                        mAdapter.addAll(mData);
+                        // 直接将新数据追加到原有数据的尾部
+                        mAdapter.addAll(newsBean.stories);
                         mAdapter.notifyDataSetChanged();
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                        mNewsListView.onNetError();
-                    }
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    mNewsListView.onNetError();
                 });
     }
 
-    public void chooseNewsItem(int position) {
-        NewsBean.StoriesBean storiesBean = mData.get(position);
+    public void clickItem(int position) {
+        NewsBean.StoriesBean storiesBean = mAdapter.getItem(position);
         mNewsListView.showNewsDetail(storiesBean.id);
     }
 
@@ -119,13 +114,5 @@ public class NewsPresenter extends BasePresenter {
     protected void onUnTokenView() {
         super.onUnTokenView();
         mNewsModel.clear();
-    }
-
-    public int findLastVisibleItemPosition() {
-        return mLayoutManager.findLastVisibleItemPosition();
-    }
-
-    public int getItemCount() {
-        return mLayoutManager.getItemCount();
     }
 }
