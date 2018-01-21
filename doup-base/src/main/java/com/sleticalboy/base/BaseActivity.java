@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.sleticalboy.base.config.ConstantValue;
@@ -33,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         ActivityController.add(this);
 
@@ -56,13 +58,21 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initView();
 
     @Override
+    protected void onStart() {
+        Log.d(TAG, "onStart() called");
+        super.onStart();
+    }
+
+    @Override
     protected void onResume() {
+        Log.d(TAG, "onResume() called");
         super.onResume();
 //        JPushManager.getInstance().onResume(this);
     }
 
     @Override
     protected void onPause() {
+        Log.d(TAG, "onPause() called");
         super.onPause();
 //        JPushManager.getInstance().onPause(this);
     }
@@ -105,10 +115,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop() called");
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
+        Log.d(TAG, "onDestroy() called");
         super.onDestroy();
         unbinder.unbind();
         ActivityController.remove(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onRestoreInstanceState() called with: savedInstanceState = [" + savedInstanceState + "]");
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     /**

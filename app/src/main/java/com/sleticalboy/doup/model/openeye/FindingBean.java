@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.model.openeye;
 
-import com.sleticalboy.base.IBaseBean;
+import com.sleticalboy.base.BaseBean;
 
 /**
  * Created by Android Studio.
@@ -9,7 +9,7 @@ import com.sleticalboy.base.IBaseBean;
  * @author sleticalboy
  */
 
-public class FindingBean implements IBaseBean {
+public class FindingBean extends BaseBean {
     public int id;
     public String name;
     public Object alias;

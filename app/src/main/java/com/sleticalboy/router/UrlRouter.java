@@ -22,7 +22,6 @@ import java.util.ArrayList;
  *
  * @author sleticalboy
  */
-
 public class UrlRouter {
 
     private static final int DEFAULT_REQUEST_CODE = -1;

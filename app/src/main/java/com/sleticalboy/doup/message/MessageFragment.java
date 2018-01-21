@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.sleticalboy.base.BaseFragment;
-import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
+import com.sleticalboy.doup.message.comment.CommentFragment;
+import com.sleticalboy.doup.message.contact.ContactListFragment;
+import com.sleticalboy.doup.message.jchat.ChatFragment;
+import com.sleticalboy.doup.message.jpush.PushFragment;
 import com.sleticalboy.doup.module.openeye.adapter.BasePagerAdapter;
 
 import java.util.ArrayList;
@@ -23,11 +26,11 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class MessageFragment extends BaseFragment implements IBaseView {
+public class MessageFragment extends BaseFragment {
 
     public static final String TAG = "MessageFragment";
 
-    private final String[] mTabTitles = {"系统通知", "聊天消息"};
+    private final String[] mTabTitles = {"通知", "聊天", "联系人", "朋友圈"};
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
@@ -39,6 +42,8 @@ public class MessageFragment extends BaseFragment implements IBaseView {
 
         tabLayout.addTab(tabLayout.newTab(), 0);
         tabLayout.addTab(tabLayout.newTab(), 1);
+        tabLayout.addTab(tabLayout.newTab(), 2);
+        tabLayout.addTab(tabLayout.newTab(), 3);
 
         BasePagerAdapter adapter = new BasePagerAdapter(getActivity(), getChildFragmentManager());
 
@@ -47,6 +52,8 @@ public class MessageFragment extends BaseFragment implements IBaseView {
         List<Fragment> subFragments = new ArrayList<>();
         subFragments.add(new PushFragment());
         subFragments.add(new ChatFragment());
+        subFragments.add(new ContactListFragment());
+        subFragments.add(new CommentFragment());
         adapter.setSubFragments(subFragments);
 
         viewPager.setAdapter(adapter);
@@ -78,19 +85,6 @@ public class MessageFragment extends BaseFragment implements IBaseView {
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_message;
-    }
-
-    @Override
-    public void onLoading() {
-    }
-
-    @Override
-    public void onLoadingOver() {
-    }
-
-    @Override
-    public void onNetError() {
-
+        return R.layout.frag_jchat;
     }
 }

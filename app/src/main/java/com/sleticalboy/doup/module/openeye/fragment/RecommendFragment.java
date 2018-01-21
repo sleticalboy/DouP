@@ -44,11 +44,11 @@ public class RecommendFragment extends LazyFragment implements IRecommendView,
     }
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
         rvRecommend.setRefreshing(false);
     }
 

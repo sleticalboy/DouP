@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.model.weather;
 
 import com.google.gson.annotations.SerializedName;
-import com.sleticalboy.base.IBaseBean;
+import com.sleticalboy.base.BaseBean;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public class WeatherBean implements IBaseBean {
+public class WeatherBean extends BaseBean {
     @SerializedName("HeWeather")
     public List<HeWeatherBean> HeWeather;
 

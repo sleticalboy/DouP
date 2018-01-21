@@ -24,10 +24,12 @@ import java.util.List;
  * 需要进行运行时权限检测的Activity可以继承这个类
  *
  * @author hongming.wang
+ * @author sleticalboy
  * @创建时间：2016年5月27日 下午3:01:31
- * @项目名称： AMapLocationDemo
+ * @项目名称： DouP
  * @文件名称：PermissionsChecker.java
  * @类型名称：PermissionsChecker
+ * @修改时间：2018年01月18日01:42:11
  * @since 2.5.0
  */
 public abstract class CheckPermissionsActivity extends BaseActivity {

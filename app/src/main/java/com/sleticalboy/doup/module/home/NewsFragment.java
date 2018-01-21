@@ -60,11 +60,11 @@ public class NewsFragment extends BaseFragment implements IBaseView,
     }
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
         rvNews.setRefreshing(false);
     }
 

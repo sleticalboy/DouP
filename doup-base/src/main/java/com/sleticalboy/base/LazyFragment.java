@@ -16,8 +16,6 @@ import android.view.View;
  */
 public abstract class LazyFragment extends BaseFragment {
 
-    public final String TAG = getClass().getSimpleName();
-
     /**
      * onCreateView 方法执行完毕
      */
@@ -26,6 +24,10 @@ public abstract class LazyFragment extends BaseFragment {
      * Fragment 对用户是否可见
      */
     protected boolean isVisibleToUser;
+    /**
+     * 数据是否初始化
+     */
+    protected boolean isDataInitialized;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -55,14 +57,16 @@ public abstract class LazyFragment extends BaseFragment {
         } else {
             this.isVisibleToUser = false;
         }
+        Log.d(TAG, "setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "]");
         super.setUserVisibleHint(isVisibleToUser);
     }
 
     private void lazyLoad() {
         // step 3 通过双重判断才加载数据
-        if (isVisibleToUser && isViewCreated) {
-            Log.d(TAG, "开始初始化数据");
+        if (isVisibleToUser && isViewCreated && !isDataInitialized) {
+            Log.d(TAG, "fetch data");
             fetchData();
+            isDataInitialized = true;
             isViewCreated = false;
             isVisibleToUser = false;
         }

@@ -8,6 +8,9 @@ package com.sleticalboy.base.config;
  */
 public interface ConstantValue {
 
+    /**
+     * url prefix
+     */
     String URL_PRE = "doup://";
 
     /**

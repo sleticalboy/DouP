@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="4dp">
 
-    <com.sleticalboy.widget.recyclerview.swipe.CircleImageView
+    <com.sleticalboy.widget.CircleImageView
         android:id="@+id/img_header"
         android:layout_width="45dp"
         android:layout_height="45dp"

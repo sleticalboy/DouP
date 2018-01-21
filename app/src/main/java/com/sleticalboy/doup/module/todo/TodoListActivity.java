@@ -19,7 +19,6 @@ public class TodoListActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
     }
 
     @Override

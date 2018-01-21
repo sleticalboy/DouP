@@ -16,12 +16,12 @@ import com.sleticalboy.doup.R;
 public class ShareActivity extends BaseActivity implements IBaseView {
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
 
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
 
     }
 

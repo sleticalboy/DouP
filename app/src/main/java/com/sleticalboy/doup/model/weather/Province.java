@@ -1,7 +1,5 @@
 package com.sleticalboy.doup.model.weather;
 
-import com.sleticalboy.base.IBaseBean;
-
 import org.litepal.crud.DataSupport;
 
 /**
@@ -10,7 +8,7 @@ import org.litepal.crud.DataSupport;
  *
  * @author sleticalboy
  */
-public class Province extends DataSupport implements IBaseBean {
+public class Province extends DataSupport {
     public int id;
     public String name;
     public int provinceCode;

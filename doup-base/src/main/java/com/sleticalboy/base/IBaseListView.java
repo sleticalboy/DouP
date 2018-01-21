@@ -1,6 +1,6 @@
 package com.sleticalboy.base;
 
-import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * <pre>
@@ -15,34 +15,11 @@ public interface IBaseListView extends IBaseView {
 
     /**
      * 设置适配器
-     *
-     * @param adapter
-     * @param <A>
      */
-//    <A extends RecyclerArrayAdapter> void setAdapter(A adapter);
+    void setAdapter(RecyclerArrayAdapter adapter);
 
     /**
      * 设置 LayoutManager
-     *
-     * @param manager
-     * @param <M>
      */
-//    <M extends RecyclerView.LayoutManager> void setLayoutManager(M manager);
-
-    /**
-     * 获取当前页面的 RecyclerView
-     *
-     * @return EasyRecyclerView 对象
-     */
-    EasyRecyclerView getRecyclerView();
-
-    /**
-     * 没有更多数据时调用
-     */
-    void onNoMore(); // 对 footer 操作
-
-    /**
-     * 加载更多时调用
-     */
-    void onShowMore(); // 对 footer 操作
+    void setLayoutManager();
 }

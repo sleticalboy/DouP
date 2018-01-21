@@ -45,22 +45,18 @@ public class AboutMeActivity extends BaseActivity implements IBaseView {
     }
 
     public static void startAction(Context context) {
-        Intent intent = new Intent(context, AboutMeActivity.class);
-        context.startActivity(intent);
+        context.startActivity(new Intent(context, AboutMeActivity.class));
     }
 
     @Override
-    public void onLoading() {
-
+    public void onLoad() {
     }
 
     @Override
-    public void onLoadingOver() {
-
+    public void onLoadFinished() {
     }
 
     @Override
     public void onNetError() {
-
     }
 }

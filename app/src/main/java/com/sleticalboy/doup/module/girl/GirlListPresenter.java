@@ -34,13 +34,13 @@ public class GirlListPresenter extends BasePresenter {
     }
 
     public void initData() {
-        mGirlView.onLoading();
+        mGirlView.onLoad();
         mGirlModel.getMeizi(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(girlBean -> {
                     mAdapter.addAll(girlBean.results);
-                    mGirlView.onLoadingOver();
+                    mGirlView.onLoadFinished();
                 }, Throwable::printStackTrace);
     }
 
@@ -55,7 +55,7 @@ public class GirlListPresenter extends BasePresenter {
                         allData.addAll(0, girlBean.results);
                         mAdapter.addAll(allData);
                         mAdapter.notifyDataSetChanged();
-                        mGirlView.onLoadingOver();
+                        mGirlView.onLoadFinished();
                     } else {
                         mAdapter.addAll(girlBean.results);
                         mAdapter.notifyDataSetChanged();

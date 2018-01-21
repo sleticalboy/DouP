@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,7 +71,6 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
         Intent intent = getIntent();
         if (intent != null) {
             mData = intent.getParcelableExtra(VIDEO);
-            Log.d(TAG, mData.toString());
         }
     }
 
@@ -233,12 +231,12 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
     }
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
 
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
 
     }
 

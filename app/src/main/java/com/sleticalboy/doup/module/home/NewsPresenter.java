@@ -92,7 +92,7 @@ public class NewsPresenter extends BasePresenter {
                         mAdapter.addAll(allData);
                         // 4, 刷新适配器
                         mAdapter.notifyDataSetChanged();
-                        mNewsListView.onLoadingOver();
+                        mNewsListView.onLoadFinished();
                     } else {
                         Log.d(TAG, "上拉加载");
                         // 直接将新数据追加到原有数据的尾部
