@@ -1,7 +1,9 @@
 package com.sleticalboy.doup;
 
 import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.module.main.StartActivity;
+import com.sleticalboy.util.SPUtils;
 
 /**
  * Created by Android Studio.
