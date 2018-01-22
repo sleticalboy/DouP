@@ -23,7 +23,7 @@ public abstract class BasePresenter<V extends IBaseView> {
     protected void setLayoutManager() {
     }
 
-    public void initRecyclerView() {
+    protected void initRecyclerView() {
     }
 
     protected void onTokenView(V view) {

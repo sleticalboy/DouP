@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.model.girl;
 
-import com.sleticalboy.base.IBaseBean;
+import com.sleticalboy.base.BaseBean;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public class GirlBean implements IBaseBean {
+public class GirlBean extends BaseBean {
     public boolean error;
     public List<ResultsBean> results;
 

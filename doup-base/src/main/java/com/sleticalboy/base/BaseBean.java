@@ -8,5 +8,5 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-public interface IBaseBean extends Serializable {
+public abstract class BaseBean implements Serializable {
 }

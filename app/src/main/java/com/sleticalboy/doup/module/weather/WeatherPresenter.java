@@ -39,7 +39,7 @@ import okhttp3.ResponseBody;
  *
  * @author sleticalboy
  */
-public class WeatherPresenter extends BasePresenter {
+public class WeatherPresenter extends BasePresenter implements WeatherContract.IWeatherPresenter {
 
     public static final String TAG = "WeatherPresenter";
 
@@ -186,7 +186,7 @@ public class WeatherPresenter extends BasePresenter {
                         Log.d("WeatherActivity", "get weather form network -- >");
                         SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
                         mWeatherView.showWeather(weatherBean);
-                        mWeatherView.onLoadingOver();
+                        mWeatherView.onLoadFinished();
                         AutoUpdateService.actionStart(getContext());
                     }, throwable -> mWeatherView.onNetError());
         }

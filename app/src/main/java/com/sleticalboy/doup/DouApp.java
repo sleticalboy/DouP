@@ -51,7 +51,7 @@ public class DouApp extends Application implements CrashHandler.OnCrashListener 
         // 初始化极光推送
         JPushManager.getInstance().initialize(this);
         // 初始化极光 IM
-//        JChatManager.getInstance().initialize(this);
+        // JChatManager.getInstance().initialize(this);
     }
 
     @Override

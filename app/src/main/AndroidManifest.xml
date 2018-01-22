@@ -240,11 +240,13 @@
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService"/>
 
-        <activity android:name=".module.amap.MapStartActivity"/>
-        <activity android:name=".message.ContactsActivity"/>
+        <activity android:name=".module.amap.MainMapActivity"/>
         <activity android:name=".module.todo.TodoListActivity"/>
         <activity android:name=".module.girl.GirlActivity"/>
         <activity android:name=".module.home.ShareActivity"/>
+        <activity android:name=".message.jpush.PushDetailActivity"/>
+        <activity android:name=".message.contact.ContactDetailActivity"/>
+        <activity android:name=".SplashActivity"/>
     </application>
 
 </manifest>

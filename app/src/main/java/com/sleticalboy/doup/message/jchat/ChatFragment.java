@@ -1,12 +1,11 @@
-package com.sleticalboy.doup.message;
+package com.sleticalboy.doup.message.jchat;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
+import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * <pre>
@@ -17,44 +16,30 @@ import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
  *
  * @author sleticalboy
  */
-public class PushFragment extends LazyFragment implements IBaseListView,
-        SwipeRefreshLayout.OnRefreshListener {
-
-    public static final String TAG = "PushFragment";
+public class ChatFragment extends LazyFragment implements IBaseListView {
 
     @Override
-    public void onLoading() {
-
+    public void onLoad() {
     }
 
     @Override
-    public void onLoadingOver() {
-
+    public void onLoadFinished() {
     }
 
     @Override
     public void onNetError() {
-
     }
 
     @Override
-    public EasyRecyclerView getRecyclerView() {
-        return null;
+    public void setAdapter(RecyclerArrayAdapter adapter) {
     }
 
     @Override
-    public void onNoMore() {
-
-    }
-
-    @Override
-    public void onShowMore() {
-
+    public void setLayoutManager() {
     }
 
     @Override
     protected void initView(View rootView) {
-
     }
 
     @Override
@@ -64,11 +49,5 @@ public class PushFragment extends LazyFragment implements IBaseListView,
 
     @Override
     protected void fetchData() {
-
-    }
-
-    @Override
-    public void onRefresh() {
-
     }
 }

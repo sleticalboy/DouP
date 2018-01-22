@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.model.openeye;
 
-import com.sleticalboy.base.IBaseBean;
+import com.sleticalboy.base.BaseBean;
 
 /**
  * <pre>
@@ -11,7 +11,7 @@ import com.sleticalboy.base.IBaseBean;
  *
  * @author sleticalboy
  */
-public class ItemListBean implements IBaseBean {
+public class ItemListBean extends BaseBean {
     public String type;
     public DataBean data;
     public Object tag;

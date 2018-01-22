@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.message;
+package com.sleticalboy.doup.message.jchat;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -16,9 +16,9 @@ import com.sleticalboy.widget.recyclerview.swipe.CircleImageView;
  *
  * @author sleticalboy
  */
-public class MessageAdapter extends RecyclerArrayAdapter<MessageBean> {
+public class ChatMsgAdapter extends RecyclerArrayAdapter<ChatMsgBean> {
 
-    public MessageAdapter(Context context) {
+    public ChatMsgAdapter(Context context) {
         super(context);
     }
 
@@ -27,15 +27,15 @@ public class MessageAdapter extends RecyclerArrayAdapter<MessageBean> {
         return new ViewHolder(parent);
     }
 
-    static class ViewHolder extends BaseViewHolder<MessageBean> {
+    static class ViewHolder extends BaseViewHolder<ChatMsgBean> {
 
         CircleImageView imgHeader;
         TextView msgTitle;
         TextView msgContent;
         TextView msgTime;
 
-        public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.item_message);
+        public ViewHolder(ViewGroup parent) {
+            super(parent, R.layout.item_message);
             imgHeader = dollar(R.id.img_header);
             msgTitle = dollar(R.id.msg_title);
             msgContent = dollar(R.id.msg_content);
@@ -43,7 +43,7 @@ public class MessageAdapter extends RecyclerArrayAdapter<MessageBean> {
         }
 
         @Override
-        public void setData(MessageBean data) {
+        public void setData(ChatMsgBean data) {
             if (data == null) {
                 return;
             }

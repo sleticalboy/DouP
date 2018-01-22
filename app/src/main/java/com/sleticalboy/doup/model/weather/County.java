@@ -1,7 +1,6 @@
 package com.sleticalboy.doup.model.weather;
 
 import com.google.gson.annotations.SerializedName;
-import com.sleticalboy.base.IBaseBean;
 
 import org.litepal.crud.DataSupport;
 
@@ -11,7 +10,7 @@ import org.litepal.crud.DataSupport;
  *
  * @author sleticalboy
  */
-public class County extends DataSupport implements IBaseBean {
+public class County extends DataSupport {
     public int id;
     public String name;
     @SerializedName("weather_id")

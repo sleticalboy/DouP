@@ -111,12 +111,12 @@ public class NewsDetailActivity extends BaseActivity implements IBaseView {
     }
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
 
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
 
     }
 

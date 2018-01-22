@@ -14,12 +14,12 @@ public interface IBaseView {
     /**
      * 加载界面时调用
      */
-    void onLoading();
+    void onLoad();
 
     /**
      * 加载界面完成时调用
      */
-    void onLoadingOver();
+    void onLoadFinished();
 
     /**
      * 网络异常时调用

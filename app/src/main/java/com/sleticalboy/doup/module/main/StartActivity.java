@@ -22,15 +22,11 @@ import android.widget.TextView;
 
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.jpush.SettingsActivity;
 import com.sleticalboy.doup.jpush.activity.IndexActivity;
-import com.sleticalboy.doup.message.ContactsActivity;
 import com.sleticalboy.doup.message.MessageFragment;
-import com.sleticalboy.doup.module.amap.MapStartActivity;
 import com.sleticalboy.doup.module.girl.GirlFragment;
 import com.sleticalboy.doup.module.home.NewsFragment;
 import com.sleticalboy.doup.module.openeye.fragment.OpeneyeFragment;
-import com.sleticalboy.doup.module.todo.TodoListActivity;
 import com.sleticalboy.doup.module.weather.WeatherActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -141,19 +137,18 @@ public class StartActivity extends BaseActivity {
         navMenu.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_call:
-                    SettingsActivity.actionStart(this);
+//                    SettingsActivity.actionStart(this);
                     break;
                 case R.id.nav_contacts:
-                    ContactsActivity.actionStart(this);
                     break;
                 case R.id.nav_location:
-                    MapStartActivity.actionStart(this);
+//                    MainMapActivity.actionStart(this);
                     break;
                 case R.id.nav_weather:
                     WeatherActivity.actionStart(this);
                     break;
                 case R.id.nav_tasks:
-                    TodoListActivity.actionStart(this);
+//                    TodoListActivity.actionStart(this);
                     break;
                 default:
                     break;

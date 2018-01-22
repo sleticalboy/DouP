@@ -1,7 +1,9 @@
 package com.sleticalboy.doup;
 
 import com.sleticalboy.base.BaseActivity;
+import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.module.main.StartActivity;
+import com.sleticalboy.util.SPUtils;
 
 /**
  * Created by Android Studio.
@@ -9,20 +11,21 @@ import com.sleticalboy.doup.module.main.StartActivity;
  *
  * @author sleticalboy
  */
-public class SplashActivity extends BaseActivity implements ISplashView {
+public class SplashActivity extends BaseActivity implements SplashContract.View {
+
+    private SplashContract.Presenter mPresenter;
 
     @Override
     protected void initView() {
-//        boolean isFirst = SPUtils.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
-//        if (isFirst) {
-//            SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
-//            // 展示欢迎页之后进入主页面
-//            StartActivity.actionStart(this);
-//        } else {
-//            StartActivity.actionStart(this);
-//        }
-        StartActivity.actionStart(this);
-        finish();
+        mPresenter = createPresenter();
+        boolean isFirst = SPUtils.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
+        if (isFirst) {
+            SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
+            // 展示欢迎页之后进入主页面
+            mPresenter.toMain();
+        } else {
+            mPresenter.toMain();
+        }
     }
 
     @Override
@@ -31,17 +34,29 @@ public class SplashActivity extends BaseActivity implements ISplashView {
     }
 
     @Override
-    public void onLoading() {
-
+    public void onLoad() {
     }
 
     @Override
-    public void onLoadingOver() {
-
+    public void onLoadFinished() {
     }
 
     @Override
     public void onNetError() {
+    }
 
+    @Override
+    public SplashContract.Presenter createPresenter() {
+        return new SplashPresenter(this, this);
+    }
+
+    @Override
+    public void showSplash() {
+    }
+
+    @Override
+    public void showMain() {
+        StartActivity.actionStart(this);
+        this.finish();
     }
 }

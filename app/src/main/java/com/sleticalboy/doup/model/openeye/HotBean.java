@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.model.openeye;
 
-import com.sleticalboy.base.IBaseBean;
+import com.sleticalboy.base.BaseBean;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author sleticalboy
  */
 
-public class HotBean implements IBaseBean {
+public class HotBean extends BaseBean {
     public int count;
     public int total;
     public String nextPageUrl;

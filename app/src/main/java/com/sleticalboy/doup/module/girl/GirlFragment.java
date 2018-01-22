@@ -57,11 +57,11 @@ public class GirlFragment extends BaseFragment implements IBaseView,
     }
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
         rvMeizi.setRefreshing(false);
     }
 

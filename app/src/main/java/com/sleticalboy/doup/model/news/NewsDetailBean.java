@@ -1,6 +1,6 @@
 package com.sleticalboy.doup.model.news;
 
-import com.sleticalboy.base.IBaseBean;
+import com.sleticalboy.base.BaseBean;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author sleticalboy
  */
-public class NewsDetailBean implements IBaseBean {
+public class NewsDetailBean extends BaseBean {
 
     public String body;
     public String image_source;

@@ -69,28 +69,28 @@ public final class LocationManager implements AMapLocationListener {
      * 设置是否需要显示地址信息
      */
     public void setNeedAddress(boolean needAddress) {
-        mLocationOption.setNeedAddress(needAddress);
+        getDefaultOption().setNeedAddress(needAddress);
     }
 
     /**
      * 设置是否优先返回GPS定位结果
      */
     public void setGpsFirst(boolean first) {
-        mLocationOption.setGpsFirst(first);
+        getDefaultOption().setGpsFirst(first);
     }
 
     /**
      * 设置是否单次定位
      */
     public void setSingleLocate(boolean single) {
-        mLocationOption.setOnceLocation(single);
+        getDefaultOption().setOnceLocation(single);
     }
 
     /**
      * 设置是否使用传感器
      */
     public void setEnableSensor(boolean enable) {
-        mLocationOption.setSensorEnable(enable);
+        getDefaultOption().setSensorEnable(enable);
     }
 
     /**
@@ -99,7 +99,7 @@ public final class LocationManager implements AMapLocationListener {
      * @param interval 时间间隔
      */
     public void setInterval(long interval) {
-        mLocationOption.setInterval(interval);
+        getDefaultOption().setInterval(interval);
     }
 
     /**
@@ -117,7 +117,7 @@ public final class LocationManager implements AMapLocationListener {
      * @param timeOut 超时时长
      */
     public void setTimeOut(long timeOut) {
-        mLocationOption.setHttpTimeOut(timeOut);
+        getDefaultOption().setHttpTimeOut(timeOut);
     }
 
     private void init(Context context) {
@@ -134,9 +134,9 @@ public final class LocationManager implements AMapLocationListener {
         // 可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setGpsFirst(false);
         // 可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setHttpTimeOut(30000);
+        mOption.setHttpTimeOut(30 * 1000);
         // 可选，设置定位间隔。默认为2秒
-//        mOption.setInterval(2000);
+        mOption.setInterval(30 * 1000);
         // 可选，设置是否返回逆地理地址信息。默认是true
         mOption.setNeedAddress(true);
         // 可选，设置是否单次定位。默认是false
@@ -175,26 +175,26 @@ public final class LocationManager implements AMapLocationListener {
         //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
         if (location.getErrorCode() == 0) {
             sb.append("定位成功" + "\n");
-            sb.append("定位类型: " + location.getLocationType() + "\n");
-            sb.append("经    度    : " + location.getLongitude() + "\n");
-            sb.append("纬    度    : " + location.getLatitude() + "\n");
-            sb.append("精    度    : " + location.getAccuracy() + "米" + "\n");
-            sb.append("提供者    : " + location.getProvider() + "\n");
+            sb.append("定位类型\t: " + location.getLocationType() + "\n");
+            sb.append("经\t度\t: " + location.getLongitude() + "\n");
+            sb.append("纬\t度\t: " + location.getLatitude() + "\n");
+            sb.append("精\t度\t: " + location.getAccuracy() + "米" + "\n");
+            sb.append("提供者\t\t: " + location.getProvider() + "\n");
 
-            sb.append("速    度    : " + location.getSpeed() + "米/秒" + "\n");
-            sb.append("角    度    : " + location.getBearing() + "\n");
+            sb.append("速\t度\t: " + location.getSpeed() + "米/秒" + "\n");
+            sb.append("角\t度\t: " + location.getBearing() + "\n");
             // 获取当前提供定位服务的卫星个数
-            sb.append("星    数    : " + location.getSatellites() + "\n");
-            sb.append("国    家    : " + location.getCountry() + "\n");
-            sb.append("省            : " + location.getProvince() + "\n");
-            sb.append("市            : " + location.getCity() + "\n");
-            sb.append("城市编码 : " + location.getCityCode() + "\n");
-            sb.append("区            : " + location.getDistrict() + "\n");
-            sb.append("区域 码   : " + location.getAdCode() + "\n");
-            sb.append("地    址    : " + location.getAddress() + "\n");
-            sb.append("兴趣点    : " + location.getPoiName() + "\n");
+            sb.append("星\t数\t: " + location.getSatellites() + "\n");
+            sb.append("国\t家\t: " + location.getCountry() + "\n");
+            sb.append("省\t\t: " + location.getProvince() + "\n");
+            sb.append("市\t\t: " + location.getCity() + "\n");
+            sb.append("城市编码\t: " + location.getCityCode() + "\n");
+            sb.append("区\t\t: " + location.getDistrict() + "\n");
+            sb.append("区域码\t\t: " + location.getAdCode() + "\n");
+            sb.append("地\t址\t: " + location.getAddress() + "\n");
+            sb.append("兴趣点\t\t: " + location.getPoiName() + "\n");
             //定位完成的时间
-            sb.append("定位时间: " + TimeUtils.formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "\n");
+            sb.append("定位时间\t: " + TimeUtils.formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "\n");
         } else {
             //定位失败
             sb.append("定位失败" + "\n");

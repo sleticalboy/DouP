@@ -13,9 +13,18 @@ import com.sleticalboy.base.BasePresenter;
  *
  * @author sleticalboy
  */
-public class SplashPresenter extends BasePresenter {
+public class SplashPresenter extends BasePresenter implements
+        SplashContract.Presenter {
 
-    public SplashPresenter(Context context) {
+    private SplashContract.View mSplashView;
+
+    public SplashPresenter(Context context, SplashContract.View splashView) {
         super(context);
+        mSplashView = splashView;
+    }
+
+    @Override
+    public void toMain() {
+        mSplashView.showMain();
     }
 }

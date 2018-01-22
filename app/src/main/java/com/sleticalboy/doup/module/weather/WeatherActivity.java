@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
 import com.sleticalboy.base.BaseActivity;
-import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.model.weather.WeatherBean;
@@ -34,7 +33,7 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class WeatherActivity extends BaseActivity implements IBaseView,
+public class WeatherActivity extends BaseActivity implements WeatherContract.IWeatherView,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "WeatherActivity";
@@ -72,18 +71,14 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
     private String mWeatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
 
     private WeatherPresenter mPresenter;
-    private LocationManager mLocationManager;
-
-    @Override
-    protected int attachLayout() {
-        return R.layout.activity_weather;
-    }
+    private LocationManager mLocManager;
 
     @Override
     protected void prepareTask() {
+        mLocManager = LocationManager.getInstance(this);
         Observable<AMapLocation> observable = RxBus.getBus().register(LocationManager.TAG);
         observable.subscribe(location -> {
-            String s = mLocationManager.defaultHandleLocation(location);
+            String s = mLocManager.defaultHandleLocation(location);
             Log.d(TAG, s);
         });
     }
@@ -93,10 +88,7 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
 
         mPresenter = new WeatherPresenter(this, this);
 
-        mLocationManager = LocationManager.getInstance(this);
-        mLocationManager.setNeedAddress(true);
-        mLocationManager.setInterval(1000 * 60 * 3);
-        mLocationManager.startLocation();
+        mLocManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
         String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
@@ -118,6 +110,11 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
         btnNavigation.setOnClickListener(v -> showDistrictDialog());
 
         mPresenter.getBgUrl();
+    }
+
+    @Override
+    protected int attachLayout() {
+        return R.layout.activity_weather;
     }
 
     public void showBg(String bgUrl) {
@@ -181,12 +178,12 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
     }
 
     @Override
-    public void onLoading() {
+    public void onLoad() {
         swipeRefresh.setRefreshing(true);
     }
 
     @Override
-    public void onLoadingOver() {
+    public void onLoadFinished() {
         swipeRefresh.setRefreshing(false);
     }
 
@@ -203,19 +200,19 @@ public class WeatherActivity extends BaseActivity implements IBaseView,
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        mLocationManager.stopLocation();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.onUnTokenView();
-        mLocationManager.destroy();
+        mLocManager.destroy();
     }
 
     public static void actionStart(Context context) {
         context.startActivity(new Intent(context, WeatherActivity.class));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mLocManager.stopLocation();
     }
 }

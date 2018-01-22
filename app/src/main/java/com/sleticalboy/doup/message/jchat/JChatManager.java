@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.jchat;
+package com.sleticalboy.doup.message.jchat;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
