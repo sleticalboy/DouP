@@ -1,14 +1,19 @@
 apply plugin: 'com.android.library'
 
+def defConfigs = rootProject.ext.android
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion defConfigs.compileSdkVersion
+    buildToolsVersion defConfigs.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion defConfigs.minSdkVersion
+        targetSdkVersion defConfigs.targetSdkVersion
+        versionCode defConfigs.versionCode
+        versionName defConfigs.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -18,19 +23,14 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:26.0.0-beta1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:0.5'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    testImplementation "junit:junit:$rootProject.ext.v_of_junit"
+    androidTestImplementation "com.android.support.test:runner:0.5"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:2.2.2"
 
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
