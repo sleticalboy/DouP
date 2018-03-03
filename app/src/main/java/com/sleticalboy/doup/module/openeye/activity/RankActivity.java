@@ -72,7 +72,7 @@ public class RankActivity extends BaseActivity implements IRecommendView,
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_finding_detail;
+        return R.layout.openeye_activity_finding_detail;
     }
 
     @Override

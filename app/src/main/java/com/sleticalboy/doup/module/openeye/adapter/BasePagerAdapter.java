@@ -57,6 +57,6 @@ public class BasePagerAdapter extends FragmentPagerAdapter {
 
     @NonNull
     private String getTabTitle(int index) {
-        return mTabTitleIds == null ? mTabTitles[index] : ResUtils.getString(mContext, mTabTitleIds[index]);
+        return mTabTitleIds == null ? mTabTitles[index] : ResUtils.INSTANCE.getString(mContext, mTabTitleIds[index]);
     }
 }

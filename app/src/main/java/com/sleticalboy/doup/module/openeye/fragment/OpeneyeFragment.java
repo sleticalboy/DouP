@@ -32,7 +32,7 @@ public class OpeneyeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.frag_eyes, container, false);
+        View rootView = inflater.inflate(R.layout.openeye_frag_main, container, false);
         ButterKnife.bind(rootView);
         initView(rootView);
 

@@ -1,6 +1,6 @@
-package com.sleticalboy.util;
+package com.sleticalboy.util
 
-import android.content.Context;
+import android.content.Context
 
 /**
  * Created by Android Studio.
@@ -9,7 +9,7 @@ import android.content.Context;
  * @author sleticalboy
  */
 
-public class ResUtils {
+object ResUtils {
 
     /**
      * 通过 resId 获取字符串
@@ -17,7 +17,7 @@ public class ResUtils {
      * @param resId 资源 weatherId
      * @return resId 对应的字符串
      */
-    public static String getString(Context context, int resId) {
-        return context.getResources().getString(resId);
+    fun getString(context: Context, resId: Int): String {
+        return context.resources.getString(resId)
     }
 }

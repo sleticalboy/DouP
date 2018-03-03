@@ -29,7 +29,7 @@ public class WeatherModel extends BaseModel {
 
     public WeatherModel(Context context) {
         super(context);
-        RetrofitClient client = RetrofitClient.getInstance(mContext.get(), ApiConstant.BASE_WEATHER_URL);
+        RetrofitClient client = RetrofitClient.getInstance(getMContext().get(), ApiConstant.BASE_WEATHER_URL);
         mWeatherApiService = client.create(WeatherApi.class);
     }
 

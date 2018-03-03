@@ -15,7 +15,7 @@ import com.sleticalboy.doup.R;
  *
  * @author sleticalboy
  */
-public class TodoListActivity extends BaseActivity {
+public class TodoListActivity extends BaseActivity implements ITodoListContract.View {
 
     @Override
     protected void initView() {
@@ -23,10 +23,25 @@ public class TodoListActivity extends BaseActivity {
 
     @Override
     protected int attachLayout() {
-        return R.layout.layout_empty;
+        return R.layout.todo_activity_main;
     }
 
     public static void actionStart(Context context) {
         context.startActivity(new Intent(context, TodoListActivity.class));
+    }
+
+    @Override
+    public void onLoad() {
+
+    }
+
+    @Override
+    public void onLoadFinished() {
+
+    }
+
+    @Override
+    public void onNetError() {
+
     }
 }

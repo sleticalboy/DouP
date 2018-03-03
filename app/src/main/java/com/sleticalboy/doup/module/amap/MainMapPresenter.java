@@ -2,6 +2,9 @@ package com.sleticalboy.doup.module.amap;
 
 import android.content.Context;
 
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.sleticalboy.base.BasePresenter;
 
 /**
@@ -13,16 +16,32 @@ import com.sleticalboy.base.BasePresenter;
  *
  * @author sleticalboy
  */
-public class MainMapPresenter extends BasePresenter implements MainMapContract.IMapMapPresenter {
+public class MainMapPresenter extends BasePresenter implements
+        MainMapContract.IMapMapPresenter, PoiSearch.OnPoiSearchListener {
 
     public MainMapContract.IMainMapView mMapView;
+    private final PoiSearch mPoiSearch;
 
     public MainMapPresenter(Context context, MainMapContract.IMainMapView mapView) {
         super(context);
         mMapView = mapView;
+        mPoiSearch = new PoiSearch(context, null);
     }
 
     @Override
-    public void doSearch() {
+    public void doSearch(PoiSearch.Query query) {
+        mPoiSearch.setQuery(query);
+        mPoiSearch.searchPOIAsyn();
+        mPoiSearch.setOnPoiSearchListener(this);
+    }
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int i) {
+        //
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+        //
     }
 }

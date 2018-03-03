@@ -27,6 +27,7 @@ import com.sleticalboy.doup.message.MessageFragment;
 import com.sleticalboy.doup.module.girl.GirlFragment;
 import com.sleticalboy.doup.module.home.NewsFragment;
 import com.sleticalboy.doup.module.openeye.fragment.OpeneyeFragment;
+import com.sleticalboy.doup.module.todo.TodoListActivity;
 import com.sleticalboy.doup.module.weather.WeatherActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -44,7 +45,7 @@ public class StartActivity extends BaseActivity {
 
     private static final String TAG = "StartActivity";
 
-    @BindView(R.id.fl_container)
+    @BindView(R.id.fl_common_container)
     FrameLayout flContainer;
 
     @BindView(R.id.nav_slide_menu)
@@ -68,7 +69,7 @@ public class StartActivity extends BaseActivity {
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_start;
+        return R.layout.main_activity_start;
     }
 
     @Override
@@ -148,7 +149,7 @@ public class StartActivity extends BaseActivity {
                     WeatherActivity.actionStart(this);
                     break;
                 case R.id.nav_tasks:
-//                    TodoListActivity.actionStart(this);
+                    TodoListActivity.actionStart(this);
                     break;
                 default:
                     break;
@@ -184,7 +185,7 @@ public class StartActivity extends BaseActivity {
             if (target.isAdded())
                 transaction.show(target);
             else
-                transaction.add(R.id.fl_container, target);
+                transaction.add(R.id.fl_common_container, target);
         }
     }
 
@@ -203,7 +204,7 @@ public class StartActivity extends BaseActivity {
         // 设置默认显示的 Fragment
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fl_container, mFragments.get(0))
+                .add(R.id.fl_common_container, mFragments.get(0))
                 .commit();
     }
 
@@ -243,13 +244,13 @@ public class StartActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_change_theme:
-                ToastUtils.showToast(this, "change theme");
+                ToastUtils.INSTANCE.showToast(this, "change theme");
                 break;
             case R.id.btn_settings:
                 IndexActivity.actionStart(this);
                 break;
             case R.id.btn_exit:
-                ToastUtils.showToast(this, "exit...");
+                ToastUtils.INSTANCE.showToast(this, "exit...");
 //                ActivityController.finishAll();
 //                android.os.Process.killProcess(android.os.Process.myPid());
                 break;

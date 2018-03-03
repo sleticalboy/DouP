@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.module.amap;
 
+import com.amap.api.services.poisearch.PoiSearch;
 import com.sleticalboy.base.IBaseView;
 
 /**
@@ -11,9 +12,9 @@ import com.sleticalboy.base.IBaseView;
  *
  * @author sleticalboy
  */
-public final class MainMapContract {
+public interface MainMapContract {
 
-    public interface IMainMapView extends IBaseView {
+    interface IMainMapView extends IBaseView {
 
         /**
          * 显示搜索结果
@@ -31,11 +32,11 @@ public final class MainMapContract {
         void showScaleController();
     }
 
-    public interface IMapMapPresenter {
+    interface IMapMapPresenter {
 
         /**
          * 搜索
          */
-        void doSearch();
+        void doSearch(PoiSearch.Query query);
     }
 }

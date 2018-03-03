@@ -2,6 +2,7 @@ package com.sleticalboy.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -38,13 +39,25 @@ public class ImageLoader {
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        new android.os.Handler().post(() -> ToastUtils.showToast(context, "加载失败，请稍后重试"));
+                    public boolean onException(Exception e,
+                                               String model,
+                                               Target<GlideDrawable> target,
+                                               boolean isFirstResource) {
+                        new Handler().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtils.INSTANCE.showToast(context, "加载失败，请稍后重试");
+                            }
+                        });
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(GlideDrawable resource,
+                                                   String model,
+                                                   Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache,
+                                                   boolean isFirstResource) {
                         new PhotoViewAttacher(targetView);
                         return false;
                     }

@@ -47,6 +47,7 @@ import java.util.ArrayList;
  * Fancy progress indicator for Material theme.
  */
 class MaterialProgressDrawable extends Drawable implements Animatable {
+
     private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
     static final Interpolator MATERIAL_INTERPOLATOR = new FastOutSlowInInterpolator();
 

@@ -41,7 +41,7 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
         CardView cardView;
 
         public ViewHolder(ViewGroup item) {
-            super(item, R.layout.item_meizi);
+            super(item, R.layout.girl_recycle_item_girl);
             imgMeizi = dollar(R.id.img_meizi);
             cardView = dollar(R.id.card_view);
         }

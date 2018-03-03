@@ -3,7 +3,10 @@ package com.sleticalboy.widget.recyclerview.adapter;
 import android.view.View;
 
 /**
- * Created by Mr.Jude on 2015/8/18.
+ * Created on 2015/8/18.
+ * @author Mr.Jude
+ * @version 1.0
+ * @description
  */
 public interface EventDelegate {
 

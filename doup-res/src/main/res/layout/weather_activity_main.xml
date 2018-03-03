@@ -30,15 +30,15 @@
                 android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
-                <include layout="@layout/title_weather"/>
+                <include layout="@layout/weather_layout_title"/>
 
-                <include layout="@layout/weather_now"/>
+                <include layout="@layout/weather_layout_now"/>
 
                 <include layout="@layout/weather_forecast"/>
 
-                <include layout="@layout/weather_aqi"/>
+                <include layout="@layout/weather_layout_aqi"/>
 
-                <include layout="@layout/weather_suggestion"/>
+                <include layout="@layout/weather_layout_suggestion"/>
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -33,7 +33,6 @@ import butterknife.OnClick;
 public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
 
     private static final String TAG = "VideoPlayActivity";
-
     public static final String VIDEO = "video";
 
     @BindView(R.id.gsy_player)
@@ -168,17 +167,17 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
 
     @Override
     public void onStartDownload() {
-        ToastUtils.showToast(this, "开始下载");
+        ToastUtils.INSTANCE.showToast(this, "开始下载");
     }
 
     @Override
     public void onDownloadFinished() {
-        ToastUtils.showToast(this, "下载完成");
+        ToastUtils.INSTANCE.showToast(this, "下载完成");
     }
 
     @Override
     public void onAddTaskError() {
-        ToastUtils.showToast(this, "添加任务失败");
+        ToastUtils.INSTANCE.showToast(this, "添加任务失败");
     }
 
     @Override
@@ -197,7 +196,7 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_play_video;
+        return R.layout.openeye_activity_play_video;
     }
 
     @Override

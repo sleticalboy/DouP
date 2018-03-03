@@ -64,7 +64,7 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
             spanIndex = 0;
         }
 
-        /**
+        /*
          * 普通Item的尺寸
          */
         if ((position >= headerCount && position < parent.getAdapter().getItemCount() - footerCount)) {

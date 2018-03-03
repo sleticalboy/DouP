@@ -68,7 +68,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
 
-    private String mWeatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
+    private String mWeatherId = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER_ID(), null);
 
     private WeatherPresenter mPresenter;
     private LocationManager mLocManager;
@@ -91,12 +91,12 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
         mLocManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
-        String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
+        String area = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_AREA(), null);
         if (StrUtils.isEmpty(area)) {
 //            showDistrictDialog();
             titleCity.setText(area);
         }
-        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
+        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER(), null);
         if (!StrUtils.isEmpty(weatherStr)) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             if (weatherBean != null) {
@@ -114,7 +114,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_weather;
+        return R.layout.weather_activity_main;
     }
 
     public void showBg(String bgUrl) {
@@ -141,7 +141,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
         for (int i = 0; i < size; i++) {
             WeatherBean.HeWeatherBean.DailyForecastBean forecast = weather.dailyForecast.get(i);
 
-            View view = View.inflate(this, R.layout.item_forecast, null);
+            View view = View.inflate(this, R.layout.weather_inflate_item_forecast, null);
             TextView tvDate = view.findViewById(R.id.tv_date);
             TextView tvInfo = view.findViewById(R.id.tv_info);
             TextView tvMax = view.findViewById(R.id.tv_max);
@@ -174,7 +174,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
      * 显示地址选择框
      */
     public void showDistrictDialog() {
-        ToastUtils.showToast(this, "点我干嘛？");
+        ToastUtils.INSTANCE.showToast(this, "点我干嘛？");
     }
 
     @Override
@@ -189,7 +189,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
 
     @Override
     public void onNetError() {
-        ToastUtils.showToast(this, "网络错误");
+        ToastUtils.INSTANCE.showToast(this, "网络错误");
     }
 
     @Override

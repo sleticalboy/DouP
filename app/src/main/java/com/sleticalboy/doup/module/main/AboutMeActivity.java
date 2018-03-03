@@ -33,7 +33,7 @@ public class AboutMeActivity extends BaseActivity implements IBaseView {
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_about_me;
+        return R.layout.main_activity_about_me;
     }
 
     @SuppressLint("SetJavaScriptEnabled")

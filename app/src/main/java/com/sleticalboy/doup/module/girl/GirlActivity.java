@@ -66,7 +66,7 @@ public class GirlActivity extends BaseActivity implements IBaseView {
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_girl;
+        return R.layout.girl_activity_girl_detial;
     }
 
     @Override
@@ -113,6 +113,6 @@ public class GirlActivity extends BaseActivity implements IBaseView {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(Uri.fromFile(file));
         this.sendBroadcast(intent);
-        ToastUtils.showToast(this, "保存成功");
+        ToastUtils.INSTANCE.showToast(this, "保存成功");
     }
 }

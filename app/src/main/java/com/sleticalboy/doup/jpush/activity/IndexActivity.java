@@ -29,7 +29,7 @@ public class IndexActivity extends InstrumentedActivity implements OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.jpush_activity_main);
         initView();
         // used for receive msg
         registerMessageReceiver();
@@ -132,7 +132,7 @@ public class IndexActivity extends InstrumentedActivity implements OnClickListen
     //for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title_weather";
+    public static final String KEY_TITLE = "weather_layout_title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
 

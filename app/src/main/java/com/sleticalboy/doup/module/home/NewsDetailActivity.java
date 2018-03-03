@@ -58,7 +58,7 @@ public class NewsDetailActivity extends BaseActivity implements IBaseView {
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_news_detail;
+        return R.layout.news_activity_news_detail;
     }
 
     @Override

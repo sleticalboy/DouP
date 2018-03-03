@@ -85,6 +85,6 @@ public class MessageFragment extends BaseFragment {
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_jchat;
+        return R.layout.jchat_frag_main;
     }
 }

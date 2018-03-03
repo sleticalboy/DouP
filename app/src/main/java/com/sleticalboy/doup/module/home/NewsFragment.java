@@ -56,7 +56,7 @@ public class NewsFragment extends BaseFragment implements IBaseView,
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_news;
+        return R.layout.news_frag_main;
     }
 
     @Override

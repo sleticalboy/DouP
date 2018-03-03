@@ -5,10 +5,10 @@
     <!--<string name="url_middle">://</string>-->
     <!--end url prefix-->
 
-    <!--start main module-->
+    <!--stjpush_activity_mainmain module-->
     <string name="host_main">main</string>
     <string name="path_start">/startActivity</string>
-    <!--end main module-->
+    <!--jpush_activity_mainmain module-->
 
     <!--start jchat module-->
     <string name="host_im">jim</string>

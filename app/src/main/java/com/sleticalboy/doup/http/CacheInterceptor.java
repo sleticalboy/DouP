@@ -19,7 +19,6 @@ import okhttp3.Response;
  *
  * @author sleticalboy
  */
-
 public final class CacheInterceptor implements Interceptor {
 
     private static final String TAG = "CacheInterceptor";

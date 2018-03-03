@@ -25,18 +25,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
 
-//    @BindString(R.string.url_schema)
-//    String mUrlSchema;
-//    @BindString(R.string.url_middle)
-//    String mUrlMiddle;
-
     protected Unbinder unbinder;
+    protected LifecycleCallback lifecycleCallback = LifecycleController.Companion.getInstance().getLifecycleCallback();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
-        ActivityController.add(this);
+        ActivityController.INSTANCE.add(this);
+        lifecycleCallback.onCreate(this, savedInstanceState);
 
         prepareTask();
 
@@ -60,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         Log.d(TAG, "onStart() called");
+        lifecycleCallback.onActivityStart(this);
         super.onStart();
     }
 
@@ -125,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Log.d(TAG, "onDestroy() called");
         super.onDestroy();
         unbinder.unbind();
-        ActivityController.remove(this);
+        ActivityController.INSTANCE.remove(this);
     }
 
     @Override
@@ -147,7 +145,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected final String urlPre() {
 //        return mUrlSchema + mUrlMiddle;
-        return ConstantValue.URL_PRE;
+        return ConstantValue.Companion.getURL_PRE();
     }
 
     public final String getJumpUrl(String module, String activity) {

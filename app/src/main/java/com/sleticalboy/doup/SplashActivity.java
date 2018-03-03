@@ -18,9 +18,9 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     protected void initView() {
         mPresenter = createPresenter();
-        boolean isFirst = SPUtils.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
+        boolean isFirst = SPUtils.INSTANCE.getBoolean(ConstantValue.Companion.getKEY_FIRST_LAUNCH(), true);
         if (isFirst) {
-            SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
+            SPUtils.INSTANCE.putBoolean(ConstantValue.Companion.getKEY_FIRST_LAUNCH(), false);
             // 展示欢迎页之后进入主页面
             mPresenter.toMain();
         } else {
@@ -30,7 +30,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_splash;
+        return R.layout.main_activity_splash;
     }
 
     @Override

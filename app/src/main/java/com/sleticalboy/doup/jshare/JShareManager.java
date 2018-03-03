@@ -11,21 +11,21 @@ import android.support.annotation.NonNull;
  */
 public class JShareManager {
 
-    private static JShareManager sInstance;
-    private static final Object sLock = new Object();
+    private static JShareManager sManager;
+    private static final Object LOCK = new Object();
 
     private JShareManager() {
     }
 
     public static JShareManager getInstance() {
-        if (sInstance == null) {
-            synchronized (sLock) {
-                if (sInstance == null) {
-                    sInstance = new JShareManager();
+        if (sManager == null) {
+            synchronized (LOCK) {
+                if (sManager == null) {
+                    sManager = new JShareManager();
                 }
             }
         }
-        return sInstance;
+        return sManager;
     }
 
     public void initialize(@NonNull Context context) {

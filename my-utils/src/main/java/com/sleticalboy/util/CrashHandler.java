@@ -47,7 +47,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private WeakReference<Context> mReference;
 
     //用来存储设备信息和异常信息
-    private Map<String, String> infos = new HashMap<>();
+    private Map<String, String> infoMap = new HashMap<>();
     //用于格式化日期,作为日志文件名的一部分
 //    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     private DateFormat formatter = DateFormat.getInstance();
@@ -126,8 +126,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             if (pi != null) {
                 String versionName = pi.versionName == null ? "null" : pi.versionName;
                 String versionCode = pi.versionCode + "";
-                infos.put("versionName", versionName);
-                infos.put("versionCode", versionCode);
+                infoMap.put("versionName", versionName);
+                infoMap.put("versionCode", versionCode);
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "an error occurred when collect package info", e);
@@ -136,7 +136,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
-                infos.put(field.getName(), field.get(null).toString());
+                infoMap.put(field.getName(), field.get(null).toString());
                 Log.d(TAG, field.getName() + " : " + field.get(null));
             } catch (Exception e) {
                 Log.e(TAG, "an error occurred when collect crash info", e);
@@ -152,7 +152,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private String saveCatchInfo2File(Throwable ex) {
 
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> entry : infos.entrySet()) {
+        for (Map.Entry<String, String> entry : infoMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             builder.append(key).append("=").append(value).append("\n");

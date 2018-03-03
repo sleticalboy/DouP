@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/actionbar"/>
+        <include layout="@layout/common_include_actionbar"/>
 
-        <include layout="@layout/container"/>
+        <include layout="@layout/common_include_fl_container"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_nav"

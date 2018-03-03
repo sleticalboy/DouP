@@ -32,7 +32,7 @@ public class GirlFragment extends BaseFragment implements IBaseView,
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_meizi;
+        return R.layout.girl_frag_main;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class GirlFragment extends BaseFragment implements IBaseView,
 
     @Override
     public void onNetError() {
-        ToastUtils.showToast(getActivity(), "网络不见啦");
+        ToastUtils.INSTANCE.showToast(getActivity(), "网络不见啦");
     }
 
     @Override

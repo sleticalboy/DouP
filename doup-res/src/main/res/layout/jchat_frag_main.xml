@@ -15,5 +15,5 @@
         app:tabSelectedTextColor="@color/colorPrimary"
         app:tabTextColor="@color/textColor"/>
 
-    <include layout="@layout/container_vp"/>
+    <include layout="@layout/common_include_vp_container"/>
 </LinearLayout>

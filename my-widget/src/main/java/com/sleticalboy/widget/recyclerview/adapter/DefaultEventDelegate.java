@@ -9,11 +9,15 @@ import android.widget.FrameLayout;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 
 /**
- * Created by Mr.Jude on 2015/8/18.
+ * Created on 2015/8/18.
+ *
+ * @author Mr.Jude
+ * @version 1.0
+ * @description
  */
 public class DefaultEventDelegate implements EventDelegate {
     private RecyclerArrayAdapter adapter;
-    private EventFooter footer ;
+    private EventFooter footer;
 
     private RecyclerArrayAdapter.OnMoreListener onMoreListener;
     private RecyclerArrayAdapter.OnNoMoreListener onNoMoreListener;
@@ -40,51 +44,51 @@ public class DefaultEventDelegate implements EventDelegate {
 
     public void onMoreViewShowed() {
         log("onMoreViewShowed");
-        if (!isLoadingMore&& onMoreListener !=null){
+        if (!isLoadingMore && onMoreListener != null) {
             isLoadingMore = true;
             onMoreListener.onMoreShow();
         }
     }
 
     public void onMoreViewClicked() {
-        if (onMoreListener !=null) onMoreListener.onMoreClick();
+        if (onMoreListener != null) onMoreListener.onMoreClick();
     }
 
     public void onErrorViewShowed() {
-        if (onErrorListener!=null)onErrorListener.onErrorShow();
+        if (onErrorListener != null) onErrorListener.onErrorShow();
     }
 
     public void onErrorViewClicked() {
-        if (onErrorListener!=null)onErrorListener.onErrorClick();
+        if (onErrorListener != null) onErrorListener.onErrorClick();
     }
 
     public void onNoMoreViewShowed() {
-        if (onNoMoreListener!=null)onNoMoreListener.onNoMoreShow();
+        if (onNoMoreListener != null) onNoMoreListener.onNoMoreShow();
     }
 
     public void onNoMoreViewClicked() {
-        if (onNoMoreListener!=null)onNoMoreListener.onNoMoreClick();
+        if (onNoMoreListener != null) onNoMoreListener.onNoMoreClick();
     }
 
     //-------------------5个状态触发事件-------------------
     @Override
     public void addData(int length) {
         log("addData" + length);
-        if (hasMore){
-            if (length == 0){
+        if (hasMore) {
+            if (length == 0) {
                 //当添加0个时，认为已结束加载到底
-                if (status==STATUS_INITIAL || status == STATUS_MORE){
+                if (status == STATUS_INITIAL || status == STATUS_MORE) {
                     footer.showNoMore();
                     status = STATUS_NOMORE;
                 }
-            }else {
+            } else {
                 //当Error或初始时。添加数据，如果有More则还原。
                 footer.showMore();
                 status = STATUS_MORE;
                 hasData = true;
             }
-        }else{
-            if (hasNoMore){
+        } else {
+            if (hasNoMore) {
                 footer.showNoMore();
                 status = STATUS_NOMORE;
             }
@@ -133,7 +137,7 @@ public class DefaultEventDelegate implements EventDelegate {
         this.onMoreListener = listener;
         hasMore = true;
         // 为了处理setMore之前就添加了数据的情况
-        if (adapter.getCount()>0){
+        if (adapter.getCount() > 0) {
             addData(adapter.getCount());
         }
         log("setMore");
@@ -161,7 +165,7 @@ public class DefaultEventDelegate implements EventDelegate {
         this.onMoreListener = listener;
         hasMore = true;
         // 为了处理setMore之前就添加了数据的情况
-        if (adapter.getCount()>0){
+        if (adapter.getCount() > 0) {
             addData(adapter.getCount());
         }
         log("setMore");
@@ -200,7 +204,7 @@ public class DefaultEventDelegate implements EventDelegate {
         public boolean skipError = false;
         public boolean skipNoMore = false;
 
-        public EventFooter(){
+        public EventFooter() {
         }
 
         @Override
@@ -215,28 +219,34 @@ public class DefaultEventDelegate implements EventDelegate {
             headerView.post(new Runnable() {
                 @Override
                 public void run() {
-                    switch (flag){
+                    switch (flag) {
                         case ShowMore:
                             onMoreViewShowed();
                             break;
                         case ShowNoMore:
-                            if (!skipNoMore)onNoMoreViewShowed();skipNoMore = false;
+                            if (!skipNoMore)
+                                onNoMoreViewShowed();
+                            skipNoMore = false;
                             break;
                         case ShowError:
-                            if (!skipError) onErrorViewShowed();skipError = false;
+                            if (!skipError)
+                                onErrorViewShowed();
+                            skipError = false;
                             break;
                     }
                 }
             });
         }
 
-        public View refreshStatus(ViewGroup parent){
+        public View refreshStatus(ViewGroup parent) {
             View view = null;
-            switch (flag){
+            switch (flag) {
                 case ShowMore:
-                    if (moreView!=null) view = moreView;
-                    else if (moreViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(moreViewRes,parent,false);
-                    if (view!=null)view.setOnClickListener(new View.OnClickListener() {
+                    if (moreView != null) view = moreView;
+                    else if (moreViewRes != 0)
+                        view = LayoutInflater.from(parent.getContext())
+                                .inflate(moreViewRes, parent, false);
+                    if (view != null) view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             onMoreViewClicked();
@@ -244,9 +254,11 @@ public class DefaultEventDelegate implements EventDelegate {
                     });
                     break;
                 case ShowError:
-                    if (errorView!=null) view = errorView;
-                    else if (errorViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(errorViewRes,parent,false);
-                    if (view!=null)view.setOnClickListener(new View.OnClickListener() {
+                    if (errorView != null) view = errorView;
+                    else if (errorViewRes != 0)
+                        view = LayoutInflater.from(parent.getContext())
+                                .inflate(errorViewRes, parent, false);
+                    if (view != null) view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             onErrorViewClicked();
@@ -254,9 +266,11 @@ public class DefaultEventDelegate implements EventDelegate {
                     });
                     break;
                 case ShowNoMore:
-                    if (noMoreView!=null) view = noMoreView;
-                    else if (noMoreViewRes!=0)view = LayoutInflater.from(parent.getContext()).inflate(noMoreViewRes,parent,false);
-                    if (view!=null)view.setOnClickListener(new View.OnClickListener() {
+                    if (noMoreView != null) view = noMoreView;
+                    else if (noMoreViewRes != 0)
+                        view = LayoutInflater.from(parent.getContext())
+                                .inflate(noMoreViewRes, parent, false);
+                    if (view != null) view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             onNoMoreViewClicked();
@@ -264,37 +278,39 @@ public class DefaultEventDelegate implements EventDelegate {
                     });
                     break;
             }
-            if (view == null)view = new FrameLayout(parent.getContext());
+            if (view == null) view = new FrameLayout(parent.getContext());
             return view;
         }
 
-        public void showError(){
+        public void showError() {
             log("footer showError");
             skipError = true;
             flag = ShowError;
-            if (adapter.getItemCount()>0)
-                adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount() > 0)
+                adapter.notifyItemChanged(adapter.getItemCount() - 1);
         }
-        public void showMore(){
+
+        public void showMore() {
             log("footer showMore");
             flag = ShowMore;
-            if (adapter.getItemCount()>0)
-                adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount() > 0)
+                adapter.notifyItemChanged(adapter.getItemCount() - 1);
         }
-        public void showNoMore(){
+
+        public void showNoMore() {
             log("footer showNoMore");
             skipNoMore = true;
             flag = ShowNoMore;
-            if (adapter.getItemCount()>0)
-                adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount() > 0)
+                adapter.notifyItemChanged(adapter.getItemCount() - 1);
         }
 
         //初始化
-        public void hide(){
+        public void hide() {
             log("footer hide");
             flag = Hide;
-            if (adapter.getItemCount()>0)
-                adapter.notifyItemChanged(adapter.getItemCount()-1);
+            if (adapter.getItemCount() > 0)
+                adapter.notifyItemChanged(adapter.getItemCount() - 1);
         }
 
         public void setMoreView(View moreView) {
@@ -329,15 +345,14 @@ public class DefaultEventDelegate implements EventDelegate {
 
         @Override
         public int hashCode() {
-            return flag+13589;
+            return flag + 13589;
         }
     }
 
 
-
-    private static void log(String content){
-        if (EasyRecyclerView.DEBUG){
-            Log.i(EasyRecyclerView.TAG,content);
+    private static void log(String content) {
+        if (EasyRecyclerView.DEBUG) {
+            Log.i(EasyRecyclerView.TAG, content);
         }
     }
 }

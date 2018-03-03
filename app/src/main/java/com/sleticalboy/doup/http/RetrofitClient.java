@@ -34,13 +34,13 @@ public class RetrofitClient {
     private Cache mCache;
     private static OkHttpClient mOkHttpClient;
     private final Retrofit mRetrofit;
-    private WeakReference<Context> mWeakReference;
+    private WeakReference<Context> mContext;
 
     private RetrofitClient(Context context, String baseUrl) {
-        mWeakReference = new WeakReference<>(context);
+        mContext = new WeakReference<>(context);
 
         if (mHttpCacheDir == null) {
-            mHttpCacheDir = new File(CommonUtils.getCacheDir(mWeakReference.get()), CACHE_DIR);
+            mHttpCacheDir = new File(CommonUtils.getCacheDir(mContext.get()), CACHE_DIR);
         }
 
         try {
@@ -57,7 +57,7 @@ public class RetrofitClient {
                 .addNetworkInterceptor(new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY)) // 打印网络请求日志
                 .addInterceptor(new UrlChangeInterceptor()) // 动态改变 baseUrl
-                .addInterceptor(new CacheInterceptor(mWeakReference.get())) // 缓存功能
+                .addInterceptor(new CacheInterceptor(mContext.get())) // 缓存功能
                 .build();
 
         // 创建 Retrofit.Builder
@@ -87,7 +87,7 @@ public class RetrofitClient {
     }
 
     public void clear() {
-        mWeakReference.clear();
-        mWeakReference = null;
+        mContext.clear();
+        mContext = null;
     }
 }

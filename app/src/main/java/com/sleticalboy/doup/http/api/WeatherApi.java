@@ -1,5 +1,6 @@
 package com.sleticalboy.doup.http.api;
 
+import com.sleticalboy.doup.http.HttpConfig;
 import com.sleticalboy.doup.model.weather.City;
 import com.sleticalboy.doup.model.weather.County;
 import com.sleticalboy.doup.model.weather.Province;
@@ -13,9 +14,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-import static com.sleticalboy.doup.http.HttpConfig.HEADER_KEY;
-import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_WEATHER;
-
 /**
  * Created by Android Studio.
  * Date: 12/29/17.
@@ -24,7 +22,7 @@ import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_WEATHER;
  */
 public interface WeatherApi {
 
-    String CUSTOM_HEADER = HEADER_KEY + ":" + HEADER_VALUE_WEATHER;
+    String CUSTOM_HEADER = HttpConfig.HEADER_KEY + ":" + HttpConfig.HEADER_VALUE_WEATHER;
 
     /**
      * 获取省份信息

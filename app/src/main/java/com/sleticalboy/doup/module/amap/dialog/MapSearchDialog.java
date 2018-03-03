@@ -103,7 +103,7 @@ public class MapSearchDialog extends DialogFragment {
      */
     private void searchKeyWord(String keyWord) {
         if (TextUtils.isEmpty(keyWord)) {
-            ToastUtils.showToast(getActivity(), "请输入关键字");
+            ToastUtils.INSTANCE.showToast(getActivity(), "请输入关键字");
             return;
         }
     }

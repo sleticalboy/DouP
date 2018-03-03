@@ -96,16 +96,20 @@ public class EasyRecyclerView extends FrameLayout {
             return;
         }
         //生成主View
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.layout_progress_recyclerview, this);
+        View v = LayoutInflater.from(getContext())
+                .inflate(R.layout.layout_progress_recyclerview, this);
         mPtrLayout = v.findViewById(R.id.ptr_layout);
         mPtrLayout.setEnabled(false);
 
         mProgressView = v.findViewById(R.id.progress);
-        if (mProgressId != 0) LayoutInflater.from(getContext()).inflate(mProgressId, mProgressView);
+        if (mProgressId != 0)
+            LayoutInflater.from(getContext()).inflate(mProgressId, mProgressView);
         mEmptyView = v.findViewById(R.id.empty);
-        if (mEmptyId != 0) LayoutInflater.from(getContext()).inflate(mEmptyId, mEmptyView);
+        if (mEmptyId != 0)
+            LayoutInflater.from(getContext()).inflate(mEmptyId, mEmptyView);
         mErrorView = v.findViewById(R.id.error);
-        if (mErrorId != 0) LayoutInflater.from(getContext()).inflate(mErrorId, mErrorView);
+        if (mErrorId != 0)
+            LayoutInflater.from(getContext()).inflate(mErrorId, mErrorView);
         initRecyclerView(v);
     }
 

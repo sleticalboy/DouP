@@ -37,7 +37,7 @@ public class RecommendAdapter extends RecyclerArrayAdapter<ItemListBean> {
         TextView tvDetail;
 
         public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.item_recommend);
+            super(itemView, R.layout.openeye_recycle_item_recommend);
             imgRecommend = dollar(R.id.img_recommend);
             imgUserIcon = dollar(R.id.img_user_icon);
             tvTitle = dollar(R.id.tv_title);

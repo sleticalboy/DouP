@@ -54,7 +54,7 @@
             </intent-filter>
         </activity>
         <!--<activity-->
-        <!--android:name=".module.main.StartActivity"-->
+        <!--android:name=".modjpush_activity_mainmain.StartActivity"-->
         <!--android:launchMode="singleInstance"/>-->
         <activity
             android:name=".module.home.NewsDetailActivity"

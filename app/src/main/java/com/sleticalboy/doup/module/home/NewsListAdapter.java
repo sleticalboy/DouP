@@ -39,7 +39,7 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> 
         ImageView newsImg;
 
         public ViewHolder(ViewGroup itemView) {
-            super(itemView, R.layout.item_news);
+            super(itemView, R.layout.news_recycle_item_news);
             cardView = dollar(R.id.card_view);
             newsTitle = dollar(R.id.news_title);
             newsImg = dollar(R.id.news_img);

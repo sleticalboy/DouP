@@ -22,7 +22,7 @@ public class GirlModel extends BaseModel {
 
     public GirlModel(Context context) {
         super(context);
-        RetrofitClient client = RetrofitClient.getInstance(mContext.get(), ApiConstant.BASE_MEIZI_URL);
+        RetrofitClient client = RetrofitClient.getInstance(getMContext().get(), ApiConstant.BASE_MEIZI_URL);
         mGirlsApiService = client.create(GirlsApi.class);
     }
 

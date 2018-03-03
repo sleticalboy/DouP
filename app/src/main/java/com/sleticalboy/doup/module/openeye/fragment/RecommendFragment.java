@@ -40,7 +40,7 @@ public class RecommendFragment extends LazyFragment implements IRecommendView,
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_recommond;
+        return R.layout.openeye_frag_recommond;
     }
 
     @Override

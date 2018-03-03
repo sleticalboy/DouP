@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     /**
      * Binds a preference's summary to its value. More specifically, when the
      * preference's value is changed, its summary (line of text below the
-     * preference title_weather) is updated to reflect the value. The summary is also
+     * preference weather_layout_title) is updated to reflect the value. The summary is also
      * immediately updated upon calling this method. The exact display format is
      * dependent on the type of preference.
      */

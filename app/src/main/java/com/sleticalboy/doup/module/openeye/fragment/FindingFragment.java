@@ -51,7 +51,7 @@ public class FindingFragment extends LazyFragment implements IBaseView,
 
     @Override
     protected int attachLayout() {
-        return R.layout.frag_findings;
+        return R.layout.openeye_frag_findings;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class FindingFragment extends LazyFragment implements IBaseView,
 
     @Override
     public void onNetError() {
-        ToastUtils.showToast(getActivity(), "网络异常");
+        ToastUtils.INSTANCE.showToast(getActivity(), "网络异常");
     }
 
     @Override

@@ -17,13 +17,14 @@ import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_NEWS;
  *
  * @author sleticalboy
  */
-
 public interface NewsApi {
+
+    String CUSTOM_HEADER = HEADER_KEY + ":" + HEADER_VALUE_NEWS;
 
     /**
      * 获取最新新闻列表
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
+    @Headers({CUSTOM_HEADER})
     @GET("4/news/latest")
     Observable<NewsBean> getLatestNews();
 
@@ -32,7 +33,7 @@ public interface NewsApi {
      *
      * @param date 日期
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
+    @Headers({CUSTOM_HEADER})
     @GET("4/news/before/{date}")
     Observable<NewsBean> getOldNews(@Path("date") String date);
 
@@ -41,7 +42,7 @@ public interface NewsApi {
      *
      * @param id 新闻 id
      */
-    @Headers({HEADER_KEY + ":" + HEADER_VALUE_NEWS})
+    @Headers({CUSTOM_HEADER})
     @GET("4/news/{id}")
     Observable<NewsDetailBean> getNewsDetail(@Path("id") String id);
 }
