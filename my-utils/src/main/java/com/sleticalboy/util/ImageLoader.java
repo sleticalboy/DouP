@@ -3,6 +3,7 @@ package com.sleticalboy.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -43,7 +44,7 @@ public class ImageLoader {
                                                String model,
                                                Target<GlideDrawable> target,
                                                boolean isFirstResource) {
-                        new Handler().post(new Runnable() {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
                                 ToastUtils.INSTANCE.showToast(context, "加载失败，请稍后重试");

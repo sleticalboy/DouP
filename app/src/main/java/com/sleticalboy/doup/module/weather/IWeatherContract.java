@@ -11,7 +11,7 @@ import com.sleticalboy.base.IBaseView;
  *
  * @author sleticalboy
  */
-public interface WeatherContract {
+public interface IWeatherContract {
 
     interface IWeatherView extends IBaseView {
     }

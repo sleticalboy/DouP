@@ -1,14 +1,12 @@
 package com.sleticalboy.doup.model.weather;
 
-import org.litepal.crud.DataSupport;
-
 /**
  * Created by Android Studio.
  * Date: 12/29/17.
  *
  * @author sleticalboy
  */
-public class Province extends DataSupport {
+public class Province /*extends DataSupport*/ {
     public int id;
     public String name;
     public int provinceCode;

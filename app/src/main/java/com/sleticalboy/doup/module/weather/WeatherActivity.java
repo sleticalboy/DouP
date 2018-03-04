@@ -33,7 +33,7 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class WeatherActivity extends BaseActivity implements WeatherContract.IWeatherView,
+public class WeatherActivity extends BaseActivity implements IWeatherContract.IWeatherView,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "WeatherActivity";
@@ -74,7 +74,7 @@ public class WeatherActivity extends BaseActivity implements WeatherContract.IWe
     private LocationManager mLocManager;
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         mLocManager = LocationManager.getInstance(this);
         Observable<AMapLocation> observable = RxBus.getBus().register(LocationManager.TAG);
         observable.subscribe(location -> {

@@ -17,12 +17,12 @@ import com.sleticalboy.base.BasePresenter;
  * @author sleticalboy
  */
 public class MainMapPresenter extends BasePresenter implements
-        MainMapContract.IMapMapPresenter, PoiSearch.OnPoiSearchListener {
+        MainMapContract.Presenter, PoiSearch.OnPoiSearchListener {
 
-    public MainMapContract.IMainMapView mMapView;
+    public MainMapContract.View mMapView;
     private final PoiSearch mPoiSearch;
 
-    public MainMapPresenter(Context context, MainMapContract.IMainMapView mapView) {
+    public MainMapPresenter(Context context, MainMapContract.View mapView) {
         super(context);
         mMapView = mapView;
         mPoiSearch = new PoiSearch(context, null);

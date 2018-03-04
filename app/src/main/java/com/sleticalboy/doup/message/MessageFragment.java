@@ -34,7 +34,7 @@ public class MessageFragment extends BaseFragment {
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
-    @BindView(R.id.view_pager)
+    @BindView(R.id.viewPager)
     ViewPager viewPager;
 
     @Override

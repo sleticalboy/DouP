@@ -35,5 +35,5 @@ interface LifecycleCallback {
 
     fun onActivityConfigurationChanged(newConfig: Configuration)
 
-    fun onActivityRestoreInstanceState(saveInstanceState: Bundle)
+    fun onActivityRestoreInstanceState(activity: Activity, saveInstanceState: Bundle)
 }

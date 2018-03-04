@@ -42,64 +42,46 @@ ext {
     ]
     // 依赖
     dependencies = [
-            // kotlin
 //            "kotlin-stdlib-jre7"        : "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
-            // multidex
             "multidex"                  : "com.android.support:multidex:$v_of_multidex",
-            // vector drawable
             "support-vector-drawable"   : "com.android.support:support-vector-drawable:$v_of_android_support",
 
-            // support-v4
             "support-v4"                : "com.android.support:support-v4:$v_of_android_support",
-            // support 依赖
             "appcompat-v7"              : "com.android.support:appcompat-v7:$v_of_android_support",
             "recyclerview-v7"           : "com.android.support:recyclerview-v7:$v_of_android_support",
             "design"                    : "com.android.support:design:$v_of_android_support",
             "cardview-v7"               : "com.android.support:cardview-v7:$v_of_android_support",
-            // constraint-layout
             "constraint-layout"         : "com.android.support.constraint:constraint-layout:1.0.2",
 
-            // glide 图片加载
 //            "glide"                     : "com.github.bumptech.glide:glide:3.7.0",
 
-            // butter knife
             "butter-knife"              : "com.jakewharton:butterknife:$v_of_butter_knife",
 
-            // RxJava2
             "rxjava2"                   : "io.reactivex.rxjava2:rxjava:2.1.0",
             "rxandroid"                 : "io.reactivex.rxjava2:rxandroid:2.0.1",
 
-            // RxDownload2
             "rxdownload2"               : "zlc.season:rxdownload2:2.0.4",
 
-            // RxPermissions2
             "rxpermission2"             : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar",
 
-            // retrofit 2
             "retrofit2"                 : "com.squareup.retrofit2:retrofit:2.3.0",
             "convert-gson2"             : "com.squareup.retrofit2:converter-gson:2.3.0",
 
-            // 支持 RxJava2.x
             "retrofit2-adapter"         : "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0",
 
-            // 只支持 rxjava 1.x
-//            "adapter-rxjava"            : "com.squareup.retrofit2:adapter-rxjava:2.3.0",
+//            "adapter-rxjava"            : "com.squareup.retrofit2:adapter-rxjava:2.3.0", // 只支持 rxjava 1.x
 
-            // OkHttp 3
             "okhttp3"                   : "com.squareup.okhttp3:okhttp:$v_of_okhttp3",
 
-            // 网络日志打印
+            // 网络请求日志打印
             "okhttp-logging-interceptor": "com.squareup.okhttp3:logging-interceptor:$v_of_okhttp3",
-
-            // LitePal DataBase
-            "litepale-db"               : "org.litepal.android:core:1.5.1",
 
             //////////////////////////// video player
 //            "gsyvp-complete"            : "com.shuyu:GSYVideoPlayer:$v_of_gsyvideoplayer", // 完整版
             "gsyvp-java"                : "com.shuyu:gsyVideoPlayer-java:$v_of_gsyvideoplayer",
             "gsyvp-arm64"               : "com.shuyu:gsyVideoPlayer-arm64:$v_of_gsyvideoplayer",
             // 开发阶段，为了支持 Genymotion 模拟器（x86架构）
-            "gsyvp-x86"                 : "com.shuyu:gsyVideoPlayer-x86:$v_of_gsyvideoplayer",
+//            "gsyvp-x86"                 : "com.shuyu:gsyVideoPlayer-x86:$v_of_gsyvideoplayer",
 //            "gsyjvp-x64"                : "com.shuyu:gsyVideoPlayer-x64:$v_of_gsyvideoplayer",
             //////////////////////////// video player
     ]

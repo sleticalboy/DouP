@@ -1,1 +1,4 @@
 /build
+/src/main/java/com/sleticalboy/doup/model/todo/DaoMaster.java
+/src/main/java/com/sleticalboy/doup/model/todo/DaoSession.java
+/src/main/java/com/sleticalboy/doup/model/todo/NoteDao.java

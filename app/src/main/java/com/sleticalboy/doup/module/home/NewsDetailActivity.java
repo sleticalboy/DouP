@@ -62,7 +62,7 @@ public class NewsDetailActivity extends BaseActivity implements IBaseView {
     }
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         Intent intent = getIntent();
         if (intent != null)
             id = intent.getIntExtra(ID, -1);

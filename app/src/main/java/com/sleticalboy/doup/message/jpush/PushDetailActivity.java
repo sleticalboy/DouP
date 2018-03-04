@@ -22,7 +22,7 @@ public class PushDetailActivity extends BaseActivity {
     private static final String NAME = "data";
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         if (getIntent() != null) {
             PushMsgBean pushMsgBean = getIntent().getParcelableExtra(NAME);
             Log.d(TAG, "pushMsgBean:" + pushMsgBean);

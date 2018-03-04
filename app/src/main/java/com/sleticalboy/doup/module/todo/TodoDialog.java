@@ -1,21 +1,24 @@
-package com.sleticalboy.doup.module.amap.dialog;
+package com.sleticalboy.doup.module.todo;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.util.ToastUtils;
+import com.sleticalboy.doup.model.todo.Note;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,16 +31,22 @@ import butterknife.Unbinder;
  *
  * @author sleticalboy
  */
-public class MapSearchDialog extends DialogFragment {
+public class TodoDialog extends DialogFragment {
 
-    @BindView(R.id.btn_back)
-    ImageButton btnBack;
-    @BindView(R.id.et_search_keyword)
-    EditText etSearchKeyword;
-    @BindView(R.id.btn_scan)
-    ImageButton btnScan;
+    private static final String TAG = "TodoDialog";
+
+    public static final int NEW_NOTE = 0x001;
 
     Unbinder unbinder;
+    @BindView(R.id.btnBack)
+    TextView btnBack;
+    @BindView(R.id.btnDone)
+    TextView btnDone;
+    @BindView(R.id.tvCreationTime)
+    TextView tvCreationTime;
+    @BindView(R.id.etNoteContent)
+    EditText etNoteContent;
+    private DateFormat mFormat;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,24 +61,42 @@ public class MapSearchDialog extends DialogFragment {
         assert window != null;
         window.requestFeature(Window.FEATURE_NO_TITLE);
         View rootView = inflater.inflate(
-                R.layout.map_dialog_search, window.findViewById(android.R.id.content), false);
+                R.layout.todo_dialog_edit, window.findViewById(android.R.id.content), false);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
         unbinder = ButterKnife.bind(this, rootView);
+        setupViews();
         return rootView;
+    }
+
+    private void setupViews() {
+        mFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+        tvCreationTime.setText(mFormat.format(new Date()));
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
         final Window window = getDialog().getWindow();
-        assert window != null;
         WindowManager.LayoutParams params = window.getAttributes();
         params.dimAmount = 0.0f;
-        params.alpha = 0.9f;
+        params.alpha = 1.0f;
         window.setAttributes(params);
+
+    }
+
+    public void showIME() {
+        etNoteContent.setFocusable(true);
+        etNoteContent.setFocusableInTouchMode(true);
+        etNoteContent.requestFocus();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+        showIME();
     }
 
     @Override
@@ -78,29 +105,24 @@ public class MapSearchDialog extends DialogFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btn_back, R.id.et_search_keyword, R.id.btn_scan})
+    @OnClick({R.id.btnBack, R.id.btnDone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_back:
+            case R.id.btnBack:
                 dismiss();
                 break;
-            case R.id.et_search_keyword:
-                searchKeyWord(etSearchKeyword.getText().toString().trim());
-                break;
-            case R.id.btn_scan:
+            case R.id.btnDone:
+                postData();
+                dismiss();
                 break;
         }
     }
 
-    /**
-     * 搜索关键字
-     *
-     * @param keyWord 关键字
-     */
-    private void searchKeyWord(String keyWord) {
-        if (TextUtils.isEmpty(keyWord)) {
-            ToastUtils.INSTANCE.showToast(getActivity(), "请输入关键字");
-            return;
-        }
+    private void postData() {
+        Note note = new Note();
+        note.setCreateTime(mFormat.format(new Date()));
+        note.setIsDone(false);
+        note.setContent(etNoteContent.getText().toString().trim());
+        ((TodoListActivity) getActivity()).updateList(note);
     }
 }

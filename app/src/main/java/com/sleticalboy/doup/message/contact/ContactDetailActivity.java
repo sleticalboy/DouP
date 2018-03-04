@@ -22,7 +22,7 @@ public class ContactDetailActivity extends BaseActivity {
     private static final String NAME = "name";
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         if (getIntent() != null) {
             Parcelable parcelable = getIntent().getParcelableExtra(NAME);
             Log.d(TAG, "parcelable:" + parcelable);

@@ -14,21 +14,20 @@ object ActivityController {
 
     private val sActivityList = ArrayList<Activity>()
 
-    fun add(a: Activity) {
-        if (!sActivityList.contains(a))
-            sActivityList.add(a)
+    fun add(activity: Activity) {
+        if (!sActivityList.contains(activity))
+            sActivityList.add(activity)
     }
 
-    fun remove(a: Activity) {
-        if (sActivityList.contains(a))
-            sActivityList.remove(a)
+    fun remove(activity: Activity) {
+        if (sActivityList.contains(activity))
+            sActivityList.remove(activity)
     }
 
     fun finishAll() {
-        for (a in sActivityList) {
-            if (!a.isFinishing)
-                a.finish()
-        }
+        sActivityList
+                .filterNot { it.isFinishing }
+                .forEach { it.finish() }
         sActivityList.clear()
     }
 }

@@ -35,12 +35,11 @@ public class OpeneyeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.openeye_frag_main, container, false);
         ButterKnife.bind(rootView);
         initView(rootView);
-
         return rootView;
     }
 
     private void initView(View rootView) {
-        ViewPager viewPager = rootView.findViewById(R.id.view_pager);
+        ViewPager viewPager = rootView.findViewById(R.id.viewPager);
         TabLayout tabLayout = rootView.findViewById(R.id.tab_layout);
 
         List<Fragment> subFragments = new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.model;
+package com.sleticalboy.doup.model.openeye;
 
 import android.content.Context;
 

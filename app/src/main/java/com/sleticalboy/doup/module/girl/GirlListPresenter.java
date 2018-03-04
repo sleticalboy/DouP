@@ -3,7 +3,7 @@ package com.sleticalboy.doup.module.girl;
 import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
-import com.sleticalboy.doup.model.GirlModel;
+import com.sleticalboy.doup.model.girl.GirlModel;
 import com.sleticalboy.doup.model.girl.GirlBean;
 
 import java.util.List;

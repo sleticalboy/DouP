@@ -14,7 +14,7 @@ import com.sleticalboy.base.IBaseView;
  */
 public interface MainMapContract {
 
-    interface IMainMapView extends IBaseView {
+    interface View extends IBaseView {
 
         /**
          * 显示搜索结果
@@ -32,7 +32,7 @@ public interface MainMapContract {
         void showScaleController();
     }
 
-    interface IMapMapPresenter {
+    interface Presenter {
 
         /**
          * 搜索

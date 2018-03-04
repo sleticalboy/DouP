@@ -193,7 +193,7 @@ public class TagAliasOperatorHelper {
     private String getActionStr(int actionType) {
         switch (actionType) {
             case ACTION_ADD:
-                return "add";
+                return "addNote";
             case ACTION_SET:
                 return "set";
             case ACTION_DELETE:

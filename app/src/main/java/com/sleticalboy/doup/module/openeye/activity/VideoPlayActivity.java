@@ -66,7 +66,7 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
     private VideoPlayPresenter mPresenter;
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         Intent intent = getIntent();
         if (intent != null) {
             mData = intent.getParcelableExtra(VIDEO);

@@ -81,7 +81,7 @@ public class StartActivity extends BaseActivity {
     }
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         checkAndRequestPermissions();
 
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);

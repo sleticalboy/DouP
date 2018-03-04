@@ -38,7 +38,7 @@ public class RankActivity extends BaseActivity implements IRecommendView,
     private RankPresenter mPresenter;
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         Intent intent = getIntent();
         if (intent != null) {
             mName = intent.getStringExtra(NAME);

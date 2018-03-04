@@ -3,7 +3,7 @@ package com.sleticalboy.doup.module.home;
 import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
-import com.sleticalboy.doup.model.NewsModel;
+import com.sleticalboy.doup.model.news.NewsModel;
 import com.sleticalboy.doup.model.news.NewsDetailBean;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

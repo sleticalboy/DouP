@@ -26,7 +26,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final String TAG = getClass().getSimpleName();
 
     protected Unbinder unbinder;
-    protected LifecycleCallback lifecycleCallback = LifecycleController.Companion.getInstance().getLifecycleCallback();
+    protected LifecycleCallback lifecycleCallback =
+            LifecycleController.Companion.getInstance().getLifecycleCallback();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,45 +35,56 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityController.INSTANCE.add(this);
         lifecycleCallback.onCreate(this, savedInstanceState);
-
-        prepareTask();
-
+        beforeViews();
         setContentView(attachLayout());
         unbinder = ButterKnife.bind(this);
-
         initView();
+        afterViews();
     }
 
     /**
-     * 做一些准备工作，对于某些页面需要有特殊处理，都放在此处处理。比如隐藏状态栏等。
+     * 1, View 初始化之前的逻辑。比如隐藏状态栏等。
      */
-    protected void prepareTask() {
+    protected void beforeViews() {
     }
 
     /**
-     * 初始化控件
+     * 2, 绑定布局文件
+     *
+     * @return layout weatherId
+     */
+    protected abstract int attachLayout();
+
+    /**
+     * 3, View 初始化时的逻辑
      */
     protected abstract void initView();
+
+    /**
+     * 4, View 初始化完成之后的逻辑
+     */
+    protected void afterViews() {
+    }
 
     @Override
     protected void onStart() {
         Log.d(TAG, "onStart() called");
-        lifecycleCallback.onActivityStart(this);
         super.onStart();
+        lifecycleCallback.onActivityStart(this);
     }
 
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume() called");
         super.onResume();
-//        JPushManager.getInstance().onResume(this);
+        lifecycleCallback.onActivityResume(this);
     }
 
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause() called");
         super.onPause();
-//        JPushManager.getInstance().onPause(this);
+        lifecycleCallback.onActivityPause(this);
     }
 
     @Override
@@ -96,13 +108,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);
     }
 
-    /**
-     * 绑定布局
-     *
-     * @return layout weatherId
-     */
-    protected abstract int attachLayout();
-
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
@@ -116,12 +121,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onStop() {
         Log.d(TAG, "onStop() called");
         super.onStop();
+        lifecycleCallback.onActivityStop(this);
     }
 
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy() called");
         super.onDestroy();
+        lifecycleCallback.onActivityDestroy(this);
         unbinder.unbind();
         ActivityController.INSTANCE.remove(this);
     }
@@ -130,12 +137,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
+        lifecycleCallback.onActivitySaveInstanceState(this, outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.d(TAG, "onRestoreInstanceState() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onRestoreInstanceState(savedInstanceState);
+        lifecycleCallback.onActivityRestoreInstanceState(this, savedInstanceState);
     }
 
     /**

@@ -13,11 +13,13 @@ import android.util.Log;
 import com.sleticalboy.base.LifecycleCallback;
 import com.sleticalboy.base.LifecycleController;
 import com.sleticalboy.doup.jpush.JPushManager;
+import com.sleticalboy.doup.model.todo.DaoMaster;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
 import com.sleticalboy.util.SPUtils;
 
-import org.litepal.LitePal;
+import org.greenrobot.greendao.AbstractDaoSession;
+import org.greenrobot.greendao.database.Database;
 
 import java.lang.ref.WeakReference;
 
@@ -30,8 +32,18 @@ import java.lang.ref.WeakReference;
 public final class DouApp extends Application implements CrashHandler.OnCrashListener {
 
     private static final String TAG = "DouApp";
+    private static final boolean ENCRYPTED = false;
 
-    public static WeakReference<Context> sReference;
+    private static WeakReference<Context> sReference;
+    private static AbstractDaoSession sDaoSession;
+
+    public static Context getContext() {
+        return sReference.get();
+    }
+
+    public static AbstractDaoSession getDaoSession() {
+        return sDaoSession;
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -49,6 +61,23 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
     }
 
     private void init() {
+        // 生命周期回调
+        initLifecycleCallback();
+
+        // SP 初始化
+        SPUtils.INSTANCE.init(this);
+
+        // 初始化 GreenDao 数据库
+        initDB();
+
+        // 初始化极光推送
+        JPushManager.getInstance().initialize(this);
+
+        // 初始化极光 IM
+        // JChatManager.getManager().initialize(this);
+    }
+
+    private void initLifecycleCallback() {
         LifecycleController.Companion.getInstance().setLifecycleCallback(new LifecycleCallback() {
             @Override
             public void onCreate(Activity activity, Bundle savedInstanceState) {
@@ -106,18 +135,19 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
             }
 
             @Override
-            public void onActivityRestoreInstanceState(Bundle saveInstanceState) {
+            public void onActivityRestoreInstanceState(Activity activity, Bundle saveInstanceState) {
 
             }
         });
+    }
 
-        SPUtils.INSTANCE.init(this);
-        // 初始化 LitePal
-        LitePal.initialize(this);
-        // 初始化极光推送
-        JPushManager.getInstance().initialize(this);
-        // 初始化极光 IM
-        // JChatManager.getManager().initialize(this);
+    private void initDB() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(
+                this, ENCRYPTED ? "encrypt-db" : "common-db");
+        Database database = ENCRYPTED
+                ? helper.getEncryptedReadableDb("super-secret")
+                : helper.getWritableDb();
+        sDaoSession = new DaoMaster(database).newSession();
     }
 
     @Override

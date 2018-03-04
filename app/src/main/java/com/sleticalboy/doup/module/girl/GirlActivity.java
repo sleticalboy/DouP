@@ -47,7 +47,7 @@ public class GirlActivity extends BaseActivity implements IBaseView {
     private GirlPresenter mPresenter;
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
         Intent intent = getIntent();
         if (intent != null) {
             imgUrl = intent.getStringExtra(IMG_URL);

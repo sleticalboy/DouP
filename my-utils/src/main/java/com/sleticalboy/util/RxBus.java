@@ -25,7 +25,7 @@ public class RxBus {
 
     @NonNull
     public static RxBus getBus() {
-        return Holder.sInstance;
+        return Holder.RX_BUS;
     }
 
     @NonNull
@@ -85,7 +85,7 @@ public class RxBus {
         }
     }
 
-    private static class Holder {
-        private static RxBus sInstance = new RxBus();
+    private static final class Holder {
+        private static final RxBus RX_BUS = new RxBus();
     }
 }

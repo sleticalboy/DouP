@@ -10,14 +10,12 @@ import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
-import com.sleticalboy.doup.model.WeatherModel;
+import com.sleticalboy.doup.model.weather.WeatherModel;
 import com.sleticalboy.doup.model.weather.City;
 import com.sleticalboy.doup.model.weather.County;
 import com.sleticalboy.doup.model.weather.Province;
 import com.sleticalboy.doup.module.weather.service.AutoUpdateService;
 import com.sleticalboy.util.SPUtils;
-
-import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ import okhttp3.ResponseBody;
  *
  * @author sleticalboy
  */
-public class WeatherPresenter extends BasePresenter implements WeatherContract.IWeatherPresenter {
+public class WeatherPresenter extends BasePresenter implements IWeatherContract.IWeatherPresenter {
 
     public static final String TAG = "WeatherPresenter";
 
@@ -65,7 +63,7 @@ public class WeatherPresenter extends BasePresenter implements WeatherContract.I
      */
     public void fetchProvince() {
         // 从数据库查询
-        mProvinceList = DataSupport.findAll(Province.class);
+//        mProvinceList = DataSupport.findAll(Province.class);
         if (mProvinceList != null && mProvinceList.size() > 0) { // 数据库中有数据
             Log.d(TAG, "从数据库获取省份数据");
             if (mProvinceNameList.size() == 0) {
@@ -84,7 +82,7 @@ public class WeatherPresenter extends BasePresenter implements WeatherContract.I
                         // 将数据保存到数据库中
                         for (Province province : provinces) {
                             province.provinceCode = province.id;
-                            province.save();
+//                            province.save();
                             mProvinceNameList.add(province.name);
                         }
                     })
@@ -105,7 +103,7 @@ public class WeatherPresenter extends BasePresenter implements WeatherContract.I
      * @param provinceCode province code
      */
     public void fetchCity(int provinceId, int provinceCode) {
-        mCityList = DataSupport.where("provinceId = ?", String.valueOf(provinceId)).find(City.class);
+//        mCityList = DataSupport.where("provinceId = ?", String.valueOf(provinceId)).find(City.class);
         if (mCityList != null && mCityList.size() > 0) {
             Log.d(TAG, "从数据库获取城市数据");
             mCityNameList.clear();
@@ -123,7 +121,7 @@ public class WeatherPresenter extends BasePresenter implements WeatherContract.I
                         for (City city : cities) {
                             city.provinceId = provinceCode;
                             city.cityCode = city.id;
-                            city.save();
+//                            city.save();
                             mCityNameList.add(city.name);
                         }
                     })
@@ -144,7 +142,7 @@ public class WeatherPresenter extends BasePresenter implements WeatherContract.I
      * @param cityCode   city code
      */
     public void fetchCounty(int provinceId, int cityCode) {
-        mCountyList = DataSupport.where("cityId = ?", String.valueOf(cityCode)).find(County.class);
+//        mCountyList = DataSupport.where("cityId = ?", String.valueOf(cityCode)).find(County.class);
         if (mCountyList != null && mCountyList.size() > 0) {
             Log.d(TAG, "从数据库获取地区数据");
             for (County county : mCountyList) {
@@ -160,7 +158,7 @@ public class WeatherPresenter extends BasePresenter implements WeatherContract.I
                         mCountyNameList.clear();
                         for (County county : counties) {
                             county.cityId = cityCode;
-                            county.save();
+//                            county.save();
                             mCountyNameList.add(county.name);
                         }
                     })

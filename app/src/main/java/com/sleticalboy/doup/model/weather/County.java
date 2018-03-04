@@ -2,15 +2,13 @@ package com.sleticalboy.doup.model.weather;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.litepal.crud.DataSupport;
-
 /**
  * Created by Android Studio.
  * Date: 12/29/17.
  *
  * @author sleticalboy
  */
-public class County extends DataSupport {
+public class County /*extends DataSupport*/ {
     public int id;
     public String name;
     @SerializedName("weather_id")

@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     //CrashHandler实例
-    private static CrashHandler sInstance = new CrashHandler();
+    private static final CrashHandler CRASH_HANDLER = new CrashHandler();
 
     private WeakReference<Context> mReference;
 
@@ -58,7 +59,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     public static CrashHandler getInstance() {
-        return sInstance;
+        synchronized (CRASH_HANDLER) {
+            return CRASH_HANDLER;
+        }
     }
 
     /**
@@ -101,14 +104,12 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         collectDeviceInfo(mReference.get());
 
         //使用Toast来显示异常信息
-        new Thread() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                Looper.prepare();
-                Toast.makeText(mReference.get(), "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
-                Looper.loop();
+                ToastUtils.INSTANCE.showToast(mReference.get(), "很抱歉,程序出现异常,即将退出.");
             }
-        }.start();
+        });
         //保存日志文件
         mFileName = saveCatchInfo2File(ex);
         return mFileName != null;

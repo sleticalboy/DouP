@@ -24,7 +24,8 @@ import butterknife.BindView;
  *
  * @author sleticalboy
  */
-public class MainMapActivity extends CheckPermissionsActivity implements MainMapContract.IMainMapView {
+public class MainMapActivity extends CheckPermissionsActivity implements
+        MainMapContract.View {
 
     @BindView(R.id.map_view)
     MapView mapView;
@@ -57,7 +58,7 @@ public class MainMapActivity extends CheckPermissionsActivity implements MainMap
     private MainMapPresenter mPresenter;
 
     @Override
-    protected void prepareTask() {
+    protected void beforeViews() {
     }
 
     @Override

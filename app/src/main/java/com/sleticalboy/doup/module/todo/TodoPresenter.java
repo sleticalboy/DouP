@@ -1,5 +1,8 @@
 package com.sleticalboy.doup.module.todo;
 
+import com.sleticalboy.doup.model.todo.Note;
+import com.sleticalboy.doup.model.todo.NoteModel;
+
 /**
  * Created on 18-2-19.
  *
@@ -7,17 +10,26 @@ package com.sleticalboy.doup.module.todo;
  * @version 1.0
  * @description
  */
-public class TodoPresenter implements ITodoListContract.Presenter {
+public class TodoPresenter implements ITodoContract.Presenter {
 
-    @Override
-    public void add() {
+    private NoteModel mModel;
+
+    public TodoPresenter(ITodoContract.View view) {
+        mModel = new NoteModel();
     }
 
     @Override
-    public void delete() {
+    public void addNote(Note note) {
+        mModel.addNote(note);
     }
 
     @Override
-    public void update() {
+    public void removeNote(Note note) {
+        mModel.removeNote(note);
+    }
+
+    @Override
+    public void updateNote(Note note) {
+        mModel.updateNote(note);
     }
 }

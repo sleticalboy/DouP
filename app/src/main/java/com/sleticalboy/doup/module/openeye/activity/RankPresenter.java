@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.sleticalboy.base.BasePresenter;
-import com.sleticalboy.doup.model.OpeneyeModel;
+import com.sleticalboy.doup.model.openeye.OpeneyeModel;
 import com.sleticalboy.doup.model.openeye.DataBean;
 import com.sleticalboy.doup.model.openeye.HotBean;
 import com.sleticalboy.doup.model.openeye.ItemListBean;
