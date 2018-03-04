@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
 import com.sleticalboy.base.IBaseView;
-import com.sleticalboy.doup.model.openeye.VideoBean;
+import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**

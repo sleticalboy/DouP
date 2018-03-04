@@ -3,13 +3,13 @@ package com.sleticalboy.doup.model.weather;
 import android.content.Context;
 
 import com.sleticalboy.base.BaseModel;
+import com.sleticalboy.doup.bean.weather.City;
+import com.sleticalboy.doup.bean.weather.County;
+import com.sleticalboy.doup.bean.weather.Province;
+import com.sleticalboy.doup.bean.weather.WeatherBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.WeatherApi;
-import com.sleticalboy.doup.model.weather.City;
-import com.sleticalboy.doup.model.weather.County;
-import com.sleticalboy.doup.model.weather.Province;
-import com.sleticalboy.doup.model.weather.WeatherBean;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class WeatherModel extends BaseModel {
 
     public WeatherModel(Context context) {
         super(context);
-        RetrofitClient client = RetrofitClient.getInstance(getMContext().get(), ApiConstant.BASE_WEATHER_URL);
+        RetrofitClient client = RetrofitClient.getInstance(getWeakReference().get(), ApiConstant.BASE_WEATHER_URL);
         mWeatherApiService = client.create(WeatherApi.class);
     }
 

@@ -2,11 +2,11 @@ package com.sleticalboy.doup.model.news;
 
 import android.content.Context;
 
+import com.sleticalboy.doup.bean.news.NewsBean;
+import com.sleticalboy.doup.bean.news.NewsDetailBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.NewsApi;
-import com.sleticalboy.doup.model.news.NewsBean;
-import com.sleticalboy.doup.model.news.NewsDetailBean;
 
 import java.lang.ref.WeakReference;
 

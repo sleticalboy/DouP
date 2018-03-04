@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.todo.Note;
+import com.sleticalboy.doup.bean.todo.Note;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 

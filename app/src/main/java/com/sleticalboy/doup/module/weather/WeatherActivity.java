@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.weather.WeatherBean;
+import com.sleticalboy.doup.bean.weather.WeatherBean;
 import com.sleticalboy.doup.module.amap.LocationManager;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.util.RxBus;

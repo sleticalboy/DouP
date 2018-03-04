@@ -1,8 +1,8 @@
 package com.sleticalboy.doup.http.api;
 
-import com.sleticalboy.doup.model.openeye.FindingBean;
-import com.sleticalboy.doup.model.openeye.HotBean;
-import com.sleticalboy.doup.model.openeye.RecommendBean;
+import com.sleticalboy.doup.bean.openeye.FindingBean;
+import com.sleticalboy.doup.bean.openeye.HotBean;
+import com.sleticalboy.doup.bean.openeye.RecommendBean;
 
 import java.util.List;
 

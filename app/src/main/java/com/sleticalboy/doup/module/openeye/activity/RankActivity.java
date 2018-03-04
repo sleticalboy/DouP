@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.openeye.VideoBean;
+import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.fragment.IRecommendView;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;

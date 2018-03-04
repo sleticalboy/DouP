@@ -36,13 +36,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:0.5'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     // RxJava2
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     // RxAndroid2
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // glide 图片加载
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    // 图片圆角等处理
-    // implementation 'jp.wasabeef:glide-transformations:3.0.1'
     // 双指放大或缩小图片
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"

@@ -15,16 +15,9 @@ import java.lang.ref.WeakReference
  */
 abstract class BaseModel(context: Context) {
 
-    protected var mContext: WeakReference<Context>? = null
-
-    init {
-        mContext = WeakReference(context)
-    }
+    val weakReference: WeakReference<Context> = WeakReference(context)
 
     open fun clear() {
-        if (mContext != null) {
-            mContext!!.clear()
-            mContext = null
-        }
+        weakReference.clear()
     }
 }

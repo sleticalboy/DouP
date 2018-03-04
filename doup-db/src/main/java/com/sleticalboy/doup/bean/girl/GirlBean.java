@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.model.girl;
+package com.sleticalboy.doup.bean.girl;
 
 import com.sleticalboy.base.BaseBean;
 
@@ -11,6 +11,9 @@ import java.util.List;
  * @author sleticalboy
  */
 public class GirlBean extends BaseBean {
+
+    private static final long serialVersionUID = 6509386201492976441L;
+
     public boolean error;
     public List<ResultsBean> results;
 

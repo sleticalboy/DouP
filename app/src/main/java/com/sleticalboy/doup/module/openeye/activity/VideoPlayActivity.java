@@ -14,7 +14,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.openeye.VideoBean;
+import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.listener.VideoListener;
 import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;

@@ -3,7 +3,7 @@ package com.sleticalboy.doup.module.openeye.adapter;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.sleticalboy.doup.model.openeye.DataBean;
+import com.sleticalboy.doup.bean.openeye.DataBean;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 

@@ -3,9 +3,8 @@ package com.sleticalboy.doup.module.openeye.fragment;
 import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
-import com.sleticalboy.doup.model.openeye.OpeneyeModel;
-import com.sleticalboy.doup.model.openeye.DataBean;
-import com.sleticalboy.doup.model.openeye.HotBean;
+import com.sleticalboy.doup.bean.openeye.DataBean;
+import com.sleticalboy.doup.bean.openeye.HotBean;
 import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
 
 import java.util.ArrayList;

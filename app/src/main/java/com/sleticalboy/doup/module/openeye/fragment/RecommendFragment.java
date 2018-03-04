@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.openeye.VideoBean;
+import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;

@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.model.weather;
+package com.sleticalboy.doup.bean.weather;
 
 import com.google.gson.annotations.SerializedName;
 import com.sleticalboy.base.BaseBean;

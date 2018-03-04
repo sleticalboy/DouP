@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.model.todo;
+package com.sleticalboy.doup.bean.todo;
 
 import android.os.Parcel;
 import android.os.Parcelable;

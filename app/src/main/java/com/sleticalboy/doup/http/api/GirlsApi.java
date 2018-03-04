@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.http.api;
 
 import com.sleticalboy.doup.http.HttpConfig;
-import com.sleticalboy.doup.model.girl.GirlBean;
+import com.sleticalboy.doup.bean.girl.GirlBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

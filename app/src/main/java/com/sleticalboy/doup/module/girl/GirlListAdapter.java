@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.girl.GirlBean;
+import com.sleticalboy.doup.bean.girl.GirlBean;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;

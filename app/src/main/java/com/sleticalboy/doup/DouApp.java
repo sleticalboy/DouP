@@ -8,18 +8,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
 import com.sleticalboy.base.LifecycleCallback;
 import com.sleticalboy.base.LifecycleController;
-import com.sleticalboy.doup.jpush.JPushManager;
-import com.sleticalboy.doup.model.weather.DaoMaster;
+import com.sleticalboy.doup.db.DBController;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
 import com.sleticalboy.util.SPUtils;
-
-import org.greenrobot.greendao.AbstractDaoSession;
-import org.greenrobot.greendao.database.Database;
 
 import java.lang.ref.WeakReference;
 
@@ -31,32 +26,22 @@ import java.lang.ref.WeakReference;
  */
 public final class DouApp extends Application implements CrashHandler.OnCrashListener {
 
-    private static final String TAG = "DouApp";
-    private static final boolean ENCRYPTED = false;
-
     private static WeakReference<Context> sReference;
-    private static AbstractDaoSession sDaoSession;
 
     public static Context getContext() {
         return sReference.get();
     }
 
-    public static AbstractDaoSession getDaoSession() {
-        return sDaoSession;
-    }
-
     @Override
     protected void attachBaseContext(Context base) {
-        Log.d(TAG, "attachBaseContext() called with: base = [" + base + "]");
         super.attachBaseContext(base);
+        sReference = new WeakReference<>(base);
         MultiDex.install(this);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate() called");
-        sReference = new WeakReference<>(this);
         init();
     }
 
@@ -67,11 +52,11 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
         // SP 初始化
         SPUtils.INSTANCE.init(this);
 
-        // 初始化 GreenDao 数据库
-        initDB();
+        // 初始化 GreenDao 数据库, 是否加密
+        DBController.getInstance().defaultInitDB(this, false);
 
         // 初始化极光推送
-        JPushManager.getInstance().initialize(this);
+//        JPushManager.getInstance().initialize(this);
 
         // 初始化极光 IM
         // JChatManager.getManager().initialize(this);
@@ -81,7 +66,7 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
         LifecycleController.Companion.getInstance().setLifecycleCallback(new LifecycleCallback() {
             @Override
             public void onCreate(Activity activity, Bundle savedInstanceState) {
-                JPushManager.getInstance().initialize(activity);
+//                JPushManager.getInstance().initialize(activity);
             }
 
             @Override
@@ -101,12 +86,12 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
 
             @Override
             public void onActivityResume(Activity activity) {
-                JPushManager.getInstance().onResume(activity);
+//                JPushManager.getInstance().onResume(activity);
             }
 
             @Override
             public void onActivityPause(Activity activity) {
-                JPushManager.getInstance().onPause(activity);
+//                JPushManager.getInstance().onPause(activity);
             }
 
             @Override
@@ -121,7 +106,7 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
 
             @Override
             public void onActivityDestroy(Activity activity) {
-                JPushManager.getInstance().disableReceiver(activity);
+//                JPushManager.getInstance().disableReceiver(activity);
             }
 
             @Override
@@ -141,15 +126,6 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
         });
     }
 
-    private void initDB() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(
-                this, ENCRYPTED ? "encrypt-db" : "common-db");
-        Database database = ENCRYPTED
-                ? helper.getEncryptedReadableDb("super-secret")
-                : helper.getWritableDb();
-        sDaoSession = new DaoMaster(database).newSession();
-    }
-
     @Override
     public void onCrash() {
         restartApp();
@@ -160,7 +136,7 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
      */
     private void restartApp() {
         Intent intent = new Intent(this, StartActivity.class);
-        // 在新的任务栈中启动应用
+//         在新的任务栈中启动应用
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         // 干掉原有的进程

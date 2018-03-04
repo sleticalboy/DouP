@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.http.api;
 
-import com.sleticalboy.doup.model.news.NewsBean;
-import com.sleticalboy.doup.model.news.NewsDetailBean;
+import com.sleticalboy.doup.bean.news.NewsBean;
+import com.sleticalboy.doup.bean.news.NewsDetailBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

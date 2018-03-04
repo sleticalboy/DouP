@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.model.openeye;
+package com.sleticalboy.doup.bean.openeye;
 
 import com.sleticalboy.base.BaseBean;
 

@@ -1,10 +1,10 @@
 package com.sleticalboy.doup.http.api;
 
 import com.sleticalboy.doup.http.HttpConfig;
-import com.sleticalboy.doup.model.weather.City;
-import com.sleticalboy.doup.model.weather.County;
-import com.sleticalboy.doup.model.weather.Province;
-import com.sleticalboy.doup.model.weather.WeatherBean;
+import com.sleticalboy.doup.bean.weather.City;
+import com.sleticalboy.doup.bean.weather.County;
+import com.sleticalboy.doup.bean.weather.Province;
+import com.sleticalboy.doup.bean.weather.WeatherBean;
 
 import java.util.List;
 

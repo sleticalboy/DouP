@@ -1,6 +1,6 @@
 println 'start loading settings.gradle file'
 
-include ':app', ':doup-res', ':my-utils', ':my-widget',
+include ':app', ':doup-res', ':my-utils', ':my-widget', ':doup-db',
         ':doup-base'
 
 println 'end loading settings.gradle file'

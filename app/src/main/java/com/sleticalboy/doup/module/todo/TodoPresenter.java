@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.module.todo;
 
-import com.sleticalboy.doup.model.todo.Note;
-import com.sleticalboy.doup.model.todo.NoteModel;
+import com.sleticalboy.doup.bean.todo.Note;
+import com.sleticalboy.doup.bean.todo.NoteModel;
 
 /**
  * Created on 18-2-19.

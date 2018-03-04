@@ -1,4 +1,4 @@
-package com.sleticalboy.doup.model.news;
+package com.sleticalboy.doup.bean.news;
 
 import com.sleticalboy.base.BaseBean;
 

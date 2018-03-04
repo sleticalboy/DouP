@@ -8,11 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.sleticalboy.base.BaseActivity;
-import com.sleticalboy.doup.DouApp;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.todo.Note;
-import com.sleticalboy.doup.model.todo.NoteDao;
-import com.sleticalboy.doup.model.weather.DaoSession;
+import com.sleticalboy.doup.bean.todo.Note;
+import com.sleticalboy.doup.bean.todo.NoteDao;
+import com.sleticalboy.doup.bean.weather.DaoSession;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import org.greenrobot.greendao.query.Query;

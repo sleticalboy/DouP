@@ -99,7 +99,7 @@ public class TagAliasOperatorHelper {
                         if (mContext != null) {
                             handleAction(mContext, sequence, tagAliasBean);
                         } else {
-                            Log.e(TAG, "#unexcepted - mContext was null");
+                            Log.e(TAG, "#unexcepted - weakReference was null");
                         }
                     } else {
                         Log.w(TAG, "#unexcepted - msg obj was incorrect");

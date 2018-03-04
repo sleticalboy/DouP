@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.todo.Note;
+import com.sleticalboy.doup.bean.todo.Note;
 
 import java.text.DateFormat;
 import java.util.Date;

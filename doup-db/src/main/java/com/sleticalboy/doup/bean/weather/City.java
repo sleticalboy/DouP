@@ -1,11 +1,11 @@
-package com.sleticalboy.doup.model.weather;
+package com.sleticalboy.doup.bean.weather;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by Android Studio.

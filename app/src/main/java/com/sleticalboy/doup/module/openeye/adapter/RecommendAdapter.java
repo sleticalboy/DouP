@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.openeye.ItemListBean;
+import com.sleticalboy.doup.bean.openeye.ItemListBean;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;

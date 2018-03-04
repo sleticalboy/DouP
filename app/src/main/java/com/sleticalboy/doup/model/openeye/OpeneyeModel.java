@@ -5,9 +5,6 @@ import android.content.Context;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.OpeneyeApi;
-import com.sleticalboy.doup.model.openeye.FindingBean;
-import com.sleticalboy.doup.model.openeye.HotBean;
-import com.sleticalboy.doup.model.openeye.RecommendBean;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
