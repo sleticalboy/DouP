@@ -12,6 +12,7 @@ import java.util.List;
  * @author sleticalboy
  */
 public class WeatherBean extends BaseBean {
+
     @SerializedName("HeWeather")
     public List<HeWeatherBean> HeWeather;
 

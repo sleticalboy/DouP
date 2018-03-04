@@ -1,6 +1,7 @@
 package com.sleticalboy.doup.model.todo;
 
 import com.sleticalboy.doup.DouApp;
+import com.sleticalboy.doup.model.weather.DaoSession;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class NoteModel {
     }
 
     public void removeNote(Note note) {
-        mDao.delete(note);
+        mDao.deleteByKey(note.getId());
     }
 
     public void updateNote(Note note) {

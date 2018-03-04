@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.io.Serializable;
@@ -33,17 +34,28 @@ public class Note implements Parcelable, Serializable {
 
     private static final long serialVersionUID = -3055753026905017167L;
 
+    @Id
+    private Integer id;
     @Property
     private String createTime;
     @Property
     private String content;
     @Property
-    private boolean isDone = false;
+    private Boolean isDone = false;
     @Property
-    private int priority; // 优先级，数字越小，优先级越高，但是不能是负数
+    private Integer priority; // 优先级，数字越小，优先级越高，但是不能是负数
 
-    @Generated(hash = 179265577)
-    public Note(String createTime, String content, boolean isDone, int priority) {
+    protected Note(Parcel in) {
+        createTime = in.readString();
+        content = in.readString();
+        isDone = in.readByte() != 0;
+        priority = in.readInt();
+    }
+
+    @Generated(hash = 1673160991)
+    public Note(Integer id, String createTime, String content, Boolean isDone,
+            Integer priority) {
+        this.id = id;
         this.createTime = createTime;
         this.content = content;
         this.isDone = isDone;
@@ -52,13 +64,6 @@ public class Note implements Parcelable, Serializable {
 
     @Generated(hash = 1272611929)
     public Note() {
-    }
-
-    protected Note(Parcel in) {
-        createTime = in.readString();
-        content = in.readString();
-        isDone = in.readByte() != 0;
-        priority = in.readInt();
     }
 
     @Override
@@ -90,29 +95,38 @@ public class Note implements Parcelable, Serializable {
         this.content = content;
     }
 
-    public boolean getIsDone() {
+    public Boolean getIsDone() {
         return this.isDone;
     }
 
-    public void setIsDone(boolean isDone) {
+    public void setIsDone(Boolean isDone) {
         this.isDone = isDone;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return this.priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         if (priority < 0) {
             throw new IllegalArgumentException("priority can not be negative" + priority);
         }
         this.priority = priority;
     }
 
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
-                "createTime='" + createTime + '\'' +
+                "id=" + id +
+                ", createTime='" + createTime + '\'' +
                 ", content='" + content + '\'' +
                 ", isDone=" + isDone +
                 ", priority=" + priority +

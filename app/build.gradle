@@ -61,7 +61,6 @@ android {
 
     greendao {
         schemaVersion 1
-        targetGenDir 'src/main/java'
     }
 }
 

@@ -13,7 +13,7 @@ import android.util.Log;
 import com.sleticalboy.base.LifecycleCallback;
 import com.sleticalboy.base.LifecycleController;
 import com.sleticalboy.doup.jpush.JPushManager;
-import com.sleticalboy.doup.model.todo.DaoMaster;
+import com.sleticalboy.doup.model.weather.DaoMaster;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
 import com.sleticalboy.util.SPUtils;

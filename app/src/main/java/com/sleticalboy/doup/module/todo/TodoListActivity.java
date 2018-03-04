@@ -2,23 +2,17 @@ package com.sleticalboy.doup.module.todo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.DouApp;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.doup.model.todo.DaoSession;
 import com.sleticalboy.doup.model.todo.Note;
 import com.sleticalboy.doup.model.todo.NoteDao;
-import com.sleticalboy.util.RxBus;
-import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
+import com.sleticalboy.doup.model.weather.DaoSession;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 import org.greenrobot.greendao.query.Query;
@@ -27,9 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 /**
  * <pre>
@@ -59,7 +50,8 @@ public class TodoListActivity extends BaseActivity/* implements ITodoContract.Vi
 
     @Override
     protected void afterViews() {
-        mNoteDao = ((DaoSession) DouApp.getDaoSession()).getNoteDao();
+        DaoSession daoSession = (DaoSession) DouApp.getDaoSession();
+        mNoteDao = daoSession.getNoteDao();
         mQuery = mNoteDao.queryBuilder().build();
         updateList();
     }
