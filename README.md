@@ -22,7 +22,7 @@
   - 热门
 - 极光
   - IM
-- todo list
+- TODO List
 - Contacts
 
 ### 项目框架
