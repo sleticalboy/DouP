@@ -38,9 +38,9 @@ public class RankAdapter extends RecyclerArrayAdapter<DataBean> {
 
         public RankHolder(ViewGroup itemView) {
             super(itemView, R.layout.openeye_recycle_item_rank);
-            imgPhoto = dollar(R.id.img_photo);
-            tvTitle = dollar(R.id.tv_title);
-            tvTime = dollar(R.id.tv_time);
+            imgPhoto = obtainView(R.id.img_photo);
+            tvTitle = obtainView(R.id.tv_title);
+            tvTime = obtainView(R.id.tv_time);
         }
 
         @Override

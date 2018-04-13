@@ -29,15 +29,11 @@ public class NoteModel {
     }
 
     public void removeNote(Note note) {
-        mDao.deleteByKey(note.getId());
+        mDao.delete(note);
     }
 
     public void updateNote(Note note) {
         mDao.update(note);
-    }
-
-    public Note getById(Integer id) {
-        return mQueryBuilder.where(NoteDao.Properties.Id.eq(id)).build().unique();
     }
 
     public Note getByCreationTime(String creationTime) {

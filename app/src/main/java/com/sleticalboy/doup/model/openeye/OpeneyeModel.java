@@ -2,6 +2,9 @@ package com.sleticalboy.doup.model.openeye;
 
 import android.content.Context;
 
+import com.sleticalboy.doup.bean.openeye.FindingBean;
+import com.sleticalboy.doup.bean.openeye.HotBean;
+import com.sleticalboy.doup.bean.openeye.RecommendBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.OpeneyeApi;

@@ -7,9 +7,9 @@ package com.sleticalboy.doup.http;
  * @author sleticalboy
  */
 
-public class ApiConstant {
-    public static final String BASE_NEWS_URL = "http://news-at.zhihu.com/api/";
-    public static final String BASE_MEIZI_URL = "http://gank.io/api/";
-    public static final String BASE_EYE_URL = "http://baobab.kaiyanapp.com/api/";
-    public static final String BASE_WEATHER_URL = "http://guolin.tech/api/";
+public interface ApiConstant {
+    String BASE_NEWS_URL = "http://news-at.zhihu.com/api/";
+    String BASE_MEIZI_URL = "http://gank.io/api/";
+    String BASE_EYE_URL = "http://baobab.kaiyanapp.com/api/";
+    String BASE_WEATHER_URL = "http://guolin.tech/api/";
 }

@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -130,5 +131,13 @@ public class ImageLoader {
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(target);
+    }
+
+    private static void privateLoad(Context context, ImageView target, Object model) {
+        final DrawableTypeRequest<Object> drawableTypeRequest = Glide.with(context).load(model);
+        drawableTypeRequest.asBitmap();
+        drawableTypeRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
+        drawableTypeRequest.centerCrop();
+        drawableTypeRequest.into(target);
     }
 }

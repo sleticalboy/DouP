@@ -7,6 +7,7 @@ import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.bean.openeye.ItemListBean;
 import com.sleticalboy.doup.bean.openeye.RecommendBean;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
+import com.sleticalboy.doup.model.openeye.OpeneyeModel;
 import com.sleticalboy.doup.module.openeye.adapter.RecommendAdapter;
 
 import java.util.List;

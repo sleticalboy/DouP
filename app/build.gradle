@@ -94,17 +94,17 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.v_of_butter_knife"
 
     // RxJava2
-    implementation "io.reactivex.rxjava2:rxjava:2.1.5"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.1.9"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
     // RxDownload2
     implementation "zlc.season:rxdownload2:2.0.4"
     // RxPermissions2
     implementation "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar"
     // retrofit 2
-    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.squareup.retrofit2:retrofit:2.4.0"
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
     // OkHttp 3
-    implementation "com.squareup.okhttp3:okhttp:3.9.1"
+    implementation "com.squareup.okhttp3:okhttp:3.10.0"
     // 网络日志打印
     implementation "com.squareup.okhttp3:logging-interceptor:3.9.0"
     // 支持 RxJava2.x

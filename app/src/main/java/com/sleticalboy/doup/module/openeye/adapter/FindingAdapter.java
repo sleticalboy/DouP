@@ -35,8 +35,8 @@ public class FindingAdapter extends RecyclerArrayAdapter<FindingBean> {
 
         ViewHolder(ViewGroup itemView) {
             super(itemView, R.layout.openeye_recycle_item_finding);
-            imgPhoto = dollar(R.id.img_photo);
-            tvTitle = dollar(R.id.tv_title);
+            imgPhoto = obtainView(R.id.img_photo);
+            tvTitle = obtainView(R.id.tv_title);
         }
 
         @Override

@@ -3,6 +3,7 @@ package com.sleticalboy.doup.module.openeye.fragment;
 import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
+import com.sleticalboy.doup.model.openeye.OpeneyeModel;
 import com.sleticalboy.doup.module.openeye.adapter.FindingAdapter;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

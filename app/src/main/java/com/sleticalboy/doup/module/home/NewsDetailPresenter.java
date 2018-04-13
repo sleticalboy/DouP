@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.bean.news.NewsDetailBean;
+import com.sleticalboy.doup.model.news.NewsModel;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

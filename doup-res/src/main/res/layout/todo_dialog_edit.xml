@@ -53,7 +53,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="8dp">
 
         <EditText
@@ -63,6 +63,8 @@
             android:background="@null"
             android:hint="请输入内容"
             android:imeOptions="actionDone"
-            android:inputType="text"/>
+            android:singleLine="false"
+            android:scrollHorizontally="false"
+            android:inputType="text|textMultiLine"/>
     </ScrollView>
 </LinearLayout>

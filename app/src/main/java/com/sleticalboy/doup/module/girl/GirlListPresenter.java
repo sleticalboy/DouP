@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.bean.girl.GirlBean;
+import com.sleticalboy.doup.model.girl.GirlModel;
 
 import java.util.List;
 

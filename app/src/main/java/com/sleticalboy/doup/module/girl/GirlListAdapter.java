@@ -37,18 +37,18 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
 
     static class ViewHolder extends BaseViewHolder<GirlBean.ResultsBean> {
 
-        ImageView imgMeizi;
+        ImageView imgGirl;
         CardView cardView;
 
         public ViewHolder(ViewGroup item) {
             super(item, R.layout.girl_recycle_item_girl);
-            imgMeizi = dollar(R.id.img_meizi);
-            cardView = dollar(R.id.card_view);
+            imgGirl = obtainView(R.id.img_girl);
+            cardView = obtainView(R.id.card_view);
         }
 
         @Override
         public void setData(GirlBean.ResultsBean data) {
-            ImageLoader.load(getContext(), imgMeizi, data.url);
+            ImageLoader.load(getContext(), imgGirl, data.url);
             String desc = data._id;
             String url = data.url;
             cardView.setOnClickListener(v -> {
@@ -56,7 +56,7 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
                 Intent intent = GirlActivity.newIntent(getContext(), url, desc);
                 ActivityOptionsCompat optionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) getContext(),
-                                imgMeizi, GirlActivity.TRANSIT_PIC);
+                                imgGirl, GirlActivity.TRANSIT_PIC);
                 // android 5.0+
                 try {
                     ActivityCompat.startActivity(getContext(), intent, optionsCompat.toBundle());

@@ -38,10 +38,10 @@ public class RecommendAdapter extends RecyclerArrayAdapter<ItemListBean> {
 
         public ViewHolder(ViewGroup itemView) {
             super(itemView, R.layout.openeye_recycle_item_recommend);
-            imgRecommend = dollar(R.id.img_recommend);
-            imgUserIcon = dollar(R.id.img_user_icon);
-            tvTitle = dollar(R.id.tv_title);
-            tvDetail = dollar(R.id.tv_detail);
+            imgRecommend = obtainView(R.id.img_recommend);
+            imgUserIcon = obtainView(R.id.img_user_icon);
+            tvTitle = obtainView(R.id.tv_title);
+            tvDetail = obtainView(R.id.tv_detail);
         }
 
         @Override

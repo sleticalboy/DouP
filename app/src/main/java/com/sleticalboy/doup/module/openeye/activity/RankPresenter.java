@@ -9,6 +9,7 @@ import com.sleticalboy.doup.bean.openeye.HotBean;
 import com.sleticalboy.doup.bean.openeye.ItemListBean;
 import com.sleticalboy.doup.bean.openeye.RecommendBean;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
+import com.sleticalboy.doup.model.openeye.OpeneyeModel;
 import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
 import com.sleticalboy.doup.module.openeye.fragment.IRecommendView;
 import com.sleticalboy.util.StrUtils;

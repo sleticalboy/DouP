@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -19,7 +20,11 @@ import java.io.File;
  * @author sleticalboy
  */
 
-public class CommonUtils {
+public final class CommonUtils {
+
+    public static boolean isOnMainThread() {
+        return Looper.myLooper() == Looper.getMainLooper();
+    }
 
     /**
      * 将视频时长转换成 12'19" 05'04" 的形式

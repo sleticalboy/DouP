@@ -29,31 +29,17 @@ public class RetrofitClient {
     private static final String CACHE_DIR = "app_cache";
 
     private static RetrofitClient sInstance;
-
-    private File mHttpCacheDir;
-    private Cache mCache;
-    private static OkHttpClient mOkHttpClient;
+    private OkHttpClient mOkHttpClient;
     private final Retrofit mRetrofit;
     private WeakReference<Context> mContext;
 
     private RetrofitClient(Context context, String baseUrl) {
         mContext = new WeakReference<>(context);
-
-        if (mHttpCacheDir == null) {
-            mHttpCacheDir = new File(CommonUtils.getCacheDir(mContext.get()), CACHE_DIR);
-        }
-
-        try {
-            if (mCache == null) {
-                mCache = new Cache(mHttpCacheDir, MAX_CACHE_SIZE);
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "could not create http cache", e);
-        }
-
+        Cache cache = new Cache(
+                new File(CommonUtils.getCacheDir(mContext.get()), CACHE_DIR), MAX_CACHE_SIZE);
         // 创建 OkHttpClient
         mOkHttpClient = new OkHttpClient.Builder()
-                .cache(mCache)
+                .cache(cache)
                 .addNetworkInterceptor(new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY)) // 打印网络请求日志
                 .addInterceptor(new UrlChangeInterceptor()) // 动态改变 baseUrl

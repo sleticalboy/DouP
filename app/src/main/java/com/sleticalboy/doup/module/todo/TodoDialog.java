@@ -4,8 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +29,8 @@ import butterknife.Unbinder;
  *
  * @author sleticalboy
  */
-public class TodoDialog extends DialogFragment {
+public class TodoDialog extends BaseDialogFragment {
 
-    private static final String TAG = "TodoDialog";
-
-    public static final int NEW_NOTE = 0x001;
-
-    Unbinder unbinder;
     @BindView(R.id.btnBack)
     TextView btnBack;
     @BindView(R.id.btnDone)
@@ -49,60 +42,26 @@ public class TodoDialog extends DialogFragment {
     private DateFormat mFormat;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        final Window window = getDialog().getWindow();
-        assert window != null;
-        window.requestFeature(Window.FEATURE_NO_TITLE);
-        View rootView = inflater.inflate(
-                R.layout.todo_dialog_edit, window.findViewById(android.R.id.content), false);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        unbinder = ButterKnife.bind(this, rootView);
-        setupViews();
-        return rootView;
-    }
-
-    private void setupViews() {
+    protected void setupViews() {
         mFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
         tvCreationTime.setText(mFormat.format(new Date()));
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        final Window window = getDialog().getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.dimAmount = 0.0f;
-        params.alpha = 1.0f;
-        window.setAttributes(params);
-
-    }
-
-    public void showIME() {
-        etNoteContent.setFocusable(true);
-        etNoteContent.setFocusableInTouchMode(true);
         etNoteContent.requestFocus();
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume() called");
-        showIME();
+    protected int attachLayout() {
+        return R.layout.todo_dialog_edit;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected void postData() {
+        Note note = new Note();
+        note.setCreateTime(mFormat.format(new Date()));
+        note.setIsDone(false);
+        note.setContent(etNoteContent.getText().toString().trim());
+        note.setPriority(10);
+        ((TodoListActivity) getActivity()).updateList(note);
     }
 
     @OnClick({R.id.btnBack, R.id.btnDone})
@@ -116,13 +75,5 @@ public class TodoDialog extends DialogFragment {
                 dismiss();
                 break;
         }
-    }
-
-    private void postData() {
-        Note note = new Note();
-        note.setCreateTime(mFormat.format(new Date()));
-        note.setIsDone(false);
-        note.setContent(etNoteContent.getText().toString().trim());
-        ((TodoListActivity) getActivity()).updateList(note);
     }
 }

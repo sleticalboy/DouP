@@ -17,6 +17,7 @@ import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.bean.weather.WeatherBean;
+import com.sleticalboy.doup.model.weather.WeatherModel;
 import com.sleticalboy.util.SPUtils;
 import com.sleticalboy.util.ToastUtils;
 

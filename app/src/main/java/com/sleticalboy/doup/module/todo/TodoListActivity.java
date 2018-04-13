@@ -10,14 +10,8 @@ import android.view.View;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.todo.Note;
-import com.sleticalboy.doup.bean.todo.NoteDao;
-import com.sleticalboy.doup.bean.weather.DaoSession;
+import com.sleticalboy.doup.bean.todo.NoteModel;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
-
-import org.greenrobot.greendao.query.Query;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -38,10 +32,8 @@ public class TodoListActivity extends BaseActivity/* implements ITodoContract.Vi
     FloatingActionButton fabAdd;
 
     private String[] mTabTitleIds = {"所有", "已做", "待做"};
-    private List<Note> mDataSet = new ArrayList<>();
     private TodoAdapter mAdapter;
-    private NoteDao mNoteDao;
-    private Query<Note> mQuery;
+    private NoteModel mNoteModel;
 
     public static void actionStart(Context context) {
         context.startActivity(new Intent(context, TodoListActivity.class));
@@ -49,9 +41,7 @@ public class TodoListActivity extends BaseActivity/* implements ITodoContract.Vi
 
     @Override
     protected void afterViews() {
-        DaoSession daoSession = (DaoSession) DouApp.getDaoSession();
-        mNoteDao = daoSession.getNoteDao();
-        mQuery = mNoteDao.queryBuilder().build();
+        mNoteModel = new NoteModel();
         updateList();
     }
 
@@ -59,7 +49,6 @@ public class TodoListActivity extends BaseActivity/* implements ITodoContract.Vi
     protected void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TodoAdapter(this);
-        mAdapter.addAll(mDataSet);
         recyclerView.setAdapter(mAdapter);
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +66,7 @@ public class TodoListActivity extends BaseActivity/* implements ITodoContract.Vi
 
 //    @Override
     public void showDialog() {
-        TodoDialog dialog = new TodoDialog();
+        final TodoDialog dialog = new TodoDialog();
         dialog.show(getSupportFragmentManager(), "");
     }
 
@@ -91,11 +80,11 @@ public class TodoListActivity extends BaseActivity/* implements ITodoContract.Vi
     }
 
     public void updateList(Note note) {
-        mNoteDao.insert(note);
+        mNoteModel.addNote(note);
         updateList();
     }
 
     private void updateList() {
-        mAdapter.addAll(mQuery.list());
+        mAdapter.setDataSet(mNoteModel.getNotes());
     }
 }

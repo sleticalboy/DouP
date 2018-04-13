@@ -13,7 +13,7 @@ ext {
     v_of_junit = '4.12'
     v_of_android_support = '26.0.0-beta1'
     v_of_multidex = '1.0.2'
-    kotlin_version = '1.1.51'
+    kotlin_version = '1.2.30'
     v_of_gsyvideoplayer = '2.1.3'
     v_of_okhttp3 = '3.9.0'
     v_of_butter_knife = '8.5.1'

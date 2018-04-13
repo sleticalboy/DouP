@@ -36,10 +36,10 @@ public class ChatMsgAdapter extends RecyclerArrayAdapter<ChatMsgBean> {
 
         public ViewHolder(ViewGroup parent) {
             super(parent, R.layout.item_message);
-            imgHeader = dollar(R.id.img_header);
-            msgTitle = dollar(R.id.msg_title);
-            msgContent = dollar(R.id.msg_content);
-            msgTime = dollar(R.id.msg_time);
+            imgHeader = obtainView(R.id.img_header);
+            msgTitle = obtainView(R.id.msg_title);
+            msgContent = obtainView(R.id.msg_content);
+            msgTime = obtainView(R.id.msg_time);
         }
 
         @Override

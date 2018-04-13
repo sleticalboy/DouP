@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.bean.news.NewsBean;
+import com.sleticalboy.doup.model.news.NewsModel;
 
 import java.util.List;
 

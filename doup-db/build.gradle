@@ -39,8 +39,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     // green dao dependency
     implementation 'org.greenrobot:greendao:3.2.2'
-    // multi dex dependency
-    implementation "com.android.support:multidex:$rootProject.ext.v_of_multidex"
+
     implementation 'com.google.code.gson:gson:2.8.0'
 
 

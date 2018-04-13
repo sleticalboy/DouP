@@ -13,6 +13,7 @@ import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.bean.weather.City;
 import com.sleticalboy.doup.bean.weather.County;
 import com.sleticalboy.doup.bean.weather.Province;
+import com.sleticalboy.doup.model.weather.WeatherModel;
 import com.sleticalboy.doup.module.weather.service.AutoUpdateService;
 import com.sleticalboy.util.SPUtils;
 

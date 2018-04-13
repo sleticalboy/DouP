@@ -34,8 +34,6 @@ public class Note implements Parcelable, Serializable {
 
     private static final long serialVersionUID = -3055753026905017167L;
 
-    @Id
-    private Integer id;
     @Property
     private String createTime;
     @Property
@@ -52,10 +50,8 @@ public class Note implements Parcelable, Serializable {
         priority = in.readInt();
     }
 
-    @Generated(hash = 1673160991)
-    public Note(Integer id, String createTime, String content, Boolean isDone,
-            Integer priority) {
-        this.id = id;
+    @Generated(hash = 1645647354)
+    public Note(String createTime, String content, Boolean isDone, Integer priority) {
         this.createTime = createTime;
         this.content = content;
         this.isDone = isDone;
@@ -114,18 +110,9 @@ public class Note implements Parcelable, Serializable {
         this.priority = priority;
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Note{" +
-                "id=" + id +
                 ", createTime='" + createTime + '\'' +
                 ", content='" + content + '\'' +
                 ", isDone=" + isDone +

@@ -9,6 +9,8 @@ import com.sleticalboy.doup.bean.todo.Note;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
+import java.util.List;
+
 /**
  * Created on 18-3-3.
  *
@@ -25,6 +27,11 @@ public class TodoAdapter extends RecyclerArrayAdapter<Note> {
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
         return new NoteHolder(parent, R.layout.todo_recycle_item_note);
+    }
+
+    public void setDataSet(List<Note> dataSet) {
+        mDataList = dataSet;
+        notifyDataSetChanged();
     }
 
     static class NoteHolder extends BaseViewHolder<Note> {
