@@ -43,7 +43,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     // 双指放大或缩小图片
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.ext.kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.ext.kotlin_version"
 }
 repositories {
     mavenCentral()

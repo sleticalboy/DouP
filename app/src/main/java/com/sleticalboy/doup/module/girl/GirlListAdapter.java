@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -61,7 +62,7 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
                 try {
                     ActivityCompat.startActivity(getContext(), intent, optionsCompat.toBundle());
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.wtf(TAG, e);
                     getContext().startActivity(intent);
                 }
             });

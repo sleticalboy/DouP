@@ -10,6 +10,7 @@ import com.sleticalboy.base.BaseBean;
  */
 
 public class FindingBean extends BaseBean {
+
     public int id;
     public String name;
     public Object alias;

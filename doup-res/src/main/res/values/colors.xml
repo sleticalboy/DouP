@@ -16,4 +16,6 @@
     <color name="black">#000000</color>
 
     <color name="tab_text_color_selected">#4FB6DC</color>
+
+    <color name="status_bar_color">@android:color/transparent</color>
 </resources>

@@ -20,7 +20,7 @@ public class HttpUtils {
                 .url(completeUrl)
                 .build();
 
-        RetrofitClient.getInstance(null, null).getOkHttpClient()
+        RetrofitClient.getInstance().getOkHttpClient()
                 .newCall(request)
                 .enqueue(callback);
     }

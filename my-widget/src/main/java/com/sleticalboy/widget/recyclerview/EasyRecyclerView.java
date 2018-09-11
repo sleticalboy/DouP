@@ -18,6 +18,9 @@ import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 
+/**
+ * @author sleticalboy
+ */
 public class EasyRecyclerView extends FrameLayout {
 
     public static final String TAG = "EasyRecyclerView";
@@ -41,7 +44,8 @@ public class EasyRecyclerView extends FrameLayout {
 
     protected RecyclerView.OnScrollListener mInternalOnScrollListener;
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
-    protected ArrayList<RecyclerView.OnScrollListener> mExternalOnScrollListenerList = new ArrayList<>();
+    protected ArrayList<RecyclerView.OnScrollListener> mExternalOnScrollListenerList =
+            new ArrayList<>();
 
     protected SwipeRefreshLayout mPtrLayout;
     protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;

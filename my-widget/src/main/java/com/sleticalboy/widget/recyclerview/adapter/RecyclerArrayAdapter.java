@@ -90,7 +90,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         @Override
         public int getSpanSize(int position) {
             if (headers.size() != 0) {
-                if (position < headers.size()) return mMaxCount;
+                if (position < headers.size()) {
+                    return mMaxCount;
+                }
             }
             if (footers.size() != 0) {
                 int i = position - headers.size() - mDataList.size();
@@ -142,8 +144,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     public void stopMore() {
-        if (mEventDelegate == null)
+        if (mEventDelegate == null) {
             throw new NullPointerException("You should invoking setLoadMore() first");
+        }
         mEventDelegate.stopLoadMore();
     }
 
@@ -214,8 +217,9 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
     }
 
     EventDelegate getEventDelegate() {
-        if (mEventDelegate == null)
+        if (mEventDelegate == null) {
             mEventDelegate = new DefaultEventDelegate(this);
+        }
         return mEventDelegate;
     }
 
@@ -738,7 +742,6 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
 
     public interface OnLoadMoreListener {
         void onLoadMore();
-
     }
 
     public interface OnMoreListener {

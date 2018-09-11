@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.sleticalboy.util.CommonUtils;
+import com.sleticalboy.util.ContextProvider;
 
 import java.io.IOException;
 
@@ -24,15 +25,15 @@ public final class CacheInterceptor implements Interceptor {
     private static final String TAG = "CacheInterceptor";
     private final Context mContext;
 
-    public CacheInterceptor(@NonNull Context context) {
-        mContext = context.getApplicationContext();
+    public CacheInterceptor() {
+        mContext = ContextProvider.getAppContext();
     }
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
 
-        if (CommonUtils.isNetworkAvailable(mContext)) {
+        if (CommonUtils.isNetworkAvailable()) {
             final Response response = chain.proceed(request);
             final int maxAge = 60;
             final String cacheControl = request.cacheControl().toString();

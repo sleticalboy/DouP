@@ -21,11 +21,7 @@ import java.io.File;
  */
 
 public final class CommonUtils {
-
-    public static boolean isOnMainThread() {
-        return Looper.myLooper() == Looper.getMainLooper();
-    }
-
+    
     /**
      * 将视频时长转换成 12'19" 05'04" 的形式
      */
@@ -61,8 +57,8 @@ public final class CommonUtils {
     /**
      * 获取应用的缓存目录
      */
-    public static File getCacheDir(@NonNull Context context) {
-        return context.getApplicationContext().getCacheDir();
+    public static File getCacheDir() {
+        return ContextProvider.getAppContext().getCacheDir();
     }
 
     /**
@@ -70,7 +66,8 @@ public final class CommonUtils {
      *
      * @return 连接返回 true， 否则 false
      */
-    public static boolean isNetworkAvailable(@NonNull Context context) {
+    public static boolean isNetworkAvailable() {
+        final Context context = ContextProvider.getAppContext();
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo info = cm.getActiveNetworkInfo();
@@ -80,7 +77,8 @@ public final class CommonUtils {
         return false;
     }
 
-    public static boolean isConnected(@NonNull Context context) {
+    public static boolean isConnected() {
+        final Context context = ContextProvider.getAppContext();
         ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert conn != null;
         NetworkInfo info = conn.getActiveNetworkInfo();
@@ -88,7 +86,8 @@ public final class CommonUtils {
     }
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
-    public static String getImei(@NonNull Context context, String defValue) {
+    public static String getImei(String defValue) {
+        final Context context = ContextProvider.getAppContext();
         String ret = null;
         try {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -109,7 +108,8 @@ public final class CommonUtils {
      *
      * @return 版本号
      */
-    public static String getVersion(@NonNull Context context) {
+    public static String getVersion() {
+        final Context context = ContextProvider.getAppContext();
         try {
             PackageInfo manager = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);

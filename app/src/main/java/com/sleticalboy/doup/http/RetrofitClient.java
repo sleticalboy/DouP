@@ -1,13 +1,9 @@
 package com.sleticalboy.doup.http;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.sleticalboy.util.CommonUtils;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -28,38 +24,35 @@ public class RetrofitClient {
     private static final long MAX_CACHE_SIZE = 1L << 24;
     private static final String CACHE_DIR = "app_cache";
 
-    private static RetrofitClient sInstance;
-    private OkHttpClient mOkHttpClient;
+    private final OkHttpClient mOkHttpClient;
     private final Retrofit mRetrofit;
-    private WeakReference<Context> mContext;
 
-    private RetrofitClient(Context context, String baseUrl) {
-        mContext = new WeakReference<>(context);
-        Cache cache = new Cache(
-                new File(CommonUtils.getCacheDir(mContext.get()), CACHE_DIR), MAX_CACHE_SIZE);
+    private RetrofitClient() {
+        Cache cache = new Cache(new File(CommonUtils.getCacheDir(), CACHE_DIR), MAX_CACHE_SIZE);
         // 创建 OkHttpClient
         mOkHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
                 .addNetworkInterceptor(new HttpLoggingInterceptor()
                         .setLevel(HttpLoggingInterceptor.Level.BODY)) // 打印网络请求日志
                 .addInterceptor(new UrlChangeInterceptor()) // 动态改变 baseUrl
-                .addInterceptor(new CacheInterceptor(mContext.get())) // 缓存功能
+                .addInterceptor(new CacheInterceptor()) // 缓存功能
                 .build();
 
         // 创建 Retrofit.Builder
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl("http://www.sample.com")
                 .client(mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
-    public synchronized static RetrofitClient getInstance(Context context, String baseUrl) {
-        if (sInstance == null) {
-            sInstance = new RetrofitClient(context, baseUrl);
-        }
-        return sInstance;
+    public static RetrofitClient getInstance() {
+        return SingleHolder.RETROFIT_CLIENT;
+    }
+    
+    private final static class SingleHolder {
+        static final RetrofitClient RETROFIT_CLIENT = new RetrofitClient();
     }
 
     public OkHttpClient getOkHttpClient() {
@@ -70,10 +63,5 @@ public class RetrofitClient {
         if (service == null)
             throw new RuntimeException("Api service is null");
         return mRetrofit.create(service);
-    }
-
-    public void clear() {
-        mContext.clear();
-        mContext = null;
     }
 }
