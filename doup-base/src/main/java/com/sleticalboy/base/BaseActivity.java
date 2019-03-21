@@ -127,18 +127,20 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        if (count == 0)
+        if (count == 0) {
             super.onBackPressed();
-        else
+        } else {
             getSupportFragmentManager().popBackStack();
+        }
     }
 
     @Override

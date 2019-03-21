@@ -18,7 +18,6 @@ public class Route implements Parcelable {
     public String activityName;
 
     private Route() {
-        throw new RuntimeException("this class can not be initialized outside!");
     }
 
     public static Route newInstance() {

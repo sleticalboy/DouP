@@ -8,8 +8,8 @@ package com.sleticalboy.doup.http;
  */
 
 public interface ApiConstant {
-    String BASE_NEWS_URL = "http://news-at.zhihu.com/api/";
-    String BASE_MEIZI_URL = "http://gank.io/api/";
-    String BASE_EYE_URL = "http://baobab.kaiyanapp.com/api/";
-    String BASE_WEATHER_URL = "http://guolin.tech/api/";
+    String BASE_NEWS_URL = "http://news-at.zhihu.com/";
+    String BASE_MEIZI_URL = "http://gank.io/";
+    String BASE_EYE_URL = "http://baobab.kaiyanapp.com/";
+    String BASE_WEATHER_URL = "http://guolin.tech/";
 }

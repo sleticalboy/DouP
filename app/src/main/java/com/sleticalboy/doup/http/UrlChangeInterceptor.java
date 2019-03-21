@@ -17,27 +17,30 @@ import okhttp3.Response;
  *
  * @author sleticalboy
  */
-public class UrlChangeInterceptor implements Interceptor {
+public final class UrlChangeInterceptor implements Interceptor {
 
     private static final String TAG = "HttpUrlInterceptor";
+
+    public UrlChangeInterceptor() {
+    }
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         //获取request
         Request request = chain.request();
-        //获取request的创建者builder
-        Request.Builder builder = request.newBuilder();
         //从request中获取headers，通过给定的键url_name
         List<String> headerValues = request.headers(HttpConfig.HEADER_KEY);
-        //从request中获取原有的HttpUrl实例oldHttpUrl
-        HttpUrl oriBaseUrl = request.url();
         if (headerValues != null && headerValues.size() > 0) {
+            //获取request的创建者builder
+            Request.Builder builder = request.newBuilder();
+            //从request中获取原有的HttpUrl实例oldHttpUrl
+            HttpUrl oriBaseUrl = request.url();
             //如果有这个header，先将配置的header删除，因此header仅用作app和okhttp之间使用
             builder.removeHeader(HttpConfig.HEADER_KEY);
 
             //匹配获得新的BaseUrl
             String headerValue = headerValues.get(0);
-            Log.d(TAG, headerValue);
+            Log.d(TAG, String.format("real server host is %s", headerValue));
             HttpUrl newBaseUrl;
             if (HttpConfig.HEADER_VALUE_NEWS.equals(headerValue)) {
                 newBaseUrl = HttpUrl.parse(HttpConfig.BASE_URL_NEWS);

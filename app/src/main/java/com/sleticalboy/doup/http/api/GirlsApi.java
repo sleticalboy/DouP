@@ -17,6 +17,6 @@ import retrofit2.http.Path;
 public interface GirlsApi {
 
     @Headers({HttpConfig.HEADER_KEY + ":" + HttpConfig.HEADER_VALUE_MEIZI})
-    @GET("data/福利/10/{page}") // http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1
+    @GET("api/data/福利/10/{page}") // http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1
     Observable<GirlBean> getBeauty(@Path("page") int page);
 }

@@ -7,7 +7,6 @@ import com.sleticalboy.doup.bean.weather.City;
 import com.sleticalboy.doup.bean.weather.County;
 import com.sleticalboy.doup.bean.weather.Province;
 import com.sleticalboy.doup.bean.weather.WeatherBean;
-import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.WeatherApi;
 
@@ -21,7 +20,7 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class WeatherModel extends BaseModel {
+public final class WeatherModel extends BaseModel {
 
     private static final String APP_KEY = "f528b9b4264e4f9b977645d60f321a0c";
 
@@ -29,8 +28,8 @@ public class WeatherModel extends BaseModel {
 
     public WeatherModel(Context context) {
         super(context);
-        RetrofitClient client = RetrofitClient.getInstance(getWeakReference().get(), ApiConstant.BASE_WEATHER_URL);
-        mWeatherApiService = client.create(WeatherApi.class);
+        // RetrofitClient client = RetrofitClient.retrofit(getWeakReference().get(), ApiConstant.BASE_WEATHER_URL);
+        mWeatherApiService = RetrofitClient.retrofit().create(WeatherApi.class);
     }
 
     public Observable<List<Province>> getProvinces() {

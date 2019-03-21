@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.sleticalboy.doup.bean.news.NewsBean;
 import com.sleticalboy.doup.bean.news.NewsDetailBean;
-import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.NewsApi;
 
@@ -18,15 +17,15 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class NewsModel {
+public final class NewsModel {
 
     private WeakReference<Context> mWeakReference;
     private NewsApi mNewsApiService;
 
     public NewsModel(Context context) {
         mWeakReference = new WeakReference<>(context);
-        RetrofitClient client = RetrofitClient.getInstance(mWeakReference.get(), ApiConstant.BASE_NEWS_URL);
-        mNewsApiService = client.create(NewsApi.class);
+        // RetrofitClient client = RetrofitClient.retrofit(mWeakReference.get(), ApiConstant.BASE_NEWS_URL);
+        mNewsApiService = RetrofitClient.retrofit().create(NewsApi.class);
     }
 
     public Observable<NewsBean> getLatestNews() {

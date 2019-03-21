@@ -13,7 +13,7 @@ import android.os.Bundle
  */
 interface LifecycleCallback {
 
-    fun onCreate(activity: Activity, savedInstanceState: Bundle)
+    fun onCreate(activity: Activity, savedInstanceState: Bundle?)
 
     fun onActivityStart(activity: Activity)
 
@@ -27,13 +27,13 @@ interface LifecycleCallback {
 
     fun onActivityStop(activity: Activity)
 
-    fun onActivitySaveInstanceState(activity: Activity, outState: Bundle)
+    fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?)
 
     fun onActivityDestroy(activity: Activity)
 
     fun onActivityFinish(activity: Activity)
 
-    fun onActivityConfigurationChanged(newConfig: Configuration)
+    fun onActivityConfigurationChanged(newConfig: Configuration?)
 
-    fun onActivityRestoreInstanceState(activity: Activity, saveInstanceState: Bundle)
+    fun onActivityRestoreInstanceState(activity: Activity, saveInstanceState: Bundle?)
 }

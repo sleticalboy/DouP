@@ -8,7 +8,7 @@ package com.sleticalboy.doup.http;
  */
 public final class HttpConfig {
 
-    public static final String HEADER_KEY = "Domain-Name";
+    public static final String HEADER_KEY = "Module-Name";
 
     public static final String HEADER_VALUE_NEWS = "news";
     public static final String HEADER_VALUE_MEIZI = "meizi";

@@ -1,6 +1,8 @@
 package com.sleticalboy.doup.http;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.sleticalboy.doup.BuildConfig;
+import com.sleticalboy.doup.DouApp;
 import com.sleticalboy.util.CommonUtils;
 
 import java.io.File;
@@ -17,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * @author sleticalboy
  */
-public class RetrofitClient {
+public final class RetrofitClient {
 
     private static final String TAG = "RetrofitClient";
 
@@ -28,40 +30,49 @@ public class RetrofitClient {
     private final Retrofit mRetrofit;
 
     private RetrofitClient() {
-        Cache cache = new Cache(new File(CommonUtils.getCacheDir(), CACHE_DIR), MAX_CACHE_SIZE);
-        // 创建 OkHttpClient
-        mOkHttpClient = new OkHttpClient.Builder()
-                .cache(cache)
-                .addNetworkInterceptor(new HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BODY)) // 打印网络请求日志
-                .addInterceptor(new UrlChangeInterceptor()) // 动态改变 baseUrl
-                .addInterceptor(new CacheInterceptor()) // 缓存功能
-                .build();
+        mOkHttpClient = httpBuilder().build();
+        mRetrofit = retrofitBuilder().build();
+    }
 
+    private Retrofit.Builder retrofitBuilder() {
         // 创建 Retrofit.Builder
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://www.sample.com")
+        return new Retrofit.Builder()
+                .baseUrl("http://www.sample.com") // placeholder
                 .client(mOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
     }
 
-    public static RetrofitClient getInstance() {
+    private OkHttpClient.Builder httpBuilder() {
+        Cache cache = new Cache(new File(DouApp.getContext().getCacheDir(), CACHE_DIR), MAX_CACHE_SIZE);
+        // 创建 OkHttpClient
+        final HttpLoggingInterceptor loggerInterceptor = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            loggerInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+        return new OkHttpClient.Builder()
+                .cache(cache)
+                .addNetworkInterceptor(loggerInterceptor)
+                .addInterceptor(new UrlChangeInterceptor())
+                .addInterceptor(new CacheInterceptor());
+    }
+
+    public static RetrofitClient retrofit() {
         return SingleHolder.RETROFIT_CLIENT;
     }
-    
+
+    public static OkHttpClient http() {
+        return retrofit().mOkHttpClient;
+    }
+
+    public final <T> T create(Class<T> service) {
+        if (service == null) {
+            throw new NullPointerException("Api service is null");
+        }
+        return mRetrofit.create(service);
+    }
+
     private final static class SingleHolder {
         static final RetrofitClient RETROFIT_CLIENT = new RetrofitClient();
-    }
-
-    public OkHttpClient getOkHttpClient() {
-        return mOkHttpClient;
-    }
-
-    public <T> T create(Class<T> service) {
-        if (service == null)
-            throw new RuntimeException("Api service is null");
-        return mRetrofit.create(service);
     }
 }

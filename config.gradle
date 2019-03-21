@@ -11,18 +11,18 @@ def keyPwd = keyStoreProperties['keyPassword']
 ext {
     // 便于统一管理的版本号等
     v_of_junit = '4.12'
-    v_of_android_support = '27.1.1'
+    v_of_android_support = '28.0.0'
     v_of_multidex = '1.0.2'
-    kotlin_version = '1.2.30'
+    kotlin_version = '1.3.20'
     v_of_gsyvideoplayer = '2.1.3'
     v_of_okhttp3 = '3.9.0'
-    v_of_butter_knife = '8.5.1'
+    v_of_butter_knife = '8.8.1'
     // 默认配置项
     android = [
-            compileSdkVersion: 27,
-            buildToolsVersion: '27.0.3',
+            compileSdkVersion: 28,
+            buildToolsVersion: '28.0.3',
             minSdkVersion    : 19,
-            targetSdkVersion : 27,
+            targetSdkVersion : 28,
             versionCode      : 1,
             versionName      : "1.0",
     ]

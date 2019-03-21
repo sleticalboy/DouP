@@ -5,7 +5,6 @@ import android.content.Context;
 import com.sleticalboy.doup.bean.openeye.FindingBean;
 import com.sleticalboy.doup.bean.openeye.HotBean;
 import com.sleticalboy.doup.bean.openeye.RecommendBean;
-import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.OpeneyeApi;
 
@@ -20,7 +19,7 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class OpeneyeModel {
+public final class OpeneyeModel {
 
     private static final String UDID = "26868b32e808498db32fd51fb422d00175e179df";
     private static final int VC = 83;
@@ -31,8 +30,8 @@ public class OpeneyeModel {
 
     public OpeneyeModel(Context context) {
         mWeakReference = new WeakReference<>(context);
-        RetrofitClient client = RetrofitClient.getInstance(mWeakReference.get(), ApiConstant.BASE_EYE_URL);
-        mOpeneyeApiService = client.create(OpeneyeApi.class);
+        // RetrofitClient client = RetrofitClient.retrofit(mWeakReference.get(), ApiConstant.BASE_EYE_URL);
+        mOpeneyeApiService = RetrofitClient.retrofit().create(OpeneyeApi.class);
     }
 
     public Observable<RecommendBean> getRecommend() {

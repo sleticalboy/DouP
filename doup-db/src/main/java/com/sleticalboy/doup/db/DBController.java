@@ -14,6 +14,7 @@ import org.greenrobot.greendao.AbstractDaoSession;
  * @author sleticalboy
  * @version 1.0
  * @description 数据库管理类, 必须先在应用的 Application 类中进行初始化后才能使用
+ * http://www.processon.com/diagraming
  */
 public final class DBController {
 

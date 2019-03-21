@@ -19,18 +19,18 @@ object TimeUtils {
     private var sdf: SimpleDateFormat? = null
 
     fun formatUTC(l: Long, strPattern: String): String {
-        var strPattern = strPattern
-        if (TextUtils.isEmpty(strPattern)) {
-            strPattern = "yyyy-MM-dd HH:mm:ss"
+        var format = strPattern
+        if (TextUtils.isEmpty(format)) {
+            format = "yyyy-MM-dd HH:mm:ss"
         }
         if (sdf == null) {
             try {
-                sdf = SimpleDateFormat(strPattern, Locale.CHINA)
+                sdf = SimpleDateFormat(format, Locale.CHINA)
             } catch (e: Throwable) {
             }
 
         } else {
-            sdf!!.applyPattern(strPattern)
+            sdf!!.applyPattern(format)
         }
         return if (sdf == null) "NULL" else sdf!!.format(l)
     }

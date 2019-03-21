@@ -1,11 +1,10 @@
 package com.sleticalboy.doup.http;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.sleticalboy.doup.DouApp;
 import com.sleticalboy.util.CommonUtils;
-import com.sleticalboy.util.ContextProvider;
 
 import java.io.IOException;
 
@@ -23,17 +22,15 @@ import okhttp3.Response;
 public final class CacheInterceptor implements Interceptor {
 
     private static final String TAG = "CacheInterceptor";
-    private final Context mContext;
 
     public CacheInterceptor() {
-        mContext = ContextProvider.getAppContext();
     }
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
 
-        if (CommonUtils.isNetworkAvailable()) {
+        if (CommonUtils.isNetworkAvailable(DouApp.getContext())) {
             final Response response = chain.proceed(request);
             final int maxAge = 60;
             final String cacheControl = request.cacheControl().toString();

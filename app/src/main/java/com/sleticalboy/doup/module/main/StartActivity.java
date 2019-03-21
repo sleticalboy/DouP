@@ -27,7 +27,6 @@ import com.sleticalboy.doup.message.MessageFragment;
 import com.sleticalboy.doup.module.girl.GirlFragment;
 import com.sleticalboy.doup.module.home.NewsFragment;
 import com.sleticalboy.doup.module.openeye.fragment.OpeneyeFragment;
-import com.sleticalboy.doup.module.todo.TodoListActivity;
 import com.sleticalboy.doup.module.weather.WeatherActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -147,9 +146,6 @@ public class StartActivity extends BaseActivity {
                     break;
                 case R.id.nav_weather:
                     WeatherActivity.actionStart(this);
-                    break;
-                case R.id.nav_tasks:
-                    TodoListActivity.actionStart(this);
                     break;
                 default:
                     break;

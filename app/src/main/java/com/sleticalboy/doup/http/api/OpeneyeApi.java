@@ -22,34 +22,32 @@ import static com.sleticalboy.doup.http.HttpConfig.HEADER_VALUE_EYES;
  */
 public interface OpeneyeApi {
 
-    String CUSTOM_HEADERS = HEADER_KEY + ":" + HEADER_VALUE_EYES;
-
     /**
      * 获取推荐首页内容
      */
-    @Headers({CUSTOM_HEADERS})
-    @GET("v2/feed?num=2&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83")
+    @Headers({HEADER_KEY + ": " + HEADER_VALUE_EYES})
+    @GET("api/v2/feed?num=2&udid=26868b32e808498db32fd51fb422d00175e179df&vc=83")
     Observable<RecommendBean> getRecommend();
 
     /**
      * 获取更多推荐内容
      */
-    @Headers({CUSTOM_HEADERS})
-    @GET("v2/feed")
+    @Headers({HEADER_KEY + ": " + HEADER_VALUE_EYES})
+    @GET("api/v2/feed")
     Observable<RecommendBean> getMoreRecommend(@Query("date") String date,
                                                @Query("num") String num);
 
     /**
      * 获取发现内容
      */
-    @Headers({CUSTOM_HEADERS})
-    @GET("v2/categories?udid=26868b32e808498db32fd51fb422d00175e179df&vc=83")
+    @Headers({HEADER_KEY + ": " + HEADER_VALUE_EYES})
+    @GET("api/v2/categories?udid=26868b32e808498db32fd51fb422d00175e179df&vc=83")
     Observable<List<FindingBean>> getFindings();
 
     /**
      * 获取热门推荐内容
      */
-    @Headers({CUSTOM_HEADERS})
+    @Headers({HEADER_KEY + ": " + HEADER_VALUE_EYES})
     @GET("api/v3/ranklist")
     Observable<HotBean> getPopular(@Query("num") int num,
                                    @Query("strategy") String strategy,
@@ -59,8 +57,8 @@ public interface OpeneyeApi {
     /**
      * 关键词搜索
      */
-    @Headers({CUSTOM_HEADERS})
-    @GET("v1/search")
+    @Headers({HEADER_KEY + ": " + HEADER_VALUE_EYES})
+    @GET("api/v1/search")
     Observable<HotBean> getSearchData(@Query("num") int num,
                                       @Query("query") String query,
                                       @Query("start") int start);
@@ -68,8 +66,8 @@ public interface OpeneyeApi {
     /**
      * 发现详情页面
      */
-    @Headers({CUSTOM_HEADERS})
-    @GET("v3/videos")
+    @Headers({HEADER_KEY + ": " + HEADER_VALUE_EYES})
+    @GET("api/v3/videos")
     Observable<HotBean> getFindingsDetail(@Query("categoryName") String categoryName,
                                           @Query("strategy") String strategy,
                                           @Query("udid") String udid,

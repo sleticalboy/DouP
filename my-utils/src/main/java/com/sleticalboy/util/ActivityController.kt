@@ -1,8 +1,7 @@
 package com.sleticalboy.util
 
 import android.app.Activity
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by Android Studio.
@@ -12,22 +11,24 @@ import java.util.ArrayList
  */
 object ActivityController {
 
-    private val sActivityList = ArrayList<Activity>()
+    private val activityList = ArrayList<Activity>()
 
     fun add(activity: Activity) {
-        if (!sActivityList.contains(activity))
-            sActivityList.add(activity)
+        if (!activityList.contains(activity))
+            activityList.add(activity)
     }
 
     fun remove(activity: Activity) {
-        if (sActivityList.contains(activity))
-            sActivityList.remove(activity)
+        if (activityList.contains(activity))
+            activityList.remove(activity)
     }
 
     fun finishAll() {
-        sActivityList
-                .filterNot { it.isFinishing }
-                .forEach { it.finish() }
-        sActivityList.clear()
+        for (activity in activityList) {
+            if (!activity.isFinishing) {
+                activity.finish()
+            }
+        }
+        activityList.clear()
     }
 }

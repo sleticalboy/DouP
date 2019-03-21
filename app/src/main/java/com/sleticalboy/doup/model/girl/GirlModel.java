@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.sleticalboy.base.BaseModel;
 import com.sleticalboy.doup.bean.girl.GirlBean;
-import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.RetrofitClient;
 import com.sleticalboy.doup.http.api.GirlsApi;
 
@@ -16,14 +15,14 @@ import io.reactivex.Observable;
  *
  * @author sleticalboy
  */
-public class GirlModel extends BaseModel {
+public final class GirlModel extends BaseModel {
 
     private GirlsApi mGirlsApiService;
 
     public GirlModel(Context context) {
         super(context);
-        RetrofitClient client = RetrofitClient.getInstance(getWeakReference().get(), ApiConstant.BASE_MEIZI_URL);
-        mGirlsApiService = client.create(GirlsApi.class);
+        // RetrofitClient client = RetrofitClient.retrofit(getWeakReference().get(), ApiConstant.BASE_MEIZI_URL);
+        mGirlsApiService = RetrofitClient.retrofit().create(GirlsApi.class);
     }
 
     public Observable<GirlBean> getMeizi(int page) {

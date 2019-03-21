@@ -6,12 +6,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-
-import java.io.File;
 
 /**
  * Created by Android Studio.
@@ -21,13 +17,14 @@ import java.io.File;
  */
 
 public final class CommonUtils {
-    
+
     /**
      * 将视频时长转换成 12'19" 05'04" 的形式
      */
     public static String wrapperTime(int duration) {
-        if (duration < 0)
+        if (duration < 0) {
             throw new IllegalArgumentException("time can not be negative");
+        }
         StringBuilder builder = new StringBuilder();
         int minutes = duration / 60;
         if (minutes >= 60) {
@@ -36,29 +33,25 @@ public final class CommonUtils {
                 builder.append(hours).append(":");
             }
             minutes %= 60;
-            if (minutes <= 9)
+            if (minutes <= 9) {
                 builder.append(0).append(minutes).append("'");
-            else
+            } else {
                 builder.append(minutes).append("'");
+            }
         } else {
-            if (minutes <= 9)
+            if (minutes <= 9) {
                 builder.append(0).append(minutes).append("'");
-            else
+            } else {
                 builder.append(minutes).append("'");
+            }
         }
         int seconds = duration % 60;
-        if (seconds <= 9)
+        if (seconds <= 9) {
             builder.append(0).append(seconds).append("\"");
-        else
+        } else {
             builder.append(seconds).append("\"");
+        }
         return builder.toString();
-    }
-
-    /**
-     * 获取应用的缓存目录
-     */
-    public static File getCacheDir() {
-        return ContextProvider.getAppContext().getCacheDir();
     }
 
     /**
@@ -66,19 +59,18 @@ public final class CommonUtils {
      *
      * @return 连接返回 true， 否则 false
      */
-    public static boolean isNetworkAvailable() {
-        final Context context = ContextProvider.getAppContext();
+    public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm != null) {
             NetworkInfo info = cm.getActiveNetworkInfo();
-            if (info.isAvailable())
+            if (info.isAvailable()) {
                 return true;
+            }
         }
         return false;
     }
 
-    public static boolean isConnected() {
-        final Context context = ContextProvider.getAppContext();
+    public static boolean isConnected(Context context) {
         ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert conn != null;
         NetworkInfo info = conn.getActiveNetworkInfo();
@@ -86,8 +78,7 @@ public final class CommonUtils {
     }
 
     @SuppressLint({"MissingPermission", "HardwareIds"})
-    public static String getImei(String defValue) {
-        final Context context = ContextProvider.getAppContext();
+    public static String getImei(Context context, String defValue) {
         String ret = null;
         try {
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -108,8 +99,7 @@ public final class CommonUtils {
      *
      * @return 版本号
      */
-    public static String getVersion() {
-        final Context context = ContextProvider.getAppContext();
+    public static String getVersion(Context context) {
         try {
             PackageInfo manager = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);

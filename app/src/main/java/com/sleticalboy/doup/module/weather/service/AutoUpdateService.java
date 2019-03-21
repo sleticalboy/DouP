@@ -92,12 +92,15 @@ public class AutoUpdateService extends Service {
         if (weatherStr != null) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             String weatherId = "";
-            if (weatherBean != null)
+            if (weatherBean != null) {
                 weatherId = weatherBean.HeWeather.get(0).basic.weatherId;
-            if (TextUtils.isEmpty(weatherId))
+            }
+            if (TextUtils.isEmpty(weatherId)) {
                 weatherId = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER_ID(), null);
-            if (TextUtils.isEmpty(weatherId))
+            }
+            if (TextUtils.isEmpty(weatherId)) {
                 return;
+            }
             mWeatherModel.getWeather(weatherId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

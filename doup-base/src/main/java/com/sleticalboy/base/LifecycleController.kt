@@ -8,16 +8,14 @@ package com.sleticalboy.base
  * @description
  */
 class LifecycleController private constructor() {
-    
+
     var lifecycleCallback: LifecycleCallback? = null
 
     companion object {
 
-        private val CONTROLLER = LifecycleController()
+        private val controller = LifecycleController()
 
         val instance: LifecycleController
-            get() {
-                return CONTROLLER
-            }
+            get() = controller
     }
 }

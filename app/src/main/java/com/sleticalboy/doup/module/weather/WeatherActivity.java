@@ -75,7 +75,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
 
     @Override
     protected void beforeViews() {
-        mLocManager = LocationManager.getInstance(this);
+        mLocManager = LocationManager.getInstance();
         Observable<AMapLocation> observable = RxBus.getBus().register(LocationManager.TAG);
         observable.subscribe(location -> {
             String s = mLocManager.defaultHandleLocation(location);
@@ -88,6 +88,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
 
         mPresenter = new WeatherPresenter(this, this);
 
+        mLocManager.init(this);
         mLocManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气

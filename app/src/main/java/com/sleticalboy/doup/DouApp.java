@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 
 import com.sleticalboy.base.LifecycleCallback;
@@ -16,8 +17,6 @@ import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
 import com.sleticalboy.util.SPUtils;
 
-import java.lang.ref.WeakReference;
-
 /**
  * Created by Android Studio.
  * Date: 12/25/17.
@@ -26,17 +25,17 @@ import java.lang.ref.WeakReference;
  */
 public final class DouApp extends Application implements CrashHandler.OnCrashListener {
 
-    private static WeakReference<Context> sReference;
+    private static Context appContext;
 
     public static Context getContext() {
-        return sReference.get();
+        return appContext;
     }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        sReference = new WeakReference<>(base);
-        MultiDex.install(this);
+        appContext = base;
+        MultiDex.install(base);
     }
 
     @Override
@@ -65,52 +64,52 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
     private void initLifecycleCallback() {
         LifecycleController.Companion.getInstance().setLifecycleCallback(new LifecycleCallback() {
             @Override
-            public void onCreate(Activity activity, Bundle savedInstanceState) {
+            public void onCreate(@NonNull Activity activity, Bundle savedInstanceState) {
 //                JPushManager.getInstance().initialize(activity);
             }
 
             @Override
-            public void onActivityStart(Activity activity) {
+            public void onActivityStart(@NonNull Activity activity) {
 
             }
 
             @Override
-            public void onStartActivityForResult(Activity activity) {
+            public void onStartActivityForResult(@NonNull Activity activity) {
 
             }
 
             @Override
-            public void onStartActivity(Activity activity) {
+            public void onStartActivity(@NonNull Activity activity) {
 
             }
 
             @Override
-            public void onActivityResume(Activity activity) {
+            public void onActivityResume(@NonNull Activity activity) {
 //                JPushManager.getInstance().onResume(activity);
             }
 
             @Override
-            public void onActivityPause(Activity activity) {
+            public void onActivityPause(@NonNull Activity activity) {
 //                JPushManager.getInstance().onPause(activity);
             }
 
             @Override
-            public void onActivityStop(Activity activity) {
+            public void onActivityStop(@NonNull Activity activity) {
 
             }
 
             @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            public void onActivitySaveInstanceState(@NonNull Activity activity, Bundle outState) {
 
             }
 
             @Override
-            public void onActivityDestroy(Activity activity) {
+            public void onActivityDestroy(@NonNull Activity activity) {
 //                JPushManager.getInstance().disableReceiver(activity);
             }
 
             @Override
-            public void onActivityFinish(Activity activity) {
+            public void onActivityFinish(@NonNull Activity activity) {
 
             }
 
@@ -120,7 +119,7 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
             }
 
             @Override
-            public void onActivityRestoreInstanceState(Activity activity, Bundle saveInstanceState) {
+            public void onActivityRestoreInstanceState(@NonNull Activity activity, Bundle saveInstanceState) {
 
             }
         });
