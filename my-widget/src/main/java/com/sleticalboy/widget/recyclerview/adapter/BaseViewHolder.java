@@ -3,7 +3,6 @@ package com.sleticalboy.widget.recyclerview.adapter;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,51 +21,52 @@ import java.lang.reflect.Field;
  * 在一些特殊情况下，只能在setData里设置监听。
  *
  * @param <M>
+ * @author xxx
  */
 public abstract class BaseViewHolder<M> extends RecyclerView.ViewHolder {
-
+    
+    private RecyclerView mOwnerRecyclerView;
+    
     public BaseViewHolder(View itemView) {
         super(itemView);
     }
-
+    
     public BaseViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(LayoutInflater.from(parent.getContext()).inflate(res, parent, false));
     }
-
-    public abstract void setData(M data);
-
+    
+    /**
+     * ViewHolder 的数据
+     *
+     * @param data
+     */
+    public abstract void bindData(M data);
+    
     protected <T extends View> T obtainView(@IdRes int id) {
-        return (T) itemView.findViewById(id);
+        return itemView.findViewById(id);
     }
-
+    
     protected Context getContext() {
         return itemView.getContext();
     }
-
+    
     protected int getDataPosition() {
-        RecyclerView.Adapter adapter = getOwnerAdapter();
-        if (adapter != null && adapter instanceof RecyclerArrayAdapter) {
-            return getAdapterPosition() - ((RecyclerArrayAdapter) adapter).getHeaderCount();
+        if (mOwnerRecyclerView == null) {
+            try {
+                final Field rv = RecyclerView.ViewHolder.class.getDeclaredField("mOwnerRecyclerView");
+                rv.setAccessible(true);
+                mOwnerRecyclerView = (RecyclerView) rv.get(this);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                mOwnerRecyclerView = null;
+            }
+        }
+        RecyclerView.Adapter adapter = null;
+        if (mOwnerRecyclerView != null) {
+            adapter = mOwnerRecyclerView.getAdapter();
+        }
+        if (adapter instanceof BaseRecyclerAdapter) {
+            return getAdapterPosition() - ((BaseRecyclerAdapter) adapter).getHeaderCount();
         }
         return getAdapterPosition();
-    }
-
-
-    @Nullable
-    protected <T extends RecyclerView.Adapter> T getOwnerAdapter() {
-        RecyclerView recyclerView = getOwnerRecyclerView();
-        return recyclerView == null ? null : (T) recyclerView.getAdapter();
-    }
-
-    @Nullable
-    protected RecyclerView getOwnerRecyclerView() {
-        try {
-            Field field = RecyclerView.ViewHolder.class.getDeclaredField("mOwnerRecyclerView");
-            field.setAccessible(true);
-            return (RecyclerView) field.get(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

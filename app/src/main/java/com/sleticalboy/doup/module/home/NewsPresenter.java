@@ -28,7 +28,7 @@ public class NewsPresenter extends BasePresenter {
 
     private NewsFragment mNewsListView;
     private NewsModel mNewsModel;
-    private NewsListAdapter mAdapter;
+    private NewsListAdapterBase mAdapter;
     private String mDate = "20180117";
 
     public NewsPresenter(Context context, NewsFragment newsListView) {
@@ -41,7 +41,7 @@ public class NewsPresenter extends BasePresenter {
      * 初始化 RecyclerView
      */
     public void initRecyclerView() {
-        mAdapter = new NewsListAdapter(getContext());
+        mAdapter = new NewsListAdapterBase(getContext());
         mNewsListView.setLayoutManager(new LinearLayoutManager(getContext()));
         mNewsListView.setAdapter(mAdapter);
     }

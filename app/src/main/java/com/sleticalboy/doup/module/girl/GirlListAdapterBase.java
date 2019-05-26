@@ -14,7 +14,7 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.girl.GirlBean;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Android Studio.
@@ -23,11 +23,11 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  * @author sleticalboy
  */
 
-public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> {
+public class GirlListAdapterBase extends BaseRecyclerAdapter<GirlBean.ResultsBean> {
 
-    public static final String TAG = "GirlListAdapter";
+    public static final String TAG = "GirlListAdapterBase";
 
-    public GirlListAdapter(Context context) {
+    public GirlListAdapterBase(Context context) {
         super(context);
     }
 
@@ -48,7 +48,7 @@ public class GirlListAdapter extends RecyclerArrayAdapter<GirlBean.ResultsBean> 
         }
 
         @Override
-        public void setData(GirlBean.ResultsBean data) {
+        public void bindData(GirlBean.ResultsBean data) {
             ImageLoader.load(getContext(), imgGirl, data.url);
             String desc = data._id;
             String url = data.url;

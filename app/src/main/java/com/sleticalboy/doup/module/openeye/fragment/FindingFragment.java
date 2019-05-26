@@ -9,7 +9,7 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.module.openeye.activity.RankActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
 
@@ -20,7 +20,7 @@ import butterknife.BindView;
  * @author sleticalboy
  */
 public class FindingFragment extends LazyFragment implements IBaseView,
-        RecyclerArrayAdapter.OnItemClickListener {
+        BaseRecyclerAdapter.OnItemClickListener {
 
     private static final String TAG = "FindingFragment";
 
@@ -42,7 +42,7 @@ public class FindingFragment extends LazyFragment implements IBaseView,
         rvFindings.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
         adapter.setError(R.layout.layout_error)
                 .setOnClickListener(v -> adapter.resumeMore());
         adapter.setOnItemClickListener(this);

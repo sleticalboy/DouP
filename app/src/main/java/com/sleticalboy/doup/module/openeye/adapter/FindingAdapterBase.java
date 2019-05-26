@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.FindingBean;
 import com.sleticalboy.util.ImageLoader;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -17,9 +17,9 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  *
  * @author sleticalboy
  */
-public class FindingAdapter extends RecyclerArrayAdapter<FindingBean> {
+public class FindingAdapterBase extends BaseRecyclerAdapter<FindingBean> {
 
-    public FindingAdapter(Context context) {
+    public FindingAdapterBase(Context context) {
         super(context);
     }
 
@@ -40,7 +40,7 @@ public class FindingAdapter extends RecyclerArrayAdapter<FindingBean> {
         }
 
         @Override
-        public void setData(FindingBean data) {
+        public void bindData(FindingBean data) {
             ImageLoader.load(getContext(), imgPhoto, data.bgPicture);
             tvTitle.setText(data.name);
         }

@@ -9,7 +9,7 @@ import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
 
@@ -20,7 +20,7 @@ import butterknife.BindView;
  * @author sleticalboy
  */
 public class GirlFragment extends BaseFragment implements IBaseView,
-        RecyclerArrayAdapter.OnLoadMoreListener,
+        BaseRecyclerAdapter.OnLoadMoreListener,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "GirlFragment";
@@ -46,7 +46,7 @@ public class GirlFragment extends BaseFragment implements IBaseView,
         rvMeizi.setLayoutManager(new GridLayoutManager(getActivity(), 2));
     }
 
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
         adapter.setError(R.layout.layout_error)
                 .setOnClickListener(v -> adapter.resumeMore());
         adapter.setMore(R.layout.layout_more, this);

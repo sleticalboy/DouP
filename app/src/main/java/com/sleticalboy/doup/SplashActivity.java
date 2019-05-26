@@ -1,5 +1,7 @@
 package com.sleticalboy.doup;
 
+import android.os.Bundle;
+
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.module.main.StartActivity;
@@ -16,7 +18,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     private SplashContract.Presenter mPresenter;
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
         mPresenter = createPresenter();
         boolean isFirst = SPUtils.INSTANCE.getBoolean(ConstantValue.Companion.getKEY_FIRST_LAUNCH(), true);
         if (isFirst) {

@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * <pre>
@@ -40,7 +40,7 @@ public class ContactListFragment extends LazyFragment implements ContactContract
     }
 
     @Override
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
     }
 
     @Override

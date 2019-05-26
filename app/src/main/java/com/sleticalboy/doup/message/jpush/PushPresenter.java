@@ -16,7 +16,7 @@ import com.sleticalboy.base.BasePresenter;
 public class PushPresenter extends BasePresenter implements PushContract.IPushPresenter {
 
     private PushContract.IPushView mPushView;
-    private PushMsgAdapter mAdapter;
+    private PushMsgAdapterBase mAdapter;
 
     public PushPresenter(Context context, PushContract.IPushView pushView) {
         super(context);
@@ -30,7 +30,7 @@ public class PushPresenter extends BasePresenter implements PushContract.IPushPr
     @Override
     public void initRecyclerView() {
         mPushView.setLayoutManager();
-        mPushView.setAdapter(mAdapter = new PushMsgAdapter(getContext()));
+        mPushView.setAdapter(mAdapter = new PushMsgAdapterBase(getContext()));
     }
 
     @Override

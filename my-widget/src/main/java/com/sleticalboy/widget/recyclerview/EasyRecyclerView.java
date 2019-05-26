@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.sleticalboy.widget.R;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 import java.util.ArrayList;
@@ -271,8 +271,8 @@ public class EasyRecyclerView extends FrameLayout {
         mRecycler.setAdapter(adapter);
         adapter.registerAdapterDataObserver(new EasyDataObserver(this));
         //只有Adapter为空时才显示ProgressView
-        if (adapter instanceof RecyclerArrayAdapter) {
-            if (((RecyclerArrayAdapter) adapter).getCount() == 0) {
+        if (adapter instanceof BaseRecyclerAdapter) {
+            if (((BaseRecyclerAdapter) adapter).getCount() == 0) {
                 showProgress();
             } else {
                 showRecycler();

@@ -6,7 +6,7 @@ import android.view.View;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Android Studio.
@@ -16,7 +16,7 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  */
 public class HotFragment extends LazyFragment implements IBaseView,
         SwipeRefreshLayout.OnRefreshListener,
-        RecyclerArrayAdapter.OnItemClickListener {
+        BaseRecyclerAdapter.OnItemClickListener {
 
 //    @BindView(R.id.rv_popular)
 //    EasyRecyclerView rvPopular;
@@ -34,7 +34,7 @@ public class HotFragment extends LazyFragment implements IBaseView,
         //
     }
 
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
         //
     }
 

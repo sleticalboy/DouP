@@ -12,35 +12,35 @@ import android.preference.PreferenceManager
  */
 object SPUtils {
 
-    private var sSharedPreferences: SharedPreferences? = null
+    private var sp: SharedPreferences? = null
 
     fun init(context: Context) {
-        if (sSharedPreferences == null) {
-            sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        if (sp == null) {
+            sp = PreferenceManager.getDefaultSharedPreferences(context)
         }
     }
 
     fun putInt(key: String, value: Int) {
-        sSharedPreferences!!.edit().putInt(key, value).apply()
+        sp!!.edit().putInt(key, value).apply()
     }
 
     fun getInt(key: String, defValue: Int): Int {
-        return sSharedPreferences!!.getInt(key, defValue)
+        return sp!!.getInt(key, defValue)
     }
 
     fun putBoolean(key: String, value: Boolean) {
-        sSharedPreferences!!.edit().putBoolean(key, value).apply()
+        sp!!.edit().putBoolean(key, value).apply()
     }
 
     fun getBoolean(key: String, defValue: Boolean): Boolean {
-        return sSharedPreferences!!.getBoolean(key, defValue)
+        return sp!!.getBoolean(key, defValue)
     }
 
     fun putString(key: String, value: String) {
-        sSharedPreferences!!.edit().putString(key, value).apply()
+        sp!!.edit().putString(key, value).apply()
     }
 
-    fun getString(key: String, defValue: String): String? {
-        return sSharedPreferences!!.getString(key, defValue)
+    fun getString(key: String, defValue: String?): String? {
+        return sp!!.getString(key, defValue)
     }
 }

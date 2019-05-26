@@ -2,6 +2,7 @@ package com.sleticalboy.doup.module.weather;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +85,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
     }
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
 
         mPresenter = new WeatherPresenter(this, this);
 

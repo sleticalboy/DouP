@@ -9,7 +9,7 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
 
@@ -21,9 +21,9 @@ import butterknife.BindView;
  */
 
 public class RecommendFragment extends LazyFragment implements IRecommendView,
-        RecyclerArrayAdapter.OnLoadMoreListener,
+        BaseRecyclerAdapter.OnLoadMoreListener,
         SwipeRefreshLayout.OnRefreshListener,
-        RecyclerArrayAdapter.OnItemClickListener {
+        BaseRecyclerAdapter.OnItemClickListener {
 
     private static final String TAG = "RecommendFragment";
 
@@ -85,7 +85,7 @@ public class RecommendFragment extends LazyFragment implements IRecommendView,
     }
 
     @Override
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
         adapter.setError(R.layout.layout_error)
                 .setOnClickListener(v -> adapter.resumeMore());
         adapter.setMore(R.layout.layout_more, this);

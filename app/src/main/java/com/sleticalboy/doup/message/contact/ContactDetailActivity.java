@@ -2,6 +2,7 @@ package com.sleticalboy.doup.message.contact;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
@@ -30,7 +31,7 @@ public class ContactDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
 
     }
 

@@ -7,7 +7,7 @@ import android.view.View;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
 
@@ -21,7 +21,7 @@ import butterknife.BindView;
  * @author sleticalboy
  */
 public class PushFragment extends LazyFragment implements PushContract.IPushView,
-        RecyclerArrayAdapter.OnItemClickListener {
+        BaseRecyclerAdapter.OnItemClickListener {
 
     @BindView(R.id.rv_push)
     EasyRecyclerView rvPush;
@@ -41,7 +41,7 @@ public class PushFragment extends LazyFragment implements PushContract.IPushView
     }
 
     @Override
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.sleticalboy.doup.http.api;
 
-import com.sleticalboy.doup.http.HttpConfig;
 import com.sleticalboy.doup.bean.girl.GirlBean;
+import com.sleticalboy.doup.http.HttpConfig;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -16,7 +16,13 @@ import retrofit2.http.Path;
  */
 public interface GirlsApi {
 
+    /**
+     * http://gank.io/api/data/福利/10/1
+     *
+     * @param page
+     * @return
+     */
     @Headers({HttpConfig.HEADER_KEY + ":" + HttpConfig.HEADER_VALUE_MEIZI})
-    @GET("api/data/福利/10/{page}") // http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1
+    @GET("api/data/福利/10/{page}")
     Observable<GirlBean> getBeauty(@Path("page") int page);
 }

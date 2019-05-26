@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.ItemListBean;
 import com.sleticalboy.util.ImageLoader;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * Created by Android Studio.
@@ -18,9 +18,9 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  *
  * @author sleticalboy
  */
-public class RecommendAdapter extends RecyclerArrayAdapter<ItemListBean> {
+public class RecommendAdapterBase extends BaseRecyclerAdapter<ItemListBean> {
 
-    public RecommendAdapter(Context context) {
+    public RecommendAdapterBase(Context context) {
         super(context);
     }
 
@@ -45,7 +45,7 @@ public class RecommendAdapter extends RecyclerArrayAdapter<ItemListBean> {
         }
 
         @Override
-        public void setData(ItemListBean data) {
+        public void bindData(ItemListBean data) {
             ImageLoader.load(getContext(), imgRecommend, data.data.cover.feed);
             if (data.data.author != null) {
                 ImageLoader.load(getContext(), imgUserIcon, data.data.author.icon);

@@ -23,7 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,10 +106,10 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         int headerHeight = 0;
 
         if (!mIncludeHeader){
-            if (parent.getAdapter() instanceof RecyclerArrayAdapter){
-                int headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
-                int footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
-                int dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
+            if (parent.getAdapter() instanceof BaseRecyclerAdapter){
+                int headerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getHeaderCount();
+                int footerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getFooterCount();
+                int dataCount = ((BaseRecyclerAdapter) parent.getAdapter()).getCount();
                 if (position<headerCount){
                     return;
                 }
@@ -216,10 +216,10 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
             int adapterPos = parent.getChildAdapterPosition(child);
 
             if (!mIncludeHeader){
-                if (parent.getAdapter() instanceof RecyclerArrayAdapter){
-                    int headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
-                    int footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
-                    int dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
+                if (parent.getAdapter() instanceof BaseRecyclerAdapter){
+                    int headerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getHeaderCount();
+                    int footerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getFooterCount();
+                    int dataCount = ((BaseRecyclerAdapter) parent.getAdapter()).getCount();
                     if (adapterPos<headerCount){
                         continue;
                     }

@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class GirlListPresenter extends BasePresenter {
 
     private GirlModel mGirlModel;
-    private GirlListAdapter mAdapter;
+    private GirlListAdapterBase mAdapter;
     private GirlFragment mGirlView;
     private int mPage = 1;
 
@@ -70,9 +70,10 @@ public class GirlListPresenter extends BasePresenter {
         mGirlModel.clear();
     }
 
+    @Override
     public void initRecyclerView() {
         mGirlView.setLayoutManager();
-        mAdapter = new GirlListAdapter(getContext());
+        mAdapter = new GirlListAdapterBase(getContext());
         mGirlView.setAdapter(mAdapter);
     }
 

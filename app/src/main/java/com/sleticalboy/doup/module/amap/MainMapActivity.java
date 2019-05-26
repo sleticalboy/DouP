@@ -2,6 +2,7 @@ package com.sleticalboy.doup.module.amap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,7 +63,7 @@ public class MainMapActivity extends CheckPermissionsActivity implements
     }
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
         mPresenter = new MainMapPresenter(this, this);
         mAMap = mapView.getMap();
         mUiSettings = mAMap.getUiSettings();

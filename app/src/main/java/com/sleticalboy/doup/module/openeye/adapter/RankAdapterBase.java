@@ -10,7 +10,7 @@ import com.sleticalboy.doup.bean.openeye.DataBean;
 import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Android Studio.
@@ -19,9 +19,9 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  * @author sleticalboy
  */
 
-public class RankAdapter extends RecyclerArrayAdapter<DataBean> {
+public class RankAdapterBase extends BaseRecyclerAdapter<DataBean> {
 
-    public RankAdapter(Context context) {
+    public RankAdapterBase(Context context) {
         super(context);
     }
 
@@ -44,7 +44,7 @@ public class RankAdapter extends RecyclerArrayAdapter<DataBean> {
         }
 
         @Override
-        public void setData(DataBean data) {
+        public void bindData(DataBean data) {
             tvTitle.setText(data.title);
             ImageLoader.load(getContext(), imgPhoto, data.cover.feed);
             tvTime.setText(String.format("%s / %s", data.category, CommonUtils.wrapperTime(data.duration)));

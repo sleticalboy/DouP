@@ -17,10 +17,10 @@ public interface EventDelegate {
     void pauseLoadMore();
     void resumeLoadMore();
 
-    void setMore(View view, RecyclerArrayAdapter.OnMoreListener listener);
-    void setNoMore(View view, RecyclerArrayAdapter.OnNoMoreListener listener);
-    void setErrorMore(View view, RecyclerArrayAdapter.OnErrorListener listener);
-    void setMore(int res, RecyclerArrayAdapter.OnMoreListener listener);
-    void setNoMore(int res, RecyclerArrayAdapter.OnNoMoreListener listener);
-    void setErrorMore(int res, RecyclerArrayAdapter.OnErrorListener listener);
+    void setMore(View view, BaseRecyclerAdapter.OnMoreListener listener);
+    void setNoMore(View view, BaseRecyclerAdapter.OnNoMoreListener listener);
+    void setErrorMore(View view, BaseRecyclerAdapter.OnErrorListener listener);
+    void setMore(int res, BaseRecyclerAdapter.OnMoreListener listener);
+    void setNoMore(int res, BaseRecyclerAdapter.OnNoMoreListener listener);
+    void setErrorMore(int res, BaseRecyclerAdapter.OnErrorListener listener);
 }

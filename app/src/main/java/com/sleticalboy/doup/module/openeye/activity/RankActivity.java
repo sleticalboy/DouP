@@ -2,6 +2,7 @@ package com.sleticalboy.doup.module.openeye.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -11,7 +12,7 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.fragment.IRecommendView;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
 
@@ -23,8 +24,8 @@ import butterknife.BindView;
  */
 public class RankActivity extends BaseActivity implements IRecommendView,
         SwipeRefreshLayout.OnRefreshListener,
-        RecyclerArrayAdapter.OnLoadMoreListener,
-        RecyclerArrayAdapter.OnItemClickListener {
+        BaseRecyclerAdapter.OnLoadMoreListener,
+        BaseRecyclerAdapter.OnItemClickListener {
 
     private static final String TAG = "RankActivity";
 
@@ -47,7 +48,7 @@ public class RankActivity extends BaseActivity implements IRecommendView,
     }
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
         mPresenter = new RankPresenter(this, this);
         mPresenter.initRecyclerView();
         mPresenter.initData(mName);
@@ -59,7 +60,7 @@ public class RankActivity extends BaseActivity implements IRecommendView,
     }
 
     @Override
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
         adapter.setError(R.layout.layout_error)
                 .setOnClickListener(v -> adapter.resumeMore());
         adapter.setMore(R.layout.layout_more, this);

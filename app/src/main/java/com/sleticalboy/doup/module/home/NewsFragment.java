@@ -8,7 +8,7 @@ import com.sleticalboy.base.BaseFragment;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,8 +21,8 @@ import butterknife.OnClick;
  */
 
 public class NewsFragment extends BaseFragment implements IBaseView,
-        RecyclerArrayAdapter.OnItemClickListener,
-        RecyclerArrayAdapter.OnLoadMoreListener,
+        BaseRecyclerAdapter.OnItemClickListener,
+        BaseRecyclerAdapter.OnLoadMoreListener,
         SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "NewsFragment";
@@ -43,7 +43,7 @@ public class NewsFragment extends BaseFragment implements IBaseView,
         rvNews.setLayoutManager(layoutManager);
     }
 
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(BaseRecyclerAdapter adapter) {
         adapter.setError(R.layout.layout_error)
                 .setOnClickListener(v -> adapter.resumeMore());
         adapter.setMore(R.layout.layout_more, this);

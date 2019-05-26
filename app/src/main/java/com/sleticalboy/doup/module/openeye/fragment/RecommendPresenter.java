@@ -8,7 +8,7 @@ import com.sleticalboy.doup.bean.openeye.ItemListBean;
 import com.sleticalboy.doup.bean.openeye.RecommendBean;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.model.openeye.OpeneyeModel;
-import com.sleticalboy.doup.module.openeye.adapter.RecommendAdapter;
+import com.sleticalboy.doup.module.openeye.adapter.RecommendAdapterBase;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -33,7 +33,7 @@ public class RecommendPresenter extends BasePresenter {
 
     private IRecommendView mRecommendView;
     private OpeneyeModel mOpeneyeModel;
-    private RecommendAdapter mAdapter;
+    private RecommendAdapterBase mAdapter;
     private String mDate;
 
     public RecommendPresenter(Context context, IRecommendView recommendView) {
@@ -123,7 +123,7 @@ public class RecommendPresenter extends BasePresenter {
 
     public void initRecyclerView() {
         mRecommendView.setLayoutManager();
-        mRecommendView.setAdapter(mAdapter = new RecommendAdapter(getContext()));
+        mRecommendView.setAdapter(mAdapter = new RecommendAdapterBase(getContext()));
     }
 
     @Override

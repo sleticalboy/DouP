@@ -11,7 +11,7 @@ import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.news.NewsBean;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Android Studio.
@@ -19,11 +19,11 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  *
  * @author sleticalboy
  */
-public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> {
+public class NewsListAdapterBase extends BaseRecyclerAdapter<NewsBean.StoriesBean> {
 
-    private static final String TAG = "NewsListAdapter";
+    private static final String TAG = "NewsListAdapterBase";
 
-    public NewsListAdapter(Context context) {
+    public NewsListAdapterBase(Context context) {
         super(context);
     }
 
@@ -46,7 +46,7 @@ public class NewsListAdapter extends RecyclerArrayAdapter<NewsBean.StoriesBean> 
         }
 
         @Override
-        public void setData(NewsBean.StoriesBean data) {
+        public void bindData(NewsBean.StoriesBean data) {
             Log.d(TAG, data.title);
             newsTitle.setText(data.title);
             ImageLoader.load(getContext(), newsImg, data.images.get(0));

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 import com.sleticalboy.widget.recyclerview.swipe.CircleImageView;
 
 /**
@@ -16,9 +16,9 @@ import com.sleticalboy.widget.recyclerview.swipe.CircleImageView;
  *
  * @author sleticalboy
  */
-public class ChatMsgAdapter extends RecyclerArrayAdapter<ChatMsgBean> {
+public class ChatMsgAdapterBase extends BaseRecyclerAdapter<ChatMsgBean> {
 
-    public ChatMsgAdapter(Context context) {
+    public ChatMsgAdapterBase(Context context) {
         super(context);
     }
 
@@ -43,7 +43,7 @@ public class ChatMsgAdapter extends RecyclerArrayAdapter<ChatMsgBean> {
         }
 
         @Override
-        public void setData(ChatMsgBean data) {
+        public void bindData(ChatMsgBean data) {
             if (data == null) {
                 return;
             }

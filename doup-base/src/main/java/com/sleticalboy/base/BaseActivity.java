@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         beforeViews();
         setContentView(attachLayout());
         unbinder = ButterKnife.bind(this);
-        initView();
+        initView(savedInstanceState);
         afterViews();
     }
 
@@ -60,8 +60,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 3, View 初始化时的逻辑
+     * @param savedInstanceState
      */
-    protected abstract void initView();
+    protected abstract void initView(final Bundle savedInstanceState);
 
     /**
      * 4, View 初始化完成之后的逻辑

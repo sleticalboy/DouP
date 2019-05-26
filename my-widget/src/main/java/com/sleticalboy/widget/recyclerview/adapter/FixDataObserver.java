@@ -15,8 +15,8 @@ public class FixDataObserver extends RecyclerView.AdapterDataObserver {
 
     @Override
     public void onItemRangeInserted(int positionStart, int itemCount) {
-        if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-            RecyclerArrayAdapter adapter = (RecyclerArrayAdapter) recyclerView.getAdapter();
+        if (recyclerView.getAdapter() instanceof BaseRecyclerAdapter) {
+            BaseRecyclerAdapter adapter = (BaseRecyclerAdapter) recyclerView.getAdapter();
             if (adapter.getFooterCount() > 0 && adapter.getCount() == itemCount) {
                 recyclerView.scrollToPosition(0);
             }

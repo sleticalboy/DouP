@@ -1,11 +1,12 @@
 package com.sleticalboy.doup.message.jchat;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * <pre>
@@ -31,7 +32,7 @@ public class ChatFragment extends LazyFragment implements IBaseListView {
     }
 
     @Override
-    public void setAdapter(RecyclerArrayAdapter adapter) {
+    public void setAdapter(@NonNull BaseRecyclerAdapter adapter) {
     }
 
     @Override

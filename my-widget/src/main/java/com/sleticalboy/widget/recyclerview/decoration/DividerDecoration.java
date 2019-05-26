@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 public class DividerDecoration extends RecyclerView.ItemDecoration {
 
@@ -46,9 +46,9 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         int position = parent.getChildAdapterPosition(view);
         int orientation = 0;
         int headerCount = 0, footerCount = 0;
-        if (parent.getAdapter() instanceof RecyclerArrayAdapter) {
-            headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
-            footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
+        if (parent.getAdapter() instanceof BaseRecyclerAdapter) {
+            headerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getHeaderCount();
+            footerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getFooterCount();
         }
 
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
@@ -80,10 +80,10 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         int orientation = 0;
         int headerCount = 0, footerCount = 0, dataCount;
 
-        if (parent.getAdapter() instanceof RecyclerArrayAdapter) {
-            headerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getHeaderCount();
-            footerCount = ((RecyclerArrayAdapter) parent.getAdapter()).getFooterCount();
-            dataCount = ((RecyclerArrayAdapter) parent.getAdapter()).getCount();
+        if (parent.getAdapter() instanceof BaseRecyclerAdapter) {
+            headerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getHeaderCount();
+            footerCount = ((BaseRecyclerAdapter) parent.getAdapter()).getFooterCount();
+            dataCount = ((BaseRecyclerAdapter) parent.getAdapter()).getCount();
         } else {
             dataCount = parent.getAdapter().getItemCount();
         }

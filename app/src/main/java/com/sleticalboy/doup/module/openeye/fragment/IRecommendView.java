@@ -2,7 +2,7 @@ package com.sleticalboy.doup.module.openeye.fragment;
 
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 /**
  * <pre>
@@ -17,7 +17,7 @@ public interface IRecommendView extends IBaseView {
 
     void setLayoutManager();
 
-    void setAdapter(RecyclerArrayAdapter adapter);
+    void setAdapter(BaseRecyclerAdapter adapter);
 
     void showVideoDetail(VideoBean videoBean);
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.model.openeye.OpeneyeModel;
-import com.sleticalboy.doup.module.openeye.adapter.FindingAdapter;
+import com.sleticalboy.doup.module.openeye.adapter.FindingAdapterBase;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -22,7 +22,7 @@ public class FindingPresenter extends BasePresenter {
 
     private FindingFragment mFindingView;
     private OpeneyeModel mOpeneyeModel;
-    private FindingAdapter mAdapter;
+    private FindingAdapterBase mAdapter;
 
     public FindingPresenter(Context context, FindingFragment findingView) {
         super(context);
@@ -51,7 +51,7 @@ public class FindingPresenter extends BasePresenter {
 
     public void initRecyclerView() {
         mFindingView.setLayoutManager();
-        mFindingView.setAdapter(mAdapter = new FindingAdapter(getContext()));
+        mFindingView.setAdapter(mAdapter = new FindingAdapterBase(getContext()));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.sleticalboy.doup.module.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class NewsDetailActivity extends BaseActivity implements IBaseView {
     private NewsDetailPresenter mPresenter;
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
         mPresenter = new NewsDetailPresenter(this, this);
         mPresenter.getNewsData(String.valueOf(id));
     }

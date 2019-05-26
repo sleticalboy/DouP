@@ -3,6 +3,7 @@ package com.sleticalboy.doup.module.girl;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -30,22 +31,22 @@ import butterknife.OnClick;
  * @author sleticalboy
  */
 public class GirlActivity extends BaseActivity implements IBaseView {
-
+    
     public static final String TAG = "GirlActivity";
     public static final String IMG_DESC = "img_desc";
     public static final String IMG_URL = "img_url";
     public static final String TRANSIT_PIC = "picture";
-
+    
     @BindView(R.id.img_girl)
     ImageView imgGirl;
     @BindView(R.id.btn_save_img)
     FloatingActionButton btnSaveImg;
-
+    
     private String imgDesc;
     private String imgUrl;
-
+    
     private GirlPresenter mPresenter;
-
+    
     @Override
     protected void beforeViews() {
         Intent intent = getIntent();
@@ -54,61 +55,61 @@ public class GirlActivity extends BaseActivity implements IBaseView {
             imgDesc = intent.getStringExtra(IMG_DESC);
         }
     }
-
+    
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
         mPresenter = new GirlPresenter(this, this);
-
+        
         ViewCompat.setTransitionName(imgGirl, TRANSIT_PIC);
         // FIXME: 1/15/18 加载圆角图片
         ImageLoader.loadPhotoView(this, imgGirl, imgUrl);
     }
-
+    
     @Override
     protected int attachLayout() {
         return R.layout.girl_activity_girl_detial;
     }
-
+    
     @Override
     protected void onDestroy() {
         ImageLoader.clear(imgGirl);
         super.onDestroy();
     }
-
+    
     public static void actionStart(Context context, Intent intent) {
         context.startActivity(intent);
     }
-
+    
     public static Intent newIntent(Context context, String url, String desc) {
         Intent intent = new Intent(context, GirlActivity.class);
         intent.putExtra(IMG_URL, url);
         intent.putExtra(IMG_DESC, desc);
         return intent;
     }
-
-    @OnClick(R.id.btn_save_img)
+    
+    @OnClick({R.id.btn_save_img, R.id.img_girl})
     public void onViewClicked(View view) {
+        if (view.getId() == R.id.img_girl) {
+            mPresenter.exitPage();
+            return;
+        }
         Snackbar.make(view, "Save Image", Snackbar.LENGTH_LONG)
                 .setAction("OK", v -> mPresenter.saveImage(imgGirl, imgDesc))
                 .show();
     }
-
-
+    
     @Override
     public void onLoad() {
-
     }
-
+    
     @Override
     public void onLoadFinished() {
-
     }
-
+    
     @Override
     public void onNetError() {
-
     }
-
+    
     public void updateGallery(File file) {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(Uri.fromFile(file));

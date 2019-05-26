@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.sleticalboy.doup.bean.openeye.DataBean;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
 
 /**
  * <pre>
@@ -16,9 +16,9 @@ import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
  *
  * @author sleticalboy
  */
-public class HotAdapter extends RecyclerArrayAdapter<DataBean> {
+public class HotAdapterBase extends BaseRecyclerAdapter<DataBean> {
 
-    public HotAdapter(Context context) {
+    public HotAdapterBase(Context context) {
         super(context);
     }
 
@@ -33,7 +33,7 @@ public class HotAdapter extends RecyclerArrayAdapter<DataBean> {
         }
 
         @Override
-        public void setData(DataBean data) {
+        public void bindData(DataBean data) {
 
         }
     }

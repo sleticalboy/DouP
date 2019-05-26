@@ -2,17 +2,17 @@ package com.sleticalboy.widget.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 
 public class EasyDataObserver extends RecyclerView.AdapterDataObserver {
     
     private EasyRecyclerView recyclerView;
-    private RecyclerArrayAdapter adapter;
+    private BaseRecyclerAdapter adapter;
 
     public EasyDataObserver(EasyRecyclerView recyclerView) {
         this.recyclerView = recyclerView;
-        if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-            adapter = (RecyclerArrayAdapter) recyclerView.getAdapter();
+        if (recyclerView.getAdapter() instanceof BaseRecyclerAdapter) {
+            adapter = (BaseRecyclerAdapter) recyclerView.getAdapter();
         }
     }
 
@@ -60,8 +60,8 @@ public class EasyDataObserver extends RecyclerView.AdapterDataObserver {
     //自动更改Container的样式
     private void update() {
         int count;
-        if (recyclerView.getAdapter() instanceof RecyclerArrayAdapter) {
-            count = ((RecyclerArrayAdapter) recyclerView.getAdapter()).getCount();
+        if (recyclerView.getAdapter() instanceof BaseRecyclerAdapter) {
+            count = ((BaseRecyclerAdapter) recyclerView.getAdapter()).getCount();
         } else {
             count = recyclerView.getAdapter().getItemCount();
         }

@@ -39,42 +39,6 @@ public class ImageLoader {
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .listener(new RequestListener<String, GlideDrawable>() {
-                    @Override
-                    public boolean onException(Exception e,
-                                               String model,
-                                               Target<GlideDrawable> target,
-                                               boolean isFirstResource) {
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastUtils.INSTANCE.showToast(context, "加载失败，请稍后重试");
-                            }
-                        });
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource,
-                                                   String model,
-                                                   Target<GlideDrawable> target,
-                                                   boolean isFromMemoryCache,
-                                                   boolean isFirstResource) {
-                        new PhotoViewAttacher(targetView);
-                        return false;
-                    }
-                })
-                .bitmapTransform(new BitmapTransformation(context) {
-                    @Override
-                    public String getId() {
-                        return null;
-                    }
-
-                    @Override
-                    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-                        return null;
-                    }
-                })
                 .centerCrop()
                 .crossFade()
                 .into(targetView);

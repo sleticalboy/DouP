@@ -3,6 +3,7 @@ package com.sleticalboy.doup.module.main;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,7 +28,7 @@ public class AboutMeActivity extends BaseActivity implements IBaseView {
     WebView webView;
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
         initWebView();
     }
 

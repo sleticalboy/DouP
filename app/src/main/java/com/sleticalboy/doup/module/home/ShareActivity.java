@@ -1,5 +1,7 @@
 package com.sleticalboy.doup.module.home;
 
+import android.os.Bundle;
+
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
@@ -31,7 +33,7 @@ public class ShareActivity extends BaseActivity implements IBaseView {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(final Bundle savedInstanceState) {
 
     }
 

@@ -63,4 +63,8 @@ class GirlPresenter extends BasePresenter {
             e.printStackTrace();
         }
     }
+    
+    public void exitPage() {
+        mGirlView.finish();
+    }
 }

@@ -6,7 +6,7 @@ import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.bean.openeye.DataBean;
 import com.sleticalboy.doup.bean.openeye.HotBean;
 import com.sleticalboy.doup.model.openeye.OpeneyeModel;
-import com.sleticalboy.doup.module.openeye.adapter.RankAdapter;
+import com.sleticalboy.doup.module.openeye.adapter.RankAdapterBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class HotPresenter extends BasePresenter {
 
     private HotFragment mHotView;
     private OpeneyeModel mOpeneyeModel;
-    private RankAdapter mAdapter;
+    private RankAdapterBase mAdapter;
     private List<DataBean> mData = new ArrayList<>();
 
     public HotPresenter(Context context, HotFragment hotView) {

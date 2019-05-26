@@ -1,6 +1,6 @@
 package com.sleticalboy.base
 
-import com.sleticalboy.widget.recyclerview.adapter.RecyclerArrayAdapter
+import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter
 
 /**
  * <pre>
@@ -16,7 +16,7 @@ interface IBaseListView : IBaseView {
     /**
      * 设置适配器
      */
-    fun setAdapter(adapter: RecyclerArrayAdapter<*>)
+    fun setAdapter(adapterBase: BaseRecyclerAdapter<*>)
 
     /**
      * 设置 LayoutManager
