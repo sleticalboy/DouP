@@ -8,7 +8,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        minSdkVersion defConfigs.minSdkVersion
+        minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion defConfigs.targetSdkVersion
         versionCode defConfigs.versionCode
         versionName defConfigs.versionName
@@ -31,7 +31,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$rootProject.ext.v_of_android_support"
     // butter knife
-    implementation "com.jakewharton:butterknife:$rootProject.ext.v_of_butter_knife"
+    annotationProcessor "com.jakewharton:butterknife:$rootProject.ext.v_of_butter_knife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.v_of_butter_knife"
     implementation project(':my-widget')
     implementation project(':my-utils')
