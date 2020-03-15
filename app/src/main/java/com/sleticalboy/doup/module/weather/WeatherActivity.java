@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
 import com.sleticalboy.annotation.BindView;
@@ -26,6 +24,7 @@ import com.sleticalboy.util.RxBus;
 import com.sleticalboy.util.SPUtils;
 import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
+import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 import io.reactivex.Observable;
 

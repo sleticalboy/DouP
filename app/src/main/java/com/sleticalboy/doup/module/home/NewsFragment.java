@@ -101,7 +101,7 @@ public class NewsFragment extends BaseFragment implements IBaseView,
     }
 
     @OnClick(R.id.fab_top)
-    public void onViewClicked() {
+    public void onViewClicked(View view) {
         scrollToPosition(0);
     }
 }

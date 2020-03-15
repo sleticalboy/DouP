@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -95,7 +96,7 @@ public class NewsDetailActivity extends BaseActivity implements IBaseView {
     }
 
     @OnClick(R.id.fab_share)
-    public void onViewClicked() {
+    public void onViewClicked(View view) {
         mPresenter.shareNews();
     }
 

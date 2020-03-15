@@ -14,40 +14,41 @@ import java.lang.reflect.Proxy;
 
 public final class ButterKnife {
 
-    private final static Class[] HOLDER = {View.OnClickListener.class};
+    private final static Class[] HOLDER =
+            {View.OnClickListener.class, View.OnLongClickListener.class};
 
-    public static void bind(@NonNull Object obj) {
+    public static void bind(@NonNull Object host) {
         try {
-            // when the obj is activity, the obj is activity too.
-            // when the obj is fragment, the obj is view
-            final Object host;
-            if (obj instanceof Fragment) {
-                if ((host = ((Fragment) obj).getView()) == null) {
+            // when the host is activity, the host is activity too.
+            // when the host is fragment, the host is view
+            final Object root;
+            if (host instanceof Fragment) {
+                if ((root = ((Fragment) host).getView()) == null) {
                     throw new IllegalArgumentException("root must be a View object.");
                 }
             } else {
-                // if (obj instanceof Activity || obj instanceof Dialog) {}
-                host = obj;
+                // if (host instanceof Activity || host instanceof Dialog) {}
+                root = host;
             }
-            bindViews(obj.getClass().getDeclaredFields(), host);
-            bindClicks(obj.getClass().getDeclaredMethods(), host);
+            bindViews(host.getClass().getDeclaredFields(), host, root);
+            bindClicks(host.getClass().getDeclaredMethods(), host, root);
         } catch (Throwable e) {
-            Log.d("ButterKnife", "bind() error obj = " + obj, e);
+            Log.w("ButterKnife", "bind() error with host = " + host, e);
         }
     }
 
-    private static void bindViews(final Field[] fields, final Object host)
+    private static void bindViews(final Field[] fields, final Object host, final Object root)
             throws IllegalAccessException {
         for (final Field field : fields) {
             final BindView bindView = field.getAnnotation(BindView.class);
             if (bindView != null && bindView.value() != -1) {
                 field.setAccessible(true);
-                field.set(host, valueOf(host, bindView.value()));
+                field.set(host, valueOf(root, bindView.value()));
             }
         }
     }
 
-    private static void bindClicks(final Method[] methods, Object host) {
+    private static void bindClicks(final Method[] methods, final Object host, final Object root) {
         if (host == null) {
             throw new NullPointerException("bindViews: the host is null.");
         }
@@ -55,39 +56,77 @@ public final class ButterKnife {
             final OnClick onClick = method.getAnnotation(OnClick.class);
             if (onClick != null && onClick.value().length != 0) {
                 for (final int id : onClick.value()) {
-                    // invokeWhenClick(method, valueOf(host, id));
-                    setOnClickListener(method, valueOf(host, id));
+                    // invokeWhenClick(method, host, valueOf(root, id));
+                    setOnClickListener(method, host, valueOf(root, id));
+                }
+            }
+            final OnLongClick onLongClick = method.getAnnotation(OnLongClick.class);
+            if (onLongClick != null && onLongClick.value().length != 0) {
+                for (final int id : onLongClick.value()) {
+                    // invokeWhenClick(method, host, valueOf(root, id));
+                    setOnClickListener(method, host, valueOf(root, id));
                 }
             }
         }
     }
 
-    private static void setOnClickListener(Method action, final View target) {
-        if (target == null) {
+    private static void setOnClickListener(Method action, final Object host, final View target) {
+        if (target == null || host == null) {
             return;
         }
-        final Object listener = Proxy.newProxyInstance(target.getContext().getClassLoader(),
-                HOLDER, (proxy, method, args) -> action.invoke(target, target));
         try {
-            View.class.getDeclaredMethod("setOnClickListener", HOLDER[0])
-                    .invoke(target, listener);
+            action.setAccessible(true);
+            final Object listener = Proxy.newProxyInstance(target.getContext().getClassLoader(),
+                    HOLDER, (proxy, method, args) -> {
+                        if ("onClick".equals(method.getName())) {
+                            if (args == null || args.length != 1) {
+                                throw new IllegalArgumentException("method " + method.getName()
+                                        + " only can have one argument.");
+                            }
+                            Log.d("ButterKnife", "onClick() view = " + args[0]);
+                            action.invoke(host, args[0]);
+                        } else if ("onLongClick".equals(method.getName())) {
+                            if (args == null || args.length != 1) {
+                                throw new IllegalArgumentException("method " + method.getName()
+                                        + " only can have one argument.");
+                            }
+                            Log.d("ButterKnife", "onLongClick() view = " + args[0] + ", action = " + method);
+                            action.invoke(host, args[0]);
+                            // TODO: 20-3-16 返回值不生效，长按事件逻辑未能成功处理?
+                            return Boolean.TRUE;
+                        }
+                        return null;
+                    }
+            );
+            target.setOnClickListener(((View.OnClickListener) listener));
+            target.setOnLongClickListener(((View.OnLongClickListener) listener));
         } catch (Throwable e) {
-            Log.d("ButterKnife", "setOnClickListener() error method = " + action
+            Log.w("ButterKnife", "setOnClickListener() error method = " + action
                     + ", targetId = " + target.getId(), e);
         }
     }
 
-    private static void invokeWhenClick(final Method method, final View target) {
+    private static void invokeWhenClick(final Method method, final Object host, final View target) {
         if (target == null) {
             return;
         }
         target.setOnClickListener(v -> {
             try {
-                method.invoke(v, v);
+                method.invoke(host, target);
             } catch (Throwable e) {
-                Log.d("ButterKnife", "invokeWhenClick() error method = " + method
+                Log.w("ButterKnife", "invokeWhenClick() error method = " + method
                         + ", targetId = " + 0, e);
             }
+        });
+        target.setOnLongClickListener(v -> {
+            try {
+                method.invoke(host, target);
+            } catch (Throwable e) {
+                Log.w("ButterKnife", "invokeWhenClick() error method = " + method
+                        + ", targetId = " + 0, e);
+                return false;
+            }
+            return true;
         });
     }
 

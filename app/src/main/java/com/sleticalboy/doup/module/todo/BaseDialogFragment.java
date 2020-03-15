@@ -26,11 +26,14 @@ public abstract class BaseDialogFragment extends DialogFragment {
                                    @Nullable Bundle savedInstanceState) {
         final Window window = getDialog().getWindow();
         beforeViews(window);
-        View rootView = inflateRootView(inflater, window.findViewById(android.R.id.content), savedInstanceState);
-        ButterKnife.bind(this, rootView);
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        return inflateRootView(inflater, window.findViewById(android.R.id.content), savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+        ButterKnife.bind(this);
         setupViews();
-        return rootView;
     }
 
     /**

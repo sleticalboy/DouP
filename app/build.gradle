@@ -12,10 +12,10 @@ def final printConfig(Map map, String tag) {
 android {
     printConfig(rootProject.ext.buildConfig, 'build')
     // rootProject.ext.buildConfig.get { key, value -> key value }
-    compileSdkVersion  COMPILE_SDK_VERSION as int
+    compileSdkVersion COMPILE_SDK_VERSION as int
     // as default, it is based on the latest compileSdkVersion
     // such as: 29 -> 29.0.3
-    buildToolsVersion  BUILD_TOOLS_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.sleticalboy.doup"

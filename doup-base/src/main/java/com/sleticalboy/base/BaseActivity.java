@@ -25,20 +25,21 @@ import com.sleticalboy.util.OSUtils;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
+    protected final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
     protected LifecycleCallback lifecycleCallback =
             LifecycleController.Companion.getInstance().getLifecycleCallback();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+        debug("onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         handleStatusBar(R.color.status_bar_color, true, false);
         super.onCreate(savedInstanceState);
         ActivityController.INSTANCE.add(this);
         lifecycleCallback.onCreate(this, savedInstanceState);
         beforeViews();
         setContentView(attachLayout());
-        ButterKnife.bind(this, null);
+        ButterKnife.bind(this);
         initView(savedInstanceState);
         afterViews();
     }
@@ -71,21 +72,21 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "onStart() called");
+        debug("onStart() called");
         super.onStart();
         lifecycleCallback.onActivityStart(this);
     }
 
     @Override
     protected void onStop() {
-        Log.d(TAG, "onStop() called");
+        debug("onStop() called");
         super.onStop();
         lifecycleCallback.onActivityStop(this);
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "onDestroy() called");
+        debug("onDestroy() called");
         super.onDestroy();
         lifecycleCallback.onActivityDestroy(this);
         ActivityController.INSTANCE.remove(this);
@@ -93,7 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
+        debug("onSaveInstanceState() called with: outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
         lifecycleCallback.onActivitySaveInstanceState(this, outState);
     }
@@ -119,7 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.d(TAG, "onRestoreInstanceState() called with: savedInstanceState = [" + savedInstanceState + "]");
+        debug("onRestoreInstanceState() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onRestoreInstanceState(savedInstanceState);
         lifecycleCallback.onActivityRestoreInstanceState(this, savedInstanceState);
     }
@@ -144,14 +145,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause() called");
+        debug("onPause() called");
         super.onPause();
         lifecycleCallback.onActivityPause(this);
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume() called");
+        debug("onResume() called");
         super.onResume();
         lifecycleCallback.onActivityResume(this);
     }
@@ -172,5 +173,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected final String urlPre() {
 //        return mUrlSchema + mUrlMiddle;
         return ConstantValue.URL_PRE;
+    }
+
+    private void debug(String msg) {
+        if (DBG) {
+            Log.d(TAG, msg);
+        }
     }
 }

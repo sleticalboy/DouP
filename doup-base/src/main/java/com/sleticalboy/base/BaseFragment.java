@@ -21,7 +21,6 @@ import com.sleticalboy.annotation.ButterKnife;
  *
  * @author sleticalboy
  */
-
 public abstract class BaseFragment extends Fragment {
 
     protected final String TAG = getClass().getSimpleName();
@@ -45,14 +44,7 @@ public abstract class BaseFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         debug("onCreateView() called with: inflater = [" + inflater + "], container = [" + container
                 + "], savedInstanceState = [" + savedInstanceState + "]");
-        prepareTask();
-
-        View rootView = inflater.inflate(attachLayout(), null);
-        ButterKnife.bind(this, rootView);
-
-        initView(rootView);
-
-        return rootView;
+        return inflater.inflate(attachLayout(), null);
     }
 
     protected void prepareTask() {
@@ -97,16 +89,18 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         debug("onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
                 + savedInstanceState + "]");
-        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this);
+        initView(view);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         debug("onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onActivityCreated(savedInstanceState);
+        prepareTask();
     }
 
     @Override
@@ -165,7 +159,7 @@ public abstract class BaseFragment extends Fragment {
 
     private void debug(String msg) {
         if (DBG) {
-            Log.d("BaseFragment", msg);
+            Log.d(TAG, msg);
         }
     }
 }

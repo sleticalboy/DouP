@@ -155,7 +155,7 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
     }
 
     @OnClick(R.id.btn_cache)
-    public void onViewClicked() {
+    public void onViewClicked(View view) {
         String url = mData.playUrl;
         String saveName = mData.title;
         mPresenter.downloadVideo(url, saveName);

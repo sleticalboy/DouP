@@ -24,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.annotation.OnClick;
+import com.sleticalboy.annotation.OnLongClick;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.jpush.activity.IndexActivity;
@@ -256,6 +257,13 @@ public class StartActivity extends BaseActivity {
 //                ActivityController.finishAll();
 //                android.os.Process.killProcess(android.os.Process.myPid());
                 break;
+        }
+    }
+
+    @OnLongClick({R.id.btn_change_theme})
+    private void onViewLongClick(View view) {
+        if (view.getId() == R.id.btn_change_theme) {
+            ToastUtils.INSTANCE.showToast(this, "change theme long click.");
         }
     }
 }
