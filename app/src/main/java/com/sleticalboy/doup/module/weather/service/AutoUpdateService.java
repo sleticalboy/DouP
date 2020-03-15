@@ -7,16 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.sleticalboy.base.config.ConstantValue;
+import com.sleticalboy.doup.bean.weather.WeatherBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
-import com.sleticalboy.doup.bean.weather.WeatherBean;
 import com.sleticalboy.doup.model.weather.WeatherModel;
 import com.sleticalboy.util.SPUtils;
 import com.sleticalboy.util.ToastUtils;
@@ -80,7 +81,7 @@ public class AutoUpdateService extends Service {
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     String bingPic = responseBody.string();
-                    SPUtils.INSTANCE.putString(ConstantValue.Companion.getKEY_BG(), bingPic);
+                    SPUtils.INSTANCE.putString(ConstantValue.KEY_BG, bingPic);
                 }
             }
         });
@@ -88,7 +89,7 @@ public class AutoUpdateService extends Service {
 
     // 更新天气
     private void updateWeather() {
-        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER(), null);
+        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER, null);
         if (weatherStr != null) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             String weatherId = "";
@@ -96,7 +97,7 @@ public class AutoUpdateService extends Service {
                 weatherId = weatherBean.HeWeather.get(0).basic.weatherId;
             }
             if (TextUtils.isEmpty(weatherId)) {
-                weatherId = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER_ID(), null);
+                weatherId = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER_ID, null);
             }
             if (TextUtils.isEmpty(weatherId)) {
                 return;
@@ -106,7 +107,7 @@ public class AutoUpdateService extends Service {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(weather -> {
                         Log.d("AutoUpdateService", "from service -->");
-                        SPUtils.INSTANCE.putString(ConstantValue.Companion.getKEY_WEATHER(), new Gson().toJson(weather));
+                        SPUtils.INSTANCE.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weather));
                     });
         }
     }

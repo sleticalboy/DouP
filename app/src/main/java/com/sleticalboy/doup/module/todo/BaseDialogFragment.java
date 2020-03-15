@@ -1,21 +1,17 @@
 package com.sleticalboy.doup.module.todo;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.sleticalboy.doup.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import com.sleticalboy.annotation.ButterKnife;
 
 /**
  * Created by Android Studio.
@@ -25,15 +21,13 @@ import butterknife.Unbinder;
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
-    Unbinder unbinder;
-
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                                    @Nullable Bundle savedInstanceState) {
         final Window window = getDialog().getWindow();
         beforeViews(window);
         View rootView = inflateRootView(inflater, window.findViewById(android.R.id.content), savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         setupViews();
         return rootView;
@@ -74,6 +68,5 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

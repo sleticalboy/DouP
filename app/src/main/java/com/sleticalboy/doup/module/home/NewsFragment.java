@@ -1,17 +1,17 @@
 package com.sleticalboy.doup.module.home;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.sleticalboy.annotation.BindView;
+import com.sleticalboy.annotation.OnClick;
 import com.sleticalboy.base.BaseFragment;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
-
-import butterknife.BindView;
-import butterknife.OnClick;
+import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 /**
  * Created by Android Studio.
@@ -28,7 +28,7 @@ public class NewsFragment extends BaseFragment implements IBaseView,
     private static final String TAG = "NewsFragment";
 
     @BindView(R.id.rv_news)
-    EasyRecyclerView rvNews;
+    private EasyRecyclerView rvNews;
 
     private NewsPresenter mPresenter;
 

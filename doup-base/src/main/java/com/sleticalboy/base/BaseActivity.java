@@ -2,20 +2,19 @@ package com.sleticalboy.base;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.sleticalboy.annotation.ButterKnife;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.util.ActivityController;
 import com.sleticalboy.util.OSUtils;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by Android Studio.
@@ -27,7 +26,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public final String TAG = getClass().getSimpleName();
 
-    protected Unbinder unbinder;
     protected LifecycleCallback lifecycleCallback =
             LifecycleController.Companion.getInstance().getLifecycleCallback();
 
@@ -40,7 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         lifecycleCallback.onCreate(this, savedInstanceState);
         beforeViews();
         setContentView(attachLayout());
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this, null);
         initView(savedInstanceState);
         afterViews();
     }
@@ -60,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 3, View 初始化时的逻辑
+     *
      * @param savedInstanceState
      */
     protected abstract void initView(final Bundle savedInstanceState);
@@ -89,7 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         Log.d(TAG, "onDestroy() called");
         super.onDestroy();
         lifecycleCallback.onActivityDestroy(this);
-        unbinder.unbind();
         ActivityController.INSTANCE.remove(this);
     }
 
@@ -173,6 +171,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected final String urlPre() {
 //        return mUrlSchema + mUrlMiddle;
-        return ConstantValue.Companion.getURL_PRE();
+        return ConstantValue.URL_PRE;
     }
 }

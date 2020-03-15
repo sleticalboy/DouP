@@ -2,8 +2,6 @@ package com.sleticalboy.widget.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.ColorRes;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +9,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.ColorRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sleticalboy.widget.R;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
@@ -48,7 +49,7 @@ public class EasyRecyclerView extends FrameLayout {
             new ArrayList<>();
 
     protected SwipeRefreshLayout mPtrLayout;
-    protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;
+    protected SwipeRefreshLayout.OnRefreshListener mRefreshListener;
 
     public SwipeRefreshLayout getSwipeToRefresh() {
         return mPtrLayout;
@@ -348,7 +349,7 @@ public class EasyRecyclerView extends FrameLayout {
      *
      * @param listener
      */
-    public void setRefreshListener(android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener listener) {
+    public void setRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
         mPtrLayout.setEnabled(true);
         mPtrLayout.setOnRefreshListener(listener);
         this.mRefreshListener = listener;

@@ -2,17 +2,18 @@ package com.sleticalboy.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
+import com.sleticalboy.annotation.ButterKnife;
 
 /**
  * Created by Android Studio.
@@ -23,19 +24,18 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
-    public final String TAG = getClass().getSimpleName();
-
-    private Unbinder mUnbinder;
+    protected final String TAG = getClass().getSimpleName();
+    protected final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
     @Override
     public void onAttach(Context context) {
-        Log.d(TAG, "onAttach() called with: context = [" + context + "]");
+        debug("onAttach() called with: context = [" + context + "]");
         super.onAttach(context);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
+        debug("onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
     }
 
@@ -43,12 +43,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView() called with: inflater = [" + inflater + "], container = [" + container
+        debug("onCreateView() called with: inflater = [" + inflater + "], container = [" + container
                 + "], savedInstanceState = [" + savedInstanceState + "]");
         prepareTask();
 
         View rootView = inflater.inflate(attachLayout(), null);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         initView(rootView);
 
@@ -98,69 +98,74 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
+        debug("onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
                 + savedInstanceState + "]");
         super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
+        debug("onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onStart() {
-        Log.d(TAG, "onStart() called");
+        debug("onStart() called");
         super.onStart();
     }
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume() called");
+        debug("onResume() called");
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause() called");
+        debug("onPause() called");
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        Log.d(TAG, "onStop() called");
+        debug("onStop() called");
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView() called");
+        debug("onDestroyView() called");
         super.onDestroyView();
-        mUnbinder.unbind();
     }
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "onDestroy() called");
+        debug("onDestroy() called");
         super.onDestroy();
     }
 
     @Override
     public void onDetach() {
-        Log.d(TAG, "onDetach() called");
+        debug("onDetach() called");
         super.onDetach();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        debug("onSaveInstanceState() called with: outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onViewStateRestored() called with: savedInstanceState = [" + savedInstanceState + "]");
+        debug("onViewStateRestored() savedInstanceState = [" + savedInstanceState + "]");
         super.onViewStateRestored(savedInstanceState);
+    }
+
+    private void debug(String msg) {
+        if (DBG) {
+            Log.d("BaseFragment", msg);
+        }
     }
 }

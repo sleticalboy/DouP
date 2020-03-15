@@ -1,18 +1,19 @@
 package com.sleticalboy.doup.module.weather;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.base.config.ConstantValue;
-import com.sleticalboy.doup.http.ApiConstant;
-import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.bean.weather.City;
 import com.sleticalboy.doup.bean.weather.County;
 import com.sleticalboy.doup.bean.weather.Province;
+import com.sleticalboy.doup.http.ApiConstant;
+import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.model.weather.WeatherModel;
 import com.sleticalboy.doup.module.weather.service.AutoUpdateService;
 import com.sleticalboy.util.SPUtils;
@@ -182,7 +183,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(weatherBean -> {
                         Log.d("WeatherActivity", "get weather form network -- >");
-                        SPUtils.INSTANCE.putString(ConstantValue.Companion.getKEY_WEATHER(), new Gson().toJson(weatherBean));
+                        SPUtils.INSTANCE.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
                         mWeatherView.showWeather(weatherBean);
                         mWeatherView.onLoadFinished();
                         AutoUpdateService.actionStart(getContext());
@@ -205,7 +206,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     String url = responseBody.string();
-                    SPUtils.INSTANCE.putString(ConstantValue.Companion.getKEY_BG(), url);
+                    SPUtils.INSTANCE.putString(ConstantValue.KEY_BG, url);
                     mWeatherView.showBg(url);
                 }
             }

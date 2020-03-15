@@ -1,23 +1,13 @@
 package com.sleticalboy.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
+import com.bumptech.glide.request.RequestOptions;
 
 /**
  * Created by Android Studio.
@@ -34,34 +24,32 @@ public class ImageLoader {
         if (targetView == null) {
             throw new NullPointerException("targetView view is null");
         }
-        Glide.with(context)
-                .load(url)
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+        final RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .crossFade()
-                .into(targetView);
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher);
+        Glide.with(context).load(url).apply(options).into(targetView);
+
     }
 
     public static void clear(View target) {
         if (target == null) {
             throw new NullPointerException("target view is null");
         }
-        Glide.clear(target);
+        // Glide.clear(target);
     }
 
     public static void load(Context context, ImageView target, int imgId) {
         if (target == null) {
             throw new NullPointerException("target view is null");
         }
-        Glide.with(context)
-                .load(imgId)
+        final RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .crossFade()
-                .into(target);
+                .error(R.mipmap.ic_launcher);
+        Glide.with(context).load(imgId).apply(options).into(target);
     }
 
     /**
@@ -70,38 +58,34 @@ public class ImageLoader {
     public static void load(Context context, ImageView target, String url) {
         if (target == null || StrUtils.isEmpty(url))
             throw new NullPointerException("target view or url is null");
-        Glide.with(context)
-                .load(url)
+        final RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .crossFade()
-                .into(target);
+                .error(R.mipmap.ic_launcher);
+        Glide.with(context).load(url).apply(options).into(target);
     }
 
     /**
      * 加载高清图片
      */
     public static void loadHigh(Context context, ImageView target, String url) {
-        if (target == null || StrUtils.isEmpty(url))
+        if (target == null || StrUtils.isEmpty(url)) {
             throw new NullPointerException("target view or url is null");
-        Glide.with(context)
-                .load(url)
-                .asBitmap()
+        }
+        final RequestOptions options = new RequestOptions()
                 .format(DecodeFormat.PREFER_ARGB_8888)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .into(target);
+                .error(R.mipmap.ic_launcher);
+        Glide.with(context).asBitmap().apply(options).into(target);
     }
 
     private static void privateLoad(Context context, ImageView target, Object model) {
-        final DrawableTypeRequest<Object> drawableTypeRequest = Glide.with(context).load(model);
-        drawableTypeRequest.asBitmap();
-        drawableTypeRequest.diskCacheStrategy(DiskCacheStrategy.ALL);
-        drawableTypeRequest.centerCrop();
-        drawableTypeRequest.into(target);
+        final RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop();
+        Glide.with(context).asBitmap().load(model).apply(options).into(target);
     }
 }

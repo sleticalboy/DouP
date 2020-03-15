@@ -1,17 +1,18 @@
 package com.sleticalboy.doup.module.home;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.news.NewsBean;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 
 /**
  * Created by Android Studio.

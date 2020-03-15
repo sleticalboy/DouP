@@ -1,15 +1,15 @@
 package com.sleticalboy.doup.message.jpush;
 
 import android.os.Parcelable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
-
-import butterknife.BindView;
 
 /**
  * <pre>
@@ -24,7 +24,7 @@ public class PushFragment extends LazyFragment implements PushContract.IPushView
         BaseRecyclerAdapter.OnItemClickListener {
 
     @BindView(R.id.rv_push)
-    EasyRecyclerView rvPush;
+    private EasyRecyclerView rvPush;
 
     private PushContract.IPushPresenter mPresenter;
 

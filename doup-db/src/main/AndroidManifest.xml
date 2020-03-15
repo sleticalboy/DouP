@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sleticalboy.doup"/>
+<manifest package="com.sleticalboy.doup.db" />

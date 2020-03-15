@@ -1,17 +1,17 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.activity.VideoPlayActivity;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
-
-import butterknife.BindView;
+import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 /**
  * Created by Android Studio.
@@ -28,7 +28,7 @@ public class RecommendFragment extends LazyFragment implements IRecommendView,
     private static final String TAG = "RecommendFragment";
 
     @BindView(R.id.rv_recommend)
-    EasyRecyclerView rvRecommend;
+    private EasyRecyclerView rvRecommend;
 
     private RecommendPresenter mPresenter;
 

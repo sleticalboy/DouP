@@ -3,13 +3,11 @@ package com.sleticalboy.doup.http;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.sleticalboy.doup.BuildConfig;
 import com.sleticalboy.doup.DouApp;
-import com.sleticalboy.util.CommonUtils;
 
 import java.io.File;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -46,13 +44,13 @@ public final class RetrofitClient {
     private OkHttpClient.Builder httpBuilder() {
         Cache cache = new Cache(new File(DouApp.getContext().getCacheDir(), CACHE_DIR), MAX_CACHE_SIZE);
         // 创建 OkHttpClient
-        final HttpLoggingInterceptor loggerInterceptor = new HttpLoggingInterceptor();
+        final HttpLogInterceptor loggerInterceptor = new HttpLogInterceptor();
         if (BuildConfig.DEBUG) {
-            loggerInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            loggerInterceptor.setLevel(HttpLogInterceptor.Level.BODY);
         }
         return new OkHttpClient.Builder()
                 .cache(cache)
-                .addNetworkInterceptor(loggerInterceptor)
+                .addInterceptor(loggerInterceptor)
                 .addInterceptor(new UrlChangeInterceptor())
                 .addInterceptor(new CacheInterceptor());
     }

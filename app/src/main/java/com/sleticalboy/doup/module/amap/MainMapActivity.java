@@ -12,9 +12,8 @@ import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.UiSettings;
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.doup.R;
-
-import butterknife.BindView;
 
 /**
  * <pre>
@@ -29,29 +28,29 @@ public class MainMapActivity extends CheckPermissionsActivity implements
         MainMapContract.View {
 
     @BindView(R.id.map_view)
-    MapView mapView;
+    private MapView mapView;
     //    @BindView(R.id.img_user_icon)
 //    CircleImageView imgUserIcon;
     @BindView(R.id.tv_search)
-    TextView tvSearch;
+    private TextView tvSearch;
     @BindView(R.id.btn_search)
-    ImageView btnSearch;
+    private ImageView btnSearch;
     //    @BindView(R.id.ll_header)
 //    LinearLayout llHeader;
     @BindView(R.id.btn_common)
-    Button btnCommon;
+    private Button btnCommon;
     @BindView(R.id.btn_satellite)
-    Button btnSatellite;
+    private Button btnSatellite;
     @BindView(R.id.btn_traffic)
-    Button btnTraffic;
+    private Button btnTraffic;
     @BindView(R.id.btn_heat)
-    Button btnHeat;
+    private Button btnHeat;
     //    @BindView(R.id.ll_map_type)
 //    LinearLayout llMapType;
     @BindView(R.id.btn_zoom_out)
-    ImageButton btnZoomOut;
+    private ImageButton btnZoomOut;
     @BindView(R.id.btn_zoom_in)
-    ImageButton btnZoomIn;
+    private ImageButton btnZoomIn;
 
     private AMap mAMap;
     private UiSettings mUiSettings;

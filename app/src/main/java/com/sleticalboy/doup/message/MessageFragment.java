@@ -1,12 +1,14 @@
 package com.sleticalboy.doup.message;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.BaseFragment;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.message.comment.CommentFragment;
@@ -17,8 +19,6 @@ import com.sleticalboy.doup.module.openeye.adapter.BasePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * Created by Android Studio.
@@ -33,9 +33,9 @@ public class MessageFragment extends BaseFragment {
     private final String[] mTabTitles = {"通知", "聊天", "联系人", "朋友圈"};
 
     @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
+    private TabLayout tabLayout;
     @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    private ViewPager viewPager;
 
     @Override
     protected void initView(View rootView) {

@@ -4,14 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.Menu;
@@ -21,6 +13,17 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.sleticalboy.annotation.BindView;
+import com.sleticalboy.annotation.OnClick;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.jpush.activity.IndexActivity;
@@ -32,9 +35,6 @@ import com.sleticalboy.doup.module.weather.WeatherActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * 应用的启动主页面
  */
@@ -43,24 +43,24 @@ public class StartActivity extends BaseActivity {
     private static final String TAG = "StartActivity";
     
     @BindView(R.id.fl_common_container)
-    FrameLayout flContainer;
+    private FrameLayout flContainer;
     
     @BindView(R.id.nav_slide_menu)
-    NavigationView navMenu;
+    private NavigationView navMenu;
     @BindView(R.id.drawer)
-    DrawerLayout drawer;
+    private DrawerLayout drawer;
     
     @BindView(R.id.btn_change_theme)
-    TextView btnChangeTheme;
+    private TextView btnChangeTheme;
     @BindView(R.id.btn_settings)
-    TextView btnSettings;
+    private TextView btnSettings;
     @BindView(R.id.btn_exit)
-    TextView btnExit;
+    private TextView btnExit;
     
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    private Toolbar toolbar;
     @BindView(R.id.bottom_nav)
-    BottomNavigationView bottomNav;
+    private BottomNavigationView bottomNav;
     
     private final SparseArray<Fragment> mFragments = new SparseArray<>();
     private Fragment mCurFragment;

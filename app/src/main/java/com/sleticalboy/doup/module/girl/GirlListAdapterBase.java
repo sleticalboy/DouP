@@ -3,18 +3,19 @@ package com.sleticalboy.doup.module.girl;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.girl.GirlBean;
 import com.sleticalboy.util.ImageLoader;
-import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
+import com.sleticalboy.widget.recyclerview.adapter.BaseViewHolder;
 
 /**
  * Created by Android Studio.

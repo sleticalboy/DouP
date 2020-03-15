@@ -4,14 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.sleticalboy.annotation.BindView;
+import com.sleticalboy.annotation.OnClick;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
@@ -19,9 +22,6 @@ import com.sleticalboy.doup.bean.news.NewsDetailBean;
 import com.sleticalboy.util.ImageLoader;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -35,18 +35,18 @@ public class NewsDetailActivity extends BaseActivity implements IBaseView {
     private static final String ID = "id";
 
     @BindView(R.id.tool_bar)
-    Toolbar toolBar;
+    private Toolbar toolBar;
     @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
+    private CollapsingToolbarLayout collapsingToolbar;
 
     @BindView(R.id.news_img)
-    ImageView newsImg;
+    private ImageView newsImg;
     @BindView(R.id.news_title)
-    TextView newsTitle;
+    private TextView newsTitle;
     @BindView(R.id.news_img_resource)
-    TextView newsImgResource;
+    private TextView newsImgResource;
     @BindView(R.id.web_view)
-    WebView webView;
+    private WebView webView;
 
     private int id;
     private NewsDetailPresenter mPresenter;

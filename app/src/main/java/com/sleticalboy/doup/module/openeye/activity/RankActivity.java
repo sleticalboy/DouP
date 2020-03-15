@@ -3,18 +3,18 @@ package com.sleticalboy.doup.module.openeye.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
 import com.sleticalboy.doup.module.openeye.fragment.IRecommendView;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
-
-import butterknife.BindView;
+import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 /**
  * Created by Android Studio.
@@ -32,7 +32,7 @@ public class RankActivity extends BaseActivity implements IRecommendView,
     public static final String NAME = "name";
 
     @BindView(R.id.rv_rank)
-    EasyRecyclerView rvRank;
+    private  EasyRecyclerView rvRank;
 
     private String mName;
 

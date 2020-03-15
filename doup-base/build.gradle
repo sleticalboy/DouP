@@ -1,17 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-
-def defConfigs = rootProject.ext.android
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion defConfigs.targetSdkVersion
-        versionCode defConfigs.versionCode
-        versionName defConfigs.versionName
+        rootProject.ext.defaultConfig.get { key, value -> key value }
     }
 
     buildTypes {
@@ -29,10 +25,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "com.android.support:appcompat-v7:$rootProject.ext.v_of_android_support"
+
+    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    // implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation rootProject.ext.deps['kotlin_jdk8']
+    implementation rootProject.ext.deps['androidx_appcompat']
     // butter knife
-    annotationProcessor "com.jakewharton:butterknife:$rootProject.ext.v_of_butter_knife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.v_of_butter_knife"
+    // annotationProcessor "com.jakewharton:butterknife:8.8.1"
+    // annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     implementation project(':my-widget')
     implementation project(':my-utils')
     api project(':doup-res')

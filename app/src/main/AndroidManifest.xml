@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sleticalboy.doup">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sleticalboy.doup">
 
     <!-- custom 极光 -->
     <permission
         android:name="com.sleticalboy.doup.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature"/>
+        android:protectionLevel="signature" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- start 极光 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="com.sleticalboy.doup.permission.JPUSH_MESSAGE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.sleticalboy.doup.permission.JPUSH_MESSAGE" />
     <!-- end 极光 -->
 
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!--高德地图-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
-    <uses-permission android:name="android.permission.BODY_SENSORS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:name=".DouApp"
@@ -42,6 +44,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:overrideLibrary="androidx.multidex"
         android:networkSecurityConfig="@xml/network_security_config">
         <!--<meta-data-->
         <!--android:name=""-->
@@ -49,9 +52,9 @@
 
         <activity android:name=".module.main.StartActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!--<activity-->
@@ -59,17 +62,17 @@
         <!--android:launchMode="singleInstance"/>-->
         <activity
             android:name=".module.home.NewsDetailActivity"
-            android:theme="@style/NewsDetailTheme"/>
-        <activity android:name=".module.main.AboutMeActivity"/>
+            android:theme="@style/NewsDetailTheme" />
+        <activity android:name=".module.main.AboutMeActivity" />
         <activity
             android:name=".module.openeye.activity.VideoPlayActivity"
-            android:theme="@style/NewsDetailTheme"/>
-        <activity android:name=".module.openeye.activity.RankActivity"/>
-        <activity android:name=".module.weather.WeatherActivity"/>
+            android:theme="@style/NewsDetailTheme" />
+        <activity android:name=".module.openeye.activity.RankActivity" />
+        <activity android:name=".module.weather.WeatherActivity" />
 
         <service
             android:name=".module.weather.service.AutoUpdateService"
-            android:exported="false"/>
+            android:exported="false" />
 
         <!-- start 极光 -->
         <!-- For test only 测试的主程序 -->
@@ -77,27 +80,27 @@
             android:name=".jpush.activity.IndexActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!-- For test only 测试高级功能 -->
         <activity
             android:name=".jpush.activity.PushSetActivity"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <!-- For test only 测试设置 -->
         <activity
             android:name=".jpush.activity.SettingActivity"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <!-- For test only 测试状态通知栏，需要打开的Activity -->
         <activity
             android:name=".jpush.activity.TestActivity"
             android:exported="false">
             <intent-filter>
-                <action android:name="jpush.testAction"/>
+                <action android:name="jpush.testAction" />
 
-                <category android:name="jpush.testCategory"/>
+                <category android:name="jpush.testCategory" />
             </intent-filter>
         </activity>
 
@@ -105,8 +108,7 @@
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle">
-        </activity>
+            android:theme="@style/MyDialogStyle" />
 
         <!-- Required SDK核心功能 -->
         <activity
@@ -115,10 +117,10 @@
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity"/>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="com.sleticalboy.doup"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.sleticalboy.doup" />
             </intent-filter>
         </activity>
 
@@ -129,62 +131,64 @@
             android:exported="false"
             android:process=":mult">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER"/>
-                <action android:name="cn.jpush.android.intent.REPORT"/>
-                <action android:name="cn.jpush.android.intent.PushService"/>
-                <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
         </service>
         <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
             android:authorities="com.sleticalboy.doup.DataProvider"
-            android:exported="false"/>
+            android:exported="false" />
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
         <service
             android:name="cn.jpush.android.service.DaemonService"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.DaemonService"/>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
 
-                <category android:name="com.sleticalboy.doup"/>
+                <category android:name="com.sleticalboy.doup" />
             </intent-filter>
         </service>
-        <!-- since 3.1.0 Required SDK 核心功能 -->
+         <!--since 3.1.0 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DownloadProvider"
             android:authorities="com.sleticalboy.doup.DownloadProvider"
-            android:exported="true"/>
+            android:enabled="false"
+            android:exported="true" />
         <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="false">
             <intent-filter android:priority="1000">
                 <!-- Required  显示通知栏 -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>
-                <category android:name="com.sleticalboy.doup"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+                <category android:name="com.sleticalboy.doup" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
             <!-- Optional -->
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-                <data android:scheme="package"/>
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
         <!-- Required SDK核心功能 -->
         <receiver
-            android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false"/>
+        android:name="cn.jpush.android.service.AlarmReceiver"
+        android:exported="false"
+        android:enabled="false"/>
 
         <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
@@ -193,16 +197,16 @@
             android:exported="false">
             <intent-filter>
                 <!-- Required  用户注册SDK的intent -->
-                <action android:name="cn.jpush.android.intent.REGISTRATION"/>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
                 <!-- Required  用户接收SDK消息的intent -->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
                 <!-- Required  用户接收SDK通知栏信息的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
                 <!-- Required  用户打开自定义通知栏的intent -->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <action android:name="cn.jpush.android.intent.CONNECTION"/>
-                <category android:name="com.sleticalboy.doup"/>
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <category android:name="com.sleticalboy.doup" />
             </intent-filter>
         </receiver>
 
@@ -210,43 +214,43 @@
         目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <receiver android:name=".jpush.receiver.MyJPushMessageReceiver">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE"/>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
-                <category android:name="com.sleticalboy.doup"/>
+                <category android:name="com.sleticalboy.doup" />
             </intent-filter>
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="developer-default"/>
+            android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="b9627ddf299f3414dea5eccb"/> <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="b9627ddf299f3414dea5eccb" /> <!-- </>值来自开发者平台取得的AppKey -->
         <!-- end 极光 -->
 
         <activity
             android:name=".jpush.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="android.support.v7.app.AppCompatActivity">
+            android:parentActivityName="androidx.appcompat.app.AppCompatActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.support.v7.app.AppCompatActivity"/>
+                android:value="androidx.appcompat.app.AppCompatActivity" />
         </activity>
 
         <!--高德地图-->
         <!-- 设置key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ca2c7e7f2639b928dee1c9c75933ea7b"/>
+            android:value="ca2c7e7f2639b928dee1c9c75933ea7b" />
         <!-- 定位需要的服务 -->
-        <service android:name="com.amap.api.location.APSService"/>
+        <service android:name="com.amap.api.location.APSService" />
 
-        <activity android:name=".module.amap.MainMapActivity"/>
-        <activity android:name=".module.girl.GirlActivity"/>
-        <activity android:name=".module.home.ShareActivity"/>
-        <activity android:name=".message.jpush.PushDetailActivity"/>
-        <activity android:name=".message.contact.ContactDetailActivity"/>
-        <activity android:name=".SplashActivity"/>
+        <activity android:name=".module.amap.MainMapActivity" />
+        <activity android:name=".module.girl.GirlActivity" />
+        <activity android:name=".module.home.ShareActivity" />
+        <activity android:name=".message.jpush.PushDetailActivity" />
+        <activity android:name=".message.contact.ContactDetailActivity" />
+        <activity android:name=".SplashActivity" />
     </application>
 
 </manifest>

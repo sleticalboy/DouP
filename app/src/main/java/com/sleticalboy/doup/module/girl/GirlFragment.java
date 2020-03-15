@@ -1,17 +1,17 @@
 package com.sleticalboy.doup.module.girl;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.BaseFragment;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
-
-import butterknife.BindView;
+import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
 
 /**
  * Created by Android Studio.
@@ -26,7 +26,7 @@ public class GirlFragment extends BaseFragment implements IBaseView,
     private static final String TAG = "GirlFragment";
 
     @BindView(R.id.rv_meizi)
-    EasyRecyclerView rvMeizi;
+    private EasyRecyclerView rvMeizi;
 
     GirlListPresenter mPresenter;
 

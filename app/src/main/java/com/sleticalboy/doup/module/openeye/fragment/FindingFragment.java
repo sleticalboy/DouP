@@ -1,8 +1,10 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
-import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.base.LazyFragment;
 import com.sleticalboy.doup.R;
@@ -10,8 +12,6 @@ import com.sleticalboy.doup.module.openeye.activity.RankActivity;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.recyclerview.EasyRecyclerView;
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
-
-import butterknife.BindView;
 
 /**
  * Created by Android Studio.
@@ -25,7 +25,7 @@ public class FindingFragment extends LazyFragment implements IBaseView,
     private static final String TAG = "FindingFragment";
 
     @BindView(R.id.rv_finding)
-    EasyRecyclerView rvFindings;
+    private EasyRecyclerView rvFindings;
 
     private FindingPresenter mPresenter;
 

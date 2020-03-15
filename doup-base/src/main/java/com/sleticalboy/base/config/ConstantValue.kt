@@ -12,39 +12,46 @@ interface ConstantValue {
         /**
          * url prefix
          */
-        val URL_PRE = "doup://"
+        const val URL_PRE = "doup://"
 
         /**
          * 和风天气背景图
          */
-        val KEY_BG = "bing_img"
+        const val KEY_BG = "bing_img"
+
         /**
          * 和风天气地区
          */
-        val KEY_AREA = "area_name"
+        const val KEY_AREA = "area_name"
+
         /**
          * 和风天气天气预报具体内容
          */
-        val KEY_WEATHER = "weather"
+        const val KEY_WEATHER = "weather"
+
         /**
          * 和风天气地区 id
          */
-        val KEY_WEATHER_ID = "weather_id"
+        const val KEY_WEATHER_ID = "weather_id"
+
         /**
          * 第一次进入应用 true or false
          */
-        val KEY_FIRST_LAUNCH = "first_launch"
+        const val KEY_FIRST_LAUNCH = "first_launch"
+
         /**
          * 自动更新天气 true or false
          */
-        val KEY_AUTO_UPDATE_WEATHER = "auto_update"
+        const val KEY_AUTO_UPDATE_WEATHER = "auto_update"
+
         /**
          * 本地视频 url
          */
-        val KEY_LOCAL_VIDEO_URL = "local_video_url"
+        const val KEY_LOCAL_VIDEO_URL = "local_video_url"
+
         /**
          * 视频下载状态  true or false
          */
-        val KEY_DOWNLOAD_STATE = "video_download_state"
+        const val KEY_DOWNLOAD_STATE = "video_download_state"
     }
 }

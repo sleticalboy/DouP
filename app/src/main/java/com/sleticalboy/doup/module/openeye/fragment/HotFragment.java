@@ -1,7 +1,8 @@
 package com.sleticalboy.doup.module.openeye.fragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.base.LazyFragment;

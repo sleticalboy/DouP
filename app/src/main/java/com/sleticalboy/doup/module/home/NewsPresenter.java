@@ -1,8 +1,9 @@
 package com.sleticalboy.doup.module.home;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sleticalboy.base.BasePresenter;
 import com.sleticalboy.doup.bean.news.NewsBean;

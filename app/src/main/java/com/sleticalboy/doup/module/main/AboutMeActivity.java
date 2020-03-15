@@ -8,11 +8,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.IBaseView;
 import com.sleticalboy.doup.R;
-
-import butterknife.BindView;
 
 /**
  * Created by Android Studio.
@@ -25,7 +24,7 @@ public class AboutMeActivity extends BaseActivity implements IBaseView {
     private static final String GIT_HUB = "https://www.github.com/sleticalboy";
 
     @BindView(R.id.web_view)
-    WebView webView;
+    private WebView webView;
 
     @Override
     protected void initView(final Bundle savedInstanceState) {

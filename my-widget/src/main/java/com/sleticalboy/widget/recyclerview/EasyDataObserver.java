@@ -1,6 +1,6 @@
 package com.sleticalboy.widget.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sleticalboy.widget.recyclerview.adapter.BaseRecyclerAdapter;
 

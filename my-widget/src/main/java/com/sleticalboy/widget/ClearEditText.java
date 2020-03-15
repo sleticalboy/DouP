@@ -2,7 +2,6 @@ package com.sleticalboy.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -11,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 public class ClearEditText extends AppCompatEditText {
 

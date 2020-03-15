@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.sleticalboy.annotation.BindView;
+import com.sleticalboy.annotation.OnClick;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.doup.bean.openeye.VideoBean;
@@ -21,9 +23,6 @@ import com.sleticalboy.util.CommonUtils;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by Android Studio.
@@ -37,26 +36,26 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
     public static final String VIDEO = "video";
 
     @BindView(R.id.gsy_player)
-    StandardGSYVideoPlayer gsyPlayer;
+    private StandardGSYVideoPlayer gsyPlayer;
 
     @BindView(R.id.img_blurred)
-    ImageView imgBlurred;
+    private ImageView imgBlurred;
 
     @BindView(R.id.tv_video_title)
-    TextView tvVideoTitle;
+    private TextView tvVideoTitle;
     @BindView(R.id.tv_video_time)
-    TextView tvVideoTime;
+    private TextView tvVideoTime;
     @BindView(R.id.tv_video_desc)
-    TextView tvVideoDesc;
+    private TextView tvVideoDesc;
 
     @BindView(R.id.btn_favorite)
-    TextView btnFavorite;
+    private TextView btnFavorite;
     @BindView(R.id.btn_share)
-    TextView btnShare;
+    private TextView btnShare;
     @BindView(R.id.btn_reply)
-    TextView btnReply;
+    private TextView btnReply;
     @BindView(R.id.btn_cache)
-    TextView btnCache;
+    private TextView btnCache;
 
     private VideoBean mData;
     private OrientationUtils mOrientationUtils;

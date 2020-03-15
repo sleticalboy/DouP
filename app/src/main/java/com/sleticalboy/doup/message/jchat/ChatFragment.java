@@ -1,7 +1,8 @@
 package com.sleticalboy.doup.message.jchat;
 
-import android.support.annotation.NonNull;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.sleticalboy.base.IBaseListView;
 import com.sleticalboy.base.LazyFragment;

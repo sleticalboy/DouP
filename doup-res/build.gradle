@@ -1,16 +1,11 @@
 apply plugin: 'com.android.library'
 
-def defConfigs = rootProject.ext.android
-
 android {
-    compileSdkVersion defConfigs.compileSdkVersion
-    buildToolsVersion defConfigs.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion defConfigs.minSdkVersion
-        targetSdkVersion defConfigs.targetSdkVersion
-        versionCode defConfigs.versionCode
-        versionName defConfigs.versionName
+        rootProject.ext.defaultConfig.get { key, value -> key value }
     }
 
     buildTypes {
@@ -26,11 +21,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // support 依赖
-    api "com.android.support:appcompat-v7:$rootProject.ext.v_of_android_support"
-    api "com.android.support:recyclerview-v7:$rootProject.ext.v_of_android_support"
-    api "com.android.support:design:$rootProject.ext.v_of_android_support"
-    api "com.android.support:cardview-v7:$rootProject.ext.v_of_android_support"
-    api "com.android.support.constraint:constraint-layout:1.1.3"
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'com.google.android.material:material:1.1.0'
+    api 'androidx.cardview:cardview:1.0.0'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     compileOnly 'com.github.chrisbanes.photoview:library:1.2.4'
 

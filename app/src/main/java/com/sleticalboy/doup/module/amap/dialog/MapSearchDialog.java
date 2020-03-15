@@ -3,8 +3,6 @@ package com.sleticalboy.doup.module.amap.dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +12,14 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+
+import com.sleticalboy.annotation.BindView;
+import com.sleticalboy.annotation.ButterKnife;
+import com.sleticalboy.annotation.OnClick;
 import com.sleticalboy.doup.R;
 import com.sleticalboy.util.ToastUtils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by Android Studio.
@@ -31,13 +30,11 @@ import butterknife.Unbinder;
 public class MapSearchDialog extends DialogFragment {
 
     @BindView(R.id.btn_back)
-    ImageButton btnBack;
+    private ImageButton btnBack;
     @BindView(R.id.et_search_keyword)
-    EditText etSearchKeyword;
+    private EditText etSearchKeyword;
     @BindView(R.id.btn_scan)
-    ImageButton btnScan;
-
-    Unbinder unbinder;
+    private ImageButton btnScan;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +53,7 @@ public class MapSearchDialog extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -75,7 +72,6 @@ public class MapSearchDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick({R.id.btn_back, R.id.et_search_keyword, R.id.btn_scan})

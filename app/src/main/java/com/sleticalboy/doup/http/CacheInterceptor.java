@@ -1,7 +1,8 @@
 package com.sleticalboy.doup.http;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.sleticalboy.doup.DouApp;
 import com.sleticalboy.util.CommonUtils;

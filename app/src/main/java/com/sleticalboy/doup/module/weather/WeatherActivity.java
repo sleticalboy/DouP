@@ -3,7 +3,6 @@ package com.sleticalboy.doup.module.weather;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.amap.api.location.AMapLocation;
 import com.google.gson.Gson;
+import com.sleticalboy.annotation.BindView;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.R;
@@ -25,7 +27,6 @@ import com.sleticalboy.util.SPUtils;
 import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
 
-import butterknife.BindView;
 import io.reactivex.Observable;
 
 /**
@@ -40,36 +41,36 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
     private static final String TAG = "WeatherActivity";
 
     @BindView(R.id.img_bg)
-    ImageView imgBg;
+    private ImageView imgBg;
     @BindView(R.id.btn_navigation)
-    Button btnNavigation;
+    private Button btnNavigation;
     @BindView(R.id.title_city)
-    TextView titleCity;
+    private TextView titleCity;
 
     @BindView(R.id.title_update_time)
-    TextView titleUpdateTime;
+    private TextView titleUpdateTime;
     @BindView(R.id.tv_degree)
-    TextView tvDegree;
+    private TextView tvDegree;
     @BindView(R.id.tv_weather_info)
-    TextView tvWeatherInfo;
+    private TextView tvWeatherInfo;
     @BindView(R.id.layout_forecast)
-    LinearLayout layoutForecast;
+    private LinearLayout layoutForecast;
     @BindView(R.id.tv_aqi)
-    TextView tvAqi;
+    private TextView tvAqi;
     @BindView(R.id.tv_pm25)
-    TextView tvPm25;
+    private TextView tvPm25;
     @BindView(R.id.tv_comfort)
-    TextView tvComfort;
+    private TextView tvComfort;
     @BindView(R.id.tv_car_wash)
-    TextView tvCarWash;
+    private TextView tvCarWash;
     @BindView(R.id.tv_sport)
-    TextView tvSport;
+    private TextView tvSport;
     @BindView(R.id.layout_weather)
-    ScrollView layoutWeather;
+    private ScrollView layoutWeather;
     @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout swipeRefresh;
+    private SwipeRefreshLayout swipeRefresh;
 
-    private String mWeatherId = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER_ID(), null);
+    private String mWeatherId = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER_ID, null);
 
     private WeatherPresenter mPresenter;
     private LocationManager mLocManager;
@@ -93,12 +94,12 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
         mLocManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
-        String area = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_AREA(), null);
+        String area = SPUtils.INSTANCE.getString(ConstantValue.KEY_AREA, null);
         if (StrUtils.isEmpty(area)) {
 //            showDistrictDialog();
             titleCity.setText(area);
         }
-        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.Companion.getKEY_WEATHER(), null);
+        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER, null);
         if (!StrUtils.isEmpty(weatherStr)) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             if (weatherBean != null) {

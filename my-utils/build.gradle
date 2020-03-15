@@ -1,17 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-def defConfigs = rootProject.ext.android
-
 android {
-    compileSdkVersion defConfigs.compileSdkVersion
-    buildToolsVersion defConfigs.buildToolsVersion
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion defConfigs.minSdkVersion
-        targetSdkVersion defConfigs.targetSdkVersion
-        versionCode defConfigs.versionCode
-        versionName defConfigs.versionName
+        rootProject.ext.defaultConfig.get { key, value -> key value }
     }
 
     buildTypes {
@@ -30,14 +25,14 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
+    implementation rootProject.ext.deps['kotlin_jdk8']
 
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     // RxAndroid2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     // glide 图片加载
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
     // 双指放大或缩小图片
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
 }

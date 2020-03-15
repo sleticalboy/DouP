@@ -3,7 +3,8 @@ package com.sleticalboy.doup.jpush;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.sleticalboy.doup.BuildConfig;
 import com.sleticalboy.doup.jpush.receiver.MyJPushMessageReceiver;

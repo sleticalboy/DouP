@@ -7,8 +7,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Process;
-import android.support.annotation.NonNull;
-import android.support.multidex.MultiDex;
+
+import androidx.annotation.NonNull;
+import androidx.multidex.MultiDex;
 
 import com.sleticalboy.base.LifecycleCallback;
 import com.sleticalboy.base.LifecycleController;
