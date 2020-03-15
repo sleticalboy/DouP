@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 public final class ButterKnife {
+
+    private final static Class[] HOLDER = {View.OnClickListener.class};
 
     public static void bind(@NonNull Object obj) {
         try {
@@ -53,9 +55,25 @@ public final class ButterKnife {
             final OnClick onClick = method.getAnnotation(OnClick.class);
             if (onClick != null && onClick.value().length != 0) {
                 for (final int id : onClick.value()) {
-                    invokeWhenClick(method, valueOf(host, id));
+                    // invokeWhenClick(method, valueOf(host, id));
+                    setOnClickListener(method, valueOf(host, id));
                 }
             }
+        }
+    }
+
+    private static void setOnClickListener(Method action, final View target) {
+        if (target == null) {
+            return;
+        }
+        final Object listener = Proxy.newProxyInstance(target.getContext().getClassLoader(),
+                HOLDER, (proxy, method, args) -> action.invoke(target, target));
+        try {
+            View.class.getDeclaredMethod("setOnClickListener", HOLDER[0])
+                    .invoke(target, listener);
+        } catch (Throwable e) {
+            Log.d("ButterKnife", "setOnClickListener() error method = " + action
+                    + ", targetId = " + target.getId(), e);
         }
     }
 
@@ -63,13 +81,14 @@ public final class ButterKnife {
         if (target == null) {
             return;
         }
-        target.setOnClickListener(new OnClickWrapper(method));
-        new InvocationHandler() {
-            @Override
-            public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-                return null;
+        target.setOnClickListener(v -> {
+            try {
+                method.invoke(v, v);
+            } catch (Throwable e) {
+                Log.d("ButterKnife", "invokeWhenClick() error method = " + method
+                        + ", targetId = " + 0, e);
             }
-        };
+        });
     }
 
     private static View valueOf(Object host, int id) {
@@ -86,22 +105,4 @@ public final class ButterKnife {
         return null;
     }
 
-    private static final class OnClickWrapper implements View.OnClickListener {
-
-        final Method mOnClick;
-
-        OnClickWrapper(final Method onClick) {
-            mOnClick = onClick;
-        }
-
-        @Override
-        public void onClick(final View v) {
-            try {
-                mOnClick.invoke(v, v);
-            } catch (Throwable e) {
-                Log.d("ButterKnife", "invokeWhenClick() error method = " + mOnClick
-                        + ", targetId = " + 0, e);
-            }
-        }
-    }
 }
