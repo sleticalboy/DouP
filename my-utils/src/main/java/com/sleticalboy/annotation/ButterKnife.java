@@ -14,8 +14,8 @@ import java.lang.reflect.Proxy;
 
 public final class ButterKnife {
 
-    private final static Class[] HOLDER =
-            {View.OnClickListener.class, View.OnLongClickListener.class};
+    private final static Class[] CLICK_HOLDER = {View.OnClickListener.class};
+    private final static Class[] LONG_CLICK_HOLDER = {View.OnLongClickListener.class};
 
     public static void bind(@NonNull Object host) {
         try {
@@ -56,58 +56,77 @@ public final class ButterKnife {
             final OnClick onClick = method.getAnnotation(OnClick.class);
             if (onClick != null && onClick.value().length != 0) {
                 for (final int id : onClick.value()) {
-                    // invokeWhenClick(method, host, valueOf(root, id));
-                    setOnClickListener(method, host, valueOf(root, id));
+                    // invokeWhenClick(method, host, valueOf(root, id), false);
+                    setOnClickListener(method, host, valueOf(root, id), false);
                 }
             }
             final OnLongClick onLongClick = method.getAnnotation(OnLongClick.class);
             if (onLongClick != null && onLongClick.value().length != 0) {
                 for (final int id : onLongClick.value()) {
-                    // invokeWhenClick(method, host, valueOf(root, id));
-                    setOnClickListener(method, host, valueOf(root, id));
+                    // invokeWhenClick(method, host, valueOf(root, id), true);
+                    setOnClickListener(method, host, valueOf(root, id), true);
                 }
             }
         }
     }
 
-    private static void setOnClickListener(Method action, final Object host, final View target) {
+    private static void setOnClickListener(Method action, final Object host, final View target,
+                                           final boolean longClick) {
         if (target == null || host == null) {
             return;
         }
         try {
             action.setAccessible(true);
             final Object listener = Proxy.newProxyInstance(target.getContext().getClassLoader(),
-                    HOLDER, (proxy, method, args) -> {
+                    longClick ? LONG_CLICK_HOLDER : CLICK_HOLDER, (proxy, method, args) -> {
                         if ("onClick".equals(method.getName())) {
                             if (args == null || args.length != 1) {
                                 throw new IllegalArgumentException("method " + method.getName()
                                         + " only can have one argument.");
                             }
-                            Log.d("ButterKnife", "onClick() view = " + args[0]);
+                            Log.d("ButterKnife", "onClick() action = " + action);
                             action.invoke(host, args[0]);
                         } else if ("onLongClick".equals(method.getName())) {
                             if (args == null || args.length != 1) {
                                 throw new IllegalArgumentException("method " + method.getName()
                                         + " only can have one argument.");
                             }
-                            Log.d("ButterKnife", "onLongClick() view = " + args[0] + ", action = " + method);
-                            action.invoke(host, args[0]);
-                            // TODO: 20-3-16 返回值不生效，长按事件逻辑未能成功处理?
-                            return Boolean.TRUE;
+                            // action 方法的返回值类型需要和接口方法返回值类型保持一致,
+                            // 否则方法逻辑不会被执行
+                            // final Object value = action.invoke(host, args[0]);
+                            Log.d("ButterKnife", "onLongClick() action " + action);
+                            return action.invoke(host, args[0]);
                         }
                         return null;
                     }
             );
+            if (longClick) {
+                target.setOnLongClickListener(((View.OnLongClickListener) listener));
+                return;
+            }
             target.setOnClickListener(((View.OnClickListener) listener));
-            target.setOnLongClickListener(((View.OnLongClickListener) listener));
         } catch (Throwable e) {
             Log.w("ButterKnife", "setOnClickListener() error method = " + action
                     + ", targetId = " + target.getId(), e);
         }
     }
 
-    private static void invokeWhenClick(final Method method, final Object host, final View target) {
+    private static void invokeWhenClick(final Method method, final Object host, final View target,
+                                        final boolean longClick) {
         if (target == null) {
+            return;
+        }
+        if (longClick) {
+            target.setOnLongClickListener(v -> {
+                try {
+                    method.invoke(host, target);
+                } catch (Throwable e) {
+                    Log.w("ButterKnife", "invokeWhenClick() error method = " + method
+                            + ", targetId = " + 0, e);
+                    return false;
+                }
+                return true;
+            });
             return;
         }
         target.setOnClickListener(v -> {
@@ -117,16 +136,6 @@ public final class ButterKnife {
                 Log.w("ButterKnife", "invokeWhenClick() error method = " + method
                         + ", targetId = " + 0, e);
             }
-        });
-        target.setOnLongClickListener(v -> {
-            try {
-                method.invoke(host, target);
-            } catch (Throwable e) {
-                Log.w("ButterKnife", "invokeWhenClick() error method = " + method
-                        + ", targetId = " + 0, e);
-                return false;
-            }
-            return true;
         });
     }
 

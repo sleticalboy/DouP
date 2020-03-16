@@ -261,9 +261,10 @@ public class StartActivity extends BaseActivity {
     }
 
     @OnLongClick({R.id.btn_change_theme})
-    private void onViewLongClick(View view) {
+    public boolean onViewLongClick(View view) {
         if (view.getId() == R.id.btn_change_theme) {
             ToastUtils.INSTANCE.showToast(this, "change theme long click.");
         }
+        return true;
     }
 }
