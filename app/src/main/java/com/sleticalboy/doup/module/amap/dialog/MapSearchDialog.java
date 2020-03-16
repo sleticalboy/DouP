@@ -53,7 +53,7 @@ public class MapSearchDialog extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
 
-        ButterKnife.bind(this);
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
 

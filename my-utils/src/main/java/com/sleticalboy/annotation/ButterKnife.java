@@ -17,7 +17,36 @@ public final class ButterKnife {
     private final static Class[] CLICK_HOLDER = {View.OnClickListener.class};
     private final static Class[] LONG_CLICK_HOLDER = {View.OnLongClickListener.class};
 
-    public static void bind(@NonNull Object host) {
+    public static void bind(@NonNull Activity host) {
+        // called in a activity
+        bind(host, host.getWindow().getDecorView());
+    }
+
+    public static void bind(@NonNull Fragment host) {
+        final View root = host.getView();
+        if (root == null) {
+            throw new IllegalStateException("Bind after #onCreateView() or when #onViewCreated");
+        }
+        // called in a fragment
+        bind(host, root);
+    }
+
+    public static void bind(@NonNull Dialog host) {
+        // called in a dialog
+        bind(host, host.getWindow().getDecorView());
+    }
+
+    public static void bind(@NonNull Object host, @NonNull View root) {
+        // called in a ViewHolder or somewhere
+        try {
+            bindViews(host.getClass().getDeclaredFields(), host, root);
+            bindClicks(host.getClass().getDeclaredMethods(), host, root);
+        } catch (Throwable e) {
+            Log.w("ButterKnife", "bind() error with host = " + host, e);
+        }
+    }
+
+    /*public static void bind(@NonNull Object host) {
         try {
             // when the host is activity, the host is activity too.
             // when the host is fragment, the host is view
@@ -35,7 +64,7 @@ public final class ButterKnife {
         } catch (Throwable e) {
             Log.w("ButterKnife", "bind() error with host = " + host, e);
         }
-    }
+    }*/
 
     private static void bindViews(final Field[] fields, final Object host, final Object root)
             throws IllegalAccessException {
