@@ -7,9 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface OnClick {
+public @interface OnItemClick {
 
-    int[] value() default {};
-
-    String method() default "onClick";
+    int value() default -1;
 }
