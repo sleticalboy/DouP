@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
@@ -49,13 +50,11 @@ public final class ButterKnife {
         }
     }
 
-    private static void bindViews(final Field[] fields, final Object host, final View root)
-            throws IllegalAccessException {
+    private static void bindViews(final Field[] fields, final Object host, final View root) {
         for (final Field field : fields) {
             final BindView bindView = field.getAnnotation(BindView.class);
             if (bindView != null && bindView.value() != -1) {
-                field.setAccessible(true);
-                field.set(host, viewOf(root, bindView.value()));
+                setSafely(field, host, viewOf(root, bindView.value()));
             }
         }
     }
@@ -68,30 +67,29 @@ public final class ButterKnife {
             final OnClick onClick = method.getAnnotation(OnClick.class);
             if (onClick != null && onClick.value().length != 0) {
                 for (final int id : onClick.value()) {
-                    setOnClickListener(method, host, viewOf(root, id), onClick);
+                    setOn$Listener(method, host, viewOf(root, id), onClick);
                 }
             }
             final OnLongClick onLongClick = method.getAnnotation(OnLongClick.class);
             if (onLongClick != null && onLongClick.value().length != 0) {
                 for (final int id : onLongClick.value()) {
-                    setOnClickListener(method, host, viewOf(root, id), onLongClick);
+                    setOn$Listener(method, host, viewOf(root, id), onLongClick);
                 }
             }
             final OnItemClick onItemClick = method.getAnnotation(OnItemClick.class);
             if (onItemClick != null && onItemClick.value() != -1) {
-                setOnClickListener(method, host, viewOf(root, onItemClick.value()), onItemClick);
+                setOn$Listener(method, host, viewOf(root, onItemClick.value()), onItemClick);
             }
         }
     }
 
-    private static void setOnClickListener(Method action, final Object host, final View target,
-                                           final Annotation a) {
+    private static void setOn$Listener(Method action, final Object host, final View target,
+                                       final Annotation a) {
         if (target == null || host == null) {
             return;
         }
         try {
             action.setAccessible(true);
-
             final Object listener = Proxy.newProxyInstance(target.getContext().getClassLoader(),
                     getInterfaces(a), (proxy, method, args) -> {
                         if ("onClick".equals(method.getName())) {
@@ -137,9 +135,7 @@ public final class ButterKnife {
         } else if (listener instanceof AdapterView.OnItemClickListener) {
             method = clazz.getMethod("onItemClickListener", ON_ITEM_CLICK);
         }
-        if (method != null) {
-            method.invoke(target, listener);
-        }
+        invokeSafely(method, target, listener);
     }
 
     private static Class<?>[] getInterfaces(final Annotation annotation) {
@@ -161,4 +157,27 @@ public final class ButterKnife {
         return value;
     }
 
+    private static void setSafely(Field field, Object obj, Object value) {
+        try {
+            field.setAccessible(true);
+            field.set(obj, value);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Object invokeSafely(Method method, Object obj, Object... args) {
+        if (method == null) {
+            return null;
+        }
+        try {
+            method.setAccessible(true);
+            return method.invoke(obj, args);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
