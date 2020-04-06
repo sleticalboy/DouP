@@ -92,14 +92,14 @@ public final class ButterKnife {
             action.setAccessible(true);
             final Object listener = Proxy.newProxyInstance(target.getContext().getClassLoader(),
                     getInterfaces(a), (proxy, method, args) -> {
-                        if ("onClick".equals(method.getName())) {
+                        if (OnClick.M.equals(method.getName())) {
                             if (args == null || args.length != 1) {
                                 throw new IllegalArgumentException("method " + method.getName()
                                         + " only can have one argument.");
                             }
                             Log.d("ButterKnife", "onClick() action = " + action);
                             action.invoke(host, /*view*/args[0]);
-                        } else if ("onLongClick".equals(method.getName())) {
+                        } else if (OnLongClick.M.equals(method.getName())) {
                             if (args == null || args.length != 1) {
                                 throw new IllegalArgumentException("method " + method.getName()
                                         + " only can have one argument.");
@@ -109,7 +109,7 @@ public final class ButterKnife {
                             // final Object value = action.invoke(host, args[0]);
                             Log.d("ButterKnife", "onLongClick() action " + action);
                             return action.invoke(host, /*view*/args[0]);
-                        } else if ("onItemClick".equals(method.getName())) {
+                        } else if (OnItemClick.M.equals(method.getName())) {
                             // void onItemClick(AdapterView<?> parent, View view, int position, long id);
                             action.invoke(host, /*position*/args[0]);
                         }

@@ -9,5 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OnLongClick {
 
+    String M = "onLongClick";
+
     int[] value() default {};
 }
