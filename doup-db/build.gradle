@@ -28,11 +28,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation rootProject.ext.deps['androidx_appcompat']
     // green dao dependency
     implementation 'org.greenrobot:greendao:3.2.2'
 
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation rootProject.ext.deps['google_gson']
 
     implementation project(':my-utils')
     implementation project(':doup-base')
