@@ -175,9 +175,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         return ConstantValue.URL_PRE;
     }
 
-    private void debug(String msg) {
+    public void debug(String msg) {
         if (DBG) {
-            Log.d(TAG, msg);
+            debug(TAG, msg);
         }
+    }
+
+    public void debug(String tag, String msg) {
+        Log.d(tag, msg);
     }
 }

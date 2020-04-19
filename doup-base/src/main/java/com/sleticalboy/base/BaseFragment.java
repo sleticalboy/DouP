@@ -157,9 +157,13 @@ public abstract class BaseFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
     }
 
-    private void debug(String msg) {
+    protected void debug(String msg) {
         if (DBG) {
-            Log.d(TAG, msg);
+            ((BaseActivity) getActivity()).debug(TAG, msg);
         }
+    }
+
+    protected void debug(String tag, String msg) {
+        ((BaseActivity) getActivity()).debug(tag, msg);
     }
 }
