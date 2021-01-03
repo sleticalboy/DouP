@@ -13,7 +13,6 @@ import androidx.multidex.MultiDex;
 
 import com.sleticalboy.base.LifecycleCallback;
 import com.sleticalboy.base.LifecycleController;
-import com.sleticalboy.doup.db.DBController;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
 import com.sleticalboy.util.SPUtils;
@@ -51,9 +50,6 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
 
         // SP 初始化
         SPUtils.INSTANCE.init(this);
-
-        // 初始化 GreenDao 数据库, 是否加密
-        DBController.getInstance().defaultInitDB(this, false);
 
         // 初始化极光推送
 //        JPushManager.getInstance().initialize(this);

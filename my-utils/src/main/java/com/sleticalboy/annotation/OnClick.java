@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OnClick {
 
-    String M = "onClick";
+    String METHOD = "onClick";
 
     int[] value() default {};
 

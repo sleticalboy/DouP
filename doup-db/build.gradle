@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION as int
@@ -16,10 +15,6 @@ android {
         }
     }
 
-    greendao {
-        schemaVersion 1
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -29,8 +24,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.deps['androidx_appcompat']
-    // green dao dependency
-    implementation 'org.greenrobot:greendao:3.2.2'
 
     implementation rootProject.ext.deps['google_gson']
 
