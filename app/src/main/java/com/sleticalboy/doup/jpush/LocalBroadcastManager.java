@@ -48,13 +48,13 @@ public final class LocalBroadcastManager {
     private LocalBroadcastManager(Context context) {
         mAppContext = context;
         mHandler = new Handler(context.getMainLooper()) {
+
+            @Override
             public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case 1:
-                        LocalBroadcastManager.this.executePendingBroadcasts();
-                        break;
-                    default:
-                        super.handleMessage(msg);
+                if (msg.what == 1) {
+                    LocalBroadcastManager.this.executePendingBroadcasts();
+                } else {
+                    super.handleMessage(msg);
                 }
             }
         };
@@ -63,9 +63,9 @@ public final class LocalBroadcastManager {
     public void registerReceiver(BroadcastReceiver receiver, IntentFilter filter) {
         synchronized (mReceivers) {
             ReceiverRecord entry = new ReceiverRecord(filter, receiver);
-            ArrayList filters = (ArrayList) mReceivers.get(receiver);
+            ArrayList<IntentFilter> filters = (ArrayList<IntentFilter>) mReceivers.get(receiver);
             if (filters == null) {
-                filters = new ArrayList(1);
+                filters = new ArrayList<>(1);
                 mReceivers.put(receiver, filters);
             }
 
@@ -73,9 +73,9 @@ public final class LocalBroadcastManager {
 
             for (int i = 0; i < filter.countActions(); ++i) {
                 String action = filter.getAction(i);
-                ArrayList entries = (ArrayList) mActions.get(action);
+                ArrayList<ReceiverRecord> entries = (ArrayList<ReceiverRecord>) mActions.get(action);
                 if (entries == null) {
-                    entries = new ArrayList(1);
+                    entries = new ArrayList<>(1);
                     mActions.put(action, entries);
                 }
                 entries.add(entry);
@@ -85,13 +85,13 @@ public final class LocalBroadcastManager {
 
     public void unregisterReceiver(BroadcastReceiver receiver) {
         synchronized (mReceivers) {
-            ArrayList filters = (ArrayList) this.mReceivers.remove(receiver);
+            ArrayList<IntentFilter> filters = (ArrayList<IntentFilter>) mReceivers.remove(receiver);
             if (filters != null) {
                 for (int i = 0; i < filters.size(); ++i) {
                     IntentFilter filter = (IntentFilter) filters.get(i);
                     for (int j = 0; j < filter.countActions(); ++j) {
                         String action = filter.getAction(j);
-                        ArrayList receivers = (ArrayList) mActions.get(action);
+                        ArrayList<ReceiverRecord> receivers = (ArrayList<ReceiverRecord>) mActions.get(action);
                         if (receivers != null) {
                             for (int k = 0; k < receivers.size(); ++k) {
                                 if (((ReceiverRecord) receivers.get(k)).receiver == receiver) {
@@ -115,19 +115,19 @@ public final class LocalBroadcastManager {
             String type = intent.resolveTypeIfNeeded(this.mAppContext.getContentResolver());
             Uri data = intent.getData();
             String scheme = intent.getScheme();
-            Set categories = intent.getCategories();
+            Set<String> categories = intent.getCategories();
             boolean debug = (intent.getFlags() & Intent.FLAG_DEBUG_LOG_RESOLUTION) != 0;
             if (debug) {
                 Log.v("LocalBroadcastManager", "Resolving type " + type + " scheme " + scheme + " of intent " + intent);
             }
 
-            ArrayList entries = mActions.get(intent.getAction());
+            ArrayList<ReceiverRecord> entries = mActions.get(intent.getAction());
             if (entries != null) {
                 if (debug) {
                     Log.v("LocalBroadcastManager", "Action list: " + entries);
                 }
 
-                ArrayList receivers = null;
+                ArrayList<ReceiverRecord> receivers = null;
 
                 int i;
                 for (i = 0; i < entries.size(); ++i) {
@@ -148,7 +148,7 @@ public final class LocalBroadcastManager {
                             }
 
                             if (receivers == null) {
-                                receivers = new ArrayList();
+                                receivers = new ArrayList<>();
                             }
 
                             receivers.add(receiver);
@@ -216,9 +216,7 @@ public final class LocalBroadcastManager {
                 this.mPendingBroadcasts.clear();
             }
 
-            for (int i = 0; i < brs.length; ++i) {
-                BroadcastRecord br = brs[i];
-
+            for (BroadcastRecord br : brs) {
                 for (int j = 0; j < br.receivers.size(); ++j) {
                     ((ReceiverRecord) br.receivers.get(j)).receiver.onReceive(this.mAppContext, br.intent);
                 }

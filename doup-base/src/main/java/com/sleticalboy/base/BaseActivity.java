@@ -35,7 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         debug("onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         handleStatusBar(R.color.status_bar_color, true, false);
         super.onCreate(savedInstanceState);
-        ActivityController.INSTANCE.add(this);
+        ActivityController.add(this);
         lifecycleCallback.onCreate(this, savedInstanceState);
         beforeViews();
         setContentView(attachLayout());
@@ -89,7 +89,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         debug("onDestroy() called");
         super.onDestroy();
         lifecycleCallback.onActivityDestroy(this);
-        ActivityController.INSTANCE.remove(this);
+        ActivityController.remove(this);
     }
 
     @Override

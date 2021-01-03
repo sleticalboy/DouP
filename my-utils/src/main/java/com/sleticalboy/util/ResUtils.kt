@@ -17,6 +17,7 @@ object ResUtils {
      * @param resId 资源 weatherId
      * @return resId 对应的字符串
      */
+    @JvmStatic
     fun getString(context: Context, resId: Int): String {
         return context.resources.getString(resId)
     }

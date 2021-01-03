@@ -19,9 +19,9 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     protected void initView(final Bundle savedInstanceState) {
-        boolean isFirst = SPUtils.INSTANCE.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
+        boolean isFirst = SPUtils.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
         if (isFirst) {
-            SPUtils.INSTANCE.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
+            SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
             // 展示欢迎页之后进入主页面
             createPresenter().toMain();
         } else {

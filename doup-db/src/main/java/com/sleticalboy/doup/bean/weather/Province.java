@@ -1,10 +1,5 @@
 package com.sleticalboy.doup.bean.weather;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Property;
-
 import java.io.Serializable;
 
 /**
@@ -13,26 +8,20 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-@Entity
 public class Province implements Serializable {
 
     private static final long serialVersionUID = 5834583142067139664L;
 
-    @Id
     public int id;
-    @Property
     public String name;
-    @Property
     public int provinceCode;
 
-    @Generated(hash = 964095859)
     public Province(int id, String name, int provinceCode) {
         this.id = id;
         this.name = name;
         this.provinceCode = provinceCode;
     }
 
-    @Generated(hash = 1309009906)
     public Province() {
     }
 

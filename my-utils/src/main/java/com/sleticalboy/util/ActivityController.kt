@@ -13,16 +13,19 @@ object ActivityController {
 
     private val activityList = ArrayList<Activity>()
 
+    @JvmStatic
     fun add(activity: Activity) {
         if (!activityList.contains(activity))
             activityList.add(activity)
     }
 
+    @JvmStatic
     fun remove(activity: Activity) {
         if (activityList.contains(activity))
             activityList.remove(activity)
     }
 
+    @JvmStatic
     fun finishAll() {
         for (activity in activityList) {
             if (!activity.isFinishing) {

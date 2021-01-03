@@ -22,7 +22,7 @@ public class BasePagerAdapter extends FragmentPagerAdapter {
     private int[] mTabTitleIds;
     private String[] mTabTitles = {"Tab 1", "Tab 2", "Tab 3"};
     private List<Fragment> mSubFragments;
-    private Context mContext;
+    private final Context mContext;
 
     public BasePagerAdapter(@NonNull Context context, FragmentManager fm) {
         super(fm);
@@ -58,6 +58,6 @@ public class BasePagerAdapter extends FragmentPagerAdapter {
 
     @NonNull
     private String getTabTitle(int index) {
-        return mTabTitleIds == null ? mTabTitles[index] : ResUtils.INSTANCE.getString(mContext, mTabTitleIds[index]);
+        return mTabTitleIds == null ? mTabTitles[index] : ResUtils.getString(mContext, mTabTitleIds[index]);
     }
 }

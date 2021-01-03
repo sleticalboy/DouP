@@ -18,6 +18,7 @@ object TimeUtils {
 
     private var sdf: SimpleDateFormat? = null
 
+    @JvmStatic
     fun formatUTC(l: Long, strPattern: String): String {
         var format = strPattern
         if (TextUtils.isEmpty(format)) {

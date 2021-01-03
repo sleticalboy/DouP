@@ -69,7 +69,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
     @BindView(R.id.swipe_refresh)
     private SwipeRefreshLayout swipeRefresh;
 
-    private String mWeatherId = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER_ID, null);
+    private final String mWeatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
 
     private WeatherPresenter mPresenter;
     private LocationManager mLocManager;
@@ -93,12 +93,12 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
         mLocManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
-        String area = SPUtils.INSTANCE.getString(ConstantValue.KEY_AREA, null);
+        String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
         if (StrUtils.isEmpty(area)) {
 //            showDistrictDialog();
             titleCity.setText(area);
         }
-        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER, null);
+        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
         if (!StrUtils.isEmpty(weatherStr)) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             if (weatherBean != null) {
@@ -176,7 +176,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
      * 显示地址选择框
      */
     public void showDistrictDialog() {
-        ToastUtils.INSTANCE.showToast(this, "点我干嘛？");
+        ToastUtils.showToast(this, "点我干嘛？");
     }
 
     @Override
@@ -191,7 +191,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
 
     @Override
     public void onNetError() {
-        ToastUtils.INSTANCE.showToast(this, "网络错误");
+        ToastUtils.showToast(this, "网络错误");
     }
 
     @Override

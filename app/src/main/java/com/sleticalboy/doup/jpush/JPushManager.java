@@ -42,12 +42,8 @@ public class JPushManager {
     }
 
     public void initialize(@NonNull Context context) {
-        LogUtils.INSTANCE.d(TAG, "initialize() called with: context = [" + context.getApplicationContext() + "]");
-        if (BuildConfig.DEBUG) {
-            JPushInterface.setDebugMode(true);
-        } else {
-            JPushInterface.setDebugMode(false);
-        }
+        LogUtils.d(TAG, "initialize() called with: context = [" + context.getApplicationContext() + "]");
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);
         JPushInterface.init(context.getApplicationContext());
     }
 

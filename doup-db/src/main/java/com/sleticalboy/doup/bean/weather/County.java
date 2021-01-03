@@ -2,11 +2,6 @@ package com.sleticalboy.doup.bean.weather;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Property;
-
 import java.io.Serializable;
 
 /**
@@ -15,22 +10,16 @@ import java.io.Serializable;
  *
  * @author sleticalboy
  */
-@Entity
 public class County implements Serializable {
 
     private static final long serialVersionUID = -4374131938089667906L;
 
-    @Id
     public int id;
-    @Property
     public String name;
     @SerializedName("weather_id")
-    @Property
     public String weatherId;
-    @Property
     public int cityId;
 
-    @Generated(hash = 731093275)
     public County(int id, String name, String weatherId, int cityId) {
         this.id = id;
         this.name = name;
@@ -38,7 +27,6 @@ public class County implements Serializable {
         this.cityId = cityId;
     }
 
-    @Generated(hash = 1991272252)
     public County() {
     }
 

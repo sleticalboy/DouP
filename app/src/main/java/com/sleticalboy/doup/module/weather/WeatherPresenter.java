@@ -43,7 +43,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
     public static final String TAG = "WeatherPresenter";
 
     private WeatherActivity mWeatherView;
-    private WeatherModel mWeatherModel;
+    private final WeatherModel mWeatherModel;
 
     private List<Province> mProvinceList = new ArrayList<>();
     private List<City> mCityList = new ArrayList<>();
@@ -183,7 +183,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(weatherBean -> {
                         Log.d("WeatherActivity", "get weather form network -- >");
-                        SPUtils.INSTANCE.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
+                        SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
                         mWeatherView.showWeather(weatherBean);
                         mWeatherView.onLoadFinished();
                         AutoUpdateService.actionStart(getContext());
@@ -206,7 +206,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     String url = responseBody.string();
-                    SPUtils.INSTANCE.putString(ConstantValue.KEY_BG, url);
+                    SPUtils.putString(ConstantValue.KEY_BG, url);
                     mWeatherView.showBg(url);
                 }
             }

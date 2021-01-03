@@ -73,7 +73,7 @@ public class AutoUpdateService extends Service {
         HttpUtils.request(ApiConstant.BASE_WEATHER_URL + "bing_pic", new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                ToastUtils.INSTANCE.showToast(AutoUpdateService.this, "网络错误");
+                ToastUtils.showToast(AutoUpdateService.this, "网络错误");
             }
 
             @Override
@@ -81,7 +81,7 @@ public class AutoUpdateService extends Service {
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     String bingPic = responseBody.string();
-                    SPUtils.INSTANCE.putString(ConstantValue.KEY_BG, bingPic);
+                    SPUtils.putString(ConstantValue.KEY_BG, bingPic);
                 }
             }
         });
@@ -89,7 +89,7 @@ public class AutoUpdateService extends Service {
 
     // 更新天气
     private void updateWeather() {
-        String weatherStr = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER, null);
+        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
         if (weatherStr != null) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             String weatherId = "";
@@ -97,7 +97,7 @@ public class AutoUpdateService extends Service {
                 weatherId = weatherBean.HeWeather.get(0).basic.weatherId;
             }
             if (TextUtils.isEmpty(weatherId)) {
-                weatherId = SPUtils.INSTANCE.getString(ConstantValue.KEY_WEATHER_ID, null);
+                weatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
             }
             if (TextUtils.isEmpty(weatherId)) {
                 return;
@@ -107,7 +107,7 @@ public class AutoUpdateService extends Service {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(weather -> {
                         Log.d("AutoUpdateService", "from service -->");
-                        SPUtils.INSTANCE.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weather));
+                        SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weather));
                     });
         }
     }

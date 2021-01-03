@@ -12,12 +12,14 @@ import java.lang.IllegalArgumentException
  */
 object ToastUtils {
 
+    @JvmStatic
     fun showToast(context: Context?, text: CharSequence) {
         if (context == null)
             throw IllegalArgumentException("context was null")
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
+    @JvmStatic
     fun showToast(context: Context, resId: Int) {
         showToast(context, context.resources.getString(resId))
     }

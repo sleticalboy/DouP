@@ -165,7 +165,7 @@ public final class LocationManager implements AMapLocationListener {
     @Override
     public void onLocationChanged(AMapLocation location) {
         if (location != null) {
-            LogUtils.INSTANCE.d(TAG, defaultHandleLocation(location));
+            LogUtils.d(TAG, defaultHandleLocation(location));
             // 将定位结果传递出去，在需要的地方接收
             RxBus.getBus().post(LocationManager.TAG, location);
         }
@@ -200,7 +200,7 @@ public final class LocationManager implements AMapLocationListener {
             sb.append("地\t址\t: " + location.getAddress() + "\n");
             sb.append("兴趣点\t\t: " + location.getPoiName() + "\n");
             //定位完成的时间
-            sb.append("定位时间\t: " + TimeUtils.INSTANCE.formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "\n");
+            sb.append("定位时间\t: " + TimeUtils.formatUTC(location.getTime(), "yyyy-MM-dd HH:mm:ss") + "\n");
         } else {
             //定位失败
             sb.append("定位失败" + "\n");
@@ -214,7 +214,7 @@ public final class LocationManager implements AMapLocationListener {
         sb.append("* GPS星数：").append(location.getLocationQualityReport().getGPSSatellites()).append("\n");
         sb.append("****************").append("\n");
         //定位之后的回调时间
-        sb.append("回调时间: " + TimeUtils.INSTANCE.formatUTC(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "\n");
+        sb.append("回调时间: " + TimeUtils.formatUTC(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "\n");
 
         //解析定位结果，
         String result = sb.toString();

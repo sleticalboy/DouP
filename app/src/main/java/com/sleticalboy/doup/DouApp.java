@@ -49,7 +49,7 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
         initLifecycleCallback();
 
         // SP 初始化
-        SPUtils.INSTANCE.init(this);
+        SPUtils.init(this);
 
         // 初始化极光推送
 //        JPushManager.getInstance().initialize(this);
