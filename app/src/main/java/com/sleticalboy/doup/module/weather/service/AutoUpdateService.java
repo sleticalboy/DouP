@@ -19,7 +19,7 @@ import com.sleticalboy.doup.bean.weather.WeatherBean;
 import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.model.weather.WeatherModel;
-import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.Prefs;
 import com.sleticalboy.util.ToastUtils;
 
 import java.io.IOException;
@@ -81,7 +81,7 @@ public class AutoUpdateService extends Service {
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     String bingPic = responseBody.string();
-                    SPUtils.putString(ConstantValue.KEY_BG, bingPic);
+                    Prefs.putString(ConstantValue.KEY_BG, bingPic);
                 }
             }
         });
@@ -89,7 +89,7 @@ public class AutoUpdateService extends Service {
 
     // 更新天气
     private void updateWeather() {
-        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
+        String weatherStr = Prefs.getString(ConstantValue.KEY_WEATHER, null);
         if (weatherStr != null) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             String weatherId = "";
@@ -97,7 +97,7 @@ public class AutoUpdateService extends Service {
                 weatherId = weatherBean.HeWeather.get(0).basic.weatherId;
             }
             if (TextUtils.isEmpty(weatherId)) {
-                weatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
+                weatherId = Prefs.getString(ConstantValue.KEY_WEATHER_ID, null);
             }
             if (TextUtils.isEmpty(weatherId)) {
                 return;
@@ -107,7 +107,7 @@ public class AutoUpdateService extends Service {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(weather -> {
                         Log.d("AutoUpdateService", "from service -->");
-                        SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weather));
+                        Prefs.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weather));
                     });
         }
     }

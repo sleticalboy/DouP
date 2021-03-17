@@ -13,7 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.sleticalboy.annotation.ButterKnife;
 import com.sleticalboy.base.config.ConstantValue;
-import com.sleticalboy.util.ActivityController;
 import com.sleticalboy.util.OSUtils;
 
 /**
@@ -27,16 +26,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final String TAG = getClass().getSimpleName();
     protected final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
-    protected LifecycleCallback lifecycleCallback =
-            LifecycleController.Companion.getInstance().getLifecycleCallback();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        debug("onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         handleStatusBar(R.color.status_bar_color, true, false);
         super.onCreate(savedInstanceState);
-        ActivityController.add(this);
-        lifecycleCallback.onCreate(this, savedInstanceState);
         beforeViews();
         setContentView(attachLayout());
         ButterKnife.bind(this);
@@ -70,35 +63,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void afterViews() {
     }
 
-    @Override
-    protected void onStart() {
-        debug("onStart() called");
-        super.onStart();
-        lifecycleCallback.onActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        debug("onStop() called");
-        super.onStop();
-        lifecycleCallback.onActivityStop(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        debug("onDestroy() called");
-        super.onDestroy();
-        lifecycleCallback.onActivityDestroy(this);
-        ActivityController.remove(this);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        debug("onSaveInstanceState() called with: outState = [" + outState + "]");
-        super.onSaveInstanceState(outState);
-        lifecycleCallback.onActivitySaveInstanceState(this, outState);
-    }
-
     protected void handleStatusBar(@ColorRes int statusBarColor, boolean isNoTitle, boolean isFullScreen) {
         OSUtils.handleStatusBar(this, statusBarColor, isNoTitle, isFullScreen);
     }
@@ -119,17 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        debug("onRestoreInstanceState() called with: savedInstanceState = [" + savedInstanceState + "]");
-        super.onRestoreInstanceState(savedInstanceState);
-        lifecycleCallback.onActivityRestoreInstanceState(this, savedInstanceState);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        }
+        if (item.getItemId() == android.R.id.home) onBackPressed();
         return super.onOptionsItemSelected(item);
     }
 
@@ -141,20 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             getSupportFragmentManager().popBackStack();
         }
-    }
-
-    @Override
-    protected void onPause() {
-        debug("onPause() called");
-        super.onPause();
-        lifecycleCallback.onActivityPause(this);
-    }
-
-    @Override
-    protected void onResume() {
-        debug("onResume() called");
-        super.onResume();
-        lifecycleCallback.onActivityResume(this);
     }
 
     public final String getTargetUrl(@StringRes int moduleNameResId, @StringRes int activityNameResId) {
@@ -171,14 +112,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return url prefix: <code>doup://</code>
      */
     protected final String urlPre() {
-//        return mUrlSchema + mUrlMiddle;
+       // return mUrlSchema + mUrlMiddle;
         return ConstantValue.URL_PRE;
-    }
-
-    public void debug(String msg) {
-        if (DBG) {
-            debug(TAG, msg);
-        }
     }
 
     public void debug(String tag, String msg) {

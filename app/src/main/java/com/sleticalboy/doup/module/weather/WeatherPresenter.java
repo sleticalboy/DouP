@@ -16,7 +16,7 @@ import com.sleticalboy.doup.http.ApiConstant;
 import com.sleticalboy.doup.http.HttpUtils;
 import com.sleticalboy.doup.model.weather.WeatherModel;
 import com.sleticalboy.doup.module.weather.service.AutoUpdateService;
-import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.Prefs;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -183,7 +183,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(weatherBean -> {
                         Log.d("WeatherActivity", "get weather form network -- >");
-                        SPUtils.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
+                        Prefs.putString(ConstantValue.KEY_WEATHER, new Gson().toJson(weatherBean));
                         mWeatherView.showWeather(weatherBean);
                         mWeatherView.onLoadFinished();
                         AutoUpdateService.actionStart(getContext());
@@ -206,7 +206,7 @@ public class WeatherPresenter extends BasePresenter implements IWeatherContract.
                 ResponseBody responseBody = response.body();
                 if (responseBody != null) {
                     String url = responseBody.string();
-                    SPUtils.putString(ConstantValue.KEY_BG, url);
+                    Prefs.putString(ConstantValue.KEY_BG, url);
                     mWeatherView.showBg(url);
                 }
             }

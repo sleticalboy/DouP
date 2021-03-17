@@ -167,9 +167,7 @@ public final class ButterKnife {
     }
 
     private static Object invokeSafely(Method method, Object obj, Object... args) {
-        if (method == null) {
-            return null;
-        }
+        if (method == null) return null;
         try {
             method.setAccessible(true);
             return method.invoke(obj, args);

@@ -21,7 +21,7 @@ import com.sleticalboy.doup.bean.weather.WeatherBean;
 import com.sleticalboy.doup.module.amap.LocationManager;
 import com.sleticalboy.util.ImageLoader;
 import com.sleticalboy.util.RxBus;
-import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.Prefs;
 import com.sleticalboy.util.StrUtils;
 import com.sleticalboy.util.ToastUtils;
 import com.sleticalboy.widget.recyclerview.swipe.SwipeRefreshLayout;
@@ -69,7 +69,7 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
     @BindView(R.id.swipe_refresh)
     private SwipeRefreshLayout swipeRefresh;
 
-    private final String mWeatherId = SPUtils.getString(ConstantValue.KEY_WEATHER_ID, null);
+    private final String mWeatherId = Prefs.getString(ConstantValue.KEY_WEATHER_ID, null);
 
     private WeatherPresenter mPresenter;
     private LocationManager mLocManager;
@@ -93,12 +93,12 @@ public class WeatherActivity extends BaseActivity implements IWeatherContract.IW
         mLocManager.startLocation();
 
         // 从 sp 中获取地区名，如果不为 null，则说明不是第一次展示天气
-        String area = SPUtils.getString(ConstantValue.KEY_AREA, null);
+        String area = Prefs.getString(ConstantValue.KEY_AREA, null);
         if (StrUtils.isEmpty(area)) {
 //            showDistrictDialog();
             titleCity.setText(area);
         }
-        String weatherStr = SPUtils.getString(ConstantValue.KEY_WEATHER, null);
+        String weatherStr = Prefs.getString(ConstantValue.KEY_WEATHER, null);
         if (!StrUtils.isEmpty(weatherStr)) {
             WeatherBean weatherBean = new Gson().fromJson(weatherStr, WeatherBean.class);
             if (weatherBean != null) {

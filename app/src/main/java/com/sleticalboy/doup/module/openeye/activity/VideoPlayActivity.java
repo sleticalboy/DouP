@@ -94,7 +94,7 @@ public class VideoPlayActivity extends BaseActivity implements IVideoPlayView {
 
     private void prepareVideo() {
         // 查看视频是否缓存过
-//        String url = SPUtils.getString(ConstantValue.KEY_LOCAL_VIDEO_URL, null);
+       // String url = SPUtils.getString(ConstantValue.KEY_LOCAL_VIDEO_URL, null);
         String url = "";
         if (!StrUtils.isEmpty(url)) {
             gsyPlayer.setUp(url, false, null, null);

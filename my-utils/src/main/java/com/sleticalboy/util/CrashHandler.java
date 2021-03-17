@@ -14,7 +14,6 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,7 +33,6 @@ import java.util.Map;
  *
  * @author sleticalboy
  */
-
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private static final String TAG = "CrashHandler";
@@ -48,10 +46,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private WeakReference<Context> mReference;
 
     //用来存储设备信息和异常信息
-    private Map<String, String> infoMap = new HashMap<>();
+    private final Map<String, Object> infoMap = new HashMap<>();
     //用于格式化日期,作为日志文件名的一部分
 //    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-    private DateFormat formatter = DateFormat.getInstance();
+    private final DateFormat formatter = DateFormat.getInstance();
 
     private String mFileName;
 
@@ -59,9 +57,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     public static CrashHandler getInstance() {
-        synchronized (CRASH_HANDLER) {
-            return CRASH_HANDLER;
-        }
+        return CRASH_HANDLER;
     }
 
     /**
@@ -97,9 +93,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @return true:如果处理了该异常信息;否则返回false.
      */
     private boolean handleException(Throwable ex) {
-        if (ex == null) {
-            return false;
-        }
+        if (ex == null) return false;
         //收集设备参数信息
         collectDeviceInfo(mReference.get());
 
@@ -107,7 +101,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                ToastUtils.INSTANCE.showToast(mReference.get(), "很抱歉,程序出现异常,即将退出.");
+                ToastUtils.showToast(mReference.get(), "很抱歉,程序出现异常,即将退出.");
             }
         });
         //保存日志文件
@@ -117,8 +111,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     /**
      * 收集设备参数信息
-     *
-     * @param ctx
      */
     public void collectDeviceInfo(Context ctx) {
         try {
@@ -137,7 +129,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
-                infoMap.put(field.getName(), field.get(null).toString());
+                infoMap.put(field.getName(), field.get(null));
                 Log.d(TAG, field.getName() + " : " + field.get(null));
             } catch (Exception e) {
                 Log.e(TAG, "an error occurred when collect crash info", e);
@@ -151,12 +143,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @return 返回文件名称, 便于将文件传送到服务器
      */
     private String saveCatchInfo2File(Throwable ex) {
-
-        StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> entry : infoMap.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            builder.append(key).append("=").append(value).append("\n");
+        StringBuilder buffer = new StringBuilder();
+        for (final String key : infoMap.keySet()) {
+            buffer.append(key).append('=').append(infoMap.get(key)).append('\n');
         }
 
         Writer writer = new StringWriter();
@@ -169,7 +158,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
         printWriter.close();
         String result = writer.toString();
-        builder.append(result);
+        buffer.append(result);
         try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
@@ -181,11 +170,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             Log.d(TAG, "saveCatchInfo2File: " + fileDir);
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 File dir = new File(fileDir);
-                if (!dir.exists()) {
-                    dir.mkdirs();
+                if (!dir.exists() && dir.mkdirs()) {
+                    Log.d(TAG, "create " + dir);
                 }
                 FileOutputStream fos = new FileOutputStream(fileDir + fileName);
-                fos.write(builder.toString().getBytes());
+                fos.write(buffer.toString().getBytes());
                 //发送给开发人员
                 sendCrashLog2PM(fileDir + fileName);
                 fos.close();
@@ -203,7 +192,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 目前只将log日志保存在sdcard 和输出到LogCat中，并未发送给后台。
      */
     private void sendCrashLog2PM(String fileName) {
-        // TODO: 11/9/17 上传文件到服务器
         if (!new File(fileName).exists()) {
             Toast.makeText(mReference.get(), "日志文件不存在！", Toast.LENGTH_SHORT).show();
             return;
@@ -216,23 +204,16 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             reader = new BufferedReader(new InputStreamReader(fis, "utf-8"));
             while (true) {
                 s = reader.readLine();
-                if (s == null)
-                    break;
+                if (s == null) break;
                 // 由于目前尚未确定以何种方式发送，所以先打出log日志。
                 Log.i("info", s);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally { // 关闭流
             try {
-                if (reader != null) {
-                    reader.close();
-                }
-                if (fis != null) {
-                    fis.close();
-                }
+                if (reader != null) reader.close();
+                if (fis != null) fis.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

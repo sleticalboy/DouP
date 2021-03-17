@@ -4,18 +4,16 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Process;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.multidex.MultiDex;
 
-import com.sleticalboy.base.LifecycleCallback;
-import com.sleticalboy.base.LifecycleController;
 import com.sleticalboy.doup.module.main.StartActivity;
 import com.sleticalboy.util.CrashHandler;
-import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.Prefs;
 
 /**
  * Created by Android Studio.
@@ -49,75 +47,50 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
         initLifecycleCallback();
 
         // SP 初始化
-        SPUtils.init(this);
+        Prefs.init(this);
 
         // 初始化极光推送
-//        JPushManager.getInstance().initialize(this);
+       // JPushManager.getInstance().initialize(this);
 
         // 初始化极光 IM
         // JChatManager.getManager().initialize(this);
     }
 
     private void initLifecycleCallback() {
-        LifecycleController.Companion.getInstance().setLifecycleCallback(new LifecycleCallback() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
-            public void onCreate(@NonNull Activity activity, Bundle savedInstanceState) {
-//                JPushManager.getInstance().initialize(activity);
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+                // JPushManager.getInstance().initialize(activity);
             }
 
             @Override
-            public void onActivityStart(@NonNull Activity activity) {
-
-            }
-
-            @Override
-            public void onStartActivityForResult(@NonNull Activity activity) {
+            public void onActivityStarted(@NonNull Activity activity) {
 
             }
 
             @Override
-            public void onStartActivity(@NonNull Activity activity) {
+            public void onActivityResumed(@NonNull Activity activity) {
+                // JPushManager.getInstance().onResume(activity);
+            }
+
+            @Override
+            public void onActivityPaused(@NonNull Activity activity) {
+                // JPushManager.getInstance().onPause(activity);
+            }
+
+            @Override
+            public void onActivityStopped(@NonNull Activity activity) {
 
             }
 
             @Override
-            public void onActivityResume(@NonNull Activity activity) {
-//                JPushManager.getInstance().onResume(activity);
-            }
-
-            @Override
-            public void onActivityPause(@NonNull Activity activity) {
-//                JPushManager.getInstance().onPause(activity);
-            }
-
-            @Override
-            public void onActivityStop(@NonNull Activity activity) {
+            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
 
             }
 
             @Override
-            public void onActivitySaveInstanceState(@NonNull Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroy(@NonNull Activity activity) {
-//                JPushManager.getInstance().disableReceiver(activity);
-            }
-
-            @Override
-            public void onActivityFinish(@NonNull Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityConfigurationChanged(Configuration newConfig) {
-
-            }
-
-            @Override
-            public void onActivityRestoreInstanceState(@NonNull Activity activity, Bundle saveInstanceState) {
-
+            public void onActivityDestroyed(@NonNull Activity activity) {
+                // JPushManager.getInstance().disableReceiver(activity);
             }
         });
     }
@@ -131,10 +104,8 @@ public final class DouApp extends Application implements CrashHandler.OnCrashLis
      * 重新启动 app
      */
     private void restartApp() {
-        Intent intent = new Intent(this, StartActivity.class);
-//         在新的任务栈中启动应用
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        // 在新的任务栈中启动应用
+        StartActivity.actionStart(this, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         // 干掉原有的进程
         Process.killProcess(Process.myPid());
     }

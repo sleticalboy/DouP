@@ -79,7 +79,7 @@ public class ImageLoader {
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher);
-        Glide.with(context).asBitmap().apply(options).into(target);
+        Glide.with(context).asBitmap().load(url).apply(options).into(target);
     }
 
     private static void privateLoad(Context context, ImageView target, Object model) {

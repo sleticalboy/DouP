@@ -67,7 +67,13 @@ public class StartActivity extends BaseActivity {
     private Fragment mCurFragment;
     
     public static void actionStart(Context context) {
-        context.startActivity(new Intent(context, StartActivity.class));
+        actionStart(context, -1);
+    }
+
+    public static void actionStart(Context context, int flags) {
+        Intent intent = new Intent(context, StartActivity.class);
+        if (flags > 0) intent.addFlags(flags);
+        context.startActivity(intent);
     }
     
     @Override

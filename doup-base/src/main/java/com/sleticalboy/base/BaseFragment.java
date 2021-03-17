@@ -1,6 +1,5 @@
 package com.sleticalboy.base;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,24 +25,10 @@ public abstract class BaseFragment extends Fragment {
     protected final String TAG = getClass().getSimpleName();
     protected final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
-    @Override
-    public void onAttach(Context context) {
-        debug("onAttach() called with: context = [" + context + "]");
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        debug("onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        debug("onCreateView() called with: inflater = [" + inflater + "], container = [" + container
-                + "], savedInstanceState = [" + savedInstanceState + "]");
         return inflater.inflate(attachLayout(), null);
     }
 
@@ -90,80 +75,13 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        debug("onViewCreated() called with: view = [" + view + "], savedInstanceState = ["
-                + savedInstanceState + "]");
         ButterKnife.bind(this);
         initView(view);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        debug("onActivityCreated() called with: savedInstanceState = [" + savedInstanceState + "]");
         super.onActivityCreated(savedInstanceState);
         prepareTask();
-    }
-
-    @Override
-    public void onStart() {
-        debug("onStart() called");
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        debug("onResume() called");
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        debug("onPause() called");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        debug("onStop() called");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        debug("onDestroyView() called");
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        debug("onDestroy() called");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        debug("onDetach() called");
-        super.onDetach();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        debug("onSaveInstanceState() called with: outState = [" + outState + "]");
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        debug("onViewStateRestored() savedInstanceState = [" + savedInstanceState + "]");
-        super.onViewStateRestored(savedInstanceState);
-    }
-
-    protected void debug(String msg) {
-        if (DBG) {
-            ((BaseActivity) getActivity()).debug(TAG, msg);
-        }
-    }
-
-    protected void debug(String tag, String msg) {
-        ((BaseActivity) getActivity()).debug(tag, msg);
     }
 }

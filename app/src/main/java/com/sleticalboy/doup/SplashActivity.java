@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.sleticalboy.base.BaseActivity;
 import com.sleticalboy.base.config.ConstantValue;
 import com.sleticalboy.doup.module.main.StartActivity;
-import com.sleticalboy.util.SPUtils;
+import com.sleticalboy.util.Prefs;
 
 /**
  * Created by Android Studio.
@@ -19,9 +19,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     protected void initView(final Bundle savedInstanceState) {
-        boolean isFirst = SPUtils.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true);
-        if (isFirst) {
-            SPUtils.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
+        if (Prefs.getBoolean(ConstantValue.KEY_FIRST_LAUNCH, true)) {
+            Prefs.putBoolean(ConstantValue.KEY_FIRST_LAUNCH, false);
             // 展示欢迎页之后进入主页面
             createPresenter().toMain();
         } else {
@@ -48,9 +47,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public SplashContract.Presenter createPresenter() {
-        if (mPresenter == null) {
-            mPresenter = new SplashPresenter(this, this);
-        }
+        if (mPresenter == null) mPresenter = new SplashPresenter(this, this);
         return mPresenter;
     }
 

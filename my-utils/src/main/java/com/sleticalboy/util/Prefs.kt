@@ -2,7 +2,6 @@ package com.sleticalboy.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 
 /**
  * Created by Android Studio.
@@ -10,14 +9,14 @@ import android.preference.PreferenceManager
  *
  * @author sleticalboy
  */
-object SPUtils {
+object Prefs {
 
     private var sp: SharedPreferences? = null
 
     @JvmStatic
     fun init(context: Context) {
         if (sp == null) {
-            sp = context.getSharedPreferences(context.packageName + "_preferences", Context.MODE_PRIVATE)
+            sp = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE)
         }
     }
 
